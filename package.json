@@ -1,0 +1,17 @@
+{
+  "name": "borders-workflow-tasklist",
+  "version": "0.0.1",
+  "description": "Centralised task list UI for business processes",
+  "author": "",
+  "license": "",
+
+  "scripts": {
+
+  },
+  "devDependencies": {
+
+  },
+  "dependencies": {
+
+  }
+}
