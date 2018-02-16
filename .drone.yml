@@ -1,0 +1,35 @@
+pipeline:
+  web-modeler-build:
+    image: docker:17.09.1
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
+    commands:
+      - docker build -t borders-workflow-tasklist .
+    when:
+      branch: master
+      event: push
+
+  image_to_quay:
+    image: docker:17.09.1
+    secrets:
+      - docker_password
+    environment:
+      - DOCKER_HOST=tcp://172.17.0.1:2375
+    commands:
+      - docker login -u="ukhomeofficedigital+borders_central" -p=$${DOCKER_PASSWORD} quay.io
+      - docker tag borders-workflow-tasklist quay.io/ukhomeofficedigital/borders-workflow-tasklist:$${DRONE_COMMIT_SHA}
+      - docker tag borders-workflow-tasklist quay.io/ukhomeofficedigital/borders-workflow-tasklist:latest
+      - docker push quay.io/ukhomeofficedigital/borders-workflow-tasklist:$${DRONE_COMMIT_SHA}
+      - docker push quay.io/ukhomeofficedigital/borders-workflow-tasklist:latest
+    when:
+      branch: master
+      event: push
+
+  deploy_to_dev:
+    image: quay.io/ukhomeofficedigital/kd:latest
+    commands:
+       - scripts/deploy.sh
+    secrets:
+      - kube_token_dev
+    when:
+      event: deployment
