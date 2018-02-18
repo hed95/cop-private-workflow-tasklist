@@ -8,7 +8,6 @@ import configureStore from './core/store/configureStore';
 
 const store = configureStore();
 
-
 const renderApp = (App) => {
     ReactDOM.render(
         <Provider store={store}>
@@ -29,7 +28,7 @@ renderApp(App);
 // Hot Module Replacement API
 if(module.hot) {
     module.hot.accept('./core/App', () => {
-        const NextApp = require('./core/App').default
+        const NextApp = require('./core/App').default;
         render(NextApp)
     })
 }

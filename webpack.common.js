@@ -8,8 +8,8 @@ const buildDirectory = path.join(__dirname, './dist');
 
 module.exports = {
     resolve: {
-        extensions: ['.json','.js', '.jsx'],
-        modules: [path.resolve(__dirname),'node_modules', sourcePath],
+        extensions: ['.json', '.js', '.jsx'],
+        modules: [path.resolve(__dirname), 'node_modules', sourcePath],
     },
     output: {
         path: buildDirectory,
@@ -39,7 +39,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }),
+                loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader'}),
             },
             {
                 test: /\.bpmn$/,
@@ -71,6 +71,19 @@ module.exports = {
                     loader: "less-loader" // compiles Less to CSS
                 }]
 
+            },
+            {
+                test: /\.scss$/,
+                use: [{
+                    loader: "style-loader"
+                }, {
+                    loader: "css-loader"
+                }, {
+                    loader: "sass-loader",
+                    options: {
+                        includePaths: ["node_modules/**/*.scss"]
+                    }
+                }]
             }
 
         ]
