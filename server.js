@@ -1,9 +1,10 @@
-const port =  process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 
 const express = require('express');
 const http = require('http');
 const app = express();
 const path = require('path');
+
 
 const respond = (req, res) => {
     res.send('OK');
@@ -18,11 +19,11 @@ app.use(express.static(__dirname + "/"));
 app.get('/healthz', respond);
 app.get('/readiness', respond);
 
-app.all('*', function(req, res) {
+app.all('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-const server = http.createServer(app).listen(app.get('port'), function() {
+const server = http.createServer(app).listen(app.get('port'), function () {
     console.log('TaskList Prod server listening on port ' + app.get('port'));
 });
 

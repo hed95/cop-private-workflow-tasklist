@@ -60,6 +60,7 @@
     "react": "^15.6.2",
     "react-dom": "^15.6.1",
     "react-hot-loader": "^3.0.0-beta.6",
+    "react-immutable-proptypes": "^2.1.0",
     "react-redux": "^5.0.5",
     "react-redux-loading-bar": "^3.1.1",
     "react-router": "^4.1.1",
@@ -67,8 +68,8 @@
     "redbox-react": "^1.4.3",
     "redux": "^3.7.1",
     "redux-observable": "^0.14.1",
-    "react-immutable-proptypes": "^2.1.0",
     "rest": "^2.0.0",
-    "rxjs": "^5.5.2"
+    "rxjs": "^5.5.2",
+    "winston": "^2.4.0"
   }
 }
