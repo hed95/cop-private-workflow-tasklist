@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const commonConfig = require('./webpack.common.js');
 const webpackMerge = require('webpack-merge');
 
-const port = 8002;
+const port = 8080;
 
 module.exports = webpackMerge(commonConfig, {
     devtool: 'eval',
