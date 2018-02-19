@@ -3,18 +3,18 @@ import {connect} from "react-redux";
 import {withRouter} from 'react-router-dom'
 
 import img from 'govuk_template_ejs/assets/images/gov.uk_logotype_crown_invert_trans.png?0.23.0'
+import ResponsiveMenu from 'react-responsive-navbar';
 
 
 class Header extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-           routerPath: this.props.location.pathname
-        }
-    }
     componentWillMount() {
         this.changeRoute = this.changeRoute.bind(this);
+        this.logout = this.logout.bind(this);
+        const path = this.props.location.pathname === '/' ? '/tasks' : this.props.location.pathname;
+        this.state = {
+            routerPath: path
+        }
     }
 
     changeRoute(path) {
@@ -49,17 +49,22 @@ class Header extends React.Component {
                     </div>
                     <div className="header-proposition">
                         <div className="content">
-                            <a href="#proposition-links" className="js-header-toggle menu">Menu</a>
-                            <nav id="proposition-menu">
-                                <a href="/" id="proposition-name">Operational Activities</a>
-                                <ul id="proposition-links">
-                                    <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/tasks')} className={routerPath === '/tasks' ? 'active' : ''}>Tasks</a></li>
-                                    <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/processes')} className={routerPath === '/processes' ? 'active' : ''}>Processes</a></li>
-                                    <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/reports')} className={routerPath === '/reports' ? 'active' : ''}>Reports</a></li>
-                                    <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/notifications')} className={routerPath === '/notifications' ? 'active' : ''}>Notifications</a></li>
-                                    <li style={{ cursor: 'pointer'}}><a onClick={this.logout.bind(this)}>Logout {kc.tokenParsed.name}</a></li>
-                                </ul>
-                            </nav>
+                            <a href="/" id="proposition-name">Operational Activities</a>
+                            <ResponsiveMenu
+                                menuOpenButton={<div className="nav-menu">Open</div>}
+                                menuCloseButton={<div className="nav-menu">Close</div>}
+                                changeMenuOn="500px"
+                                smallMenuClassName="small-menu"
+                                menu={
+                                    <ul id="proposition-links">
+                                        <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/tasks')} className={routerPath === '/tasks' ? 'active' : ''}>Tasks</a></li>
+                                        <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/processes')} className={routerPath === '/processes' ? 'active' : ''}>Processes</a></li>
+                                        <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/reports')} className={routerPath === '/reports' ? 'active' : ''}>Reports</a></li>
+                                        <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/notifications')} className={routerPath === '/notifications' ? 'active' : ''}>Notifications</a></li>
+                                        <li style={{ cursor: 'pointer'}}><a onClick={this.logout}>Logout {kc.tokenParsed.name}</a></li>
+                                    </ul>
+                                }
+                            />
                         </div>
                     </div>
 

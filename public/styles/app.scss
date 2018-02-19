@@ -35,3 +35,18 @@ $path: "../../node_modules/govuk_frontend_toolkit/images/";
 @import "../../node_modules/govuk-elements-sass/public/sass/elements/components";                    // GOV.UK prefixed styles - blue highlighted box
 @import "../../node_modules/govuk-elements-sass/public/sass/elements/shame";                         // Hacks and workarounds that will go away eventually
 @import "../../node_modules/govuk_template_ejs/assets/stylesheets/govuk-template.css";
+
+@media (min-width: 900px) {
+
+}
+
+.nav-menu {
+  color: white;
+  text-align: right;
+  cursor: pointer;
+}
+
+.small-menu {
+  text-align: left;
+  white-space: nowrap;
+}
