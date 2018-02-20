@@ -122,21 +122,21 @@ spec:
             port: 8080
             scheme: HTTP
         env:
-          - name: REALM
-            valueFrom:
-              secretKeyRef:
-                name: borders-workflow-tasklist
-                key: AUTH_REALM
-          - name: AUTH_URL
-            valueFrom:
-              secretKeyRef:
-                name: borders-workflow-tasklist
-                key: AUTH_URL
-          - name: CLIENT_ID
-            valueFrom:
-              secretKeyRef:
-                name: borders-workflow-tasklist
-                key: CLIENT_ID
+        - name: REALM
+          valueFrom:
+            secretKeyRef:
+              name: borders-workflow-tasklist
+              key: AUTH_REALM
+        - name: AUTH_URL
+          valueFrom:
+            secretKeyRef:
+              name: borders-workflow-tasklist
+              key: AUTH_URL
+        - name: CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: borders-workflow-tasklist
+              key: CLIENT_ID
       volumes:
       {{ if eq .USE_CFSSL "false" }}
       - name: certs
