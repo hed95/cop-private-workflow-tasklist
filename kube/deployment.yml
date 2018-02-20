@@ -125,7 +125,7 @@ spec:
           - name: REALM
             valueFrom:
               secretKeyRef:
-                name: borders-workflow-taslist
+                name: borders-workflow-tasklist
                 key: AUTH_REALM
           - name: AUTH_URL
             valueFrom:
