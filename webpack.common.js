@@ -19,13 +19,6 @@ module.exports = {
     },
     plugins: [
         new webpack.NamedModulesPlugin(),
-        new webpack.DefinePlugin({
-           'process.env': {
-               'REALM' : JSON.stringify(process.env.REALM),
-               'AUTH_URL': JSON.stringify(process.env.AUTH_URL),
-               'CLIENT_ID': JSON.stringify(process.env.CLIENT_ID)
-           }
-        }),
         new HtmlWebpackPlugin({
             template: './public/index.html',
             favicon: './public/favicon.ico'

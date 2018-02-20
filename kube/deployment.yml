@@ -58,9 +58,9 @@ spec:
           value: "8080"
         {{- if eq .USE_CFSSL "false" }}
         - name: SERVER_CERT
-          value: /etc/modeler/certs/platform.pem
+          value: /etc/tasklist/certs/platform.pem
         - name: SERVER_KEY
-          value: /etc/modeler/certs/platform-key.pem
+          value: /etc/tasklist/certs/platform-key.pem
         {{- end }}
         {{- if eq .USE_CFSSL "true" }}
         - name: SERVER_CERT
@@ -94,7 +94,7 @@ spec:
         volumeMounts:
         {{- if eq .USE_CFSSL "false" }}
         - name: certs
-          mountPath: /etc/modeler/certs
+          mountPath: /etc/tasklist/certs
           readOnly: true
         {{- end }}
         {{- if eq .USE_CFSSL "true" }}
@@ -113,9 +113,30 @@ spec:
             memory: {{ .KUBE_MEMORY_LIMIT }}
         readinessProbe:
           httpGet:
-            path: /
+            path: /readiness
             port: 8080
             scheme: HTTP
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+            scheme: HTTP
+        env:
+          - name: REALM
+            valueFrom:
+              secretKeyRef:
+                name: borders-workflow-taslist
+                key: AUTH_REALM
+          - name: AUTH_URL
+            valueFrom:
+              secretKeyRef:
+                name: borders-workflow-tasklist
+                key: AUTH_URL
+          - name: CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: borders-workflow-tasklist
+                key: CLIENT_ID
       volumes:
       {{ if eq .USE_CFSSL "false" }}
       - name: certs

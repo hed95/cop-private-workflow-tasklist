@@ -7,13 +7,14 @@ import NotificationsPage from './../pages/notifications/components/Notifications
 
 
 const Main = () => (
+
     <main>
         <Switch>
-            <Route name="Tasks" exact path='/tasks' component={TaskPage} />
+            <Route name="Tasks" exact path='/tasks' component={TaskPage}/>
             <Route name="Processes" exact path='/processes' component={ProcessesPage}/>
             <Route name="Reports" exact path='/reports' component={ReportsPage}/>
             <Route name="Notifications" exact path='/notifications' component={NotificationsPage}/>
-            <Redirect to="/tasks" />
+            <Redirect to="/tasks"/>
         </Switch>
     </main>
 );
