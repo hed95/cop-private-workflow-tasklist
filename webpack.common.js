@@ -19,6 +19,7 @@ module.exports = {
     },
     plugins: [
         new webpack.NamedModulesPlugin(),
+        new webpack.EnvironmentPlugin( { ...process.env } ),
         new HtmlWebpackPlugin({
             template: './public/index.html',
             favicon: './public/favicon.ico'

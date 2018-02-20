@@ -15,14 +15,7 @@ module.exports = webpackMerge(commonConfig, {
         ],
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.DefinePlugin({
-            'process.env': {
-                'REALM' : JSON.stringify(process.env.REALM),
-                'AUTH_URL': JSON.stringify(process.env.AUTH_URL),
-                'CLIENT_ID': JSON.stringify(process.env.CLIENT_ID)
-            }
-        })
+        new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
         contentBase: 'public/',
