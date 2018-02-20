@@ -26,7 +26,7 @@ module.exports = webpackMerge(commonConfig, {
             debug: false
         }),
         new CopyWebpackPlugin([
-            {from:'./public/img', to:'img'},
+            {from:'public/img', to:'img'},
             {from:'server.js', to:''}
         ]),
         new UglifyJSPlugin({
