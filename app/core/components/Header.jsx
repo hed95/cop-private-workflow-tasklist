@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {withRouter} from 'react-router-dom'
+import LoadingBar from 'react-redux-loading-bar'
 
 import img from 'govuk_template_ejs/assets/images/gov.uk_logotype_crown_invert_trans.png?0.23.0'
 import ResponsiveMenu from 'react-responsive-navbar';
@@ -71,7 +72,13 @@ class Header extends React.Component {
                 </div>
             </header>
             <div id="global-header-bar"/>
-
+            <LoadingBar
+                updateTime={100}
+                maxProgress={100}
+                progressIncrease={4}
+                scope="header"
+                className="loading-bar"
+            />
         </div>
     }
 }

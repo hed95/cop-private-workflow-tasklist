@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: borders-workflow-tasklist
 spec:
-  replicas: {{ .MODELER_REPLICAS }}
+  replicas: {{ .TASKLIST_REPLICAS }}
   strategy:
     type: RollingUpdate
     rollingUpdate:

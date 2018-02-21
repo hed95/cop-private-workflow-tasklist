@@ -19,6 +19,14 @@ app.use(express.static(__dirname + "/"));
 app.get('/healthz', respond);
 app.get('/readiness', respond);
 
+app.get('/auth-config', (req,res) => {
+   res.send({
+       'REALM': process.env.REALM,
+       'AUTH_URL': process.env.AUTH_URL,
+       'CLIENT_ID': process.env.CLIENT_ID
+   })
+});
+
 app.all('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });

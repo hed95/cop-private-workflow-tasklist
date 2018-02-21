@@ -17,7 +17,7 @@ export USE_SELF_SIGNED_CERTS=false
 case "${DRONE_DEPLOY_TO}" in
   dev)
     export DNS_NAME="tasklist.dev.workflow.borders.homeoffice.gov.uk"
-    export MODELER_REPLICAS="2"
+    export TASKLIST_REPLICAS="2"
     export KUBE_CPU_LIMIT="800m"
     export KUBE_MEMORY_LIMIT="3072Mi"
     export KUBE_NAMESPACE="bfarch-dev"
