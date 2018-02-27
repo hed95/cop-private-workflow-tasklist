@@ -35,7 +35,6 @@ kd --insecure-skip-tls-verify \
   --timeout=5m \
   -f kube/ingress.yml \
   -f kube/service.yml \
-  -f kube/deployment.yml \
-  -f kube/secrets.yml
+  -f kube/deployment.yml
 
 exit $?
