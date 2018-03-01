@@ -15,7 +15,11 @@ spec:
       paths:
       - backend:
           serviceName: borders-workflow-tasklist
-          servicePort: https
+          servicePort: 80
+        path: /
+      - backend:
+          serviceName: borders-workflow-tasklist
+          servicePort: 443
         path: /
   tls:
   - hosts:
