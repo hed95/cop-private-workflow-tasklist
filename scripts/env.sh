@@ -8,16 +8,14 @@ export JAVA_OPTS="-server -Xms64m -Xmx2g -XX:MetaspaceSize=96M -XX:MaxMetaspaceS
 export KUBE_CPU_LIMIT="400m"
 export KUBE_MEMORY_LIMIT="1024Mi"
 export KUBE_SERVICE="service"
-export USE_CFSSL=true
 export USE_INGRESS=true
 export USE_NETWORK_POLICY=true
-export USE_PROXY_PROTOCOL=false
 export USE_SELF_SIGNED_CERTS=false
 
 case "${DRONE_DEPLOY_TO}" in
   dev)
-    export DNS_NAME="tasklist.dev.workflow.borders.homeoffice.gov.uk"
-    export TASKLIST_REPLICA_COUNT="2"
+     export DNS_NAME="tasklist.bfarch-dev.notprod.acp.homeoffice.gov.uk"
+     export TASKLIST_REPLICA_COUNT="2"
     export KUBE_CPU_LIMIT="800m"
     export KUBE_MEMORY_LIMIT="3072Mi"
     export KUBE_NAMESPACE="bfarch-dev"
