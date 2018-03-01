@@ -14,7 +14,7 @@ export USE_SELF_SIGNED_CERTS=false
 
 case "${DRONE_DEPLOY_TO}" in
   dev)
-     export DNS_NAME="tasks.bfarch-dev.notprod.acp.homeoffice.gov.uk"
+     export DNS_NAME="tasklistdev.bfarch-dev.notprod.acp.homeoffice.gov.uk"
      export TASKLIST_REPLICA_COUNT="2"
     export KUBE_CPU_LIMIT="800m"
     export KUBE_MEMORY_LIMIT="3072Mi"
