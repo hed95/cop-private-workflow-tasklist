@@ -28,7 +28,7 @@ spec:
              - SETGID
         args:
           - --certs=/certs
-          - --domain=borders-workflow-modeler.${KUBE_NAMESPACE}.svc.cluster.local
+          - --domain=borders-workflow-tasklist.${KUBE_NAMESPACE}.svc.cluster.local
           - --expiry=8760h
           - --command=/usr/local/scripts/trigger_nginx_reload.sh
         env:
