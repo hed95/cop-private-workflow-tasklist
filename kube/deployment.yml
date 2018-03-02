@@ -77,8 +77,6 @@ spec:
             proxy_buffers             4 256k;
             proxy_busy_buffers_size   256k;
         ports:
-        - name: http
-          containerPort: 10080
         - name: https
           containerPort: 10443
         volumeMounts:
