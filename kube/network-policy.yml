@@ -14,6 +14,4 @@ spec:
           name: ingress-internal
     ports:
     - protocol: TCP
-      port: 10080
-    - protocol: TCP
       port: 10443
