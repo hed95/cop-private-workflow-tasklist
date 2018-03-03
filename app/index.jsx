@@ -8,6 +8,7 @@ import configureStore from './core/store/configureStore';
 import Keycloak from "keycloak-js";
 import '../public/styles/app.scss'
 import '../public/styles/fonts.css'
+import '../node_modules/bootstrap/dist/css/bootstrap.css';
 
 const store = configureStore();
 

@@ -6,7 +6,9 @@ import Header from "./components/Header";
 const App = () => (
     <div>
         <Header/>
-        <Main/>
+        <div className="container">
+            <Main/>
+        </div>
         <Footer/>
     </div>
 )
