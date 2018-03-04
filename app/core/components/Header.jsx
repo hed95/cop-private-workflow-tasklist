@@ -12,7 +12,7 @@ class Header extends React.Component {
     componentWillMount() {
         this.changeRoute = this.changeRoute.bind(this);
         this.logout = this.logout.bind(this);
-        const path = this.props.location.pathname === '/' ? '/profile' : this.props.location.pathname;
+        const path = this.props.location.pathname;
         this.state = {
             routerPath: path
         }
@@ -57,7 +57,7 @@ class Header extends React.Component {
                                 smallMenuClassName="small-menu"
                                 menu={
                                     <ul id="proposition-links">
-                                        <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/profile')} className={routerPath === '/profile' ? 'active' : ''}>Profile</a></li>
+                                        <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/')} className={routerPath === '/' ? 'active' : ''}>Profile</a></li>
                                         <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/tasks')} className={routerPath === '/tasks' ? 'active' : ''}>Tasks</a></li>
                                         <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/processes')} className={routerPath === '/processes' ? 'active' : ''}>Processes</a></li>
                                         <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/reports')} className={routerPath === '/reports' ? 'active' : ''}>Reports</a></li>

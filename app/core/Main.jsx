@@ -10,12 +10,12 @@ import ProfilePage from "../pages/profile/components/ProfilePage";
 const Main = () => (
     <main>
             <Switch>
-                <Route name="Profile" exact path="/profile" component={ProfilePage}/>
+                <Route name="Profile" exact path="/" component={ProfilePage}/>
                 <Route name="Tasks" exact path='/tasks' component={TaskPage}/>
                 <Route name="Processes" exact path='/processes' component={ProcessesPage}/>
                 <Route name="Reports" exact path='/reports' component={ReportsPage}/>
                 <Route name="Notifications" exact path='/notifications' component={NotificationsPage}/>
-                <Redirect to="/profile"/>
+                <Redirect to="/"/>
             </Switch>
     </main>
 );
