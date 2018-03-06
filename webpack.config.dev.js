@@ -24,7 +24,10 @@ module.exports = webpackMerge(commonConfig, {
         port: `${port}`,
         historyApiFallback: true,
         publicPath: commonConfig.output.publicPath,
-        stats: { colors: true }
+        stats: { colors: true },
+        proxy: {
+            "/api/reference-data": "http://localhost:8082"
+        }
     }
 });
 

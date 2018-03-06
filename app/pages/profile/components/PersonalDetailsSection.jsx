@@ -27,6 +27,16 @@ const PersonalDetailsSection = (props) => {
             <input className="form-control" id="lastName" name="lastName"
                    type="text" value={kc.tokenParsed.family_name} readOnly={true}/>
         </div>
+        <div className="form-group">
+            <label className="form-label" htmlFor="mobile">Mobile</label>
+            <input className="form-control" id="lastName" name="mobile"
+                   type="text" value="" readOnly={true}/>
+        </div>
+        <div className="form-group">
+            <label className="form-label" htmlFor="grade">Grade</label>
+            <input className="form-control" id="lastName" name="grade"
+                   type="text" value="" readOnly={true}/>
+        </div>
     </fieldset>
 
 

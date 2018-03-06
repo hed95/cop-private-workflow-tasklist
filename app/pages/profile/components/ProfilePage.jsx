@@ -12,8 +12,8 @@ class ProfilePage extends React.Component {
                 <PersonalDetailsSection {...this.props} />
             </div>
             <div className="column-one-half">
-                <TeamDetailsSection/>
-                <ShiftDetailsSection/>
+                <TeamDetailsSection {...this.props} />
+                <ShiftDetailsSection {...this.props} />
             </div>
 
         </div>

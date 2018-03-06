@@ -46,6 +46,7 @@
     "webpack-subresource-integrity": "^1.0.3"
   },
   "dependencies": {
+    "accessible-autocomplete": "^1.6.1",
     "bootstrap": "^4.0.0",
     "build": "^0.1.4",
     "express": "^4.16.2",
@@ -53,6 +54,7 @@
     "govuk-elements-sass": "^3.1.2",
     "govuk_frontend_toolkit": "^7.4.1",
     "govuk_template_ejs": "^0.23.0",
+    "immutable": "^3.8.2",
     "jquery": "^3.3.1",
     "json-loader": "^0.5.7",
     "keycloak-js": "^3.4.3",
@@ -71,9 +73,12 @@
     "react-router-dom": "^4.1.1",
     "redbox-react": "^1.4.3",
     "redux": "^3.7.1",
+    "redux-devtools-extension": "^2.13.2",
     "redux-observable": "^0.14.1",
+    "reselect": "^3.0.1",
     "rest": "^2.0.0",
     "rxjs": "^5.5.2",
+    "throttle-debounce": "^1.0.1",
     "winston": "^2.4.0"
   }
 }
