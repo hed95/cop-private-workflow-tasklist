@@ -4,6 +4,7 @@ const express = require('express');
 const http = require('http');
 const app = express();
 const path = require('path');
+const proxy = require('http-proxy-middleware');
 
 
 const respond = (req, res) => {
@@ -18,6 +19,10 @@ app.use(express.static(__dirname + "/"));
 
 app.get('/healthz', respond);
 app.get('/readiness', respond);
+app.user('/api/reference-data', proxy({
+    target: process.env.REFERENCE_DATA_API_URL, changeOrigin: true
+}))
+
 
 app.get('/auth-config', (req,res) => {
    res.send({

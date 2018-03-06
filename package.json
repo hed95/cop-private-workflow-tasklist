@@ -54,6 +54,7 @@
     "govuk-elements-sass": "^3.1.2",
     "govuk_frontend_toolkit": "^7.4.1",
     "govuk_template_ejs": "^0.23.0",
+    "http-proxy-middleware": "^0.17.4",
     "immutable": "^3.8.2",
     "jquery": "^3.3.1",
     "json-loader": "^0.5.7",
