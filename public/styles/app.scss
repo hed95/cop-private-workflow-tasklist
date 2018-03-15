@@ -57,3 +57,131 @@ $path: "../../node_modules/govuk_frontend_toolkit/images/";
 #global-header .header-proposition #proposition-links a:hover {
   text-decoration: none;
 }
+
+.loading-bar {
+  background-color: $govuk-blue;;
+  height: 5px;
+  position: absolute;
+}
+
+
+.status {
+  background-color: $govuk-blue;
+  color: $white;
+  padding: 15px;
+  margin-bottom: 10px;
+  p {
+    font-weight: 400;
+  }
+
+  .status-extra {
+    font-weight: normal;
+  }
+}
+
+@include media(tablet) {
+  .status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+
+    p {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .status-extra {
+      font-size: 18px;
+    }
+  }
+}
+
+.pagination .pagination_list-items {
+
+  li {
+    display: inline-block;
+    a {
+      //@include bold-19;
+      @extend .bold-small;
+      color: $govuk-blue;
+      display: inline-block;
+      padding: 15px 5px 10px 5px;
+      margin-right: 15px;
+      text-decoration: none;
+
+      &:focus {
+        outline: 0;
+      }
+    }
+    &.active a,
+    &.active a:hover {
+      color: $govuk-blue;
+      -webkit-box-shadow: inset 0px -5px 0px 0px $govuk-blue;
+      -moz-box-shadow: inset 0px -5px 0px 0px $govuk-blue;
+      box-shadow: inset 0px -5px 0px 0px $govuk-blue;
+    }
+  }
+}
+
+.padding {
+  padding-left: 15px;
+}
+
+
+
+.flash-card {
+  margin-top: 1em;
+  padding: 10px;
+  background: $link-colour;
+  color: $page-colour;
+
+  p {
+    margin-left: 32px;
+  }
+
+  h1 {
+    &:first-of-type {
+      margin-top: 0 !important;
+    }
+  }
+
+  h2 {
+    margin: 0.7em 0px 0.3em 0px !important;
+  }
+
+  a {
+    color: $page-colour;
+    &:visited, &:hover, &:active {
+      color: $page-colour; }
+  }
+  details {
+    // margin-bottom: 1em;
+    summary {
+      color: $page-colour;
+    }
+    .panel {
+      border-left-color: $page-colour;
+    }
+  }
+
+}
+
+@media (min-width: 769px) {
+  .flash-card {
+    margin-top: 1.25em;
+    padding: 10px 20px;
+  }
+}
+
+.circle-white {
+  color: #005ea5;
+  background: #fff;
+  float: left;
+  margin-right: 10px;
+}
+
+.bottom-right-container {
+  justify-content: flex-end;
+  display: flex;
+}

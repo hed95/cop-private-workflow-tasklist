@@ -26,7 +26,8 @@ module.exports = webpackMerge(commonConfig, {
         publicPath: commonConfig.output.publicPath,
         stats: { colors: true },
         proxy: {
-            "/api/reference-data": process.env.REFERENCE_DATA_API_URL
+            "/api/reference-data": process.env.REFERENCE_DATA_API_URL,
+            "/api/workflow": process.env.WORKFLOW_API_URL
         }
     }
 });
