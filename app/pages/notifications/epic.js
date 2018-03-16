@@ -38,7 +38,7 @@ const acknowledgeNotification = (action$, store) =>
                 }
             }).map(payload => {
                 return actions.acknowledgeNotificationSuccess(payload)
-            }).catch(error => Observable.of(actions.acknowledgeNotificationFailure(error)))
+            }).catch(error => Observable.of(actions.acknowledgeNotificationFailure(action.taskId, error)))
         );
 
 export default combineEpics(fetchNotifications, acknowledgeNotification);

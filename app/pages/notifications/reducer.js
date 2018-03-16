@@ -62,7 +62,9 @@ function reducer(state = initialState, action) {
             const itemIndex = state.get("notifications").findIndex(x => x.getIn(['task','id']) === taskId);
             return itemIndex > -1 ? state.deleteIn(["notifications", itemIndex]) : state;
         case actions.ACKNOWLEDGE_NOTIFICATION_FAILURE:
-            return state.set('error', action.payload);
+            const ids = state.get('acknowledgingTaskIds').delete(action.taskId);
+            return state.set('error', action.payload)
+                .set('acknowledgingTaskIds',ids);
         default:
             return state;
     }

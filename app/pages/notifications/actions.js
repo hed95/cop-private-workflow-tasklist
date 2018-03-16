@@ -23,10 +23,11 @@ const acknowledgeNotificationSuccess = payload => ({
     payload
 });
 
-const acknowledgeNotificationFailure = error => ({
+const acknowledgeNotificationFailure = (taskId, error) => ({
     type: types.ACKNOWLEDGE_NOTIFICATION_FAILURE,
     error: true,
-    payload: error.raw.message
+    payload: error.raw.message,
+    taskId: taskId
 });
 
 
