@@ -46,18 +46,21 @@ console.log("bpmnModeler " + bpmnModelerUrl);
 app.use('/api/reference-data', proxy({
     target: prestUrl,
     changeOrigin: true,
+    secure: false,
     pathRewrite: {"^/api/reference-data" : "/public"}
 }));
 
 
 app.use('/api/workflow', proxy({
     target: workflowUrl,
+    secure: false,
     changeOrigin: true
 }));
 
 
 app.use('/api/form', proxy({
     target: formIOUrl,
+    secure: false,
     changeOrigin: true,
     pathRewrite: {"^/api/form": "/form"}
 }));
@@ -65,6 +68,7 @@ app.use('/api/form', proxy({
 app.use('/form-builder', proxy({
     target: formIOUrl,
     changeOrigin: true,
+    secure: false,
     pathRewrite: {"^/form-builder": "/"}
 }));
 
@@ -72,6 +76,7 @@ app.use('/form-builder', proxy({
 app.use('/bpmn-modeler', proxy({
     target: bpmnModelerUrl,
     changeOrigin: true,
+    secure: false,
     pathRewrite: {"^/bpmn-modeler": "/"}
 }));
 
