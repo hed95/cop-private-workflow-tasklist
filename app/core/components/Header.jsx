@@ -6,7 +6,6 @@ import LoadingBar from 'react-redux-loading-bar'
 import img from 'govuk_template_ejs/assets/images/gov.uk_logotype_crown_invert_trans.png?0.23.0'
 import ResponsiveMenu from 'react-responsive-navbar';
 
-
 class Header extends React.Component {
 
     componentWillMount() {
@@ -36,6 +35,8 @@ class Header extends React.Component {
 
     render() {
         const routerPath = this.state.routerPath;
+
+        const pointerStyle = {cursor: 'pointer'};
         return <div>
             <header role="banner" id="global-header" className="with-proposition">
                 <div className="header-wrapper">
@@ -57,12 +58,12 @@ class Header extends React.Component {
                                 smallMenuClassName="small-menu"
                                 menu={
                                     <ul id="proposition-links">
-                                        <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/')} className={routerPath === '/' ? 'active' : ''}>Profile</a></li>
-                                        <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/tasks')} className={routerPath === '/tasks' ? 'active' : ''}>Tasks</a></li>
-                                        <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/processes')} className={routerPath === '/processes' ? 'active' : ''}>Processes</a></li>
-                                        <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/reports')} className={routerPath === '/reports' ? 'active' : ''}>Reports</a></li>
-                                        <li style={{ cursor: 'pointer'}}><a onClick={() => this.changeRoute('/notifications')} className={routerPath === '/notifications' ? 'active' : ''}>Notifications</a></li>
-                                        <li style={{ cursor: 'pointer'}}><a onClick={this.logout}>Logout</a></li>
+                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/profile')} className={routerPath === '/profile' ? 'active' : ''}>Profile</a></li>
+                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/tasks')} className={routerPath === '/tasks' ? 'active' : ''}>Tasks</a></li>
+                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/processes')} className={routerPath === '/processes' ? 'active' : ''}>Processes</a></li>
+                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/reports')} className={routerPath === '/reports' ? 'active' : ''}>Reports</a></li>
+                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/notifications')} className={routerPath === '/notifications' ? 'active' : ''}>Notifications</a></li>
+                                        <li style={pointerStyle}><a onClick={this.logout}>Logout</a></li>
                                     </ul>
                                 }
                             />
@@ -83,8 +84,8 @@ class Header extends React.Component {
     }
 }
 
-export default connect((state) => {
+export default withRouter(connect((state) => {
     return {
         kc: state.keycloak
     }
-}, {})(withRouter(Header))
+}, {})(Header))

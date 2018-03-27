@@ -4,6 +4,10 @@ const webpackMerge = require('webpack-merge');
 
 const port = process.env.PORT || 8080;
 
+const prestUrl = `${process.env[process.env.PREST_NAME + "_SERVICE_HOST"]}:${process.env[process.env.PREST_NAME + "_SERVICE_PORT"]}`;
+const workflowUrl = `${process.env[process.env.WORKFLOW_NAME + "_SERVICE_HOST"]}:${process.env[process.env.WORKFLOW_NAME + "_SERVICE_PORT"]}`;
+const formIOUrl = `${process.env[process.env.FORM_IO_NAME + "_SERVICE_HOST"]}:${process.env[process.env.FORM_IO_NAME + "_SERVICE_PORT"]}`;
+
 module.exports = webpackMerge(commonConfig, {
     devtool: 'eval',
     entry: {
@@ -24,10 +28,21 @@ module.exports = webpackMerge(commonConfig, {
         port: `${port}`,
         historyApiFallback: true,
         publicPath: commonConfig.output.publicPath,
-        stats: { colors: true },
+        stats: {colors: true},
         proxy: {
-            "/api/reference-data": process.env.REFERENCE_DATA_API_URL,
-            "/api/workflow": process.env.WORKFLOW_API_URL
+            "/api/reference-data": {
+               target: prestUrl,
+               pathRewrite: {"^/api/reference-data" : "/public"},
+               secure: false,
+               changeOrigin: true
+            },
+            "/api/form": {
+                target: formIOUrl,
+                secure: false,
+                pathRewrite: {"^/api/form": "/form"},
+                changeOrigin: true
+            },
+            "/api/workflow": workflowUrl
         }
     }
 });

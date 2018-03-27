@@ -19,9 +19,43 @@ app.use(express.static(__dirname + "/"));
 
 app.get('/healthz', respond);
 app.get('/readiness', respond);
-app.user('/api/reference-data', proxy({
-    target: process.env.REFERENCE_DATA_API_URL, changeOrigin: true
-}))
+
+const prestUrl = `${process.env[process.env.PREST_NAME + "_SERVICE_HOST"]}:${process.env[process.env.PREST_NAME + "_SERVICE_PORT"]}`;
+const workflowUrl = `${process.env[process.env.WORKFLOW_NAME + "_SERVICE_HOST"]}:${process.env[process.env.WORKFLOW_NAME + "_SERVICE_PORT"]}`;
+const formIOUrl = `${process.env[process.env.FORM_IO_NAME + "_SERVICE_HOST"]}:${process.env[process.env.FORM_IO_NAME + "_SERVICE_PORT"]}`;
+const bpmnModeler =  `${process.env[process.env.WORKFLOW_MODELER + "_SERVICE_HOST"]}:${process.env[process.env.WORKFLOW_MODELER + "_SERVICE_PORT"]}`;
+
+app.use('/api/reference-data', proxy({
+    target: prestUrl,
+    changeOrigin: true,
+    pathRewrite: {"^/api/reference-data" : "/public"}
+}));
+
+
+app.use('/api/workflow', proxy({
+    target: workflowUrl,
+    changeOrigin: true
+}));
+
+
+app.use('/api/form', proxy({
+    target: formIOUrl,
+    changeOrigin: true,
+    pathRewrite: {"^/api/form": "/form"}
+}));
+
+app.use('/form-builder', proxy({
+    target: formIOUrl,
+    changeOrigin: true,
+    pathRewrite: {"^/form-builder": "/"}
+}));
+
+
+app.use('/bpmn-modeler', proxy({
+    target: bpmnModeler,
+    changeOrigin: true,
+    pathRewrite: {"^/bpmn-modeler": "/"}
+}));
 
 
 app.get('/auth-config', (req,res) => {

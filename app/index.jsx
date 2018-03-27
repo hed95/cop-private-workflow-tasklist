@@ -12,7 +12,6 @@ import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import 'rxjs';
 
 const store = configureStore();
-
 let kc = null;
 
 const renderApp = (App) => {
@@ -23,7 +22,7 @@ const renderApp = (App) => {
                 <Provider store={store}>
                     <div>
                         <AppContainer>
-                            <BrowserRouter>
+                            <BrowserRouter >
                                 <App/>
                             </BrowserRouter>
                         </AppContainer>

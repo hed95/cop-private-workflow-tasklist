@@ -16,7 +16,6 @@ class NotificationsPage extends React.Component {
         this.props.fetchNotifications("/api/workflow/notifications");
     }
 
-
     render() {
         const items = [];
         this.props.notifications.forEach(task => {
@@ -26,7 +25,7 @@ class NotificationsPage extends React.Component {
             }
         });
 
-        return <div style={{'paddingTop': '20px'}}>
+        return <div>
             <LoadingBar
                 updateTime={100}
                 maxProgress={100}
@@ -35,7 +34,7 @@ class NotificationsPage extends React.Component {
                 className="loading-bar"
             />
             {this.props.isFetching ?
-                <div style={{'paddingTop': '10px'}} className="data-item bold-small">Loading notifications...</div> :
+                <div className="data-item bold-small">Loading notifications...</div> :
                 <div className="data">
 
                     <span className="data-item bold-xlarge">{this.props.total}</span>

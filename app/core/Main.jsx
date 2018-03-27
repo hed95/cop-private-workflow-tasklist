@@ -5,17 +5,19 @@ import TaskPage from './../pages/tasks/components/TasksPage'
 import ReportsPage from './../pages/reports/components/ReportsPage'
 import NotificationsPage from './../pages/notifications/components/NotificationsPage'
 import ProfilePage from "../pages/profile/components/ProfilePage";
-
+import SessionScopedRoute from "./session/components/SessionScopedRoute";
 
 const Main = () => (
     <main>
             <Switch>
-                <Route name="Profile" exact path="/" component={ProfilePage}/>
-                <Route name="Tasks" exact path='/tasks' component={TaskPage}/>
-                <Route name="Processes" exact path='/processes' component={ProcessesPage}/>
-                <Route name="Reports" exact path='/reports' component={ReportsPage}/>
-                <Route name="Notifications" exact path='/notifications' component={NotificationsPage}/>
-                <Redirect to="/"/>
+                <Route name="Profile" exact path="/profile" render={() => (
+                    <ProfilePage />
+                )}/>
+                <SessionScopedRoute name="Tasks" exact path='/tasks' component={TaskPage} />
+                <SessionScopedRoute name="Processes" exact path='/processes' component={ProcessesPage}/>
+                <SessionScopedRoute name="Reports" exact path='/reports' component={ReportsPage}/>
+                <SessionScopedRoute name="Notifications" exact path='/notifications' component={NotificationsPage}/>
+                <Redirect to="/profile"/>
             </Switch>
     </main>
 );
