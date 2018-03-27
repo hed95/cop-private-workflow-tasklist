@@ -25,16 +25,17 @@ console.log("workflow name " + process.env.WORKFLOW_NAME);
 console.log("formio name " + process.env.FORM_IO_NAME);
 console.log("bpmn modeler name " + process.env.WORKFLOW_MODELER);
 
-const prestName = process.env.PREST_NAME.toUpperCase().replace("-", "_");
-const workflowName =process.env.WORKFLOW_NAME.toUpperCase().replace("-", "_");
-const formIOName = process.env.FORM_IO_NAME.toUpperCase().replace("-", "_");
-const bpmnModelerName = process.env.WORKFLOW_MODELER.toUpperCase().replace("-", "_");
+const prestName = process.env.PREST_NAME;
+const internalDomain = process.env.INTDOMAIN;
+const workflowName =process.env.WORKFLOW_NAME;
+const formIOName = process.env.FORM_IO_NAME;
+const bpmnModelerName = process.env.WORKFLOW_MODELER;
 
 
-const prestUrl = `${process.env[ prestName+ "_SERVICE_HOST"]}:${process.env[prestName + "_SERVICE_PORT"]}`;
-const workflowUrl = `${process.env[workflowName + "_SERVICE_HOST"]}:${process.env[workflowName+ "_SERVICE_PORT"]}`;
-const formIOUrl = `${process.env[formIOName + "_SERVICE_HOST"]}:${process.env[formIOName + "_SERVICE_PORT"]}`;
-const bpmnModelerUrl =  `${process.env[bpmnModelerName + "_SERVICE_HOST"]}:${process.env[bpmnModelerName + "_SERVICE_PORT"]}`;
+const prestUrl = `https://${prestName}.${internalDomain}`;
+const workflowUrl = `https://${workflowName}.${internalDomain}`;
+const formIOUrl = `https://${formIOName}.${internalDomain}`;
+const bpmnModelerUrl =  `https://${bpmnModelerName}.${internalDomain}`;
 
 
 console.log("prestUrl " + prestUrl);
