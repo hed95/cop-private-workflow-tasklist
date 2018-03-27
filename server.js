@@ -20,6 +20,12 @@ app.use(express.static(__dirname + "/"));
 app.get('/healthz', respond);
 app.get('/readiness', respond);
 
+console.log("prest name " + process.env.PREST_NAME);
+console.log("workflow name " + process.env.WORKFLOW_NAME);
+console.log("formio name " + process.env.FORM_IO_NAME);
+console.log("bpmn modeler name " + process.env.WORKFLOW_MODELER);
+
+
 const prestUrl = `${process.env[process.env.PREST_NAME + "_SERVICE_HOST"]}:${process.env[process.env.PREST_NAME + "_SERVICE_PORT"]}`;
 const workflowUrl = `${process.env[process.env.WORKFLOW_NAME + "_SERVICE_HOST"]}:${process.env[process.env.WORKFLOW_NAME + "_SERVICE_PORT"]}`;
 const formIOUrl = `${process.env[process.env.FORM_IO_NAME + "_SERVICE_HOST"]}:${process.env[process.env.FORM_IO_NAME + "_SERVICE_PORT"]}`;
