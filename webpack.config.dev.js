@@ -8,6 +8,11 @@ const prestUrl = `${process.env[process.env.PREST_NAME + "_SERVICE_HOST"]}:${pro
 const workflowUrl = `${process.env[process.env.WORKFLOW_NAME + "_SERVICE_HOST"]}:${process.env[process.env.WORKFLOW_NAME + "_SERVICE_PORT"]}`;
 const formIOUrl = `${process.env[process.env.FORM_IO_NAME + "_SERVICE_HOST"]}:${process.env[process.env.FORM_IO_NAME + "_SERVICE_PORT"]}`;
 
+console.log("prestUrl " + prestUrl);
+console.log("workflowUrl " + workflowUrl);
+console.log("formIOUrl " + formIOUrl);
+
+
 module.exports = webpackMerge(commonConfig, {
     devtool: 'eval',
     entry: {

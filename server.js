@@ -25,6 +25,12 @@ const workflowUrl = `${process.env[process.env.WORKFLOW_NAME + "_SERVICE_HOST"]}
 const formIOUrl = `${process.env[process.env.FORM_IO_NAME + "_SERVICE_HOST"]}:${process.env[process.env.FORM_IO_NAME + "_SERVICE_PORT"]}`;
 const bpmnModeler =  `${process.env[process.env.WORKFLOW_MODELER + "_SERVICE_HOST"]}:${process.env[process.env.WORKFLOW_MODELER + "_SERVICE_PORT"]}`;
 
+
+console.log("prestUrl " + prestUrl);
+console.log("workflowUrl " + workflowUrl);
+console.log("formIOUrl " + formIOUrl);
+console.log("bpmnModeler " + bpmnModeler);
+
 app.use('/api/reference-data', proxy({
     target: prestUrl,
     changeOrigin: true,
