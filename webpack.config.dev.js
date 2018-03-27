@@ -4,27 +4,15 @@ const webpackMerge = require('webpack-merge');
 
 const port = process.env.PORT || 8080;
 
-console.log("prest name " + process.env.PREST_NAME);
-console.log("workflow name " + process.env.WORKFLOW_NAME);
-console.log("formio name " + process.env.FORM_IO_NAME);
-console.log("bpmn modeler name " + process.env.WORKFLOW_MODELER);
 
-const prestName = process.env.PREST_NAME.toUpperCase().replace("-", "_");
-const workflowName =process.env.WORKFLOW_NAME.toUpperCase().replace("-", "_");
-const formIOName = process.env.FORM_IO_NAME.toUpperCase().replace("-", "_");
-const bpmnModelerName = process.env.WORKFLOW_MODELER.toUpperCase().replace("-", "_");
-
-
-const prestUrl = `${process.env[ prestName+ "_SERVICE_HOST"]}:${process.env[prestName + "_SERVICE_PORT"]}`;
-const workflowUrl = `${process.env[workflowName + "_SERVICE_HOST"]}:${process.env[workflowName+ "_SERVICE_PORT"]}`;
-const formIOUrl = `${process.env[formIOName + "_SERVICE_HOST"]}:${process.env[formIOName + "_SERVICE_PORT"]}`;
-const bpmnModelerUrl =  `${process.env[bpmnModelerName + "_SERVICE_HOST"]}:${process.env[bpmnModelerName + "_SERVICE_PORT"]}`;
+const prestUrl = process.env.PREST_URL;
+const workflowUrl = process.env.WORKFLOW_URL;
+const formIOUrl = process.env.FORM_URL
 
 
 console.log("prestUrl " + prestUrl);
 console.log("workflowUrl " + workflowUrl);
 console.log("formIOUrl " + formIOUrl);
-console.log("bpmnModeler " + bpmnModelerUrl);
 
 
 module.exports = webpackMerge(commonConfig, {

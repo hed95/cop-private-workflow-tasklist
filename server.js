@@ -89,7 +89,7 @@ app.get('/auth-config', (req,res) => {
    })
 });
 
-app.all('/', function (req, res) {
+app.all('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
