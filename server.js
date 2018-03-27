@@ -25,10 +25,10 @@ console.log("workflow name " + process.env.WORKFLOW_NAME);
 console.log("formio name " + process.env.FORM_IO_NAME);
 console.log("bpmn modeler name " + process.env.WORKFLOW_MODELER);
 
-const prestName = process.env.PREST_NAME.toUpper().replace("-", "_");
-const workflowName =process.env.WORKFLOW_NAME.toUpper().replace("-", "_");
-const formIOName = process.env.FORM_IO_NAME.toUpper().replace("-", "_");
-const bpmnModelerName = process.env.WORKFLOW_MODELER.toUpper().replace("-", "_");
+const prestName = process.env.PREST_NAME.toUpperCase().replace("-", "_");
+const workflowName =process.env.WORKFLOW_NAME.toUpperCase().replace("-", "_");
+const formIOName = process.env.FORM_IO_NAME.toUpperCase().replace("-", "_");
+const bpmnModelerName = process.env.WORKFLOW_MODELER.toUpperCase().replace("-", "_");
 
 
 const prestUrl = `${process.env[ prestName+ "_SERVICE_HOST"]}:${process.env[prestName + "_SERVICE_PORT"]}`;
