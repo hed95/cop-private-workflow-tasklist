@@ -25,17 +25,22 @@ console.log("workflow name " + process.env.WORKFLOW_NAME);
 console.log("formio name " + process.env.FORM_IO_NAME);
 console.log("bpmn modeler name " + process.env.WORKFLOW_MODELER);
 
+const prestName = process.env.PREST_NAME.toUpper().replace("-", "_");
+const workflowName =process.env.WORKFLOW_NAME.toUpper().replace("-", "_");
+const formIOName = process.env.FORM_IO_NAME.toUpper().replace("-", "_");
+const bpmnModelerName = process.env.WORKFLOW_MODELER.toUpper().replace("-", "_");
 
-const prestUrl = `${process.env[process.env.PREST_NAME + "_SERVICE_HOST"]}:${process.env[process.env.PREST_NAME + "_SERVICE_PORT"]}`;
-const workflowUrl = `${process.env[process.env.WORKFLOW_NAME + "_SERVICE_HOST"]}:${process.env[process.env.WORKFLOW_NAME + "_SERVICE_PORT"]}`;
-const formIOUrl = `${process.env[process.env.FORM_IO_NAME + "_SERVICE_HOST"]}:${process.env[process.env.FORM_IO_NAME + "_SERVICE_PORT"]}`;
-const bpmnModeler =  `${process.env[process.env.WORKFLOW_MODELER + "_SERVICE_HOST"]}:${process.env[process.env.WORKFLOW_MODELER + "_SERVICE_PORT"]}`;
+
+const prestUrl = `${process.env[ prestName+ "_SERVICE_HOST"]}:${process.env[prestName + "_SERVICE_PORT"]}`;
+const workflowUrl = `${process.env[workflowName + "_SERVICE_HOST"]}:${process.env[workflowName+ "_SERVICE_PORT"]}`;
+const formIOUrl = `${process.env[formIOName + "_SERVICE_HOST"]}:${process.env[formIOName + "_SERVICE_PORT"]}`;
+const bpmnModelerUrl =  `${process.env[bpmnModelerName + "_SERVICE_HOST"]}:${process.env[bpmnModelerName + "_SERVICE_PORT"]}`;
 
 
 console.log("prestUrl " + prestUrl);
 console.log("workflowUrl " + workflowUrl);
 console.log("formIOUrl " + formIOUrl);
-console.log("bpmnModeler " + bpmnModeler);
+console.log("bpmnModeler " + bpmnModelerUrl);
 
 app.use('/api/reference-data', proxy({
     target: prestUrl,
@@ -64,7 +69,7 @@ app.use('/form-builder', proxy({
 
 
 app.use('/bpmn-modeler', proxy({
-    target: bpmnModeler,
+    target: bpmnModelerUrl,
     changeOrigin: true,
     pathRewrite: {"^/bpmn-modeler": "/"}
 }));
