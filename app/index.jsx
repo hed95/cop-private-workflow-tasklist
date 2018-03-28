@@ -35,7 +35,7 @@ const renderApp = (App) => {
 };
 
 if (process.env.NODE_ENV === 'production') {
-    fetch('/auth-config')
+    fetch('/api/config')
         .then((response) => {
             return response.json()
         }).then((data) => {

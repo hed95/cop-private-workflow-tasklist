@@ -20,7 +20,9 @@ function reducer(state = initialState, action) {
                .set('hasActiveSession', data && data.length !== 0)
                 .set('sessionInfo', Immutable.fromJS(data[0]));
         case actions.FETCH_ACTIVE_SESSION_FAILURE:
-            return state.set('isFetching', false).set('error', action.payload);
+            return state.set('isFetching', false)
+                .set('hasActiveSession', false)
+                .set('error', action.payload);
         default:
             return state;
     }

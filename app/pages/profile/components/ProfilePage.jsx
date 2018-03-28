@@ -8,7 +8,7 @@ import {createStructuredSelector} from "reselect";
 import * as sessionActions from "../../../core/session/actions";
 import * as formActions from '../../../core/forms/actions';
 
-import {form, isFetchingForm} from "../../../core/forms/selectors";
+import {form, isFetchingForm, formLoadingFailed} from "../../../core/forms/selectors";
 
 import Spinner from 'react-spinkit';
 import FormioUtils from 'formiojs/utils';
@@ -23,11 +23,10 @@ class ProfilePage extends React.Component {
     }
 
 
-
     parseForm = (form) => {
 
         if (!this.props.isFetchingFrom && form) {
-            FormioUtils.eachComponent(form.components, function(component) {
+            FormioUtils.eachComponent(form.components, function (component) {
                 if (component.data && component.data.url) {
                     const url = component.data.url;
                     component.data.url = `${window.location.origin}/api/reference-data${url}`;
@@ -40,8 +39,20 @@ class ProfilePage extends React.Component {
 
     render() {
 
-        const {hasActiveSession, isFetching, isFetchingFrom} = this.props;
+        const {hasActiveSession, isFetching, isFetchingFrom, formLoadingFailed} = this.props;
         const form = this.parseForm(this.props.form);
+
+        const failedToLoad = formLoadingFailed ? <div><Formio form={form}/></div> : <div>
+            <div className="notice">
+                <i className="icon icon-important">
+                    <span className="visually-hidden">Warning</span>
+                </i>
+                <strong className="bold-small">
+                    Failed to load form.
+                </strong>
+            </div>
+        </div>;
+
         const toDisplay = !hasActiveSession ?
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <div className="notice">
@@ -54,7 +65,7 @@ class ProfilePage extends React.Component {
                 </div>
             </div> : <div/>;
         return <div>
-            {isFetching && isFetchingForm?
+            {isFetching && isFetchingForm ?
                 <div style={{display: 'flex', justifyContent: 'center'}}><Spinner
                     name="three-bounce" color="#005ea5"/></div>
                 : toDisplay
@@ -71,7 +82,7 @@ class ProfilePage extends React.Component {
                         </legend>
                         {isFetchingFrom ? <div>
                             Loading form...
-                        </div> : <Formio form={form} />
+                        </div> : failedToLoad
                         }
                     </fieldset>
                 </div>
@@ -85,7 +96,8 @@ class ProfilePage extends React.Component {
 ProfilePage.propTypes = {
     isFetching: PropTypes.bool,
     hasActiveSession: PropTypes.bool,
-    isFetchingFrom : PropTypes.bool
+    isFetchingFrom: PropTypes.bool,
+    formLoadingFailed: PropTypes.bool
 };
 
 
@@ -104,6 +116,7 @@ export default connect((state) => {
         hasActiveSession: hasActiveSession(state),
         isFetching: isFetching(state),
         isFetchingForm: isFetchingForm(state),
-        form: form(state)
+        form: form(state),
+        formLoadingFailed: formLoadingFailed(state)
     }
 }, mapDispatchToProps)(withRouter(ProfilePage))

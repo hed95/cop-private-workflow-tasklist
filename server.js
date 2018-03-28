@@ -26,7 +26,7 @@ console.log("formio name " + process.env.FORM_IO_NAME);
 console.log("bpmn modeler name " + process.env.WORKFLOW_MODELER);
 
 const prestName = process.env.PREST_NAME;
-const internalDomain = process.env.INTDOMAIN;
+const internalDomain = process.env.INT_DOMAIN;
 const workflowName =process.env.WORKFLOW_NAME;
 const formIOName = process.env.FORM_IO_NAME;
 const bpmnModelerName = process.env.WORKFLOW_MODELER;
@@ -65,27 +65,13 @@ app.use('/api/form', proxy({
     pathRewrite: {"^/api/form": "/form"}
 }));
 
-app.use('/form-builder', proxy({
-    target: formIOUrl,
-    changeOrigin: true,
-    secure: false,
-    pathRewrite: {"^/form-builder": "/"}
-}));
 
-
-app.use('/bpmn-modeler', proxy({
-    target: bpmnModelerUrl,
-    changeOrigin: true,
-    secure: false,
-    pathRewrite: {"^/bpmn-modeler": "/"}
-}));
-
-
-app.get('/auth-config', (req,res) => {
+app.get('/api/config', (req,res) => {
    res.send({
        'REALM': process.env.REALM,
        'AUTH_URL': process.env.AUTH_URL,
-       'CLIENT_ID': process.env.CLIENT_ID
+       'CLIENT_ID': process.env.CLIENT_ID,
+       'MODELER_URL' : process.env.MODELER_URL
    })
 });
 

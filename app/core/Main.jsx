@@ -5,6 +5,7 @@ import TaskPage from './../pages/tasks/components/TasksPage'
 import ReportsPage from './../pages/reports/components/ReportsPage'
 import NotificationsPage from './../pages/notifications/components/NotificationsPage'
 import ProfilePage from "../pages/profile/components/ProfilePage";
+import AdminPage from "../pages/admin/components/AdminPage";
 import SessionScopedRoute from "./session/components/SessionScopedRoute";
 
 const Main = () => (
@@ -17,6 +18,7 @@ const Main = () => (
                 <SessionScopedRoute name="Processes" exact path='/processes' component={ProcessesPage}/>
                 <SessionScopedRoute name="Reports" exact path='/reports' component={ReportsPage}/>
                 <SessionScopedRoute name="Notifications" exact path='/notifications' component={NotificationsPage}/>
+                <SessionScopedRoute name="Admin" exact path="/admin" component={AdminPage}/>
                 <Redirect to="/profile"/>
             </Switch>
     </main>

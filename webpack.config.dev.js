@@ -7,8 +7,7 @@ const port = process.env.PORT || 8080;
 
 const prestUrl = process.env.PREST_URL;
 const workflowUrl = process.env.WORKFLOW_URL;
-const formIOUrl = process.env.FORM_URL
-
+const formIOUrl = process.env.FORM_URL;
 
 console.log("prestUrl " + prestUrl);
 console.log("workflowUrl " + workflowUrl);
@@ -37,10 +36,10 @@ module.exports = webpackMerge(commonConfig, {
         publicPath: commonConfig.output.publicPath,
         stats: {colors: true},
         proxy: {
-            "/api/reference-data": {
+            "/api/reference-data/**": {
                target: prestUrl,
-               pathRewrite: {"^/api/reference-data" : "/public"},
                secure: false,
+               pathRewrite: {"^/api/reference-data" : "/public" },
                changeOrigin: true
             },
             "/api/form": {

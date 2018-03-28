@@ -37,6 +37,8 @@ class Header extends React.Component {
         const routerPath = this.state.routerPath;
 
         const pointerStyle = {cursor: 'pointer'};
+        const adminRole = this.props.kc.resourceAccess['borders-tasklist'].roles.find( role => role === 'admin');
+
         return <div>
             <header role="banner" id="global-header" className="with-proposition">
                 <div className="header-wrapper">
@@ -50,7 +52,7 @@ class Header extends React.Component {
                     </div>
                     <div className="header-proposition">
                         <div className="content">
-                            <a href="/" id="proposition-name">Operational Activities</a>
+                            <a href="#" id="proposition-name">Operational Activities</a>
                             <ResponsiveMenu
                                 menuOpenButton={<div className="nav-menu">Open</div>}
                                 menuCloseButton={<div className="nav-menu">Close</div>}
@@ -63,6 +65,7 @@ class Header extends React.Component {
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/processes')} className={routerPath === '/processes' ? 'active' : ''}>Processes</a></li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/reports')} className={routerPath === '/reports' ? 'active' : ''}>Reports</a></li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/notifications')} className={routerPath === '/notifications' ? 'active' : ''}>Notifications</a></li>
+                                        { adminRole ? <li style={pointerStyle}><a onClick={() => this.changeRoute('/admin')} className={routerPath === '/admin' ? 'active' : ''}>Admin</a></li> : <div />}
                                         <li style={pointerStyle}><a onClick={this.logout}>Logout</a></li>
                                     </ul>
                                 }
