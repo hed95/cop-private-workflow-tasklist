@@ -37,7 +37,8 @@ class Header extends React.Component {
         const routerPath = this.state.routerPath;
 
         const pointerStyle = {cursor: 'pointer'};
-        const adminRole = this.props.kc.resourceAccess['borders-tasklist'].roles.find( role => role === 'admin');
+        const adminRole = this.props.kc.resourceAccess['borders-tasklist'] && this.props.kc.resourceAccess['borders-tasklist'].roles ? this.props.kc.resourceAccess['borders-tasklist'].roles.find(role => role === 'admin')
+            : null;
 
         return <div>
             <header role="banner" id="global-header" className="with-proposition">

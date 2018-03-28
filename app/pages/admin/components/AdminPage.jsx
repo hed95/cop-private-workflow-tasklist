@@ -10,7 +10,9 @@ import WorkflowAdminPage from "./WorkflowAdminPage";
 class AdminPage extends React.Component {
 
     componentDidMount() {
-        const adminRole = this.props.kc.resourceAccess['borders-tasklist'].roles.find(role => role === 'admin');
+
+        const adminRole = this.props.kc.resourceAccess['borders-tasklist'] && this.props.kc.resourceAccess['borders-tasklist'].roles ? this.props.kc.resourceAccess['borders-tasklist'].roles.find(role => role === 'admin')
+            : null;
         if (!adminRole) {
             this.props.history.push("/profile");
         }
