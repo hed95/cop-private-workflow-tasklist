@@ -18,7 +18,7 @@ const Main = () => (
                 <SessionScopedRoute name="Processes" exact path='/processes' component={ProcessesPage}/>
                 <SessionScopedRoute name="Reports" exact path='/reports' component={ReportsPage}/>
                 <SessionScopedRoute name="Notifications" exact path='/notifications' component={NotificationsPage}/>
-                <SessionScopedRoute name="Admin" exact path="/admin" component={AdminPage}/>
+                <Route name="Admin" exact path="/admin" component={AdminPage}/>
                 <Redirect to="/profile"/>
             </Switch>
     </main>
