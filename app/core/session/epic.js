@@ -9,7 +9,7 @@ const fetchActiveSession = (action$, store) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/reference-data/activesession?email=${store.getState().keycloak.tokenParsed.email}`
+                path: `/api/reference-data/activesession?email=${store.getState().keycloak.tokenParsed.email}`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
