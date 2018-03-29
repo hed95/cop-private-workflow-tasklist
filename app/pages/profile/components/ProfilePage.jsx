@@ -15,11 +15,12 @@ import FormioUtils from 'formiojs/utils';
 import {Formio} from 'react-formio';
 import 'react-formio/formio.css';
 
+
 class ProfilePage extends React.Component {
 
     componentDidMount() {
         this.props.actions.sessionActions.fetchActiveSession();
-        this.props.actions.formActions.fetchForm("createSession");
+        this.props.actions.formActions.fetchForm("createAnActiveSession");
     }
 
 
@@ -42,7 +43,7 @@ class ProfilePage extends React.Component {
         const {hasActiveSession, isFetching, isFetchingFrom, formLoadingFailed} = this.props;
         const form = this.parseForm(this.props.form);
 
-        const failedToLoad = formLoadingFailed ? <div><Formio form={form}/></div> : <div>
+        const failedToLoad = !formLoadingFailed ? <div><Formio form={form}/></div> : <div>
             <div className="notice">
                 <i className="icon icon-important">
                     <span className="visually-hidden">Warning</span>
