@@ -25,7 +25,6 @@ console.log("workflow name " + process.env.WORKFLOW_NAME);
 console.log("formio name " + process.env.FORM_IO_NAME);
 console.log("bpmn modeler name " + process.env.WORKFLOW_MODELER);
 
-const internalDomain = process.env.INT_DOMAIN;
 const domain = process.env.DOMAIN;
 
 const prestName = process.env.PREST_NAME;
@@ -33,9 +32,9 @@ const workflowName =process.env.WORKFLOW_NAME;
 const formIOName = process.env.FORM_IO_NAME;
 const bpmnModelerName = process.env.WORKFLOW_MODELER;
 
-const prestUrl = `https://${prestName}.${internalDomain}`;
-const workflowUrl = `https://${workflowName}.${internalDomain}`;
-const formIOUrl = `https://${formIOName}.${internalDomain}`;
+const prestUrl = `https://${prestName}.${domain}`;
+const workflowUrl = `https://${workflowName}.${domain}`;
+const formIOUrl = `https://${formIOName}.${domain}`;
 const bpmnModelerUrl =  `https://${bpmnModelerName}.${domain}`;
 
 
