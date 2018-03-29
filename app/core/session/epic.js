@@ -10,6 +10,10 @@ const fetchActiveSession = (action$, store) =>
             client({
                 method: 'GET',
                 path: `/api/reference-data/activesession?email=${store.getState().keycloak.tokenParsed.email}`
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`
+                }
             }).map(payload => actions.fetchActiveSessionSuccess(payload))
                 .catch(error => Observable.of(actions.fetchActiveSessionFailure(error)))
         );
