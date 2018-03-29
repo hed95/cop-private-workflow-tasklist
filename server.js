@@ -32,8 +32,10 @@ const workflowName =process.env.WORKFLOW_NAME;
 const formIOName = process.env.FORM_IO_NAME;
 const bpmnModelerName = process.env.WORKFLOW_MODELER;
 
-const prestUrl = `https://${prestName}.${process.env.INT_DOMAIN}`;
-const workflowUrl = `https://${workflowName}.${domain}`;
+const intdomain = process.env.INT_DOMAIN;
+
+const prestUrl = `https://${prestName}.${intdomain}`;
+const workflowUrl = `https://${workflowName}.${intdomain}`;
 const formIOUrl = `https://${formIOName}.${domain}`;
 const bpmnModelerUrl =  `https://${bpmnModelerName}.${domain}`;
 const prestDatabaseName = process.env.TX_DB_NAME;
