@@ -24,13 +24,15 @@ class ProfilePage extends React.Component {
     }
 
 
-    parseForm = (form) => {
-
+    parseForm = (form, kc) => {
         if (!this.props.isFetchingFrom && form) {
             FormioUtils.eachComponent(form.components, function (component) {
                 if (component.data && component.data.url) {
                     const url = component.data.url;
                     component.data.url = `${window.location.origin}/api/reference-data${url}`;
+                }
+                if (component.key === 'bearerToken' && component.defaultValue === '[bearerToken]') {
+                    component.defaultValue = kc.token;
                 }
             });
         }
@@ -41,7 +43,7 @@ class ProfilePage extends React.Component {
     render() {
 
         const {hasActiveSession, isFetching, isFetchingFrom, formLoadingFailed} = this.props;
-        const form = this.parseForm(this.props.form);
+        const form = this.parseForm(this.props.form, this.props.kc);
 
         const failedToLoad = !formLoadingFailed ? <div><Formio form={form}/></div> : <div>
             <div className="notice">
