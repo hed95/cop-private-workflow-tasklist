@@ -32,10 +32,11 @@ const workflowName =process.env.WORKFLOW_NAME;
 const formIOName = process.env.FORM_IO_NAME;
 const bpmnModelerName = process.env.WORKFLOW_MODELER;
 
-const prestUrl = `https://${prestName}.${domain}`;
+const prestUrl = `https://${prestName}.${process.env.INT_DOMAIN}`;
 const workflowUrl = `https://${workflowName}.${domain}`;
 const formIOUrl = `https://${formIOName}.${domain}`;
 const bpmnModelerUrl =  `https://${bpmnModelerName}.${domain}`;
+const prestDatabaseName = process.env.TX_DB_NAME;
 
 
 console.log("prestUrl " + prestUrl);
@@ -43,27 +44,64 @@ console.log("workflowUrl " + workflowUrl);
 console.log("formIOUrl " + formIOUrl);
 console.log("bpmnModeler " + bpmnModelerUrl);
 
-app.use('/api/reference-data', proxy({
-    target: prestUrl,
-    changeOrigin: true,
-    secure: false,
-    pathRewrite: {"^/api/reference-data" : "/public"}
-}));
+
+app.use('/api/reference-data', proxy(
+    {
+        target: prestUrl,
+        pathRewrite: {
+            '^/api/reference-data/_QUERIES' : `/_QUERIES/read`,
+            '^/api/reference-data' : `/${prestDatabaseName}/public`
+        },
+        onProxyReq: function onProxyReq(proxyReq, req, res) {
+            console.log('Prest Proxy -->  ', req.method, req.path, '-->', prestUrl, proxyReq.path);
+        },
+        onError: function onError(err, req, res) {
+            console.error(err);
+            res.status(500);
+            res.json({error: 'Error when connecting to remote server.'});
+        },
+        logLevel: 'debug',
+        changeOrigin: true,
+        secure: false
+    }
+));
 
 
 app.use('/api/workflow', proxy({
-    target: workflowUrl,
-    secure: false,
-    changeOrigin: true
-}));
-
-
-app.use('/api/form', proxy({
-    target: formIOUrl,
-    secure: false,
+    target: prestUrl,
+    onProxyReq: function onProxyReq(proxyReq, req, res) {
+        console.log('Workflow Proxy -->  ', req.method, req.path, '-->', workflowUrl, proxyReq.path);
+    },
+    onError: function onError(err, req, res) {
+        console.error(err);
+        res.status(500);
+        res.json({error: 'Error when connecting to remote server.'});
+    },
+    logLevel: 'debug',
     changeOrigin: true,
-    pathRewrite: {"^/api/form": "/form"}
+    secure: false
 }));
+
+
+app.use('/api/form', proxy(
+    {
+        target: formIOUrl,
+        pathRewrite: {
+            '^/api/form' : '/form'
+        },
+        onProxyReq: function onProxyReq(proxyReq, req, res) {
+            console.log('Form IO Proxy -->  ', req.method, req.path, '-->', formIOUrl, proxyReq.path);
+        },
+        onError: function onError(err, req, res) {
+            console.error(err);
+            res.status(500);
+            res.json({error: 'Error when connecting to remote server.'});
+        },
+        logLevel: 'debug',
+        changeOrigin: true,
+        secure: false
+    }
+));
 
 
 app.get('/api/config', (req,res) => {
@@ -76,6 +114,7 @@ app.get('/api/config', (req,res) => {
 });
 
 app.all('*', function (req, res) {
+    console.log("Request to tasklist");
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
