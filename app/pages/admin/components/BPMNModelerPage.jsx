@@ -34,7 +34,7 @@ class BPMNModelerPage extends React.Component {
     render() {
         const {loading, failed} = this.state;
 
-        const iframe = failed?  <div>
+        const iframe = failed?  <div style={{paddingTop: '10px'}}>
             <div className="notice">
                 <i className="icon icon-important">
                     <span className="visually-hidden">Warning</span>
