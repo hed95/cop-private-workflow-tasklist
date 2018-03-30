@@ -30,10 +30,10 @@ class ProfilePage extends React.Component {
                 if (component.data && component.data.url) {
                     const url = component.data.url;
                     component.data.url = `${window.location.origin}/api/reference-data${url}`;
+                    const header = component.data.headers.find( h => h.key === 'Authorization');
+                    header.value = `Bearer ${kc.token}`;
                 }
-                if (component.key === 'bearerToken' && component.defaultValue === '[bearerToken]') {
-                    component.defaultValue = kc.token;
-                }
+
             });
         }
         return form;
@@ -44,8 +44,7 @@ class ProfilePage extends React.Component {
 
         const {hasActiveSession, isFetching, isFetchingFrom, formLoadingFailed} = this.props;
         const form = this.parseForm(this.props.form, this.props.kc);
-
-        const failedToLoad = !formLoadingFailed ? <div><Formio form={form}/></div> : <div>
+        const loadForm = !formLoadingFailed ? <div><Formio form={form}/></div> : <div>
             <div className="notice">
                 <i className="icon icon-important">
                     <span className="visually-hidden">Warning</span>
@@ -68,7 +67,7 @@ class ProfilePage extends React.Component {
                 </div>
             </div> : <div/>;
         return <div>
-            {isFetching && isFetchingForm ?
+            {isFetching?
                 <div style={{display: 'flex', justifyContent: 'center'}}><Spinner
                     name="three-bounce" color="#005ea5"/></div>
                 : toDisplay
@@ -83,10 +82,7 @@ class ProfilePage extends React.Component {
                         <legend>
                             <h3 className="heading-medium">Team Details</h3>
                         </legend>
-                        {isFetchingFrom ? <div>
-                            Loading form...
-                        </div> : failedToLoad
-                        }
+                        { isFetchingFrom ? <div>Loading form...</div> : loadForm }
                     </fieldset>
                 </div>
 
@@ -118,8 +114,8 @@ export default connect((state) => {
         kc: state.keycloak,
         hasActiveSession: hasActiveSession(state),
         isFetching: isFetching(state),
-        isFetchingForm: isFetchingForm(state),
         form: form(state),
+        isFetchingForm: isFetchingForm(state),
         formLoadingFailed: formLoadingFailed(state)
     }
 }, mapDispatchToProps)(withRouter(ProfilePage))

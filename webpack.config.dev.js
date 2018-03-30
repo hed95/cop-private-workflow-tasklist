@@ -36,7 +36,7 @@ module.exports = webpackMerge(commonConfig, {
         publicPath: commonConfig.output.publicPath,
         stats: {colors: true},
         proxy: {
-            "/api/reference-data/**": {
+            "/api/reference-data": {
                target: prestUrl,
                secure: false,
                pathRewrite: {"^/api/reference-data" : "/public" },
