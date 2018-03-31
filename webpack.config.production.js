@@ -9,7 +9,7 @@ const SriPlugin = require('webpack-subresource-integrity');
 module.exports = webpackMerge(commonConfig, {
     devtool: 'source-map',
     entry: {
-        app: './app/index',
+        app: './app/index'
     },
     plugins: [
         new SriPlugin({

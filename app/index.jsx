@@ -6,6 +6,7 @@ import {BrowserRouter} from 'react-router-dom'
 import {Provider} from 'react-redux';
 import configureStore from './core/store/configureStore';
 import Keycloak from "keycloak-js";
+import 'webpack-icons-installer/bootstrap';
 import '../public/styles/app.scss'
 import '../public/styles/fonts.css'
 import '../node_modules/bootstrap/dist/css/bootstrap.css';

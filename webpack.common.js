@@ -32,8 +32,12 @@ module.exports = {
         }),
         new ExtractTextPlugin('styles.css'),
         new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
+            $: "jquery",
+            jQuery: "jquery",
+            "window.jQuery": "jquery",
+            Tooltip: "exports-loader?Tooltip!bootstrap/js/dist/tooltip",
+            Tether: "tether",
+            "window.Tether": "tether"
         }),
     ],
     module: {
@@ -79,6 +83,7 @@ module.exports = {
                 }]
 
             },
+
             {
                 test: /\.scss$/,
                 use: [{

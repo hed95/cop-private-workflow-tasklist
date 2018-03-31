@@ -13,7 +13,7 @@ import {form, loadingForm, formLoadingFailed} from "../../../core/forms/selector
 import Spinner from 'react-spinkit';
 import FormioUtils from 'formiojs/utils';
 import {createForm} from 'formiojs';
-import 'formiojs/dist/formio.full.css';
+
 
 class ProfilePage extends React.Component {
 
@@ -40,6 +40,7 @@ class ProfilePage extends React.Component {
 
 
     render() {
+        
         const {hasActiveSession, isFetching, loadingForm, formLoadingFailed} = this.props;
         if (this.props.form) {
             const form = this.parseForm(this.props.form, this.props.kc);
