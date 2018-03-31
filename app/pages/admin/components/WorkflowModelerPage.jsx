@@ -2,7 +2,7 @@ import React from 'react'
 import Iframe from 'react-iframe'
 import Spinner from 'react-spinkit';
 
-class BPMNModelerPage extends React.Component {
+class WorkflowModelerPage extends React.Component {
 
     constructor(props) {
         super(props);
@@ -34,7 +34,7 @@ class BPMNModelerPage extends React.Component {
     render() {
         const {loading, failed} = this.state;
 
-        const iframe = failed?  <div style={{paddingTop: '10px'}}>
+        const iframe = failed ?  <div style={{paddingTop: '10px'}}>
             <div className="notice">
                 <i className="icon icon-important">
                     <span className="visually-hidden">Warning</span>
@@ -57,4 +57,4 @@ class BPMNModelerPage extends React.Component {
     }
 }
 
-export default BPMNModelerPage;
+export default WorkflowModelerPage;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import BPMNModelerPage from "./BPMNModelerPage";
+import WorkflowModelerPage from "./WorkflowModelerPage";
 import FormModelerPage from "./FormModelerPage";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -26,13 +26,13 @@ class AdminPage extends React.Component {
             <div>
                 <Tabs>
                     <TabList>
-                        <Tab>BPMN Modeler</Tab>
+                        <Tab>Workflow Modeler</Tab>
                         <Tab>Form Builder</Tab>
                         <Tab>Workflow Admin</Tab>
                     </TabList>
 
                     <TabPanel>
-                        <BPMNModelerPage/>
+                        <WorkflowModelerPage/>
                     </TabPanel>
                     <TabPanel>
                         <FormModelerPage/>

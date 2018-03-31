@@ -36,6 +36,9 @@ $path: "../../node_modules/govuk_frontend_toolkit/images/";
 @import "../../node_modules/govuk-elements-sass/public/sass/elements/shame";                         // Hacks and workarounds that will go away eventually
 @import "../../node_modules/govuk_template_ejs/assets/stylesheets/govuk-template.css";
 @import "../../node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.css";
+
+@import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
 .nav-menu {
   color: white;
   text-align: right;
@@ -171,4 +174,22 @@ $path: "../../node_modules/govuk_frontend_toolkit/images/";
   @extend .error-summary
 }
 
+.has-error {
+  @extend .error-message
+}
+.choices__input {
+  font-size: inherit;
+}
 
+.choices .choices__item {
+  font-size: inherit;
+}
+
+
+.choices .form-control {
+  width: 100%;
+}
+
+.btn  {
+  @extend .button
+}
