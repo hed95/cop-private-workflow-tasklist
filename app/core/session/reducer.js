@@ -15,7 +15,7 @@ function reducer(state = initialState, action) {
         case actions.FETCH_ACTIVE_SESSION:
             return state.set('isFetching', true);
         case actions.FETCH_ACTIVE_SESSION_SUCCESS:
-           const data = [];
+           const data = action.payload.entity;
            return state.set('isFetching', false)
                .set('hasActiveSession', data && data.length !== 0)
                 .set('sessionInfo', Immutable.fromJS(data[0]));

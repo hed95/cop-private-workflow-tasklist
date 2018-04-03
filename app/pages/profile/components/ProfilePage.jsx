@@ -27,6 +27,7 @@ class ProfilePage extends React.Component {
             FormioUtils.eachComponent(form.components, function (component) {
                 if (component.data && component.data.url) {
                     const url = component.data.url;
+                    component.lazyLoad = true;
                     component.data.url = `${window.location.origin}/api/reference-data${url}`;
                     const header = component.data.headers.find( h => h.key === 'Authorization');
                     header.value = `Bearer ${kc.token}`;
@@ -45,8 +46,19 @@ class ProfilePage extends React.Component {
         const {hasActiveSession, isFetching, loadingForm, formLoadingFailed} = this.props;
         if (!loadingForm && this.props.form) {
             $( "#formio" ).empty();
-            const form = this.parseForm(this.props.form, this.props.kc);
-            createForm(document.getElementById("formio"), form);
+            const parsedForm = this.parseForm(this.props.form, this.props.kc);
+            createForm(document.getElementById("formio"), parsedForm)
+                .then(function(form) {
+                    form.on('submit', (submission) => {
+                        alert('The form was just submitted!!!' + submission.data);
+                        form.emit('submitDone');
+                    });
+                    form.on('error', (errors) => {
+                        alert('We have errors!');
+                        form.emit('submitDone');
+                    });
+
+                });
         }
         const failedToLoadForm = formLoadingFailed ?  <div>
             <div className="notice">

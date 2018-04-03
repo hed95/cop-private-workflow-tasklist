@@ -216,3 +216,7 @@ $path: "../../node_modules/govuk_frontend_toolkit/images/";
     }
   }
 }
+
+.alert-success {
+  @extend .govuk-box-highlight
+}
