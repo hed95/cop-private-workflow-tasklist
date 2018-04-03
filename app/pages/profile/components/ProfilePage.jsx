@@ -31,6 +31,9 @@ class ProfilePage extends React.Component {
                     const header = component.data.headers.find( h => h.key === 'Authorization');
                     header.value = `Bearer ${kc.token}`;
                 }
+                if (component.key === 'bearerToken') {
+                    component.defaultValue = kc.token;
+                }
 
             });
         }

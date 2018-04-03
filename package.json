@@ -93,6 +93,7 @@
     "rxjs": "^5.5.2",
     "tether": "^1.4.3",
     "throttle-debounce": "^1.0.1",
+    "uuid": "^3.2.1",
     "webpack-icons-installer": "^1.0.0",
     "winston": "^2.4.0"
   }
