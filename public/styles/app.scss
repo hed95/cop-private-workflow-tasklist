@@ -201,3 +201,18 @@ $path: "../../node_modules/govuk_frontend_toolkit/images/";
   height: 0;
   border: solid transparent;
 }
+
+
+.formio-component-radio,
+.formio-component-selectboxes,
+.formio-component-checkbox {
+  .input-group {
+    display: block;
+  }
+
+  label {
+    span {
+      padding-left: 0.5em;
+    }
+  }
+}

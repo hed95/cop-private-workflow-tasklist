@@ -75,6 +75,7 @@ class ProfilePage extends React.Component {
                 : toDisplay
             }
 
+
             <div className="grid-row">
                 <div className="column-one-half">
                     <PersonalDetailsSection {...this.props} />

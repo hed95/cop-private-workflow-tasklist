@@ -12,10 +12,20 @@ class Header extends React.Component {
         this.changeRoute = this.changeRoute.bind(this);
         this.logout = this.logout.bind(this);
         const path = this.props.location.pathname;
+        window.addEventListener('resize', this.handleWindowSizeChange);
         this.state = {
             routerPath: path
         }
     }
+
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleWindowSizeChange);
+    }
+
+    handleWindowSizeChange = () => {
+        this.setState({ width: window.innerWidth });
+    };
 
     changeRoute(path) {
         this.setState({routerPath: path});
@@ -34,7 +44,7 @@ class Header extends React.Component {
     }
 
     render() {
-        const routerPath = this.state.routerPath;
+        const { width, routerPath} = this.state;
 
         const pointerStyle = {cursor: 'pointer'};
 
@@ -42,6 +52,7 @@ class Header extends React.Component {
             ? this.props.kc.realmAccess.roles.find(role => role === 'platform_admin')
             : null;
 
+        const navWidth = window.innerWidth <= 500 ? 'inherit' : '700px';
 
         return <div>
             <header role="banner" id="global-header" className="with-proposition">
@@ -63,12 +74,15 @@ class Header extends React.Component {
                                 changeMenuOn="500px"
                                 smallMenuClassName="small-menu"
                                 menu={
-                                    <ul id="proposition-links">
+                                    <ul id="proposition-links" style={{width: navWidth}}>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/profile')} className={routerPath === '/profile' ? 'active' : ''}>Profile</a></li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/tasks')} className={routerPath === '/tasks' ? 'active' : ''}>Tasks</a></li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/processes')} className={routerPath === '/processes' ? 'active' : ''}>Processes</a></li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/reports')} className={routerPath === '/reports' ? 'active' : ''}>Reports</a></li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/notifications')} className={routerPath === '/notifications' ? 'active' : ''}>Notifications</a></li>
+                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/campaigns')}
+                                                                    className={routerPath === '/campaigns' ? 'active' : ''}>Campaigns</a>
+                                        </li>
                                         { adminRole ? <li style={pointerStyle}><a onClick={() => this.changeRoute('/admin')} className={routerPath === '/admin' ? 'active' : ''}>Admin</a></li> : <div />}
                                         <li style={pointerStyle}><a onClick={this.logout}>Logout</a></li>
                                     </ul>
