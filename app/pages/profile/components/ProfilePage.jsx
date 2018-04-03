@@ -22,7 +22,6 @@ class ProfilePage extends React.Component {
         this.props.actions.formActions.fetchForm("createAnActiveSession");
     }
 
-
     parseForm = (form, kc) => {
         if (!this.props.isFetchingFrom && form) {
             FormioUtils.eachComponent(form.components, function (component) {
@@ -40,11 +39,11 @@ class ProfilePage extends React.Component {
 
 
     render() {
-        
         const {hasActiveSession, isFetching, loadingForm, formLoadingFailed} = this.props;
-        if (this.props.form) {
+        if (!loadingForm && this.props.form) {
+            $( "#formio" ).empty();
             const form = this.parseForm(this.props.form, this.props.kc);
-                 createForm(document.getElementById("formio"), form);
+            createForm(document.getElementById("formio"), form);
         }
         const failedToLoadForm = formLoadingFailed ?  <div>
             <div className="notice">

@@ -5,7 +5,7 @@ import profilePage from '../pages/profile';
 import notificationPage from '../pages/notifications';
 import sessionPage from '../core/session/index';
 import form from '../core/forms/index';
-
+import {  routerReducer } from 'react-router-redux'
 import {combineEpics} from 'redux-observable';
 
 export const rootEpic = combineEpics(
@@ -19,6 +19,7 @@ export const rootEpic = combineEpics(
 
 export const rootReducer = combineReducers({
     loadingBar: loadingBarReducer,
+    routing: routerReducer,
     keycloak: keycloakReducer,
     [profilePage.constants.NAME]: profilePage.reducer,
     [notificationPage.constants.NAME]: notificationPage.reducer,
