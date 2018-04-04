@@ -37,13 +37,13 @@ module.exports = webpackMerge(commonConfig, {
         publicPath: commonConfig.output.publicPath,
         stats: {colors: true},
         headers: {
-            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Origin": "https://workflow-tasklist.dev.bfarch-notprod.homeoffice.gov.uk/",
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
         },
         proxy: {
             "/api/reference-data": {
                target: prestUrl,
-               secure: true,
+               secure: false,
                 pathRewrite: {
                     '^/api/reference-data/_QUERIES' : `/_QUERIES/read`,
                     '^/api/reference-data' : `/${prestDatabaseName}/public`

@@ -5,6 +5,7 @@ const http = require('http');
 const app = express();
 const path = require('path');
 const proxy = require('http-proxy-middleware');
+const cors = require('cors')
 
 
 const respond = (req, res) => {
@@ -16,6 +17,8 @@ process.title = 'borders-workflow-tasklist';
 app.set('port', port);
 
 app.use(express.static(__dirname + "/"));
+
+app.use(cors());
 
 app.get('/healthz', respond);
 app.get('/readiness', respond);

@@ -31,7 +31,7 @@ class ProfilePage extends React.Component {
                 if (component.data && component.data.url) {
                     const url = component.data.url;
                     component.lazyLoad = true;
-                    component.data.url = `${window.location.origin}/api/reference-data${url}`;
+                    component.data.url = `https://workflow-tasklist.dev.bfarch-notprod.homeoffice.gov.uk/api/reference-data${url}`;
                     const bearerValue = `Bearer ${kc.token}`;
                     const header = component.data.headers.find(h => h.key === 'Authorization');
 
