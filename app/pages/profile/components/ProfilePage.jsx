@@ -55,17 +55,18 @@ class ProfilePage extends React.Component {
 
     render() {
         const {hasActiveSession, isFetching, loadingForm, formLoadingFailed, kc} = this.props;
+        const that = this;
         if (!loadingForm && this.props.form) {
             $("#formio").empty();
             const parsedForm = this.parseForm(this.props.form, this.props.kc);
             createForm(document.getElementById("formio"), parsedForm)
                 .then(function (form) {
                     form.on('submit', (submission) => {
-                        this.props.formActions.submitForm(
+                        that.props.formActions.submitForm(
                             form._id, submission.data
                         );
 
-                        if (this.props.submittingFormForValidation) {
+                        if (that.props.submittingFormForValidation) {
                             alert("Submitting for form validation");
                         }
 
