@@ -20,4 +20,20 @@ const fetchForm = (action$, store) =>
         );
 
 
-export default combineEpics(fetchForm);
+const submitForm = (action$, store) =>
+    action$.ofType(types.SUBMIT_FORM)
+        .mergeMap(action =>
+            client({
+                method: 'POST',
+                path: `/api/form/${action.formId}/submission`,
+                entity: action.submissionData,
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`,
+                    'Content-Type': 'application/json'
+                }
+            }).map(payload => actions.submitFormSuccess(payload))
+                .catch(error => Observable.of(actions.submitFormFailure(error)))
+        );
+
+export default combineEpics(fetchForm, submitForm);

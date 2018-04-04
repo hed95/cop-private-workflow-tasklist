@@ -2,13 +2,16 @@ import React, {PropTypes} from "react";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import PersonalDetailsSection from "./PersonalDetailsSection";
-import {hasActiveSession, isFetching} from "../../../core/session/selectors";
+import {hasActiveSession, isFetching, activeSession} from "../../../core/session/selectors";
 import {bindActionCreators} from "redux";
 import {createStructuredSelector} from "reselect";
 import * as sessionActions from "../../../core/session/actions";
 import * as formActions from '../../../core/forms/actions';
 
-import {form, loadingForm, formLoadingFailed} from "../../../core/forms/selectors";
+import {
+    form, loadingForm, formLoadingFailed, formValidationError,
+    validationErrors, submittingFormForValidation
+} from "../../../core/forms/selectors";
 
 import Spinner from 'react-spinkit';
 import FormioUtils from 'formiojs/utils';
@@ -29,13 +32,21 @@ class ProfilePage extends React.Component {
                     const url = component.data.url;
                     component.lazyLoad = true;
                     component.data.url = `${window.location.origin}/api/reference-data${url}`;
-                    const header = component.data.headers.find( h => h.key === 'Authorization');
-                    header.value = `Bearer ${kc.token}`;
+                    const bearerValue = `Bearer ${kc.token}`;
+                    const header = component.data.headers.find(h => h.key === 'Authorization');
+
+                    if (header) {
+                        header.value = bearerValue;
+                    } else {
+                        component.data.headers.push({
+                            "key": "Authorization",
+                            "value": bearerValue
+                        });
+                    }
                 }
                 if (component.key === 'bearerToken') {
                     component.defaultValue = kc.token;
                 }
-
             });
         }
         return form;
@@ -43,24 +54,34 @@ class ProfilePage extends React.Component {
 
 
     render() {
-        const {hasActiveSession, isFetching, loadingForm, formLoadingFailed} = this.props;
+        const {hasActiveSession, isFetching, loadingForm, formLoadingFailed, kc} = this.props;
         if (!loadingForm && this.props.form) {
-            $( "#formio" ).empty();
+            $("#formio").empty();
             const parsedForm = this.parseForm(this.props.form, this.props.kc);
             createForm(document.getElementById("formio"), parsedForm)
-                .then(function(form) {
+                .then(function (form) {
                     form.on('submit', (submission) => {
-                        alert('The form was just submitted!!!' + submission.data);
-                        form.emit('submitDone');
-                    });
-                    form.on('error', (errors) => {
-                        alert('We have errors!');
-                        form.emit('submitDone');
-                    });
+                        this.props.formActions.submitForm(
+                            form._id, submission.data
+                        );
 
+                        if (this.props.submittingFormForValidation) {
+                            alert("Submitting for form validation");
+                        }
+
+                        const activeSession = {
+                            "email": kc.tokenParsed.email,
+                            "endtime": "",
+                            "teamid": submission.data.teamid,
+                            "personid": submission.data.personid,
+                            "keycloaksessionid": this.props.kc.sessionId
+                        };
+                        alert("activeSession to submit " + activeSession);
+                        form.emit('submitDone');
+                    });
                 });
         }
-        const failedToLoadForm = formLoadingFailed ?  <div>
+        const failedToLoadForm = formLoadingFailed ? <div>
             <div className="notice">
                 <i className="icon icon-important">
                     <span className="visually-hidden">Warning</span>
@@ -69,7 +90,7 @@ class ProfilePage extends React.Component {
                     Failed to load form.
                 </strong>
             </div>
-        </div> : <div />
+        </div> : <div/>
 
         const toDisplay = !hasActiveSession ?
             <div style={{display: 'flex', justifyContent: 'center'}}>
@@ -83,7 +104,7 @@ class ProfilePage extends React.Component {
                 </div>
             </div> : <div/>;
         return <div>
-            {isFetching?
+            {isFetching ?
                 <div style={{display: 'flex', justifyContent: 'center'}}><Spinner
                     name="three-bounce" color="#005ea5"/></div>
                 : toDisplay
@@ -99,9 +120,9 @@ class ProfilePage extends React.Component {
                         <legend>
                             <h3 className="heading-medium">Team Details</h3>
                         </legend>
-                        {loadingForm ? <div>Loading Form....</div>: <div/> }
+                        {loadingForm ? <div>Loading Form....</div> : <div/>}
                         {failedToLoadForm}
-                        <div id="formio" />
+                        <div id="formio"/>
                     </fieldset>
                 </div>
 
@@ -115,7 +136,9 @@ ProfilePage.propTypes = {
     isFetching: PropTypes.bool,
     hasActiveSession: PropTypes.bool,
     loadingForm: PropTypes.bool,
-    formLoadingFailed: PropTypes.bool
+    formLoadingFailed: PropTypes.bool,
+    submittingFormForValidation: PropTypes.bool,
+    formValidationError: PropTypes.bool
 };
 
 
@@ -135,6 +158,10 @@ export default connect((state) => {
         isFetching: isFetching(state),
         form: form(state),
         loadingForm: loadingForm(state),
-        formLoadingFailed: formLoadingFailed(state)
+        formLoadingFailed: formLoadingFailed(state),
+        activeSession: activeSession(state),
+        formValidationError: formValidationError(state),
+        validationErrors: validationErrors(state),
+        submittingFormForValidation: submittingFormForValidation(state)
     }
 }, mapDispatchToProps)(withRouter(ProfilePage))

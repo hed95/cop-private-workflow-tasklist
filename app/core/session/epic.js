@@ -15,8 +15,21 @@ const fetchActiveSession = (action$, store) =>
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
             }).map(payload => actions.fetchActiveSessionSuccess(payload))
-                .catch(error => Observable.of(actions.fetchActiveSessionFailure(error)))
-        );
+                .catch(error => Observable.of(actions.fetchActiveSessionFailure(error))));
 
+const createActiveSession = (action$, store) =>
+    action$.ofType(types.CREATE_ACTIVE_SESSION)
+        .mergeMap(action =>
+            client({
+                method: 'POST',
+                entity: action.activeSession,
+                path: `/api/reference-data/activesession`,
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`,
+                    'Content-Type': 'application/json'
+                }
+            }).map(payload => actions.createActiveSessionSuccess(payload))
+                .catch(error => Observable.of(actions.createActiveSessionFailure(error))));
 
-export default combineEpics(fetchActiveSession);
+export default combineEpics(fetchActiveSession, createActiveSession);

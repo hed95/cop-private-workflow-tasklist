@@ -17,9 +17,28 @@ const fetchFormFailure = error => ({
 });
 
 
+const submitForm = (formId, submissionData)=> ({
+    type: types.SUBMIT_FORM,
+    formId,
+    submissionData
+});
+
+const submitFormSuccess = payload => ({
+    type: types.SUBMIT_FORM_SUCCESS,
+    payload
+});
+
+const submitFormFailure = error => ({
+    type: types.SUBMIT_FORM_FAILURE,
+    error
+});
+
 
 export {
     fetchForm,
     fetchFormSuccess,
-    fetchFormFailure
+    fetchFormFailure,
+    submitForm,
+    submitFormSuccess,
+    submitFormFailure
 }

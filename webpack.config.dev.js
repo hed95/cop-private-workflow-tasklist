@@ -8,6 +8,7 @@ const port = process.env.PORT || 8080;
 const prestUrl = process.env.PREST_URL;
 const workflowUrl = process.env.WORKFLOW_URL;
 const formIOUrl = process.env.FORM_URL;
+const prestDatabaseName = process.env.TX_DB_NAME;
 
 console.log("prestUrl " + prestUrl);
 console.log("workflowUrl " + workflowUrl);
@@ -35,13 +36,21 @@ module.exports = webpackMerge(commonConfig, {
         historyApiFallback: true,
         publicPath: commonConfig.output.publicPath,
         stats: {colors: true},
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+        },
         proxy: {
             "/api/reference-data": {
                target: prestUrl,
-               secure: false,
-               pathRewrite: {"^/api/reference-data" : "/public" },
+               secure: true,
+                pathRewrite: {
+                    '^/api/reference-data/_QUERIES' : `/_QUERIES/read`,
+                    '^/api/reference-data' : `/${prestDatabaseName}/public`
+                },
                changeOrigin: true
             },
+
             "/api/form": {
                 target: formIOUrl,
                 secure: false,

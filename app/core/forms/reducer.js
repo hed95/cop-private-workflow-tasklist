@@ -1,13 +1,16 @@
 import Immutable from 'immutable';
 import * as actions from './actionTypes';
 
-const {Map} = Immutable;
+const {Map, List} = Immutable;
 
 const initialState = new Map({
     loadingForm: true,
     form: null,
-    error: '',
-    formLoadingFailed: false
+    error: null,
+    formLoadingFailed: false,
+    formValidationError: false,
+    validationErrors: List([]),
+    submittingFormForValidation: false
 });
 
 function reducer(state = initialState, action) {
@@ -24,6 +27,21 @@ function reducer(state = initialState, action) {
             return state.set('loadingForm', false)
                 .set('error', action.payload)
                 .set('formLoadingFailed', true);
+
+        case actions.SUBMIT_FORM:
+            return state.set('submittingFormForValidation', true)
+                .set('validationErrors', List([]))
+                .set('formValidationError', false);
+        case actions.SUBMIT_FORM_SUCCESS:
+            return state.set('submittingFormForValidation', false)
+                .set('validationErrors', List([]))
+                .set('formValidationError', false);
+        case actions.SUBMIT_FORM_FAILURE:
+            const hasValidationErrors = true;
+            const validationErrors = List([]);
+            return state.set('submittingFormForValidation', false)
+                .set('formValidationError', hasValidationErrors)
+                .set('validationErrors', validationErrors);
         default:
             return state;
     }

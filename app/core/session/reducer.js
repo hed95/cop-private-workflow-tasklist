@@ -6,8 +6,9 @@ const {Map} = Immutable;
 const initialState = new Map({
     isFetching: true,
     hasActiveSession: false,
-    sessionInfo : Map({}),
-    error: ''
+    activeSession : Map({}),
+    error: '',
+    submitting: false
 });
 
 function reducer(state = initialState, action) {
@@ -18,10 +19,18 @@ function reducer(state = initialState, action) {
            const data = action.payload.entity;
            return state.set('isFetching', false)
                .set('hasActiveSession', data && data.length !== 0)
-                .set('sessionInfo', Immutable.fromJS(data[0]));
+                .set('activeSession', Immutable.fromJS(data[0]));
         case actions.FETCH_ACTIVE_SESSION_FAILURE:
             return state.set('isFetching', false)
                 .set('hasActiveSession', false)
+                .set('error', action.payload);
+        case actions.CREATE_ACTIVE_SESSION:
+            return state.set('submitting', true);
+        case actions.CREATE_ACTIVE_SESSION_SUCCESS:
+            return state.set('submitting', false)
+                .set('activeSession', action.payload.entity);
+        case actions.CREATE_ACTIVE_SESSION_FAILURE:
+            return state.set("submitting", false)
                 .set('error', action.payload);
         default:
             return state;
