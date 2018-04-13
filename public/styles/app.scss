@@ -38,6 +38,7 @@ $path: "../../node_modules/govuk_frontend_toolkit/images/";
 
 @import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../../node_modules/formiojs/dist/formio.full.css";
+@import "../icons.css";
 
 .nav-menu {
   color: white;
@@ -223,4 +224,52 @@ $path: "../../node_modules/govuk_frontend_toolkit/images/";
 
 .alert-success {
   @extend .govuk-box-highlight
+}
+
+
+.govuk-box-highlight {
+  padding: 1em 2em 2em;
+  background-color: #006435;
+}
+
+.govuk-box-highlight a, .govuk-box-highlight a:hover, .govuk-box-highlight a:visited {
+  color: white;
+  font-weight: 700;
+}
+
+.govuk-box-highlight.incomplete {
+  background-color: #005ea5;
+  text-align: left;
+  padding: 15px;
+  margin-bottom: 30px;
+}
+
+.govuk-box-highlight.incomplete .heading-medium, .govuk-box-highlight.incomplete .timeline ul li h2, .timeline ul li .govuk-box-highlight.incomplete h2 {
+  margin-top: 0;
+}
+
+.govuk-box-highlight.incomplete p:last-of-type {
+  margin-bottom: 0;
+}
+
+.confirm-page .hod-checkmark {
+  font-size: 35px;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.confirm-page .hod-checkmark::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.confirm-page .hod-checkmark + .heading-large {
+  margin-top: 0;
 }

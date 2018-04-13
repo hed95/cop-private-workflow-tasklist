@@ -23,7 +23,7 @@ const createActiveSession = (action$, store) =>
             client({
                 method: 'POST',
                 entity: action.activeSession,
-                path: `/api/reference-data/activesession`,
+                path: `/api/workflow/sessions`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`,

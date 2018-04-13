@@ -27,7 +27,7 @@ const createActiveSessionSuccess = payload => ({
 
 const createActiveSessionFailure = error => ({
     error: true,
-    payload: error.raw.message,
+    payload: error,
     type: types.CREATE_ACTIVE_SESSION_FAILURE
 });
 

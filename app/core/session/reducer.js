@@ -4,37 +4,58 @@ import * as actions from './actionTypes';
 const {Map} = Immutable;
 
 const initialState = new Map({
-    isFetching: true,
+    isFetchingActiveSession: true,
     hasActiveSession: false,
     activeSession : Map({}),
-    error: '',
-    submitting: false
+    activeSessionError: null,
+    submittingActiveSession: false,
+    activeSubmissionSuccess: false
 });
 
 function reducer(state = initialState, action) {
     switch (action.type) {
         case actions.FETCH_ACTIVE_SESSION:
-            return state.set('isFetching', true);
+            return state.set('isFetchingActiveSession', true)
+                .set('activeSessionError', null);
         case actions.FETCH_ACTIVE_SESSION_SUCCESS:
            const data = action.payload.entity;
-           return state.set('isFetching', false)
+           return state.set('isFetchingActiveSession', false)
                .set('hasActiveSession', data && data.length !== 0)
                 .set('activeSession', Immutable.fromJS(data[0]));
         case actions.FETCH_ACTIVE_SESSION_FAILURE:
-            return state.set('isFetching', false)
+            return state.set('isFetchingActiveSession', false)
                 .set('hasActiveSession', false)
-                .set('error', action.payload);
+                .set('activeSessionError', action.payload);
         case actions.CREATE_ACTIVE_SESSION:
-            return state.set('submitting', true);
+            return state.set('submittingActiveSession', true)
+                .set('activeSubmissionSuccess', false)
+                .set('activeSessionError', null);
         case actions.CREATE_ACTIVE_SESSION_SUCCESS:
-            return state.set('submitting', false)
+            return state.set('submittingActiveSession', false)
+                .set('activeSubmissionSuccess', true)
+                .set('hasActiveSession', true)
                 .set('activeSession', action.payload.entity);
         case actions.CREATE_ACTIVE_SESSION_FAILURE:
-            return state.set("submitting", false)
-                .set('error', action.payload);
+            const message = createMessage(action);
+            return state.set("submittingActiveSession", false)
+                .set('activeSubmissionSuccess', false)
+                .set('activeSessionError', message);
         default:
             return state;
     }
+}
+
+const createMessage = (action) => {
+    let message = null;
+
+    if (action.payload.entity) {
+        message = action.payload.entity;
+    } else {
+        message = `Submission to create an active session failed. Cause:${action.payload.status.code}:${action.payload.status.text}`
+    }
+
+    return  message;
+
 }
 
 export default reducer;

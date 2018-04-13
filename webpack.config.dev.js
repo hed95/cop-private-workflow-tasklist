@@ -10,9 +10,12 @@ const workflowUrl = process.env.WORKFLOW_URL;
 const formIOUrl = process.env.FORM_URL;
 const prestDatabaseName = process.env.TX_DB_NAME;
 
+const translationServiceUrl = process.env.TRANSLATION_SERVICE_URL;
+
 console.log("prestUrl " + prestUrl);
 console.log("workflowUrl " + workflowUrl);
 console.log("formIOUrl " + formIOUrl);
+console.log("translationServiceUrl " + translationServiceUrl);
 
 
 module.exports = webpackMerge(commonConfig, {
@@ -36,28 +39,26 @@ module.exports = webpackMerge(commonConfig, {
         historyApiFallback: true,
         publicPath: commonConfig.output.publicPath,
         stats: {colors: true},
-        headers: {
-            "Access-Control-Allow-Origin": "https://workflow-tasklist.dev.bfarch-notprod.homeoffice.gov.uk/",
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-        },
         proxy: {
             "/api/reference-data": {
-               target: prestUrl,
-               secure: false,
-                pathRewrite: {
-                    '^/api/reference-data/_QUERIES' : `/_QUERIES/read`,
-                    '^/api/reference-data' : `/${prestDatabaseName}/public`
-                },
-               changeOrigin: true
+                target: prestUrl,
+                secure: false,
+                changeOrigin: true
             },
-
             "/api/form": {
                 target: formIOUrl,
                 secure: false,
-                pathRewrite: {"^/api/form": "/form"},
                 changeOrigin: true
             },
-            "/api/workflow": workflowUrl
+            "/api/workflow": {
+                target: workflowUrl,
+                changeOrigin: true
+            },
+            "/api/translation": {
+                target: translationServiceUrl,
+                changeOrigin: true
+            },
+
         }
     }
 });

@@ -9,7 +9,6 @@ import Keycloak from "keycloak-js";
 import 'webpack-icons-installer/bootstrap';
 import '../public/styles/app.scss'
 import '../public/styles/fonts.css'
-import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import 'rxjs';
 
 const store = configureStore();

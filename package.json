@@ -51,6 +51,7 @@
     "bootstrap": "^4.0.0",
     "build": "^0.1.4",
     "cors": "^2.8.4",
+    "crypto-js": "^3.1.9-1",
     "express": "^4.16.2",
     "file-loader": "^0.11.2",
     "formiojs": "^2.30.0",

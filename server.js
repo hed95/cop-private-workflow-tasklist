@@ -27,6 +27,8 @@ console.log("prest name " + process.env.PREST_NAME);
 console.log("workflow name " + process.env.WORKFLOW_NAME);
 console.log("formio name " + process.env.FORM_IO_NAME);
 console.log("bpmn modeler name " + process.env.WORKFLOW_MODELER);
+console.log("translation name" + process.env.TRANSLATION_SERVICE_NAME);
+
 
 const domain = process.env.DOMAIN;
 
@@ -34,6 +36,7 @@ const prestName = process.env.PREST_NAME;
 const workflowName =process.env.WORKFLOW_NAME;
 const formIOName = process.env.FORM_IO_NAME;
 const bpmnModelerName = process.env.WORKFLOW_MODELER;
+const translationServiceName =  process.env.TRANSLATION_SERVICE_NAME;
 
 const intdomain = process.env.INT_DOMAIN;
 
@@ -42,12 +45,14 @@ const workflowUrl = `https://${workflowName}.${intdomain}`;
 const formIOUrl = `https://${formIOName}.${domain}`;
 const bpmnModelerUrl =  `https://${bpmnModelerName}.${domain}`;
 const prestDatabaseName = process.env.TX_DB_NAME;
-
+const translationServiceUrl = `https://${translationServiceName}.${intdomain}`;
 
 console.log("prestUrl " + prestUrl);
 console.log("workflowUrl " + workflowUrl);
 console.log("formIOUrl " + formIOUrl);
 console.log("bpmnModeler " + bpmnModelerUrl);
+console.log("translationServiceUrl " + translationServiceUrl);
+
 
 
 app.use('/api/reference-data', proxy(
@@ -96,6 +101,23 @@ app.use('/api/form', proxy(
         },
         onProxyReq: function onProxyReq(proxyReq, req, res) {
             console.log('Form IO Proxy -->  ', req.method, req.path, '-->', formIOUrl, proxyReq.path);
+        },
+        onError: function onError(err, req, res) {
+            console.error(err);
+            res.status(500);
+            res.json({error: 'Error when connecting to remote server.'});
+        },
+        logLevel: 'debug',
+        changeOrigin: true,
+        secure: false
+    }
+));
+
+app.use('/api/translation', proxy(
+    {
+        target: formIOUrl,
+        onProxyReq: function onProxyReq(proxyReq, req, res) {
+            console.log('Translation Service Proxy -->  ', req.method, req.path, '-->', formIOUrl, proxyReq.path);
         },
         onError: function onError(err, req, res) {
             console.error(err);

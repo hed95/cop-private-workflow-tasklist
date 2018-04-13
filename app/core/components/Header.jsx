@@ -44,7 +44,7 @@ class Header extends React.Component {
     }
 
     render() {
-        const { width, routerPath} = this.state;
+        const { routerPath} = this.state;
 
         const pointerStyle = {cursor: 'pointer'};
 
@@ -67,7 +67,16 @@ class Header extends React.Component {
                     </div>
                     <div className="header-proposition">
                         <div className="content">
-                            <a href="#" id="proposition-name">Operational Activities</a>
+                            <div className="grid-row">
+
+                                <div className="column-one-half">
+                                    <a href="#" id="proposition-name">Operational Activities</a>
+                                </div>
+                                <div className="column-one-half">
+                                    <h4 style={{color: 'white', textAlign: 'right', fontSize: '15px', padding: '5px 10px'}} id="proposition-name" >{this.props.kc.tokenParsed.given_name} {this.props.kc.tokenParsed.family_name} </h4>
+                                </div>
+
+                            </div>
                             <ResponsiveMenu
                                 menuOpenButton={<div className="nav-menu">Open</div>}
                                 menuCloseButton={<div className="nav-menu">Close</div>}
@@ -93,7 +102,7 @@ class Header extends React.Component {
 
                 </div>
             </header>
-            <div id="global-header-bar"/>
+            <div id="global-header-bar" />
             <LoadingBar
                 updateTime={100}
                 maxProgress={100}
