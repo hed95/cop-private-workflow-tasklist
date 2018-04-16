@@ -73,7 +73,7 @@ class Header extends React.Component {
                                     <a href="#" id="proposition-name">Operational Activities</a>
                                 </div>
                                 <div className="column-one-half">
-                                    <h4 style={{color: 'white', textAlign: 'right', fontSize: '15px', padding: '5px 10px'}} id="proposition-name" >{this.props.kc.tokenParsed.given_name} {this.props.kc.tokenParsed.family_name} </h4>
+                                    <h4 style={{color: 'white', textAlign: 'right', fontSize: '15px', marginTop: '5px'}} id="proposition-name" >{this.props.kc.tokenParsed.given_name} {this.props.kc.tokenParsed.family_name} </h4>
                                 </div>
 
                             </div>

@@ -48,7 +48,9 @@
   },
   "dependencies": {
     "accessible-autocomplete": "^1.6.1",
-    "bootstrap": "^4.0.0",
+    "bootstrap": "3.3.7",
+    "bootstrap-sass": "3.3.7",
+    "bootswatch": "3.3.7",
     "build": "^0.1.4",
     "cors": "^2.8.4",
     "crypto-js": "^3.1.9-1",
