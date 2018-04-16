@@ -62,7 +62,7 @@ class ProfilePage extends React.Component {
                         <h3 className="heading-medium">Team Details</h3>
                     </legend>
                     <StartForm formName="createAnActiveSession" processKey="activate-session" {...this.props}
-                               formDataContext={dataContext}/>
+                               formDataContext={null}/>
                 </fieldset>
             </div>
 
