@@ -3,7 +3,7 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {
     activeSessionError, activeSubmissionSuccess, hasActiveSession,
-    isFetchingActiveSession
+    isFetchingActiveSession, submittingActiveSession
 } from "../../../core/session/selectors";
 import {bindActionCreators} from "redux";
 import {createStructuredSelector} from "reselect";
@@ -51,7 +51,7 @@ class ProfilePage extends React.Component {
                 locationid: this.getValue(personDetails, 'locationid'),
                 setregionasdefault: this.getValue(personDetails, 'setregionasdefault'),
                 setteamasdefault: this.getValue(personDetails, 'setteamasdefault'),
-                setlocationasdefault:  this.getValue(personDetails, 'setlocationasdefault'),
+                setlocationasdefault: this.getValue(personDetails, 'setlocationasdefault'),
             };
         }
 
@@ -62,7 +62,7 @@ class ProfilePage extends React.Component {
                         <h3 className="heading-medium">Team Details</h3>
                     </legend>
                     <StartForm formName="createAnActiveSession" processKey="activate-session" {...this.props}
-                               formDataContext={null}/>
+                               formDataContext={dataContext}/>
                 </fieldset>
             </div>
 
@@ -71,8 +71,13 @@ class ProfilePage extends React.Component {
 
     render() {
 
-        const {hasActiveSession, isFetchingActiveSession, isFetchingPerson, activeSessionError, activeSubmissionSuccess} = this.props;
-        const headerToDisplay = !hasActiveSession ?
+        const {
+            hasActiveSession, isFetchingActiveSession,
+            isFetchingPerson, activeSessionError,
+            activeSubmissionSuccess,
+            submittingActiveSession
+        } = this.props;
+        const headerToDisplay = !submittingActiveSession && !hasActiveSession ?
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <div className="notice">
                     <i className="icon icon-important">
@@ -104,12 +109,32 @@ class ProfilePage extends React.Component {
                 </div> : <div/>}
             {activeSubmissionSuccess ? <div className="govuk-box-highlight confirm-page new">
                 <span className="hod-checkmark"/>
-                <h2 className="heading-medium">
-                    Shift details created
+                <h2 className="heading-small">
+                    Shift details created. You can now nagivate to other areas of the platform
                 </h2>
-                <p>You can now nagivate to other areas of the platform</p>
             </div> : <div/>}
+            {submittingActiveSession ?
+                <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
+                    name="three-bounce" color="#005ea5"/></div> : <div></div>
+            }
 
+
+            <div className="multiple-choice">
+                <input id="contract-length-1" name="contract-length" type="checkbox" value="Less then 1 year"/>
+                <label for="contract-length-1">Less then 1 year</label>
+            </div>
+            <div className="multiple-choice">
+                <input id="contract-length-2" name="contract-length" type="checkbox" value="2 years"/>
+                <label for="contract-length-2">2 years</label>
+            </div>
+            <div className="multiple-choice">
+                <input id="contract-length-3" name="contract-length" type="checkbox" value="5 years"/>
+                <label for="contract-length-3">5 years</label>
+            </div>
+            <div className="multiple-choice">
+                <input id="contract-length-4" name="contract-length" type="checkbox" value="10 years"/>
+                <label for="contract-length-4">10 years</label>
+            </div>
             {this.form}
         </div>
     }
@@ -142,6 +167,7 @@ export default connect((state) => {
         validationErrors: validationErrors(state),
         submittingFormForValidation: submittingFormForValidation(state),
         activeSessionError: activeSessionError(state),
+        submittingActiveSession: submittingActiveSession(state),
         activeSubmissionSuccess: activeSubmissionSuccess(state)
     }
 }, mapDispatchToProps)(withRouter(ProfilePage))

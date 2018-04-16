@@ -115,7 +115,7 @@ app.use('/api/form', proxy(
 
 app.use('/api/translation', proxy(
     {
-        target: formIOUrl,
+        target: translationServiceUrl,
         onProxyReq: function onProxyReq(proxyReq, req, res) {
             console.log('Translation Service Proxy -->  ', req.method, req.path, '-->', formIOUrl, proxyReq.path);
         },

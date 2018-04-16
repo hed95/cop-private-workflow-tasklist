@@ -16,6 +16,7 @@ function reducer(state = initialState, action) {
     switch (action.type) {
         case actions.FETCH_ACTIVE_SESSION:
             return state.set('isFetchingActiveSession', true)
+                .set('activeSubmissionSuccess', false)
                 .set('activeSessionError', null);
         case actions.FETCH_ACTIVE_SESSION_SUCCESS:
            const data = action.payload.entity;
