@@ -6,7 +6,7 @@ import Header from "./components/Header";
 const App = () => (
     <div>
         <Header/>
-        <div className="container" style={{paddingTop : '20px', height:'100%'}}>
+        <div className="container" style={{paddingTop : '20px', height:'100vh'}}>
             <Main/>
         </div>
         <Footer/>
