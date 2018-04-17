@@ -11,7 +11,7 @@ const fetchPerson = (action$, store) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `https://workflow-tasklist.dev.bfarch-notprod.homeoffice.gov.uk/api/reference-data/staffattributes?_join=inner:person:staffattributes.personid:$eq:person.personid&staffattributes.email=${store.getState().keycloak.tokenParsed.email}`,
+                path: `/reference-data/staffattributes?_join=inner:person:staffattributes.personid:$eq:person.personid&staffattributes.email=${store.getState().keycloak.tokenParsed.email}`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
