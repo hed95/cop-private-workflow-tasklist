@@ -78,7 +78,7 @@ app.use('/api/reference-data', proxy(
 
 
 app.use('/api/workflow', proxy({
-    target: prestUrl,
+    target: workflowUrl,
     onProxyReq: function onProxyReq(proxyReq, req, res) {
         console.log('Workflow Proxy -->  ', req.method, req.path, '-->', workflowUrl, proxyReq.path);
     },
