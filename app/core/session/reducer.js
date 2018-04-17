@@ -39,7 +39,7 @@ function reducer(state = initialState, action) {
         case actions.CREATE_ACTIVE_SESSION_FAILURE:
             let message;
             if (action.payload.entity) {
-                message = action.payload.entity;
+                message = action.payload.entity.error;
             } else {
                 message = `Submission to create an active session failed. Cause:${action.payload.status.code}:${action.payload.status.text}`
             }
