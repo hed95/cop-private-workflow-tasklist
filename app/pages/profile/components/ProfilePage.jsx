@@ -110,7 +110,7 @@ class ProfilePage extends React.Component {
             {activeSubmissionSuccess ? <div className="govuk-box-highlight confirm-page new">
                 <span className="hod-checkmark"/>
                 <h2 className="heading-small">
-                    Shift details created. You can now nagivate to other areas of the platform
+                    Shift details created. You can now navigate to other areas of the platform
                 </h2>
             </div> : <div/>}
             {submittingActiveSession ?
