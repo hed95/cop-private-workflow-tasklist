@@ -25,9 +25,9 @@ const createActiveSession = (action$, store) =>
                 entity: action.activeSession,
                 path: `/api/workflow/sessions`,
                 headers: {
-                    "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`,
-                    'Content-Type': 'application/json'
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
                 }
             }).map(payload => actions.createActiveSessionSuccess(payload))
                 .catch(error => Observable.of(actions.createActiveSessionFailure(error))));

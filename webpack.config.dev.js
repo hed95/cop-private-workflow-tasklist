@@ -52,7 +52,10 @@ module.exports = webpackMerge(commonConfig, {
             },
             "/api/workflow": {
                 target: workflowUrl,
-                changeOrigin: true
+                changeOrigin: true,
+                onProxyReq: function onProxyReq(proxyReq, req, res) {
+                    console.log('Workflow Proxy -->  ', req.method, req.path, '-->', `${workflowUrl}${proxyReq.path}`);
+                },
             },
             "/api/translation": {
                 target: translationServiceUrl,
