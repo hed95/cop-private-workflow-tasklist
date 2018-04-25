@@ -92,6 +92,20 @@ app.use('/api/workflow', proxy({
     secure: false
 }));
 
+app.use('/rest/camunda', proxy({
+    target: workflowUrl,
+    onProxyReq: function onProxyReq(proxyReq, req, res) {
+        console.log('Workflow Proxy Camunda REST-->  ', req.method, req.path, '-->', workflowUrl, proxyReq.path);
+    },
+    onError: function onError(err, req, res) {
+        console.error(err);
+        res.status(500);
+        res.json({error: 'Error when connecting to remote server.'});
+    },
+    logLevel: 'debug',
+    changeOrigin: true,
+    secure: false
+}));
 
 app.use('/api/form', proxy(
     {
