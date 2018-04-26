@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {isFetchingActiveSession, hasActiveSession} from '../selectors';
+import {isFetching, hasActiveSession} from '../selectors';
 import * as actions from "../actions";
 import {createStructuredSelector} from "reselect";
 import {Redirect, Route} from "react-router";
@@ -15,10 +15,14 @@ class SessionScopedRoute extends React.Component {
 
     render() {
         const { component: Component, hasActiveSession} = this.props;
-        if (this.props.isFetchingActiveSession) {
+        if (this.props.isFetching) {
             return <div style={{paddingTop: '20px', display: 'flex', justifyContent: 'center'}}><Spinner name="three-bounce" color="#005ea5"/></div>
         } else {
-            return <Route render={(props) => <Component {...props }/>}/>
+            if (hasActiveSession) {
+                return <Route render={(props) => <Component {...props }/>}/>
+            } else {
+                return <Route render={() => <Redirect to="/profile"/>}/>
+            }
         }
 
     }
@@ -27,13 +31,13 @@ class SessionScopedRoute extends React.Component {
 
 SessionScopedRoute.propTypes = {
     fetchActiveSession: PropTypes.func.isRequired,
-    isFetchingActiveSession: PropTypes.bool,
+    isFetching: PropTypes.bool,
     hasActiveSession: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
     hasActiveSession: hasActiveSession,
-    isFetchingActiveSession: isFetchingActiveSession
+    isFetching: isFetching
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

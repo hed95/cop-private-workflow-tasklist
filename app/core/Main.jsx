@@ -21,7 +21,7 @@ const Main = () => (
                 <SessionScopedRoute name="Reports" exact path='/reports' component={ReportsPage}/>
                 <SessionScopedRoute name="Notifications" exact path='/notifications' component={NotificationsPage}/>
                 <SessionScopedRoute name="Campaigns" exact path='/campaigns' component={CampaignsPage}/>
-                <SessionScopedRoute name="Process Start Page" exact path="/process-start/:processKey" component={ProcessStartPage}/>
+                <SessionScopedRoute name="Process Start Page" exact path="/process-start" component={ProcessStartPage}/>
                 <Route name="Admin" exact path="/admin" component={AdminPage}/>
                 <Redirect to="/profile"/>
             </Switch>

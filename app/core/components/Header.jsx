@@ -48,6 +48,10 @@ class Header extends React.Component {
 
         const pointerStyle = {cursor: 'pointer'};
 
+        const isProcess = (routerPath) => {
+            return routerPath === '/processes' || routerPath === '/process-start';
+        };
+
         const adminRole = this.props.kc.realmAccess && this.props.kc.realmAccess.roles
             ? this.props.kc.realmAccess.roles.find(role => role === 'platform_admin')
             : null;
@@ -86,7 +90,7 @@ class Header extends React.Component {
                                     <ul id="proposition-links" style={{width: navWidth}}>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/profile')} className={routerPath === '/profile' ? 'active' : ''}>Profile</a></li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/tasks')} className={routerPath === '/tasks' ? 'active' : ''}>Tasks</a></li>
-                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/processes')} className={routerPath === '/processes' || routerPath === '/process-start'  ? 'active' : ''}>Processes</a></li>
+                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/processes')} className={isProcess(routerPath) ? 'active' : ''}>Processes</a></li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/reports')} className={routerPath === '/reports' ? 'active' : ''}>Reports</a></li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/notifications')} className={routerPath === '/notifications' ? 'active' : ''}>Notifications</a></li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/campaigns')}

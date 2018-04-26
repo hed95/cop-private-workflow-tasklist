@@ -19,7 +19,7 @@ class ProcessesPage extends React.Component {
     }
 
     process = (process) => {
-        this.props.history.replace("/process-start/" + process.getIn(["process-definition", "key"]));
+        this.props.history.replace("/process-start?processKey=" + process.getIn(["process-definition", "key"]));
     };
 
     render() {
@@ -34,7 +34,7 @@ class ProcessesPage extends React.Component {
                     <tbody>
                     {
                         processDefinitions.map(p => {
-                            return <tr style={pointerStyle} onClick={() => this.process(p)}>
+                            return <tr key={p.getIn(['process-definition', 'key'])} style={pointerStyle} onClick={() => this.process(p)}>
                                     <td>{p.getIn(['process-definition', 'name'])}</td>
                                     <td>{p.getIn(['process-definition', 'description'])}</td>
                                  </tr>

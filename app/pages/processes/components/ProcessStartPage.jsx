@@ -8,32 +8,31 @@ import * as actions from "../actions";
 import ImmutablePropTypes from "react-immutable-proptypes";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
+import queryString from 'query-string';
 
 class ProcessStartPage extends React.Component {
 
     componentDidMount() {
-        // this.props.fetchProcessDefinition("search-of-a-person");
+        const params = queryString.parse(this.props.location.search);
+        this.props.fetchProcessDefinition(params.processKey);
     }
 
     render() {
-        // const {processDefinition} = this.props;
-        // const processKey = processDefinition.getIn(['process-definition', 'key']);
-        // const formKey = processDefinition.get('formKey');
-
+        const {isFetchingProcessDefinition, processDefinition} = this.props;
         return <div className="grid-row">
             <div className="column-full">
                 <fieldset>
-                    {false ? <div>Loading form...</div> : <div>
+                    {isFetchingProcessDefinition ? <div>Loading form...</div> : <div>
                         <legend>
-                            <h3 className="heading-medium">Search Of A Person</h3>
+                            <h3 className="heading-medium">{this.props.processDefinition.getIn(['process-definition', 'name'])}</h3>
                         </legend>
-                        <StartForm formName={"searchOfPerson"} processKey={""} {...this.props}
+
+                        <StartForm formName={processDefinition.get('formKey')} processKey={processDefinition.getIn(['process-definition', 'key'])} {...this.props}
                                    formDataContext={null}/>
                     </div>
                     }
                 </fieldset>
             </div>
-
         </div>
     };
 
@@ -41,6 +40,7 @@ class ProcessStartPage extends React.Component {
 
 ProcessStartPage.propTypes = {
     fetchProcessDefinition: PropTypes.func.isRequired,
+    processDefinition: ImmutablePropTypes.map.isRequired,
     isFetchingProcessDefinition: PropTypes.bool,
     hasError: PropTypes.bool,
     errorMessage: PropTypes.object,
@@ -51,8 +51,9 @@ const mapStateToProps = createStructuredSelector({
     isFetchingProcessDefinition: isFetchingProcessDefinition,
     hasError: hasError,
     errorMessage: errorMessage
+
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ProcessStartPage));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProcessStartPage));
