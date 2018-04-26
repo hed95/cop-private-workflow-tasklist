@@ -5,6 +5,7 @@ import profilePage from '../pages/profile';
 import notificationPage from '../pages/notifications';
 import sessionPage from '../core/session/index';
 import person from '../core/person/index';
+import processDefinitions from '../pages/processes/index';
 
 import form from './start-forms/index';
 import {  routerReducer } from 'react-router-redux'
@@ -15,8 +16,8 @@ export const rootEpic = combineEpics(
     notificationPage.epic,
     sessionPage.epic,
     form.epic,
-    person.epic
-
+    person.epic,
+    processDefinitions.epic
 );
 
 
@@ -28,5 +29,6 @@ export const rootReducer = combineReducers({
     [notificationPage.constants.NAME]: notificationPage.reducer,
     [sessionPage.constants.NAME]: sessionPage.reducer,
     [form.constants.NAME]: form.reducer,
-    [person.constants.NAME]: person.reducer
+    [person.constants.NAME]: person.reducer,
+    [processDefinitions.constants.NAME]: processDefinitions.reducer
 });

@@ -10,6 +10,7 @@ import {
 import LoadingBar from 'react-redux-loading-bar'
 import InfiniteScroll from 'react-infinite-scroller';
 
+
 class NotificationsPage extends React.Component {
 
     componentDidMount() {

@@ -18,11 +18,7 @@ class SessionScopedRoute extends React.Component {
         if (this.props.isFetchingActiveSession) {
             return <div style={{paddingTop: '20px', display: 'flex', justifyContent: 'center'}}><Spinner name="three-bounce" color="#005ea5"/></div>
         } else {
-            if (hasActiveSession) {
-                return <Route render={(props) => <Component {...props }/>}/>
-            } else {
-                return <Route render={() => <Redirect to="/profile"/>}/>
-            }
+            return <Route render={(props) => <Component {...props }/>}/>
         }
 
     }
