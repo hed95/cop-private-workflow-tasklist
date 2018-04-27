@@ -3,6 +3,7 @@ import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {Observable} from "rxjs/Observable";
 import {combineEpics} from "redux-observable";
+import {errorObservable} from "../error/epicUtil";
 
 const fetchActiveSession = (action$, store) =>
     action$.ofType(types.FETCH_ACTIVE_SESSION)
@@ -15,7 +16,10 @@ const fetchActiveSession = (action$, store) =>
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
             }).map(payload => actions.fetchActiveSessionSuccess(payload))
-                .catch(error => Observable.of(actions.fetchActiveSessionFailure(error))));
+                .catch(error => {
+                        return errorObservable(actions.fetchActiveSessionFailure(), error);
+                    }
+                ));
 
 const createActiveSession = (action$, store) =>
     action$.ofType(types.CREATE_ACTIVE_SESSION)
@@ -30,6 +34,9 @@ const createActiveSession = (action$, store) =>
                     "Content-Type": "application/json"
                 }
             }).map(payload => actions.createActiveSessionSuccess(payload))
-                .catch(error => Observable.of(actions.createActiveSessionFailure(error))));
+                .catch(error => {
+                        return errorObservable(actions.createActiveSessionFailure(), error);
+                    }
+                ));
 
 export default combineEpics(fetchActiveSession, createActiveSession);

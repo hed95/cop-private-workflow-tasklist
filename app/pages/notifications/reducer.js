@@ -8,7 +8,6 @@ const initialState = new Map({
     notifications: List([]),
     total: 0,
     nextPage: null,
-    error: '',
     hasMoreItems: false,
     pageSize: null,
     acknowledgingTaskIds: Set([])
@@ -63,8 +62,7 @@ function reducer(state = initialState, action) {
             return itemIndex > -1 ? state.deleteIn(["notifications", itemIndex]) : state;
         case actions.ACKNOWLEDGE_NOTIFICATION_FAILURE:
             const ids = state.get('acknowledgingTaskIds').delete(action.taskId);
-            return state.set('error', action.payload)
-                .set('acknowledgingTaskIds',ids);
+            return state.set('acknowledgingTaskIds',ids);
         default:
             return state;
     }

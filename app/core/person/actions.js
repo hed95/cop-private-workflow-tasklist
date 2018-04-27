@@ -9,11 +9,9 @@ const fetchPersonSuccess = (payload) => ({
     payload
 });
 
-const fetchPersonFailure = (error) => ({
+const fetchPersonFailure = () => ({
     type: types.FETCH_PERSON_FAILURE,
-    error: true,
-    payload: error.raw.message,
-})
+});
 
 export {
     fetchPerson,

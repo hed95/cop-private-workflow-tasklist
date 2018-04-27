@@ -12,15 +12,11 @@ import {createForm} from "formiojs";
 class StartForm extends React.Component {
 
     componentDidMount() {
-        if (this.props.formDataContext) {
-            this.props.fetchFormWithContext(this.props.formName, this.props.formDataContext);
-        } else {
-            this.props.fetchForm(this.props.formName);
-        }
+        this.props.fetchForm(this.props.formName);
     }
 
     render() {
-        const {loadingForm, formLoadingFailed} = this.props;
+        const {loadingForm} = this.props;
         const that = this;
 
         if (!loadingForm && this.props.form) {
@@ -46,30 +42,15 @@ class StartForm extends React.Component {
                 console.log('IFrame: caught formio error in promise', e);
             });
         }
-        const failedToLoadForm = formLoadingFailed ? <div>
-            <div className="notice">
-                <i className="icon icon-important">
-                    <span className="visually-hidden">Warning</span>
-                </i>
-                <strong className="bold-small">
-                    Failed to load form.
-                </strong>
-            </div>
-        </div> : <div/>;
 
-        return <div>{loadingForm ? <div>Loading Form....</div> : <div/>}
-            {failedToLoadForm}
-            <div id="formio"/>
-        </div>
+        return <div> <div id="formio"/></div>
     }
 }
 
 StartForm.propTypes = {
     fetchForm: PropTypes.func.isRequired,
     fetchFormWithContext: PropTypes.func.isRequired,
-    isFetchingForm: PropTypes.bool,
-    loadingForm: PropTypes.bool,
-    formLoadingFailed: PropTypes.bool,
+    loadingForm: PropTypes.bool
 };
 
 
@@ -79,7 +60,6 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 export default connect((state) => {
     return {
         form: form(state),
-        loadingForm: loadingForm(state),
-        formLoadingFailed: formLoadingFailed(state),
+        loadingForm: loadingForm(state)
     }
 }, mapDispatchToProps)(withRouter(StartForm))

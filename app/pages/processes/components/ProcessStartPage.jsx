@@ -27,8 +27,9 @@ class ProcessStartPage extends React.Component {
                             <h3 className="heading-medium">{this.props.processDefinition.getIn(['process-definition', 'name'])}</h3>
                         </legend>
 
-                        <StartForm formName={processDefinition.get('formKey')} processKey={processDefinition.getIn(['process-definition', 'key'])} {...this.props}
-                                   formDataContext={null}/>
+                        <StartForm formName={processDefinition.get('formKey')}
+                                   processKey={processDefinition.getIn(['process-definition', 'key'])}
+                                   {...this.props}/>
                     </div>
                     }
                 </fieldset>
@@ -41,16 +42,12 @@ class ProcessStartPage extends React.Component {
 ProcessStartPage.propTypes = {
     fetchProcessDefinition: PropTypes.func.isRequired,
     processDefinition: ImmutablePropTypes.map.isRequired,
-    isFetchingProcessDefinition: PropTypes.bool,
-    hasError: PropTypes.bool,
-    errorMessage: PropTypes.object,
+    isFetchingProcessDefinition: PropTypes.bool
 };
 
 const mapStateToProps = createStructuredSelector({
     processDefinition: processDefinition,
-    isFetchingProcessDefinition: isFetchingProcessDefinition,
-    hasError: hasError,
-    errorMessage: errorMessage
+    isFetchingProcessDefinition: isFetchingProcessDefinition
 
 });
 

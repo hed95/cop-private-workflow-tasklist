@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react'
 import {
-    errorMessage, hasError,
     isFetchingProcessDefinitions,
     processDefinitions
 } from "../selectors";
@@ -24,10 +23,9 @@ class ProcessesPage extends React.Component {
 
     render() {
         const {isFetchingProcessDefinitions, processDefinitions} = this.props;
-
         const pointerStyle = {cursor: 'pointer'};
-
         return <div>
+
             {isFetchingProcessDefinitions ? <div>Loading Processes....</div> : <div>
                 <table>
                     <caption className="heading-small">Processes</caption>
@@ -43,6 +41,7 @@ class ProcessesPage extends React.Component {
                     </tbody>
                 </table>
             </div>}
+
         </div>
     }
 }
@@ -50,16 +49,12 @@ class ProcessesPage extends React.Component {
 ProcessesPage.propTypes = {
     fetchProcessDefinitions: PropTypes.func.isRequired,
     processDefinitions: ImmutablePropTypes.list.isRequired,
-    isFetchingProcessDefinitions: PropTypes.bool,
-    hasError: PropTypes.bool,
-    errorMessage: PropTypes.object,
+    isFetchingProcessDefinitions: PropTypes.bool
 };
 
 const mapStateToProps = createStructuredSelector({
     processDefinitions: processDefinitions,
-    isFetchingProcessDefinitions: isFetchingProcessDefinitions,
-    hasError: hasError,
-    errorMessage: errorMessage
+    isFetchingProcessDefinitions: isFetchingProcessDefinitions
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

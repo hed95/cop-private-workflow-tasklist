@@ -1,13 +1,15 @@
 import client from "../../common/rest/client";
 import * as types from "./actionTypes";
 import * as actions from "./actions";
+import * as errorActions from '../../core/error/actions';
 import {Observable} from "rxjs/Observable";
 import {combineEpics} from "redux-observable";
+import {errorObservable} from "../../core/error/epicUtil";
 
 const fetchProcessDefinitions = (action$, store) =>
     action$.ofType(types.FETCH_PROCESS_DEFINITIONS)
-        .mergeMap(action =>
-            client({
+        .mergeMap(action => {
+            return client({
                 method: 'GET',
                 path: `/api/workflow/process-definitions`,
                 headers: {
@@ -15,7 +17,11 @@ const fetchProcessDefinitions = (action$, store) =>
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
             }).map(payload => actions.fetchProcessDefinitionsSuccess(payload))
-                .catch(error => Observable.of(actions.fetchProcessDefinitionsFailure(error))));
+                .catch(error => {
+                    return errorObservable(actions.fetchProcessDefinitionsFailure(), error);
+                    }
+                );
+        });
 
 
 const fetchProcessDefinition = (action$, store) =>
@@ -29,6 +35,9 @@ const fetchProcessDefinition = (action$, store) =>
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
             }).map(payload => actions.fetchProcessDefinitionSuccess(payload))
-                .catch(error => Observable.of(actions.fetchProcessDefinitionFailure(error))));
+                .catch(error => {
+                        return errorObservable(actions.fetchProcessDefinitionFailure(), error);
+                    }
+                ));
 
 export default combineEpics(fetchProcessDefinitions, fetchProcessDefinition);

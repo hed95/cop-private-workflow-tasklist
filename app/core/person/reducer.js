@@ -5,7 +5,6 @@ const {Map} = Immutable;
 
 const initialState = new Map({
     isFetchingPerson: true,
-    error: '',
     person: null,
 });
 
@@ -18,8 +17,7 @@ function reducer(state = initialState, action) {
            return state.set('isFetchingPerson', false)
                .set('person', Immutable.fromJS(data));
         case actions.FETCH_PERSON_FAILURE:
-            return state.set('isFetchingPerson', false)
-                .set('error', action.payload);
+            return state.set('isFetchingPerson', false);
         default:
             return state;
     }

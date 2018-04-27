@@ -7,6 +7,7 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar';
 
 import * as types from './actionTypes';
 import * as actions from './actions';
+import {errorObservable} from "../../core/error/epicUtil";
 
 const fetchNotifications = (action$, store) =>
     action$.ofType(types.FETCH_NOTIFICATIONS)
@@ -21,7 +22,10 @@ const fetchNotifications = (action$, store) =>
                             "Authorization": `Bearer ${store.getState().keycloak.token}`
                         }
                     }).map(payload => actions.fetchNotificationsSuccess(payload))
-                        .catch(error => Observable.of(actions.fetchNotificationsFailure(error)))
+                        .catch(error => {
+                                return errorObservable(actions.fetchNotificationsFailure(), error);
+                            }
+                        )
                         .concat(Observable.of(hideLoading('notifications'))),
                 ));
 
@@ -31,14 +35,16 @@ const acknowledgeNotification = (action$, store) =>
         .mergeMap(action =>
             client({
                 method: 'DELETE',
-                path: `/api/workflow/notifications/${action.taskId}`,
+                path: `/api/workflow/notifications/task/${action.taskId}`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
             }).map(payload => {
                 return actions.acknowledgeNotificationSuccess(payload)
-            }).catch(error => Observable.of(actions.acknowledgeNotificationFailure(action.taskId, error)))
-        );
+            }) .catch(error => {
+                    return errorObservable(actions.acknowledgeNotificationFailure(action.taskId), error);
+                }
+            ));
 
 export default combineEpics(fetchNotifications, acknowledgeNotification);

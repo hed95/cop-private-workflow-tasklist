@@ -10,9 +10,7 @@ const fetchProcessDefinitionsSuccess = payload => ({
 });
 
 
-const fetchProcessDefinitionsFailure =  error => ({
-   error: true,
-   payload: error,
+const fetchProcessDefinitionsFailure = () => ({
    type: types.FETCH_PROCESS_DEFINITIONS_FAILURE
 });
 
@@ -28,9 +26,7 @@ const fetchProcessDefinitionSuccess = payload => ({
 });
 
 
-const fetchProcessDefinitionFailure =  error => ({
-    error: true,
-    payload: error,
+const fetchProcessDefinitionFailure =  () => ({
     type: types.FETCH_PROCESS_DEFINITION_FAILURE
 });
 

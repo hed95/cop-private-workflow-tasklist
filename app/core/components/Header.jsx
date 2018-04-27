@@ -5,6 +5,8 @@ import LoadingBar from 'react-redux-loading-bar'
 
 import img from 'govuk_template_ejs/assets/images/gov.uk_logotype_crown_invert_trans.png?0.23.0'
 import ResponsiveMenu from 'react-responsive-navbar';
+import * as errorActionTypes from '../../core/error/actionTypes';
+import {bindActionCreators} from "redux";
 
 class Header extends React.Component {
 
@@ -29,6 +31,7 @@ class Header extends React.Component {
 
     changeRoute(path) {
         this.setState({routerPath: path});
+        this.props.resetError();
         this.props.history.replace(path);
     }
 
@@ -118,8 +121,14 @@ class Header extends React.Component {
     }
 }
 
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    resetError: () => dispatch({type: errorActionTypes.RESET_ERROR})
+}, dispatch);
+
+
 export default withRouter(connect((state) => {
     return {
         kc: state.keycloak
     }
-}, {})(Header))
+}, mapDispatchToProps)(Header))

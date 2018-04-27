@@ -4,6 +4,7 @@ import * as actions from "./actions";
 import {Observable} from "rxjs/Observable";
 import * as types from "./actionTypes";
 import * as sessionTypes from '../../core/session/actionTypes'
+import {errorObservable} from "../error/epicUtil";
 
 
 const fetchForm = (action$, store) =>
@@ -17,8 +18,10 @@ const fetchForm = (action$, store) =>
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
             }).map(payload => actions.fetchFormSuccess(payload))
-                .catch(error => Observable.of(actions.fetchFormFailure(error)))
-        );
+                .catch(error => {
+                        return errorObservable(actions.fetchFormFailure(), error);
+                    }
+                ));
 
 const fetchFormWithContext = (action$, store) =>
     action$.ofType(types.FETCH_FORM_WITH_CONTEXT)
@@ -36,9 +39,10 @@ const fetchFormWithContext = (action$, store) =>
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
             }).map(payload => actions.fetchFormSuccess(payload))
-                .catch(error => Observable.of(actions.fetchFormFailure(error)))
-        );
-
+                .catch(error => {
+                        return errorObservable(actions.fetchFormFailure(), error);
+                    }
+                ));
 
 const submit = (action$, store) =>
     action$.ofType(types.SUBMIT)
@@ -69,8 +73,10 @@ const submit = (action$, store) =>
                     }
                 }
 
-            }).catch(error => Observable.of(actions.submitFailure(error)))
-        );
+            })  .catch(error => {
+                    return errorObservable(actions.submitFailure(), error);
+                }
+            ));
 
 const submitToWorkflow = (action$, store) =>
     action$.ofType(types.SUBMIT_TO_WORKFKOW)
@@ -91,7 +97,8 @@ const submitToWorkflow = (action$, store) =>
                 }).map(payload => {
                     return Observable.of(actions.submitToWorkflowSuccess(payload))
                 }).catch(error => {
-                    return Observable.of(actions.submitToWorkflowFailure(error))
+                    return errorObservable(actions.submitToWorkflowFailure(), error);
+
                 })
             }
         );

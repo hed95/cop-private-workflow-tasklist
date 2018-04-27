@@ -6,9 +6,6 @@ const {Map, List} = Immutable;
 const initialState = new Map({
     isFetchingProcessDefinitions: true,
     processDefinitions: List([]),
-    error: false,
-    errorMessage: null,
-    processDefinition: new Map({}),
     isFetchingProcessDefinition: false
 });
 
@@ -21,19 +18,16 @@ function reducer(state = initialState, action) {
             return state.set('isFetchingProcessDefinitions', false)
                 .set('processDefinitions', Immutable.fromJS(data));
         case actions.FETCH_PROCESS_DEFINITIONS_FAILURE:
-            return state.set('isFetchingProcessDefinitions', false)
-                .set('error', true)
-                .set('errorMessage', action.payload);
+            return state.set('isFetchingProcessDefinitions', false);
         case actions.FETCH_PROCESS_DEFINITION:
-            return state.set('isFetchingProcessDefinition', true);
+            return state.set('isFetchingProcessDefinition', true)
+                .set('fetchingFailed', false);
         case actions.FETCH_PROCESS_DEFINITION_SUCCESS:
             const processDefinition = action.payload.entity ? action.payload.entity : {};
             return state.set('isFetchingProcessDefinition', false)
                 .set('processDefinition', Immutable.fromJS(processDefinition));
         case actions.FETCH_PROCESS_DEFINITION_FAILURE:
-            return state.set('isFetchingProcessDefinition', false)
-                .set('error', true)
-                .set('errorMessage', action.payload);
+            return state.set('isFetchingProcessDefinition', false);
         default:
             return state;
     }

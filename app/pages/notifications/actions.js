@@ -8,10 +8,8 @@ const fetchNotificationsSuccess = payload => ({
     type: types.FETCH_NOTIFICATIONS_SUCCESS, payload
 });
 
-const fetchNotificationsFailure = error => ({
+const fetchNotificationsFailure = () => ({
     type: types.FETCH_NOTIFICATIONS_FAILURE,
-    error: true,
-    payload: error.raw.message
 });
 
 const acknowledgeNotification = taskId => ({
@@ -23,10 +21,8 @@ const acknowledgeNotificationSuccess = payload => ({
     payload
 });
 
-const acknowledgeNotificationFailure = (taskId, error) => ({
+const acknowledgeNotificationFailure = (taskId) => ({
     type: types.ACKNOWLEDGE_NOTIFICATION_FAILURE,
-    error: true,
-    payload: error.raw.message,
     taskId: taskId
 });
 

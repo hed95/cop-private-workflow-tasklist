@@ -7,7 +7,6 @@ const initialState = new Map({
     isFetchingActiveSession: true,
     hasActiveSession: false,
     activeSession: Map({}),
-    activeSessionError: null,
     submittingActiveSession: false,
     activeSubmissionSuccess: false
 });
@@ -16,8 +15,7 @@ function reducer(state = initialState, action) {
     switch (action.type) {
         case actions.FETCH_ACTIVE_SESSION:
             return state.set('isFetchingActiveSession', true)
-                .set('activeSubmissionSuccess', false)
-                .set('activeSessionError', null);
+                .set('activeSubmissionSuccess', false);
         case actions.FETCH_ACTIVE_SESSION_SUCCESS:
             const data = action.payload.entity;
             return state.set('isFetchingActiveSession', false)
@@ -25,30 +23,19 @@ function reducer(state = initialState, action) {
                 .set('activeSession', Immutable.fromJS(data[0]));
         case actions.FETCH_ACTIVE_SESSION_FAILURE:
             return state.set('isFetchingActiveSession', false)
-                .set('hasActiveSession', false)
-                .set('activeSessionError', action.payload);
+                .set('hasActiveSession', false);
         case actions.CREATE_ACTIVE_SESSION:
             return state.set('submittingActiveSession', true)
-                .set('activeSubmissionSuccess', false)
-                .set('activeSessionError', null);
+                .set('activeSubmissionSuccess', false);
         case actions.CREATE_ACTIVE_SESSION_SUCCESS:
             return state.set('submittingActiveSession', false)
                 .set('activeSubmissionSuccess', true)
                 .set('hasActiveSession', true)
                 .set('activeSession', action.payload.entity);
         case actions.CREATE_ACTIVE_SESSION_FAILURE:
-            let message;
-            const payload = action.payload;
-            const messagePrefix = 'Submission to create active session failed:';
-            if (payload.entity && payload.entity.error) {
-                message = `${messagePrefix} ${payload.entity.error}`;
-            } else {
-                message = `${messagePrefix} ${action.payload.status.code}:${action.payload.status.text}`
-            }
             return state
                 .set("submittingActiveSession", false)
-                .set('activeSubmissionSuccess', false)
-                .set('activeSessionError', message);
+                .set('activeSubmissionSuccess', false);
         default:
             return state;
     }

@@ -23,8 +23,8 @@ import {
 class ProfilePage extends React.Component {
 
     componentDidMount() {
-        this.props.actions.sessionActions.fetchActiveSession();
-        this.props.actions.personActions.fetchPerson();
+        //this.props.actions.sessionActions.fetchActiveSession();
+        //this.props.actions.personActions.fetchPerson();
         this.form = this.createForm();
     }
 
@@ -37,23 +37,6 @@ class ProfilePage extends React.Component {
     };
 
     createForm = () => {
-        const activeSession = this.props.activeSession;
-        const personDetails = this.props.person;
-        let dataContext;
-        if (activeSession) {
-            dataContext = activeSession
-        } else {
-            dataContext = {
-                teamid: this.getValue(personDetails, 'teamid'),
-                personid: this.getValue(personDetails, 'personid'),
-                endtime: null,
-                regionid: this.getValue(personDetails, 'regionid'),
-                locationid: this.getValue(personDetails, 'locationid'),
-                setregionasdefault: this.getValue(personDetails, 'setregionasdefault'),
-                setteamasdefault: this.getValue(personDetails, 'setteamasdefault'),
-                setlocationasdefault: this.getValue(personDetails, 'setlocationasdefault'),
-            };
-        }
 
         return <div className="grid-row">
             <div className="column-full">
@@ -73,7 +56,7 @@ class ProfilePage extends React.Component {
 
         const {
             hasActiveSession, isFetchingActiveSession,
-            isFetchingPerson, activeSessionError,
+            isFetchingPerson,
             activeSubmissionSuccess,
             submittingActiveSession
         } = this.props;
@@ -95,18 +78,6 @@ class ProfilePage extends React.Component {
                     name="three-bounce" color="#005ea5"/></div>
                 : headerToDisplay
             }
-
-            {activeSessionError ?
-                <div className="error-summary" role="alert" aria-labelledby="error-summary-heading-example-1"
-                     tabIndex="-1">
-                    <h2 className="heading-medium error-summary-heading" id="error-summary-heading-example-1">
-                        Failed to create shift details
-                    </h2>
-                    <ul className="error-summary-list">
-                        <li>{activeSessionError}</li>
-                    </ul>
-
-                </div> : <div/>}
             {activeSubmissionSuccess ? <div className="govuk-box-highlight confirm-page new">
                 <span className="hod-checkmark"/>
                 <h2 className="heading-small">
@@ -145,10 +116,7 @@ export default connect((state) => {
         isFetchingActiveSession: isFetchingActiveSession(state),
         person: person(state),
         isFetchingPerson: isFetchingPerson(state),
-        hasFormValidationErrors: hasFormValidationErrors(state),
-        validationErrors: validationErrors(state),
         submittingFormForValidation: submittingFormForValidation(state),
-        activeSessionError: activeSessionError(state),
         submittingActiveSession: submittingActiveSession(state),
         activeSubmissionSuccess: activeSubmissionSuccess(state)
     }

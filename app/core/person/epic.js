@@ -3,6 +3,7 @@ import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {Observable} from "rxjs/Observable";
 import {combineEpics} from "redux-observable";
+import {errorObservable} from "../error/epicUtil";
 
 
 
@@ -17,7 +18,10 @@ const fetchPerson = (action$, store) =>
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
             }).map(payload => actions.fetchPersonSuccess(payload))
-                .catch(error => Observable.of(actions.fetchPersonFailure(error))));
+                .catch(error => {
+                        return errorObservable(actions.fetchPersonFailure(), error);
+                    }
+                ));
 
 
 export default combineEpics(fetchPerson);

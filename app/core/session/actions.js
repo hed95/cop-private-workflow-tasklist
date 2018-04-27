@@ -9,9 +9,7 @@ const fetchActiveSessionSuccess = payload => ({
     payload
 });
 
-const fetchActiveSessionFailure = error => ({
-    error: true,
-    payload: error.raw.message,
+const fetchActiveSessionFailure = () => ({
     type: types.FETCH_ACTIVE_SESSION_FAILURE
 });
 
@@ -25,9 +23,7 @@ const createActiveSessionSuccess = payload => ({
     payload
 });
 
-const createActiveSessionFailure = error => ({
-    error: true,
-    payload: error,
+const createActiveSessionFailure = () => ({
     type: types.CREATE_ACTIVE_SESSION_FAILURE
 });
 

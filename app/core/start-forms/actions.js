@@ -20,9 +20,7 @@ const fetchFormSuccess = payload => ({
    payload
 });
 
-const fetchFormFailure = error => ({
-    error: true,
-    payload: error.raw.message,
+const fetchFormFailure = () => ({
     type: types.FETCH_FORM_FAILURE
 });
 
@@ -40,9 +38,8 @@ const submitSuccess = (payload) => ({
     payload
 });
 
-const submitFailure = (error) => ({
-    type: types.SUBMIT_FAILURE,
-    error
+const submitFailure = () => ({
+    type: types.SUBMIT_FAILURE
 });
 
 const submitToWork = (processKey, variableName, data) => ({
@@ -57,10 +54,8 @@ const submitToWorkflowSuccess = (payload) => ({
     payload
 });
 
-const submitToWorkflowFailure = (error) => ({
-    type: types.SUBMIT_TO_WORKFKOW_FAILURE,
-    error:true,
-    payload: error
+const submitToWorkflowFailure = () => ({
+    type: types.SUBMIT_TO_WORKFKOW_FAILURE
 });
 
 
