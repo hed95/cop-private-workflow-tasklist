@@ -23,13 +23,18 @@ class ProcessStartPage extends React.Component {
             <div className="column-full">
                 <fieldset>
                     {isFetchingProcessDefinition ? <div>Loading form...</div> : <div>
-                        <legend>
-                            <h3 className="heading-medium">{this.props.processDefinition.getIn(['process-definition', 'name'])}</h3>
-                        </legend>
+                        {processDefinition ? <div>
+                            <legend>
+                                <h3 className="heading-medium">{processDefinition.getIn(['process-definition', 'name'])}</h3>
+                            </legend>
 
-                        <StartForm formName={processDefinition.get('formKey')}
-                                   processKey={processDefinition.getIn(['process-definition', 'key'])}
-                                   {...this.props}/>
+                            <StartForm formName={processDefinition.get('formKey')}
+                                       processKey={processDefinition.getIn(['process-definition', 'key'])}
+                                       {...this.props}/>
+                        </div> : <div>
+                            No process definition found
+                        </div>}
+
                     </div>
                     }
                 </fieldset>
@@ -41,7 +46,7 @@ class ProcessStartPage extends React.Component {
 
 ProcessStartPage.propTypes = {
     fetchProcessDefinition: PropTypes.func.isRequired,
-    processDefinition: ImmutablePropTypes.map.isRequired,
+    processDefinition: ImmutablePropTypes.map,
     isFetchingProcessDefinition: PropTypes.bool
 };
 

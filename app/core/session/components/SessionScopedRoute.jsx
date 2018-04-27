@@ -7,6 +7,7 @@ import {createStructuredSelector} from "reselect";
 import {Redirect, Route} from "react-router";
 import Spinner from 'react-spinkit';
 import ErrorHandlingComponent from "../../error/component/ErrorHandlingComponent";
+const uuidv4 = require('uuid/v4');
 
 class SessionScopedRoute extends React.Component {
 
@@ -20,8 +21,8 @@ class SessionScopedRoute extends React.Component {
             return <div style={{paddingTop: '20px', display: 'flex', justifyContent: 'center'}}><Spinner
                 name="three-bounce" color="#005ea5"/></div>
         } else {
-            return <Route render={(props) => <ErrorHandlingComponent>
-                <Component {...props}/>
+            return <Route render={(props) => <ErrorHandlingComponent >
+                <Component {...props} key={uuidv4()}/>
             </ErrorHandlingComponent>}/>
         }
 

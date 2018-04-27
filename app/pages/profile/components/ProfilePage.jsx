@@ -23,8 +23,8 @@ import {
 class ProfilePage extends React.Component {
 
     componentDidMount() {
-        //this.props.actions.sessionActions.fetchActiveSession();
-        //this.props.actions.personActions.fetchPerson();
+        this.props.actions.sessionActions.fetchActiveSession();
+        this.props.actions.personActions.fetchPerson();
         this.form = this.createForm();
     }
 
