@@ -38,7 +38,7 @@ class ProfilePage extends React.Component {
 
     createForm = () => {
 
-        return <div className="grid-row">
+            return <div className="grid-row">
             <div className="column-full">
                 <fieldset>
                     <legend>

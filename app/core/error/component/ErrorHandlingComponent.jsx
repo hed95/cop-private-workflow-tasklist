@@ -18,7 +18,7 @@ class ErrorHandlingComponent extends React.Component {
             <div className="error-summary" role="alert" aria-labelledby="error-summary-heading-example-1"
                  tabIndex="-1">
                 <h2 className="heading-medium error-summary-heading" id="error-summary-heading-example-1">
-                   The following errors occurred:
+                   We are experiencing technical problems
                 </h2>
                 <ul className="error-summary-list">
                     {items}

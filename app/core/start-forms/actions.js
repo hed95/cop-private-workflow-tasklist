@@ -13,8 +13,6 @@ const fetchFormWithContext = (formName, dataContext) => ({
 
 
 
-
-
 const fetchFormSuccess = payload => ({
    type: types.FETCH_FORM_SUCCESS,
    payload

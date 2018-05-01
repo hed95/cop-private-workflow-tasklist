@@ -278,3 +278,89 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 .confirm-page .hod-checkmark + .heading-large {
   margin-top: 0;
 }
+
+.react-tabs__tab--selected {
+  background: #fff;
+  border-color: #aaa;
+  color: black;
+  font-weight: bold;
+  border-radius: 5px 5px 0 0;
+}
+
+.gov-pagination .pagination > li > a {
+  border: none;
+}
+
+
+.pagination .pagination_list-items {
+
+  li {
+    display: inline-block;
+    a {
+      //@include bold-19;
+      @extend .bold-small;
+      color: $govuk-blue;
+      display: inline-block;
+      padding: 15px 5px 10px 5px;
+      margin-right: 15px;
+      text-decoration: none;
+      border: none;
+
+      &:focus {
+        outline: 0;
+      }
+    }
+    &.active a,
+    &.active a:hover {
+      color: $govuk-blue;
+      -webkit-box-shadow: inset 0px -5px 0px 0px $govuk-blue;
+      -moz-box-shadow: inset 0px -5px 0px 0px $govuk-blue;
+      box-shadow: inset 0px -5px 0px 0px $govuk-blue;
+    }
+  }
+}
+
+.padding {
+  padding-left: 15px;
+}
+
+.pagination {
+  padding: 0;
+}
+.pagination__item {
+  display: inline-block;
+  list-style: none;
+
+}
+.pagination__link {
+  display: block;
+  padding: 5px 10px;
+  text-decoration: none;
+  border: none;
+
+  &:hover, &:focus {
+    background: $highlight-colour;
+    outline: 3px solid $focus-colour;
+  }
+
+  &.current {
+    color: $text-colour;
+    font-weight: 700;
+    border: none;
+    pointer-events: none;
+    cursor: default;
+
+    &:hover, &:focus {
+      color: $text-colour;
+      background: none;
+    }
+  }
+}
+
+.pagination__summary {
+  padding: 25px 0  ;
+
+  @media (min-width: 642px) {
+    float: right;
+  }
+}

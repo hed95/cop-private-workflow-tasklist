@@ -28,7 +28,12 @@ class ProcessesPage extends React.Component {
 
             {isFetchingProcessDefinitions ? <div>Loading Processes....</div> : <div>
                 <table>
-                    <caption className="heading-small">Processes</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                    </thead>
                     <tbody>
                     {
                         processDefinitions.map(p => {

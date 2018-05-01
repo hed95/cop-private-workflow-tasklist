@@ -42,6 +42,10 @@ module.exports = webpackMerge(commonConfig, {
         proxy: {
             "/api/reference-data": {
                 target: prestUrl,
+                pathRewrite: {
+                    '^/api/reference-data/_QUERIES' : `/_QUERIES/read`,
+                    '^/api/reference-data' : `/${prestDatabaseName}/public`
+                },
                 secure: false,
                 changeOrigin: true
             },

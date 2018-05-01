@@ -1,21 +1,51 @@
-import * as types from './actionTypes';
+import * as types from "./actionTypes";
 
-const fetchGroupTasks = url => ({
-    type: types.FETCH_GROUP_TASKS, url
-});
+const fetchTasksAssignedToMe = (url) => {
+    return {
+        type: types.FETCH_TASKS_ASSIGNED_TO_ME,
+        url
+    }
+};
 
-const fetchGroupTasksSuccess = payload => ({
-    type: types.FETCH_GROUP_TASKS_SUCCESS,
-    payload
-});
+const fetchTasksAssignedToMeSuccess = (payload) => {
+    return {
+        type: types.FETCH_TASKS_ASSIGNED_TO_ME_SUCCESS,
+        payload
+    }
+};
 
-const fetchGroupTasksFailure = error => ({
-    error: true,
-    payload: error.raw.message,
-    type: types.FETCH_GROUP_TASKS_FAILURE
-})
+const fetchTasksAssignedToMeFailure = () => {
+    return {
+        type: types.FETCH_TASKS_ASSIGNED_TO_ME_FAILURE
+    }
+};
 
-export  {
-    fetchGroupTasks,
-    fetchGroupTasksSuccess
+
+const fetchMyGroupTasks = (url) => {
+    return {
+        type: types.FETCH_MY_GROUP_TASKS,
+        url
+    }
+};
+
+const fetchMyGroupTasksSuccess = (payload) => {
+    return {
+        type: types.FETCH_MY_GROUP_TASKS_SUCCESS,
+        payload
+    }
+};
+
+const fetchMyGroupTasksFailure = () => {
+    return {
+        type: types.FETCH_MY_GROUP_TASKS_FAILURE
+    }
+};
+
+export {
+    fetchTasksAssignedToMe,
+    fetchTasksAssignedToMeSuccess,
+    fetchTasksAssignedToMeFailure,
+    fetchMyGroupTasks,
+    fetchMyGroupTasksSuccess,
+    fetchMyGroupTasksFailure
 }

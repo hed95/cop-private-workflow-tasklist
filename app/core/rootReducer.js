@@ -6,6 +6,8 @@ import sessionPage from '../core/session/index';
 import person from '../core/person/index';
 import processDefinitions from '../pages/processes/index';
 import error from '../core/error/index';
+import task from '../pages/task/index'
+import tasks from '../pages/tasks/index';
 
 import form from './start-forms/index';
 import {  routerReducer } from 'react-router-redux'
@@ -16,7 +18,9 @@ export const rootEpic = combineEpics(
     sessionPage.epic,
     form.epic,
     person.epic,
-    processDefinitions.epic
+    processDefinitions.epic,
+    task.epic,
+    tasks.epic
 );
 
 
@@ -29,5 +33,7 @@ export const rootReducer = combineReducers({
     [form.constants.NAME]: form.reducer,
     [person.constants.NAME]: person.reducer,
     [processDefinitions.constants.NAME]: processDefinitions.reducer,
-    [error.constants.NAME]: error.reducer
+    [error.constants.NAME]: error.reducer,
+    [task.constants.NAME]: task.reducer,
+    [tasks.constants.NAME]: tasks.reducer
 });
