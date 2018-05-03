@@ -304,7 +304,6 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
       padding: 15px 5px 10px 5px;
       margin-right: 15px;
       text-decoration: none;
-      border: none;
 
       &:focus {
         outline: 0;
@@ -336,7 +335,6 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
   display: block;
   padding: 5px 10px;
   text-decoration: none;
-  border: none;
 
   &:hover, &:focus {
     background: $highlight-colour;

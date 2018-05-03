@@ -15,6 +15,8 @@ class StartForm extends React.Component {
         this.props.fetchForm(this.props.formName);
     }
 
+
+
     render() {
         const {loadingForm} = this.props;
         const that = this;

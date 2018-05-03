@@ -14,7 +14,9 @@ const initialState = new Map({
 function reducer(state = initialState, action) {
     switch (action.type) {
         case actions.FETCH_FORM:
-            return state.set('loadingForm', true);
+            return state.set('loadingForm', true)
+                .set('submittingToWorkflow', false)
+                .set('submissionToWorkflowSuccessful', false);
         case actions.FETCH_FORM_SUCCESS:
             const data = action.payload.entity;
             return state.set('loadingForm', false)

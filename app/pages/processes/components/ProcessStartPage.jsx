@@ -9,6 +9,8 @@ import ImmutablePropTypes from "react-immutable-proptypes";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import queryString from 'query-string';
+import {submissionToWorkflowSuccessful, submittingToWorkflow} from "../../../core/start-forms/selectors";
+import Spinner from 'react-spinkit';
 
 class ProcessStartPage extends React.Component {
 
@@ -18,8 +20,21 @@ class ProcessStartPage extends React.Component {
     }
 
     render() {
-        const {isFetchingProcessDefinition, processDefinition} = this.props;
+        const {isFetchingProcessDefinition, processDefinition, submissionToWorkflowSuccessful, submittingToWorkflow} = this.props;
         return <div className="grid-row">
+            {submittingToWorkflow ?
+                <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
+                    name="three-bounce" color="#005ea5"/></div> : <div></div>
+            }
+
+            {
+                !submittingToWorkflow && submissionToWorkflowSuccessful ? <div className="govuk-box-highlight confirm-page new">
+                    <span className="hod-checkmark"/>
+                    <h2 className="heading-small">
+                        {processDefinition.getIn(['process-definition', 'name'])} successfully started
+                    </h2>
+                </div> : <div/>
+            }
             <div className="column-full">
                 <fieldset>
                     {isFetchingProcessDefinition ? <div>Loading form...</div> : <div>
@@ -37,6 +52,7 @@ class ProcessStartPage extends React.Component {
 
                     </div>
                     }
+
                 </fieldset>
             </div>
         </div>
@@ -47,12 +63,16 @@ class ProcessStartPage extends React.Component {
 ProcessStartPage.propTypes = {
     fetchProcessDefinition: PropTypes.func.isRequired,
     processDefinition: ImmutablePropTypes.map,
-    isFetchingProcessDefinition: PropTypes.bool
+    isFetchingProcessDefinition: PropTypes.bool,
+    submittingToWorkflow: PropTypes.bool,
+    submissionToWorkflowSuccessful: PropTypes.bool
 };
 
 const mapStateToProps = createStructuredSelector({
     processDefinition: processDefinition,
-    isFetchingProcessDefinition: isFetchingProcessDefinition
+    isFetchingProcessDefinition: isFetchingProcessDefinition,
+    submittingToWorkflow: submittingToWorkflow,
+    submissionToWorkflowSuccessful: submissionToWorkflowSuccessful,
 
 });
 

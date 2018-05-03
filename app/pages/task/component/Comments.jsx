@@ -11,8 +11,6 @@ import Pagination from "../../../core/components/Pagination";
 
 class Comments extends React.Component {
 
-
-
     constructor() {
         super();
         this.state = {
@@ -25,19 +23,24 @@ class Comments extends React.Component {
     }
 
     componentDidMount() {
+        this.setState({pageOfItems: []});
         this.props.fetchComments(`/api/workflow/tasks/${this.props.taskId}/comments`);
 
     }
 
+    componentWillUnmount() {
+        this.setState({pageOfItems: []});
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.taskId !== this.props.taskId) {
+            this.setState({pageOfItems: []});
             this.props.fetchComments(`/api/workflow/tasks/${nextProps.taskId}/comments`);
         }
     }
     render() {
 
         const {isFetchingComments, comments} = this.props;
-
         return <div>
             <div className="data">
                 <span className="data-item bold-medium">{comments.size} comments</span>

@@ -32,6 +32,10 @@ class Pagination extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        this.setState({pager: {}});
+    }
+
     setPage(page) {
         let {items, pageSize} = this.props;
         let pager = this.state.pager;
@@ -111,40 +115,40 @@ class Pagination extends React.Component {
             // don't display pager if there is only 1 page
             return null;
         }
-
+        const summary = `Showing ${pager.currentPage} — ${pager.totalPages} of ${pager.totalItems} results`;
         return (
-            <nav role="navigation" aria-label="Pagination">
-                <div className="gov-pagination">
-                    <ul className="pagination">
-                        <li className={pager.currentPage === 1 ? 'disabled' : ''}>
-                            <a onClick={() => this.setPage(1)}>First</a>
-                        </li>
-                        <li className={pager.currentPage === 1 ? 'disabled' : ''}>
-                            <a onClick={() => this.setPage(pager.currentPage - 1)}>Previous</a>
-                        </li>
-                        {pager.pages.map((page, index) => {
-                                const current = pager.currentPage === page ? 'current' : '';
-                                const paginationLink = `pagination__link ${current}`;
-                                return <li key={index} className="pagination__item">
-                                    <a className={paginationLink}
-                                       onClick={() => this.setPage(page)}>{page}</a>
-                                </li>
+            <div className="grid-row">
+                <nav role="navigation" aria-label="Pagination">
+                    <div className="pagination__summary">{summary}</div>
+                    <div className="gov-pagination">
+                        <ul className="pagination">
+                            <li className={pager.currentPage === 1 ? 'disabled' : ''}>
+                                <a onClick={() => this.setPage(1)}>First</a>
+                            </li>
+                            <li className={pager.currentPage === 1 ? 'disabled' : ''}>
+                                <a onClick={() => this.setPage(pager.currentPage - 1)}>Previous</a>
+                            </li>
+                            {pager.pages.map((page, index) => {
+                                    const current = pager.currentPage === page ? 'current' : '';
+                                    const paginationLink = `pagination__link ${current}`;
+                                    return <li key={index} className="pagination__item">
+                                        <a className={paginationLink}
+                                           onClick={() => this.setPage(page)}>{page}</a>
+                                    </li>
 
-                            }
-                        )}
-                        <li className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
-                            <a onClick={() => this.setPage(pager.currentPage + 1)}>Next</a>
-                        </li>
-                        <li className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
-                            <a onClick={() => this.setPage(pager.totalPages)}>Last</a>
-                        </li>
-                    </ul>
-                    <div
-                        className="pagination__summary">Showing {pager.currentPage} &ndash; {pager.totalPages} of {pager.totalItems} results
+                                }
+                            )}
+                            <li className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
+                                <a onClick={() => this.setPage(pager.currentPage + 1)}>Next</a>
+                            </li>
+                            <li className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
+                                <a onClick={() => this.setPage(pager.totalPages)}>Last</a>
+                            </li>
+                        </ul>
                     </div>
-                </div>
 
-            </nav>
+                </nav>
+            </div>
         );
     }
 }

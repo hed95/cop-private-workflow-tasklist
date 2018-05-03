@@ -73,34 +73,31 @@ const submit = (action$, store) =>
                     }
                 }
 
-            })  .catch(error => {
+            }).catch(error => {
                     return errorObservable(actions.submitFailure(), error);
                 }
             ));
 
 const submitToWorkflow = (action$, store) =>
     action$.ofType(types.SUBMIT_TO_WORKFKOW)
-        .mergeMap(action => {
-                client({
-                    method: 'POST',
-                    path: `/api/workflow/process-instances`,
-                    entity: {
-                        "data": action.data,
-                        "processKey": action.processKey,
-                        "variableName": action.variableName
-                    },
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": `Bearer ${store.getState().keycloak.token}`,
-                        'Content-Type': 'application/json'
-                    }
-                }).map(payload => {
-                    return Observable.of(actions.submitToWorkflowSuccess(payload))
-                }).catch(error => {
-                    return errorObservable(actions.submitToWorkflowFailure(), error);
-
+        .mergeMap(action =>
+            client({
+                method: 'POST',
+                path: `/api/workflow/process-instances`,
+                entity: {
+                    "data": action.data,
+                    "processKey": action.processKey,
+                    "variableName": action.variableName
+                },
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`,
+                    'Content-Type': 'application/json'
+                }
+            }).map(payload => actions.submitToWorkflowSuccess(payload))
+                .catch(error => {
+                    return errorObservable(actions.submitToWorkflowFailure(), error)
                 })
-            }
         );
 
 
