@@ -10,19 +10,37 @@ const initialState = new Map({
     comments: new List([]),
     task: new Map({}),
     form: null,
-    isFetchingCreateCommentForm: false
-
+    isFetchingCreateCommentForm: false,
+    unclaimSuccessful: false,
+    claimSuccessful: false,
+    completeSuccessful: false,
+    variables: new Map({}),
+    candidateGroups: new List([])
 });
 
 function reducer(state = initialState, action) {
     switch (action.type) {
+
         //fetch task
         case actions.FETCH_TASK:
-            return state.set('isFetchingTask', true);
+            return initialState;
         case actions.FETCH_TASK_SUCCESS:
             const task = action.payload.entity.task;
+            const rawVariables = action.payload.entity.variables;
+            let variables;
+            if (rawVariables) {
+                variables = Immutable.fromJS(Object.keys(rawVariables).map((key) => {
+                    return {
+                        key: key,
+                        value: rawVariables[key].value
+                    }
+                }));
+            }
             return state.set('isFetchingTask', false)
-                .set('task', Immutable.fromJS(task));
+                .set('task', Immutable.fromJS(task))
+                .set('candidateGroups', action.payload.entity.candidateGroups ?
+                    Immutable.fromJS(action.payload.entity.candidateGroups) : new List([]))
+                .set('variables', variables);
         case actions.FETCH_TASK_FAILURE:
             return state.set('isFetchingTask', false);
 
@@ -56,6 +74,22 @@ function reducer(state = initialState, action) {
         case actions.FETCH_CREATE_COMMENT_FORM_FAILURE:
             return state.set('isFetchingCreateCommentForm', false);
 
+        case actions.UNCLAIM_TASK_SUCCESS:
+            return state.set('unclaimSuccessful', true);
+
+        case actions.UNCLAIM_TASK_FAILURE:
+            return state.set('unclaimSuccessful', false);
+
+        case actions.CLAIM_TASK_SUCCESS:
+            return state.set('claimSuccessful', true);
+        case actions.CLAIM_TASK_FAILURE:
+            return state.set('claimSuccessful', false);
+
+        case actions.COMPLETE_TASK_SUCCESS:
+            return state.set('completeSuccessful', true);
+        case actions.COMPLETE_TASK_FAILURE:
+
+            return state.set('completeSuccessful', false);
         default:
             return state;
     }

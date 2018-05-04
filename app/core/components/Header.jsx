@@ -32,7 +32,7 @@ class Header extends React.Component {
     changeRoute(path) {
         this.setState({routerPath: path});
         this.props.resetError();
-        this.props.history.replace(path);
+       this.props.history.replace(path);
     }
 
     componentWillReceiveProps(nextProps) {

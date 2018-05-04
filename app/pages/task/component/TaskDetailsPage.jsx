@@ -4,7 +4,8 @@ import Comments from "./Comments";
 import Info from "./Info";
 import Form from "./Form";
 import {
-    isFetchingTask, task
+    candidateGroups,
+    isFetchingTask, task, variables
 } from "../selectors";
 import * as actions from "../actions";
 import {bindActionCreators} from "redux";
@@ -27,24 +28,26 @@ class TaskDetailsPage extends React.Component {
             this.props.fetchTask(nextProps.taskId);
         }
     }
-    
+
     render() {
         const {task} = this.props;
+
+        const hasFormKey = task && task.get('formKey');
         return <div>
             <h3 className="heading-medium">{task.get('name')}</h3>
             <Tabs>
                 <TabList>
                     <Tab>Details</Tab>
-                    <Tab>Form</Tab>
+                    {hasFormKey ? <Tab>Form</Tab> : null}
                     <Tab>Comments</Tab>
                 </TabList>
                 <div style={{paddingTop: '10px'}}>
                     <TabPanel>
-                        <Info task={task}/>
+                        <Info {...this.props} />
                     </TabPanel>
-                    <TabPanel>
+                    {hasFormKey ? <TabPanel>
                         <Form/>
-                    </TabPanel>
+                    </TabPanel> : null}
                     <TabPanel>
                         <Comments taskId={this.taskId}/>
                     </TabPanel>
@@ -62,7 +65,9 @@ TaskDetailsPage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
     isFetchingTask: isFetchingTask,
-    task: task
+    task: task,
+    candidateGroups: candidateGroups,
+    variables: variables
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

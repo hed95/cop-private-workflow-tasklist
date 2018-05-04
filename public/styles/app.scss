@@ -362,3 +362,23 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
     float: right;
   }
 }
+
+.btn-toolbar .btn {
+  margin-right: 5px;
+  background-color: $button-colour;
+  &:hover, &:disabled {
+    background-color: $button-colour;
+  }
+
+}
+.btn-toolbar .btn:last-child{
+  margin-right: 0;
+  background-color: $button-colour;
+}
+
+.app-dl .dl-horizontal dt
+{
+  white-space: normal;
+  width: auto;
+  text-align: left;
+}

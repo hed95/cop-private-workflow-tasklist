@@ -2,6 +2,7 @@ import React, {PropTypes} from "react";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {
+    activeSession,
     activeSessionError, activeSubmissionSuccess, hasActiveSession,
     isFetchingActiveSession, submittingActiveSession
 } from "../../../core/session/selectors";
@@ -16,9 +17,9 @@ import {
 import Spinner from 'react-spinkit';
 import StartForm from "../../../core/start-forms/components/StartForm";
 import {
-    hasFormValidationErrors, submittingFormForValidation,
-    validationErrors
+    submittingFormForValidation
 } from "../../../core/start-forms/selectors";
+import ImmutablePropTypes from "react-immutable-proptypes";
 
 class ProfilePage extends React.Component {
 
@@ -37,7 +38,6 @@ class ProfilePage extends React.Component {
     };
 
     createForm = () => {
-
             return <div className="grid-row">
             <div className="column-full">
                 <fieldset>
@@ -45,7 +45,7 @@ class ProfilePage extends React.Component {
                         <h3 className="heading-medium">Team Details</h3>
                     </legend>
                     <StartForm formName="createAnActiveSession" processKey="activate-session" {...this.props}
-                               formDataContext={null}/>
+                               submission={this.props.activeSession}/>
                 </fieldset>
             </div>
 
@@ -97,6 +97,7 @@ class ProfilePage extends React.Component {
 ProfilePage.propTypes = {
     isFetchingActiveSession: PropTypes.bool,
     hasActiveSession: PropTypes.bool,
+    activeSession: ImmutablePropTypes.map
 };
 
 
@@ -118,7 +119,8 @@ export default connect((state) => {
         isFetchingPerson: isFetchingPerson(state),
         submittingFormForValidation: submittingFormForValidation(state),
         submittingActiveSession: submittingActiveSession(state),
-        activeSubmissionSuccess: activeSubmissionSuccess(state)
+        activeSubmissionSuccess: activeSubmissionSuccess(state),
+        activeSession: activeSession(state)
     }
 }, mapDispatchToProps)(withRouter(ProfilePage))
 

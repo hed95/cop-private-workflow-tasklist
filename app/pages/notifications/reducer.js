@@ -55,9 +55,9 @@ function reducer(state = initialState, action) {
         case actions.ACKNOWLEDGE_NOTIFICATION_SUCCESS:
             const taskId = action.payload.entity.id;
             const taskIds = state.get('acknowledgingTaskIds').delete(taskId);
-            const totalResult = state.get('total');
+            const totalResult = state.get('total') === 0 ? 0 : state.get('total') - 1;
             state = state.set('acknowledgingTaskIds',taskIds )
-                .set('total', (totalResult - 1));
+                .set('total', totalResult);
             const itemIndex = state.get("notifications").findIndex(x => x.getIn(['task','id']) === taskId);
             return itemIndex > -1 ? state.deleteIn(["notifications", itemIndex]) : state;
         case actions.ACKNOWLEDGE_NOTIFICATION_FAILURE:

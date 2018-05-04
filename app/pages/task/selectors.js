@@ -8,3 +8,8 @@ export const isCreatingComment = state => state[NAME].get('isCreatingComment');
 export const isFetchingCreateCommentForm = state => state[NAME].get('isFetchingCreateCommentForm');
 export const form = state => state[NAME].get('form');
 export const reloadCommentForm = state => state[NAME].get('reloadCommentForm');
+export const unclaimSuccessful = state => state[NAME].get('unclaimSuccessful');
+export const claimSuccessful = state => state[NAME].get('claimSuccessful');
+export const completeSuccessful = state => state[NAME].get('completeSuccessful');
+export const candidateGroups = state => state[NAME].get('candidateGroups');
+export const variables = state => state[NAME].get('variables');

@@ -9,16 +9,16 @@ class TasksPage extends React.Component {
         return <div>
             <Tabs>
                 <TabList>
-                    <Tab>My Tasks</Tab>
                     <Tab>My Group Tasks</Tab>
+                    <Tab>My Tasks</Tab>
                 </TabList>
 
                 <div style={{paddingTop: '10px'}}>
                     <TabPanel>
-                        <MyTasks/>
+                        <MyGroupTasks/>
                     </TabPanel>
                     <TabPanel>
-                        <MyGroupTasks/>
+                        <MyTasks/>
                     </TabPanel>
                 </div>
             </Tabs>

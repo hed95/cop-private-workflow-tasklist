@@ -68,7 +68,7 @@ const createComment = (action$, store) =>
                 path: `/api/workflow/tasks/comments`,
                 headers: {
                     "Accept": "application/json",
-                    "Content-Type" : "application/json",
+                    "Content-Type": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 },
             }).map(payload => actions.createCommentSuccess(payload))
@@ -78,4 +78,64 @@ const createComment = (action$, store) =>
                 ));
 
 
-export default combineEpics(fetchComments, fetchTask, createComment, fetchCreateCommentForm)
+const claimTask = (action$, store) =>
+    action$.ofType(types.CLAIM_TASK)
+        .mergeMap(action =>
+            client({
+                method: 'POST',
+                entity: {},
+                path: `/api/workflow/tasks/${action.taskId}/_claim`,
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`
+                },
+            }).map(payload => actions.claimTaskSuccess(payload))
+                .catch(error => {
+                        return errorObservable(actions.claimTaskFailure(), error);
+                    }
+                ));
+
+
+const unclaimTask = (action$, store) =>
+    action$.ofType(types.UNCLAIM_TASK)
+        .mergeMap(action =>
+            client({
+                method: 'POST',
+                entity: {},
+                path: `/api/workflow/tasks/${action.taskId}/_unclaim`,
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`
+                },
+            }).map(payload => actions.unclaimTaskSuccess(payload))
+                .catch(error => {
+                        return errorObservable(actions.unclaimTaskFailure(), error);
+                    }
+                ));
+
+const completeTask = (action$, store) =>
+    action$.ofType(types.COMPLETE_TASK)
+        .mergeMap(action =>
+            client({
+                method: 'POST',
+                entity: {},
+                path: `/api/workflow/tasks/${action.taskId}/_complete`,
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`
+                },
+            }).map(() => actions.completeTaskSuccess())
+                .catch(error => {
+                    return errorObservable(actions.completeTaskFailure(), error);
+                }));
+
+export default combineEpics(fetchComments,
+    fetchTask,
+    createComment,
+    fetchCreateCommentForm,
+    claimTask,
+    unclaimTask,
+    completeTask)

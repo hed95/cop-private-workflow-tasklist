@@ -35,6 +35,7 @@ class MyGroupTasks extends React.Component {
                     <th scope="col">Task name</th>
                     <th scope="col">Priority</th>
                     <th scope="col">Due</th>
+                    <th scope="col">Assignee</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,7 @@ class MyGroupTasks extends React.Component {
                             <td>{task.get('name')}</td>
                             <td>{priority(task.get('priority'))}</td>
                             <td>{moment().to(moment(task.get('due')))}</td>
+                            <td>{task.get('assignee') ?task.get('assignee'): 'Unassigned' }</td>
                         </tr>
                     })
                 }

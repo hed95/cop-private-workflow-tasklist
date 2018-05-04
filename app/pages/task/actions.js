@@ -83,6 +83,67 @@ const  fetchCreateCommentFormFailure = () => {
     }
 };
 
+
+const claimTask = (taskId) => {
+    return {
+        type: types.CLAIM_TASK,
+        taskId
+    }
+};
+
+const claimTaskSuccess = (payload) => {
+    return {
+        type: types.CLAIM_TASK_SUCCESS,
+        payload
+    }
+};
+
+const claimTaskFailure = () => {
+    return {
+        type: types.CLAIM_TASK_FAILURE
+    }
+};
+
+const unclaimTask = (taskId) => {
+    return {
+        type: types.UNCLAIM_TASK,
+        taskId
+    }
+};
+
+const unclaimTaskSuccess = (payload) => {
+    return {
+        type: types.UNCLAIM_TASK_SUCCESS,
+        payload
+    }
+};
+
+const unclaimTaskFailure = () => {
+    return {
+        type: types.UNCLAIM_TASK_FAILURE
+    }
+};
+
+
+const completeTask = (taskId) => {
+    return {
+        type: types.COMPLETE_TASK,
+        taskId
+    }
+};
+
+const completeTaskSuccess = () => {
+    return {
+        type: types.COMPLETE_TASK_SUCCESS,
+    }
+};
+
+const completeTaskFailure = () => {
+    return {
+        type: types.COMPLETE_TASK_FAILURE
+    }
+};
+
 export {
     fetchComments,
     fetchCommentsSuccess,
@@ -95,5 +156,14 @@ export {
     fetchTaskFailure,
     fetchCreateCommentForm,
     fetchCreateCommentFormSuccess,
-    fetchCreateCommentFormFailure
+    fetchCreateCommentFormFailure,
+    claimTask,
+    claimTaskSuccess,
+    claimTaskFailure,
+    unclaimTask,
+    unclaimTaskSuccess,
+    unclaimTaskFailure,
+    completeTask,
+    completeTaskSuccess,
+    completeTaskFailure
 }

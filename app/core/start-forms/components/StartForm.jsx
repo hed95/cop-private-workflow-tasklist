@@ -12,9 +12,14 @@ import {createForm} from "formiojs";
 class StartForm extends React.Component {
 
     componentDidMount() {
-        this.props.fetchForm(this.props.formName);
+        const formDataContext = this.props.formDataContext;
+        const formName = this.props.formName;
+        if (formDataContext) {
+            this.props.fetchFormWithContext(formName, formDataContext);
+        } else {
+            this.props.fetchForm(formName);
+        }
     }
-
 
 
     render() {
@@ -27,6 +32,7 @@ class StartForm extends React.Component {
             createForm(document.getElementById("formio"), parsedForm, {
                 noAlerts: true
             }).then(function (form) {
+
                 form.on('submit', (submission) => {
                     console.log('IFrame: submitting form', submission);
                     const processKey = that.props.processKey;
