@@ -13,6 +13,8 @@ import {connect} from "react-redux";
 import {createStructuredSelector} from "reselect";
 import ImmutablePropTypes from "react-immutable-proptypes";
 import queryString from 'query-string';
+import Attachments from "./Attachments";
+const uuidv4 = require('uuid/v4');
 
 
 class TaskDetailsPage extends React.Component {
@@ -40,16 +42,20 @@ class TaskDetailsPage extends React.Component {
                     <Tab>Details</Tab>
                     {hasFormKey ? <Tab>Form</Tab> : null}
                     <Tab>Comments</Tab>
+                    <Tab>Attachments</Tab>
                 </TabList>
                 <div style={{paddingTop: '10px'}}>
-                    <TabPanel>
+                    <TabPanel key={uuidv4()}>
                         <Info {...this.props} />
                     </TabPanel>
-                    {hasFormKey ? <TabPanel>
-                        <Form/>
+                    {hasFormKey ? <TabPanel key={uuidv4()}>
+                        <Form task={task}/>
                     </TabPanel> : null}
-                    <TabPanel>
+                    <TabPanel key={uuidv4()}>
                         <Comments taskId={this.taskId}/>
+                    </TabPanel>
+                    <TabPanel key={uuidv4()}>
+                        <Attachments taskId={this.taskId} />
                     </TabPanel>
                 </div>
             </Tabs>

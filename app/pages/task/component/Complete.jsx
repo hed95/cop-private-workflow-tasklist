@@ -3,7 +3,8 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import * as actions from "../actions";
-import {completeSuccessful, unclaimSuccessful} from "../selectors";
+import {completeSuccessful} from "../selectors";
+import Tooltip from '@cypress/react-tooltip'
 
 class Complete extends React.Component {
 
@@ -27,7 +28,12 @@ class Complete extends React.Component {
         const taskAssignee = task.get('assignee');
         const formKey = task.get('formKey');
         const displayButton = taskAssignee && taskAssignee === userId && !formKey;
-        return <input className="btn btn-primary" onClick={() => this.complete()} type="button" value="Complete" disabled={!displayButton}/>;
+        return <div>
+            <input className="btn btn-primary" onClick={() => this.complete()}
+                   type="button" value="Complete" disabled={!displayButton}/>
+
+        </div>
+
     }
 
 }

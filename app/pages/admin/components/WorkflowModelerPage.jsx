@@ -43,7 +43,7 @@ class WorkflowModelerPage extends React.Component {
                     Failed to load modeler
                 </strong>
             </div>
-        </div> : <Iframe url={this.state.modelerUrl}
+        </div> : <Iframe url="https://workflow-modeler.dev.bfarch-notprod.homeoffice.gov.uk"
                          position="absolute"
                          width="80%"
                          id="bpmnModelerId"

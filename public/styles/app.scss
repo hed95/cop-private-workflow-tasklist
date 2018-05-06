@@ -376,8 +376,15 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
   background-color: $button-colour;
 }
 
+
 .app-dl .dl-horizontal dt
 {
+  white-space: normal;
+  width: auto;
+  text-align: left;
+}
+
+.task-form {
   white-space: normal;
   width: auto;
   text-align: left;

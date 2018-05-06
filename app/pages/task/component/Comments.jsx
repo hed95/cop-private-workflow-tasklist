@@ -43,7 +43,7 @@ class Comments extends React.Component {
         const {isFetchingComments, comments} = this.props;
         return <div>
             <div className="data">
-                <span className="data-item bold-medium">{comments.size} comments</span>
+                <span className="data-item bold-medium">{comments.size} {comments.size === 1? 'comment' : 'comments'}</span>
             </div>
             {!isFetchingComments ? <div>
                     {this.state.pageOfItems.map((comment) => {

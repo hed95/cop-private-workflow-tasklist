@@ -33,10 +33,6 @@ class ProfilePage extends React.Component {
         this.form = null;
     }
 
-    getValue = (object, propertyName) => {
-        return object ? (object[propertyName] ? object[propertyName] : null) : null;
-    };
-
     createForm = () => {
             return <div className="grid-row">
             <div className="column-full">

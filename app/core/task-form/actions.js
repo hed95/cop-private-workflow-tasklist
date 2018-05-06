@@ -1,8 +1,8 @@
 import * as types from "./actionTypes";
 
-const fetchTaskForm = (formName) => ({
+const fetchTaskForm = (task) => ({
     type: types.FETCH_TASK_FORM,
-    formName
+    task
 });
 
 

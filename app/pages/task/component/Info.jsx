@@ -2,6 +2,7 @@ import React from "react";
 import Actions from './Actions';
 import moment from "moment/moment";
 import {priority} from "../../../core/util/priority";
+const uuidv4 = require('uuid/v4');
 
 class Info extends React.Component {
 
@@ -11,18 +12,18 @@ class Info extends React.Component {
             <div className="app-dl">
                 <dl className="dl-horizontal">
                     <dt>Name</dt>
-                    <dd>{task.get('name')}</dd>
+                    <dd key={uuidv4()}>{task.get('name')}</dd>
                     <dt>Description</dt>
-                    <dd><p>{task.get('description')}</p></dd>
+                    <dd key={uuidv4()}><p>{task.get('description')}</p></dd>
                     <dt>Due</dt>
                     <dd>{moment().to(moment(task.get('due')))}</dd>
                     <dt>Priority</dt>
-                    <dd>{priority(task.get('priority'))}</dd>
+                    <dd key={uuidv4()}>{priority(task.get('priority'))}</dd>
                     <dt>Assigned To</dt>
-                    <dd>{task.get('assignee') ? task.get('assignee') : 'Unassigned'}</dd>
+                    <dd key={uuidv4()}>{task.get('assignee') ? task.get('assignee') : 'Unassigned'}</dd>
                     <dt>Team</dt>
                     {candidateGroups.map((command) => {
-                        return <dd>{command}</dd>
+                        return <dd key={uuidv4()}>{command}</dd>
                     })}
                     <dt>Supporting Information</dt>
                     <dt>
