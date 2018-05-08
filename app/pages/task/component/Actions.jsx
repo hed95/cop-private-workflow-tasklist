@@ -8,10 +8,21 @@ export default class Actions extends React.Component {
     render() {
         const {task} = this.props;
 
-        return <div className="btn-toolbar" style={{paddingTop: '20px'}}>
-            <Claim task={task}/>
-            <Unclaim task={task} />
-            <Complete task={task}/>
+        return <div style={{paddingTop: '20px'}}>
+
+            <div className="btn-group btn-block" role="group">
+                <Claim task={task}/>
+                <Unclaim task={task} />
+                <Complete task={task}/>
+            </div>
+            <div className="gov-panel" style={{paddingTop: '20px'}}>
+                <details>
+                    <summary><span className="summary">Help with actions</span></summary>
+                    <div className="panel panel-border-narrow">
+                        <p>Hello</p>
+                    </div>
+                </details>
+            </div>
         </div>
     }
 }

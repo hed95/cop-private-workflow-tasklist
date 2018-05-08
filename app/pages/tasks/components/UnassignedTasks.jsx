@@ -4,15 +4,15 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {createStructuredSelector} from "reselect";
 import * as actions from "../actions";
-import {myGroupTasks} from "../selectors";
+import {unassignedTasks} from "../selectors";
 import moment from "moment";
 import {priority} from "../../../core/util/priority";
 import {withRouter} from "react-router";
 
-class MyGroupTasks extends React.Component {
+class UnassignedTasks extends React.Component {
 
     componentDidMount() {
-        this.props.fetchMyGroupTasks("/api/workflow/tasks");
+        this.props.fetchUnassignedTasks("/api/workflow/tasks?unassignedOnly=true");
         this.goToTask = this.goToTask.bind(this);
     }
 
@@ -21,13 +21,13 @@ class MyGroupTasks extends React.Component {
     }
 
     render() {
-        const {myGroupTasks} = this.props;
+        const {unassignedTasks} = this.props;
         const pointerStyle = {cursor: 'pointer'};
         return <div>
 
             <div className="data">
                 <span
-                    className="data-item bold-medium">{myGroupTasks.get('total')} {myGroupTasks.get('total') === 1 ? 'task' : 'tasks'} allocated to team</span>
+                    className="data-item bold-medium">{unassignedTasks.get('total')} unassigned {unassignedTasks.get('total') === 1 ? 'task' : 'tasks'}</span>
             </div>
             <table>
                 <thead>
@@ -35,19 +35,17 @@ class MyGroupTasks extends React.Component {
                     <th scope="col">Task name</th>
                     <th scope="col">Priority</th>
                     <th scope="col">Due</th>
-                    <th scope="col">Assignee</th>
                 </tr>
                 </thead>
                 <tbody>
                 {
-                    myGroupTasks.get('tasks').map((taskData) => {
+                    unassignedTasks.get('tasks').map((taskData) => {
                         const task = taskData.get('task');
                         return <tr style={pointerStyle} onClick={() => this.goToTask(task.get('id'))}
                                    key={task.get('id')}>
                             <td>{task.get('name')}</td>
                             <td>{priority(task.get('priority'))}</td>
                             <td>{moment().to(moment(task.get('due')))}</td>
-                            <td>{task.get('assignee') ? task.get('assignee') : 'Unassigned'}</td>
                         </tr>
                     })
                 }
@@ -58,15 +56,15 @@ class MyGroupTasks extends React.Component {
     }
 }
 
-MyGroupTasks.propTypes = {
-    fetchMyGroupTasks: PropTypes.func.isRequired,
-    myGroupTasks: ImmutablePropTypes.map
+UnassignedTasks.propTypes = {
+    fetchUnassignedTasks: PropTypes.func.isRequired,
+    unassignedTasks: ImmutablePropTypes.map
 };
 
 const mapStateToProps = createStructuredSelector({
-    myGroupTasks: myGroupTasks
+    unassignedTasks: unassignedTasks
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MyGroupTasks));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UnassignedTasks));

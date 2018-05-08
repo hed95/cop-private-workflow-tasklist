@@ -13,7 +13,15 @@ const initialState = new Map({
         isFetchingMyGroupTasks: false,
         tasks: new List([]),
         total: 0
-    })
+    }),
+    unassignedTasks: new Map({
+        isFetchingUnassignedTasks: false,
+        tasks: new List([]),
+        total: 0
+    }),
+    taskCounts: new Map({}),
+    isFetchingTaskCounts: false,
+    tabIndex: 0
 });
 
 function reducer(state = initialState, action) {
@@ -42,6 +50,27 @@ function reducer(state = initialState, action) {
         case actions.FETCH_MY_GROUP_TASKS_FAILURE:
             return state.setIn(['myGroupTasks', 'isFetchingMyGroupTasks'], false);
 
+        case actions.FETCH_UNASSIGNED_TASKS:
+            return state.setIn(['unassignedTasks', 'isFetchingUnassignedTasks'], true);
+        case actions.FETCH_UNASSIGNED_TASKS_SUCCESS:
+            const unassignedTasks = action.payload.entity._embedded ? action.payload.entity._embedded.tasks : [];
+            const totalUnassigned = action.payload.entity.page.totalElements;
+            return state.setIn(['unassignedTasks', 'isFetchingUnassignedTasks'], false)
+                .setIn(['unassignedTasks', 'tasks'], Immutable.fromJS(unassignedTasks))
+                .setIn(['unassignedTasks', 'total'], totalUnassigned);
+        case actions.FETCH_UNASSIGNED_TASKS_FAILURE:
+            return state.setIn(['unassignedTasks', 'isFetchingUnassignedTasks'], false);
+
+        case actions.FETCH_TASK_COUNTS:
+            return state.set('isFetchingTaskCounts', true);
+        case actions.FETCH_TASK_COUNTS_SUCCESS:
+            return state.set('isFetchingTaskCounts', false)
+                .set('taskCounts', Immutable.fromJS(action.payload.entity));
+        case actions.FETCH_TASK_COUNTS_FAILURE:
+            return state.set('isFetchingTaskCounts', true);
+
+        case actions.SET_TAB_INDEX:
+            return state.set('tabIndex', action.index);
         default:
             return state;
     }

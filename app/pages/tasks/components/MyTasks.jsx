@@ -25,8 +25,7 @@ class MyTasks extends React.Component {
 
         return <div>
             <div className="data">
-                <span className="data-item bold-xlarge">{myTasks.get('total')}</span>
-                <span className="data-item bold-small">Group Tasks</span>
+                <span className="data-item bold-medium">{myTasks.get('total')} tasks assigned to me</span>
             </div>
             <table>
                 <thead>

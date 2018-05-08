@@ -4,7 +4,7 @@ import keycloakReducer from './../common/security/keycloakReducer'
 import notificationPage from '../pages/notifications';
 import sessionPage from '../core/session/index';
 import person from '../core/person/index';
-import processDefinitions from '../pages/processes/index';
+import processDefinitions from '../pages/procedures/index';
 import error from '../core/error/index';
 import task from '../pages/task/index'
 import tasks from '../pages/tasks/index';

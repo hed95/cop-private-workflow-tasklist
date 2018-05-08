@@ -45,6 +45,7 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 @import "../../node_modules/formiojs/dist/formio.full.css";
 @import "../icons.css";
 
+
 .nav-menu {
   color: white;
   text-align: right;
@@ -363,15 +364,15 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
   }
 }
 
-.btn-toolbar .btn {
+
+.btn-group .btn {
   margin-right: 5px;
   background-color: $button-colour;
   &:hover, &:disabled {
     background-color: $button-colour;
   }
-
 }
-.btn-toolbar .btn:last-child{
+.btn-group .btn:last-child{
   margin-right: 0;
   background-color: $button-colour;
 }

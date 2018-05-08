@@ -18,7 +18,7 @@ class ProcessesPage extends React.Component {
     }
 
     process = (process) => {
-        this.props.history.replace("/process-start?processKey=" + process.getIn(["process-definition", "key"]));
+        this.props.history.replace("/procedure-start?processKey=" + process.getIn(["process-definition", "key"]));
     };
 
     render() {

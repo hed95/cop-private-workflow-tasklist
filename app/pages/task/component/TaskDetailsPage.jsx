@@ -14,6 +14,7 @@ import {createStructuredSelector} from "reselect";
 import ImmutablePropTypes from "react-immutable-proptypes";
 import queryString from 'query-string';
 import Attachments from "./Attachments";
+import Audit from "./Audit";
 const uuidv4 = require('uuid/v4');
 
 
@@ -43,6 +44,7 @@ class TaskDetailsPage extends React.Component {
                     {hasFormKey ? <Tab>Form</Tab> : null}
                     <Tab>Comments</Tab>
                     <Tab>Attachments</Tab>
+                    <Tab>Audit</Tab>
                 </TabList>
                 <div style={{paddingTop: '10px'}}>
                     <TabPanel key={uuidv4()}>
@@ -56,6 +58,9 @@ class TaskDetailsPage extends React.Component {
                     </TabPanel>
                     <TabPanel key={uuidv4()}>
                         <Attachments taskId={this.taskId} />
+                    </TabPanel>
+                    <TabPanel key={uuidv4()}>
+                        <Audit taskId={this.taskId} />
                     </TabPanel>
                 </div>
             </Tabs>

@@ -41,11 +41,67 @@ const fetchMyGroupTasksFailure = () => {
     }
 };
 
+
+const fetchUnassignedTasks = (url) => {
+    return {
+        type: types.FETCH_UNASSIGNED_TASKS,
+        url
+    }
+};
+
+const fetchUnassignedTasksSuccess = (payload) => {
+    return {
+        type: types.FETCH_UNASSIGNED_TASKS_SUCCESS,
+        payload
+    }
+};
+
+const fetchUnassignedTasksFailure = () => {
+    return {
+        type: types.FETCH_UNASSIGNED_TASKS_FAILURE
+    }
+};
+
+
+const fetchTaskCounts = () => {
+    return {
+        type: types.FETCH_TASK_COUNTS
+    }
+};
+
+const fetchTaskCountsSuccess = (payload) => {
+    return {
+        type: types.FETCH_TASK_COUNTS_SUCCESS,
+        payload
+    }
+};
+
+const fetchTaskCountsFailure = () => {
+    return {
+        type: types.FETCH_TASK_COUNTS_FAILURE
+    }
+};
+
+const setTabIndex = (index) => {
+    return {
+        type: types.SET_TAB_INDEX,
+        index
+    }
+};
+
+
 export {
     fetchTasksAssignedToMe,
     fetchTasksAssignedToMeSuccess,
     fetchTasksAssignedToMeFailure,
     fetchMyGroupTasks,
     fetchMyGroupTasksSuccess,
-    fetchMyGroupTasksFailure
+    fetchMyGroupTasksFailure,
+    fetchUnassignedTasks,
+    fetchUnassignedTasksSuccess,
+    fetchUnassignedTasksFailure,
+    fetchTaskCounts,
+    fetchTaskCountsSuccess,
+    fetchTaskCountsFailure,
+    setTabIndex
 }

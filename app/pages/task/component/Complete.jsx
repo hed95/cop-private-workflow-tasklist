@@ -28,11 +28,10 @@ class Complete extends React.Component {
         const taskAssignee = task.get('assignee');
         const formKey = task.get('formKey');
         const displayButton = taskAssignee && taskAssignee === userId && !formKey;
-        return <div>
-            <input className="btn btn-primary" onClick={() => this.complete()}
+        return <input className="btn btn-primary" onClick={() => this.complete()}
                    type="button" value="Complete" disabled={!displayButton}/>
 
-        </div>
+
 
     }
 

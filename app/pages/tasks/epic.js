@@ -38,5 +38,36 @@ const fetchMyGroupTasks = (action$, store) =>
                 ));
 
 
+const fetchUnassignedTasks = (action$, store) =>
+    action$.ofType(types.FETCH_UNASSIGNED_TASKS)
+        .mergeMap(action =>
+            client({
+                method: 'GET',
+                path: `${action.url}`,
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`
+                }
+            }).map(payload => actions.fetchUnassignedTasksSuccess(payload))
+                .catch(error => {
+                        return errorObservable(actions.fetchUnassignedTasksFailure(), error);
+                    }
+                ));
 
-export default combineEpics(fetchTasksAssignedToMe,fetchMyGroupTasks);
+const fetchTaskCounts = (action$, store) =>
+    action$.ofType(types.FETCH_TASK_COUNTS)
+        .mergeMap(action =>
+            client({
+                method: 'GET',
+                path: `/api/workflow/tasks/task-counts`,
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`
+                }
+            }).map(payload => actions.fetchTaskCountsSuccess(payload))
+                .catch(error => {
+                        return errorObservable(actions.fetchTaskCountsFailure(), error);
+                    }
+                ));
+
+export default combineEpics(fetchTasksAssignedToMe, fetchMyGroupTasks, fetchUnassignedTasks, fetchTaskCounts);
