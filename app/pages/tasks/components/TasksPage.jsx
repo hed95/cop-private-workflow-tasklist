@@ -28,7 +28,7 @@ class TasksPage extends React.Component {
             {!isFetchingTaskCounts ? <div className="grid-row">
                 <div className="column-one-third">
                     <div className="data">
-                        <a style={pointerStyle} onClick={() => this.props.setTabIndex(0)}>
+                        <a style={pointerStyle} onClick={() => this.props.setTabIndex(0)} className={tabIndex === 0 ? 'active-count' : ''}>
                             <span className="data-item bold-xlarge">{taskCounts.get('tasksAssignedToUser')}</span>
                         </a>
                         <span className="data-item bold-small">Assigned to me</span>
@@ -38,7 +38,7 @@ class TasksPage extends React.Component {
 
                 <div className="column-one-third">
                     <div className="data">
-                        <a style={pointerStyle} onClick={() => this.props.setTabIndex(1)}>
+                        <a style={pointerStyle} onClick={() => this.props.setTabIndex(1)} className={tabIndex === 1 ? 'active-count' : ''}>
                             <span className="data-item bold-xlarge">{taskCounts.get('tasksUnassigned')}</span>
                         </a>
                         <span className="data-item bold-small">Unassigned</span>
@@ -46,7 +46,7 @@ class TasksPage extends React.Component {
                 </div>
                 <div className="column-one-third">
                     <div className="data">
-                        <a  style={pointerStyle} onClick={() => this.props.setTabIndex(2)}>
+                        <a  style={pointerStyle} onClick={() => this.props.setTabIndex(2)} className={tabIndex === 2 ? 'active-count' : ''}>
                             <span className="data-item bold-xlarge">{taskCounts.get('totalTasksAllocatedToTeam')}</span>
                         </a>
                         <span className="data-item bold-small">Allocated to team</span>
