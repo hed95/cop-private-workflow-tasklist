@@ -59,7 +59,7 @@ const fetchTaskCounts = (action$, store) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/workflow/tasks/task-counts`,
+                path: `/api/workflow/tasks/_task-counts`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
