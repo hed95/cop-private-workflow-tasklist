@@ -95,7 +95,7 @@ class Header extends React.Component {
                                 smallMenuClassName="small-menu"
                                 menu={
                                     <ul id="proposition-links" style={{width: navWidth}}>
-                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/profile')} className={routerPath === '/profile' ? 'active' : ''}>Profile</a></li>
+                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/shift')} className={routerPath === '/shift' ? 'active' : ''}>Shift</a></li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/tasks')} className={isTask(routerPath) ? 'active' : ''}>Tasks</a></li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/procedures')} className={isProcess(routerPath) ? 'active' : ''}>Procedures</a></li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/reports')} className={routerPath === '/reports' ? 'active' : ''}>Reports</a></li>

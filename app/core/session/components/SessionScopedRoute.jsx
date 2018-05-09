@@ -25,7 +25,7 @@ class SessionScopedRoute extends React.Component {
             if (hasActiveSession) {
                 return <Route render={(props) => <ErrorHandlingComponent><Component {...props} key={uuidv4()}/></ErrorHandlingComponent>} />
             } else {
-                return <Route render={() => <Redirect to="/profile"/>}/>
+                return <Route render={() => <Redirect to="/shift"/>}/>
             }
         }
 

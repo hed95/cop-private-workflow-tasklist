@@ -21,11 +21,10 @@ import {
 } from "../../../core/start-forms/selectors";
 import ImmutablePropTypes from "react-immutable-proptypes";
 
-class ProfilePage extends React.Component {
+class ShiftPage extends React.Component {
 
     componentDidMount() {
         this.props.actions.sessionActions.fetchActiveSession();
-        this.props.actions.personActions.fetchPerson();
         this.form = this.createForm();
     }
 
@@ -34,11 +33,11 @@ class ProfilePage extends React.Component {
     }
 
     createForm = () => {
-            return <div className="grid-row">
+        return <div className="grid-row">
             <div className="column-full">
                 <fieldset>
                     <legend>
-                        <h3 className="heading-medium">Team Details</h3>
+                        <h3 className="heading-medium">Shift Details</h3>
                     </legend>
                     <StartForm formName="createAnActiveSession" processKey="activate-session" {...this.props}
                                submission={this.props.activeSession}/>
@@ -51,8 +50,8 @@ class ProfilePage extends React.Component {
     render() {
 
         const {
-            hasActiveSession, isFetchingActiveSession,
-            isFetchingPerson,
+            hasActiveSession,
+            isFetchingActiveSession,
             activeSubmissionSuccess,
             submittingActiveSession
         } = this.props;
@@ -69,7 +68,7 @@ class ProfilePage extends React.Component {
             </div> : <div/>;
         return <div>
 
-            {isFetchingActiveSession && isFetchingPerson ?
+            {isFetchingActiveSession ?
                 <div style={{display: 'flex', justifyContent: 'center'}}><Spinner
                     name="three-bounce" color="#005ea5"/></div>
                 : headerToDisplay
@@ -82,7 +81,7 @@ class ProfilePage extends React.Component {
             </div> : <div/>}
             {submittingActiveSession ?
                 <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
-                    name="three-bounce" color="#005ea5"/></div> : <div></div>
+                    name="three-bounce" color="#005ea5"/></div> : <div/>
             }
             {this.form}
         </div>
@@ -90,7 +89,7 @@ class ProfilePage extends React.Component {
 }
 
 
-ProfilePage.propTypes = {
+ShiftPage.propTypes = {
     isFetchingActiveSession: PropTypes.bool,
     hasActiveSession: PropTypes.bool,
     activeSession: ImmutablePropTypes.map
@@ -100,8 +99,7 @@ ProfilePage.propTypes = {
 const mapDispatchToProps = (dispatch) => {
     return {
         actions: {
-            sessionActions: bindActionCreators(sessionActions, dispatch),
-            personActions: bindActionCreators(personActions, dispatch)
+            sessionActions: bindActionCreators(sessionActions, dispatch)
         }
     };
 };
@@ -111,12 +109,11 @@ export default connect((state) => {
         kc: state.keycloak,
         hasActiveSession: hasActiveSession(state),
         isFetchingActiveSession: isFetchingActiveSession(state),
-        person: person(state),
         isFetchingPerson: isFetchingPerson(state),
         submittingFormForValidation: submittingFormForValidation(state),
         submittingActiveSession: submittingActiveSession(state),
         activeSubmissionSuccess: activeSubmissionSuccess(state),
         activeSession: activeSession(state)
     }
-}, mapDispatchToProps)(withRouter(ProfilePage))
+}, mapDispatchToProps)(withRouter(ShiftPage))
 
