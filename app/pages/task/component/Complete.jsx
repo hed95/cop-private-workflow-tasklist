@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import * as actions from "../actions";
 import {completeSuccessful} from "../selectors";
-import Tooltip from '@cypress/react-tooltip'
 
 class Complete extends React.Component {
 
