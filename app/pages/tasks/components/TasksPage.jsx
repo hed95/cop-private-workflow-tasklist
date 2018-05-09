@@ -26,7 +26,6 @@ class TasksPage extends React.Component {
 
         return <div>
             {!isFetchingTaskCounts ? <div className="grid-row">
-
                 <div className="column-one-third">
                     <div className="data">
                         <a style={pointerStyle} onClick={() => this.props.setTabIndex(0)}>
@@ -54,7 +53,7 @@ class TasksPage extends React.Component {
                     </div>
                 </div>
 
-            </div> : <div>Loading task counts...</div>}
+            </div> : <div>Loading task counts...</div> }
 
             <Tabs selectedIndex={tabIndex} onSelect={tabIndex => this.props.setTabIndex(tabIndex)}>
                 <TabList>

@@ -11,7 +11,7 @@ import LoadingBar from 'react-redux-loading-bar'
 import InfiniteScroll from 'react-infinite-scroller';
 
 
-class NotificationsPage extends React.Component {
+class MessagesPage extends React.Component {
 
     componentDidMount() {
         this.props.fetchNotifications("/api/workflow/notifications");
@@ -35,11 +35,11 @@ class NotificationsPage extends React.Component {
                 className="loading-bar"
             />
             {this.props.isFetching ?
-                <div className="data-item bold-small">Loading notifications...</div> :
+                <div className="data-item bold-small">Loading messages...</div> :
                 <div className="data">
 
                     <span className="data-item bold-xlarge">{this.props.total}</span>
-                    <span className="data-item bold-small">Notifications</span>
+                    <span className="data-item bold-small">Messages</span>
                 </div>}
 
 
@@ -85,7 +85,7 @@ const NotificationTask = ({task, action}) => {
     </div>
 };
 
-NotificationsPage.propTypes = {
+MessagesPage.propTypes = {
     fetchNotifications: PropTypes.func.isRequired,
     acknowledgeNotification: PropTypes.func.isRequired,
     notifications: ImmutablePropTypes.list.isRequired,
@@ -108,4 +108,4 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(NotificationsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MessagesPage);

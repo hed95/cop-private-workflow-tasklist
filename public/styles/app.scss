@@ -45,7 +45,6 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 @import "../../node_modules/formiojs/dist/formio.full.css";
 @import "../icons.css";
 
-
 .nav-menu {
   color: white;
   text-align: right;
@@ -213,7 +212,6 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
   border: solid transparent;
 }
 
-
 .formio-component-radio,
 .formio-component-selectboxes,
 .formio-component-checkbox {
@@ -231,7 +229,6 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 .alert-success {
   @extend .govuk-box-highlight
 }
-
 
 .govuk-box-highlight {
   padding: 1em 2em 2em;
@@ -292,7 +289,6 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
   border: none;
 }
 
-
 .pagination .pagination_list-items {
 
   li {
@@ -327,11 +323,13 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 .pagination {
   padding: 0;
 }
+
 .pagination__item {
   display: inline-block;
   list-style: none;
 
 }
+
 .pagination__link {
   display: block;
   padding: 5px 10px;
@@ -357,13 +355,12 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 }
 
 .pagination__summary {
-  padding: 25px 0  ;
+  padding: 25px 0;
 
   @media (min-width: 642px) {
     float: right;
   }
 }
-
 
 .btn-group .btn {
   margin-right: 5px;
@@ -372,14 +369,13 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
     background-color: $button-colour;
   }
 }
-.btn-group .btn:last-child{
+
+.btn-group .btn:last-child {
   margin-right: 0;
   background-color: $button-colour;
 }
 
-
-.app-dl .dl-horizontal dt
-{
+.app-dl .dl-horizontal dt {
   white-space: normal;
   width: auto;
   text-align: left;
@@ -389,4 +385,35 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
   white-space: normal;
   width: auto;
   text-align: left;
+}
+
+.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+  border-radius: 0 0 0 0;
+}
+
+.btn-group > .btn:last-child:not(:first-child), .btn-group > .dropdown-toggle:not(:first-child) {
+  border-radius: 0 0 0 0;
+}
+
+.gov-panel {
+
+  .panel-border-wide {
+    border-left-width: 10px;
+  }
+
+  .panel {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    clear: both;
+    border-left-style: solid;
+    border-color: #bfc1c3;
+    padding: 0.78947em;
+    margin-bottom: 0.78947em;
+    border-radius: 0;
+    border-bottom-style: none;
+    border-top-style: none;
+    border-right-style: none;
+    box-shadow: 0 0 0;
+  }
 }
