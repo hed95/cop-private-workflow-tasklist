@@ -23,7 +23,7 @@ app.use(cors());
 app.get('/healthz', respond);
 app.get('/readiness', respond);
 
-console.log("prest name " + process.env.PREST_NAME);
+console.log("platform data name " + process.env.PLATFORM_DATA);
 console.log("workflow name " + process.env.WORKFLOW_NAME);
 console.log("formio name " + process.env.FORM_IO_NAME);
 console.log("bpmn modeler name " + process.env.WORKFLOW_MODELER);
