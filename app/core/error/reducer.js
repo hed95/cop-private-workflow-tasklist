@@ -35,6 +35,10 @@ function reducer(state = initialState, action) {
             } else {
                 errorToReturn.message = isJson(error.entity) ? error.entity : "";
             }
+
+            if (!error.message) {
+                errorToReturn.message ="Failed to execute action";
+            }
             errorToReturn.raw = error;
             const errors = state.get('errors').push(Immutable.fromJS(errorToReturn));
             return state.set('hasError', true)

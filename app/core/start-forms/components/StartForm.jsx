@@ -32,7 +32,6 @@ class StartForm extends React.Component {
             createForm(document.getElementById("formio"), parsedForm, {
                 noAlerts: true
             }).then(function (form) {
-
                 form.on('submit', (submission) => {
                     console.log('IFrame: submitting form', submission);
                     const processKey = that.props.processKey;

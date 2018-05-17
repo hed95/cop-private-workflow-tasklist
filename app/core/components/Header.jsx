@@ -100,8 +100,8 @@ class Header extends React.Component {
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/procedures')} className={isProcess(routerPath) ? 'active' : ''}>Procedures</a></li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/reports')} className={routerPath === '/reports' ? 'active' : ''}>Reports</a></li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/messages')} className={routerPath === '/messages' ? 'active' : ''}>Messages</a></li>
-                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/campaigns')}
-                                                                    className={routerPath === '/campaigns' ? 'active' : ''}>Campaigns</a>
+                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/calendar')}
+                                                                    className={routerPath === '/calendar' ? 'active' : ''}>Calendar</a>
                                         </li>
                                         { adminRole ? <li style={pointerStyle}><a onClick={() => this.changeRoute('/admin')} className={routerPath === '/admin' ? 'active' : ''}>Admin</a></li> : <div />}
                                         <li style={pointerStyle}><a onClick={this.logout}>Logout</a></li>

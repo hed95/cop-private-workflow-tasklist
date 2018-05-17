@@ -44,6 +44,7 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 @import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../../node_modules/formiojs/dist/formio.full.css";
 @import "../icons.css";
+@import "../../node_modules/flatpickr/dist/themes/airbnb.css";
 
 .nav-menu {
   color: white;
@@ -193,9 +194,6 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
   width: 100%;
 }
 
-.personal-details .form-control {
-  width: 80%;
-}
 
 .btn {
   @extend .button

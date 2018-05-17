@@ -32,7 +32,7 @@ console.log("translation name" + process.env.TRANSLATION_SERVICE_NAME);
 
 const domain = process.env.DOMAIN;
 
-const prestName = process.env.PREST_NAME;
+const platformData = process.env.PLATFORM_DATA;
 const workflowName =process.env.WORKFLOW_NAME;
 const formIOName = process.env.FORM_IO_NAME;
 const bpmnModelerName = process.env.WORKFLOW_MODELER;
@@ -40,14 +40,13 @@ const translationServiceName =  process.env.TRANSLATION_SERVICE_NAME;
 
 const intdomain = process.env.INT_DOMAIN;
 
-const prestUrl = `https://${prestName}.${intdomain}`;
+const platformDataUrl = `https://${platformData}.${intdomain}`;
 const workflowUrl = `https://${workflowName}.${intdomain}`;
 const formIOUrl = `https://${formIOName}.${domain}`;
 const bpmnModelerUrl =  `https://${bpmnModelerName}.${domain}`;
-const prestDatabaseName = process.env.TX_DB_NAME;
 const translationServiceUrl = `https://${translationServiceName}.${intdomain}`;
 
-console.log("prestUrl " + prestUrl);
+console.log("platformDataUrl " + platformDataUrl);
 console.log("workflowUrl " + workflowUrl);
 console.log("formIOUrl " + formIOUrl);
 console.log("bpmnModeler " + bpmnModelerUrl);
@@ -55,15 +54,14 @@ console.log("translationServiceUrl " + translationServiceUrl);
 
 
 
-app.use('/api/reference-data', proxy(
+app.use('/api/platform-data', proxy(
     {
-        target: prestUrl,
+        target: platformDataUrl,
         pathRewrite: {
-            '^/api/reference-data/_QUERIES' : `/_QUERIES/read`,
-            '^/api/reference-data' : `/${prestDatabaseName}/public`
+            '^/api/platform-data/' : ''
         },
         onProxyReq: function onProxyReq(proxyReq, req, res) {
-            console.log('Prest Proxy -->  ', req.method, req.path, '-->', prestUrl, proxyReq.path);
+            console.log('Platform Data Proxy -->  ', req.method, req.path, '-->', prestUrl, proxyReq.path);
         },
         onError: function onError(err, req, res) {
             console.error(err);

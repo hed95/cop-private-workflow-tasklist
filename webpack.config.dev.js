@@ -5,14 +5,12 @@ const webpackMerge = require('webpack-merge');
 const port = process.env.PORT || 8080;
 
 
-const prestUrl = process.env.PREST_URL;
+const platformDataUrl = process.env.PLATFORM_DATA_URL;
 const workflowUrl = process.env.WORKFLOW_URL;
 const formIOUrl = process.env.FORM_URL;
-const prestDatabaseName = process.env.TX_DB_NAME;
-
 const translationServiceUrl = process.env.TRANSLATION_SERVICE_URL;
 
-console.log("prestUrl " + prestUrl);
+console.log("platformDataUrl " + platformDataUrl);
 console.log("workflowUrl " + workflowUrl);
 console.log("formIOUrl " + formIOUrl);
 console.log("translationServiceUrl " + translationServiceUrl);
@@ -40,11 +38,10 @@ module.exports = webpackMerge(commonConfig, {
         publicPath: commonConfig.output.publicPath,
         stats: {colors: true},
         proxy: {
-            "/api/reference-data": {
-                target: prestUrl,
+            "/api/platform-data": {
+                target: platformDataUrl,
                 pathRewrite: {
-                    '^/api/reference-data/_QUERIES' : `/_QUERIES/read`,
-                    '^/api/reference-data' : `/${prestDatabaseName}/public`
+                    '^/api/platform-data' : ''
                 },
                 secure: false,
                 changeOrigin: true

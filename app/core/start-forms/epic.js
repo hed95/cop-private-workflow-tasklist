@@ -3,7 +3,7 @@ import {combineEpics} from "redux-observable";
 import * as actions from "./actions";
 import {Observable} from "rxjs/Observable";
 import * as types from "./actionTypes";
-import * as sessionTypes from '../../core/session/actionTypes'
+import * as sessionTypes from '../shift/actionTypes'
 import {errorObservable} from "../error/epicUtil";
 
 
@@ -59,10 +59,10 @@ const submit = (action$, store) =>
                     'Content-Type': 'application/json'
                 }
             }).take(1).map(payload => {
-                if (action.processKey === 'activate-session') {
+                if (action.processKey === 'activate-shift') {
                     return {
-                        type: sessionTypes.CREATE_ACTIVE_SESSION,
-                        activeSession: payload.entity.data
+                        type: sessionTypes.CREATE_ACTIVE_SHIFT,
+                        shiftInfo: payload.entity.data
                     }
                 } else {
                     return {
