@@ -1,4 +1,4 @@
-FROM quay.io/ukhomeofficedigital/nodejs-base:v8.9.4
+FROM quay.io/ukhomeofficedigital/nodejs-base:v8.11.1
 
 ENV USER user-borders-workflow-tasklist
 ENV GROUP group-borders-workflow-tasklist
