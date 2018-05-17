@@ -61,7 +61,7 @@ app.use('/api/platform-data', proxy(
             '^/api/platform-data/' : ''
         },
         onProxyReq: function onProxyReq(proxyReq, req, res) {
-            console.log('Platform Data Proxy -->  ', req.method, req.path, '-->', prestUrl, proxyReq.path);
+            console.log('Platform Data Proxy -->  ', req.method, req.path, '-->', platformDataUrl, proxyReq.path);
         },
         onError: function onError(err, req, res) {
             console.error(err);
