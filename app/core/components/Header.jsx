@@ -26,13 +26,13 @@ class Header extends React.Component {
     }
 
     handleWindowSizeChange = () => {
-        this.setState({ width: window.innerWidth });
+        this.setState({width: window.innerWidth});
     };
 
     changeRoute(path) {
         this.setState({routerPath: path});
         this.props.resetError();
-       this.props.history.replace(path);
+        this.props.history.replace(path);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -47,7 +47,7 @@ class Header extends React.Component {
     }
 
     render() {
-        const { routerPath} = this.state;
+        const {routerPath} = this.state;
 
         const pointerStyle = {cursor: 'pointer'};
 
@@ -84,7 +84,8 @@ class Header extends React.Component {
                                     <a href="#" id="proposition-name">Operational Activities</a>
                                 </div>
                                 <div className="column-one-half">
-                                    <h4 style={{color: 'white', textAlign: 'right', fontSize: '15px', marginTop: '5px'}} id="proposition-name" >{this.props.kc.tokenParsed.given_name} {this.props.kc.tokenParsed.family_name} </h4>
+                                    <h4 style={{color: 'white', textAlign: 'right', fontSize: '15px', marginTop: '5px'}}
+                                        id="proposition-name">{this.props.kc.tokenParsed.given_name} {this.props.kc.tokenParsed.family_name} </h4>
                                 </div>
 
                             </div>
@@ -95,15 +96,28 @@ class Header extends React.Component {
                                 smallMenuClassName="small-menu"
                                 menu={
                                     <ul id="proposition-links" style={{width: navWidth}}>
-                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/shift')} className={routerPath === '/shift' ? 'active' : ''}>Shift</a></li>
-                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/tasks')} className={isTask(routerPath) ? 'active' : ''}>Tasks</a></li>
-                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/procedures')} className={isProcess(routerPath) ? 'active' : ''}>Procedures</a></li>
-                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/reports')} className={routerPath === '/reports' ? 'active' : ''}>Reports</a></li>
-                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/messages')} className={routerPath === '/messages' ? 'active' : ''}>Messages</a></li>
+                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/shift')}
+                                                                    className={routerPath === '/shift' ? 'active' : ''}>Shift</a>
+                                        </li>
+                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/tasks')}
+                                                                    className={isTask(routerPath) ? 'active' : ''}>Tasks</a>
+                                        </li>
+                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/procedures')}
+                                                                    className={isProcess(routerPath) ? 'active' : ''}>Procedures</a>
+                                        </li>
+                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/reports')}
+                                                                    className={routerPath === '/reports' ? 'active' : ''}>Reports</a>
+                                        </li>
+                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/messages')}
+                                                                    className={routerPath === '/messages' ? 'active' : ''}>Messages</a>
+                                        </li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/calendar')}
                                                                     className={routerPath === '/calendar' ? 'active' : ''}>Calendar</a>
                                         </li>
-                                        { adminRole ? <li style={pointerStyle}><a onClick={() => this.changeRoute('/admin')} className={routerPath === '/admin' ? 'active' : ''}>Admin</a></li> : <div />}
+                                        {adminRole ?
+                                            <li style={pointerStyle}><a onClick={() => this.changeRoute('/admin')}
+                                                                        className={routerPath === '/admin' ? 'active' : ''}>Admin</a>
+                                            </li> : <div/>}
                                         <li style={pointerStyle}><a onClick={this.logout}>Logout</a></li>
                                     </ul>
                                 }
@@ -113,7 +127,7 @@ class Header extends React.Component {
 
                 </div>
             </header>
-            <div id="global-header-bar" />
+            <div id="global-header-bar"/>
             <LoadingBar
                 updateTime={100}
                 maxProgress={100}
