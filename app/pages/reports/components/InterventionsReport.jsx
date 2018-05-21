@@ -38,9 +38,14 @@ class InterventionsReport extends React.Component {
             .dimension(hourDim)
             .group(eventByHourGroup)
             .innerRadius(50)
+            .legend(dc.legend())
+            .label((d) =>  d.value)
             .controlsUseVisibility(true);
         genderRowChart
+            .renderTitleLabel(true)
             .dimension(genderDim)
+            .title((d) => d.gender)
+            .legend(dc.legend())
             .group(genderByGroup)
             .elasticX(true)
             .controlsUseVisibility(true);
@@ -82,19 +87,19 @@ class InterventionsReport extends React.Component {
             <div className="grid-row" style={{paddingTop: '10px'}}>
 
                 <div className="column-one-third">
-                    <div id="chart-ring" style={{width: '300px', height: '300px'}}>
+                    <div id="chart-ring" style={{width: '300px', height: '300px'}}><span>Events by hour</span>
                     </div>
                 </div>
 
                 <div className="column-one-third">
-                    <div id="chart-row-martial" style={{width: '300px', height: '300px'}}>
+                    <div id="chart-row-martial" style={{width: '300px', height: '300px'}}><span>Events by Martial Status</span>
                     </div>
                     <div id="martial-legend" className="dc-html-legend-container"/>
 
                 </div>
 
                 <div className="column-one-third">
-                    <div id="chart-row-gender" style={{width: '300px', height: '300px'}}>
+                    <div id="chart-row-gender" style={{width: '300px', height: '300px'}}><span>Events by Gender</span>
                     </div>
                 </div>
 
