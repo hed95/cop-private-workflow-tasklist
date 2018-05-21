@@ -48,7 +48,8 @@ class InterventionsReport extends React.Component {
             .dimension(martialDim)
             .group(martialStatusByGroup)
             .elasticX(true)
-            .controlsUseVisibility(true);
+            .controlsUseVisibility(true)
+            .legend(dc.htmlLegend().container('#martial-legend').horizontal(true).highlightSelected(true));
 
         function show_empty_message(chart) {
             const is_empty = d3.sum(chart.group().all().map(chart.valueAccessor())) === 0;
@@ -68,12 +69,16 @@ class InterventionsReport extends React.Component {
         }
 
         martialRowChart.on('pretransition', show_empty_message);
+        genderRowChart.on('pretransition', show_empty_message);
         dc.renderAll();
     }
 
 
     render() {
-        return <div>
+        return <div style={{paddingTop: '20px'}}>
+
+            <h3 className="heading-medium">Interventions Report</h3>
+
             <div className="grid-row" style={{paddingTop: '10px'}}>
 
                 <div className="column-one-third">
@@ -84,6 +89,8 @@ class InterventionsReport extends React.Component {
                 <div className="column-one-third">
                     <div id="chart-row-martial" style={{width: '300px', height: '300px'}}>
                     </div>
+                    <div id="martial-legend" className="dc-html-legend-container"/>
+
                 </div>
 
                 <div className="column-one-third">

@@ -16,8 +16,7 @@ import InterventionsReport from "../pages/reports/components/InterventionsReport
 
 const ReportRoutes = ({match}) => (
     <div>
-        <ShiftScopedRoute name="Reports" exact path='/reports' component={ReportsPage} />
-        <ShiftScopedRoute path={match.url + "/interventions"} component={InterventionsReport}/>
+
     </div>
 );
 
@@ -31,7 +30,8 @@ const Main = () => (
                 )}/>
                 <ShiftScopedRoute name="Tasks" exact path='/tasks' component={TasksPage} />
                 <ShiftScopedRoute name="Procedures" exact path='/procedures' component={ProcessesPage}/>
-                <Route name="Reports" component={ReportRoutes} />
+                <ShiftScopedRoute name="Reports" exact path='/reports' component={ReportsPage} />
+                <ShiftScopedRoute exact path="/reports/interventions" component={InterventionsReport}/>
                 <ShiftScopedRoute name="Messages" exact path='/messages' component={MessagesPage}/>
                 <ShiftScopedRoute name="Calendar" exact path='/calendar' component={CalendarPage}/>
                 <ShiftScopedRoute name="Procedure Start Page" exact path="/procedure-start" component={ProcessStartPage}/>
