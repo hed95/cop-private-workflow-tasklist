@@ -6,11 +6,22 @@ import ReportsPage from './../pages/reports/components/ReportsPage'
 import MessagesPage from '../pages/messages/components/MessagesPage'
 import ProfilePage from "../pages/shift/components/ShiftPage";
 import AdminPage from "../pages/admin/components/AdminPage";
-import SessionScopedRoute from "./shift/components/ShiftScopedRoute";
+import ShiftScopedRoute from "./shift/components/ShiftScopedRoute";
 import CalendarPage from "../pages/calendar/components/CalendarPage";
 import ProcessStartPage from "../pages/procedures/components/ProcedureStartPage";
 import TaskDetailsPage from "../pages/task/component/TaskDetailsPage";
 import ErrorHandlingComponent from "./error/component/ErrorHandlingComponent";
+import InterventionsReport from "../pages/reports/components/InterventionsReport";
+
+
+const ReportRoutes = ({match}) => (
+    <div>
+        <ShiftScopedRoute name="Reports" exact path='/reports' component={ReportsPage} />
+        <ShiftScopedRoute path={match.url + "/interventions"} component={InterventionsReport}/>
+    </div>
+);
+
+
 
 const Main = () => (
     <main>
@@ -18,13 +29,13 @@ const Main = () => (
                 <Route name="Shift" exact path="/shift" render={() => (
                     <ErrorHandlingComponent><ProfilePage /></ErrorHandlingComponent>
                 )}/>
-                <SessionScopedRoute name="Tasks" exact path='/tasks' component={TasksPage} />
-                <SessionScopedRoute name="Procedures" exact path='/procedures' component={ProcessesPage}/>
-                <SessionScopedRoute name="Reports" exact path='/reports' component={ReportsPage}/>
-                <SessionScopedRoute name="Messages" exact path='/messages' component={MessagesPage}/>
-                <SessionScopedRoute name="Calendar" exact path='/calendar' component={CalendarPage}/>
-                <SessionScopedRoute name="Procedure Start Page" exact path="/procedure-start" component={ProcessStartPage}/>
-                <SessionScopedRoute name="Task Details Page" exact path="/task" component={TaskDetailsPage}/>
+                <ShiftScopedRoute name="Tasks" exact path='/tasks' component={TasksPage} />
+                <ShiftScopedRoute name="Procedures" exact path='/procedures' component={ProcessesPage}/>
+                <Route name="Reports" component={ReportRoutes} />
+                <ShiftScopedRoute name="Messages" exact path='/messages' component={MessagesPage}/>
+                <ShiftScopedRoute name="Calendar" exact path='/calendar' component={CalendarPage}/>
+                <ShiftScopedRoute name="Procedure Start Page" exact path="/procedure-start" component={ProcessStartPage}/>
+                <ShiftScopedRoute name="Task Details Page" exact path="/task" component={TaskDetailsPage}/>
 
                 <Route name="Admin" exact path="/admin" component={AdminPage}/>
                 <Redirect to="/shift"/>

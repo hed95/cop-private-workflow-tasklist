@@ -59,6 +59,10 @@ class Header extends React.Component {
             return routerPath === '/tasks' || routerPath === '/task';
         };
 
+        const isReports = (routerPath) => {
+            return routerPath.indexOf("reports") >= 1? 'active' : '';
+        };
+
         const adminRole = this.props.kc.realmAccess && this.props.kc.realmAccess.roles
             ? this.props.kc.realmAccess.roles.find(role => role === 'platform_admin')
             : null;
@@ -106,7 +110,7 @@ class Header extends React.Component {
                                                                     className={isProcess(routerPath) ? 'active' : ''}>Procedures</a>
                                         </li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/reports')}
-                                                                    className={routerPath === '/reports' ? 'active' : ''}>Reports</a>
+                                                                    className={isReports(routerPath)}>Reports</a>
                                         </li>
                                         <li style={pointerStyle}><a onClick={() => this.changeRoute('/messages')}
                                                                     className={routerPath === '/messages' ? 'active' : ''}>Messages</a>
