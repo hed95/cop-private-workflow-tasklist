@@ -31,15 +31,6 @@ class ProcessStartPage extends React.Component {
                 <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
                     name="three-bounce" color="#005ea5"/></div> : <div></div>
             }
-
-            {
-                !submittingToWorkflow && submissionToWorkflowSuccessful ? <div className="govuk-box-highlight confirm-page new">
-                    <span className="hod-checkmark"/>
-                    <h2 className="heading-small">
-                        {processDefinition.getIn(['process-definition', 'name'])} successfully started
-                    </h2>
-                </div> : <div/>
-            }
             <div className="column-full">
                 <fieldset>
                     {isFetchingProcessDefinition ? <div>Loading form...</div> : <div>
@@ -50,6 +41,7 @@ class ProcessStartPage extends React.Component {
 
                             <StartForm formName={processDefinition.get('formKey')}
                                        processKey={processDefinition.getIn(['process-definition', 'key'])}
+                                       processName={processDefinition.getIn(['process-definition', 'name'])}
                                        {...this.props}/>
                         </div> : <div>
                             No process definition found

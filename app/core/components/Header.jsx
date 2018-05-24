@@ -7,6 +7,7 @@ import img from 'govuk_template_ejs/assets/images/gov.uk_logotype_crown_invert_t
 import ResponsiveMenu from 'react-responsive-navbar';
 import * as errorActionTypes from '../../core/error/actionTypes';
 import {bindActionCreators} from "redux";
+import PubSub from "pubsub-js";
 
 class Header extends React.Component {
 
@@ -32,6 +33,10 @@ class Header extends React.Component {
     changeRoute(path) {
         this.setState({routerPath: path});
         this.props.resetError();
+        PubSub.publish("submission", {
+            submission: false,
+            message: null
+        });
         this.props.history.replace(path);
     }
 

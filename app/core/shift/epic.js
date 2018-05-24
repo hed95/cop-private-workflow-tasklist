@@ -3,6 +3,7 @@ import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
 import {errorObservable} from "../error/epicUtil";
+import PubSub from "pubsub-js";
 
 const fetchActiveShift = (action$, store) =>
     action$.ofType(types.FETCH_ACTIVE_SHIFT)
@@ -31,10 +32,15 @@ const createActiveShift = (action$, store) =>
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 }
-            }).map(payload => actions.createActiveShiftSuccess(payload))
-                .catch(error => {
-                        return errorObservable(actions.createActiveShiftFailure(), error);
-                    }
-                ));
+            }).map(payload => {
+                PubSub.publish("submission", {
+                    submission: true,
+                    message: `Shift successfully started`
+                });
+                return actions.createActiveShiftSuccess(payload)
+            }).catch(error => {
+                    return errorObservable(actions.createActiveShiftFailure(), error);
+                }
+            ));
 
 export default combineEpics(fetchActiveShift, createActiveShift);

@@ -27,12 +27,13 @@ const resetForm = () => ({
 });
 
 
-const submit = (formId,  processKey, variableName, submissionData)=> ({
+const submit = (formId,  processKey, variableName, submissionData, processName)=> ({
     type: types.SUBMIT,
     formId,
     processKey,
     variableName,
-    submissionData
+    submissionData,
+    processName
 });
 
 const submitSuccess = (payload) => ({
@@ -44,11 +45,12 @@ const submitFailure = () => ({
     type: types.SUBMIT_FAILURE
 });
 
-const submitToWork = (processKey, variableName, data) => ({
+const submitToWork = (processKey, variableName, data, processName) => ({
     type: types.SUBMIT_TO_WORKFKOW,
     processKey,
     variableName,
-    data
+    data,
+    processName
 });
 
 const submitToWorkflowSuccess = (payload) => ({

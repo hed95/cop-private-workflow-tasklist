@@ -44,8 +44,12 @@ class StartForm extends React.Component {
                     const processKey = that.props.processKey;
                     const variableInput = parsedForm.components.find(c => c.key === 'submitVariableName');
                     const variableName = variableInput ? variableInput.defaultValue : that.props.variableName;
-                    that.props.submit(parsedForm._id, processKey, variableName, submission.data);
+                    const processName = that.props.processName ? that.props.processName : processKey;
+
+                    that.props.submit(parsedForm._id,
+                        processKey, variableName, submission.data, processName);
                     form.emit('submitDone');
+                    that.props.history.replace("/tasks");
                 });
                 form.on('error', (errors) => {
                     console.log('IFrame: we have errors!', errors);

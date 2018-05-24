@@ -1,10 +1,10 @@
 import client from "../../common/rest/client";
 import {combineEpics} from "redux-observable";
 import * as actions from "./actions";
-import {Observable} from "rxjs/Observable";
 import * as types from "./actionTypes";
 import * as sessionTypes from '../shift/actionTypes'
 import {errorObservable} from "../error/epicUtil";
+import PubSub from 'pubsub-js';
 
 
 const fetchForm = (action$, store) =>
@@ -69,7 +69,8 @@ const submit = (action$, store) =>
                         type: types.SUBMIT_TO_WORKFKOW,
                         processKey: action.processKey,
                         variableName: action.variableName,
-                        data: payload.entity.data
+                        data: payload.entity.data,
+                        processName: action.processName
                     }
                 }
 
@@ -94,8 +95,14 @@ const submitToWorkflow = (action$, store) =>
                     "Authorization": `Bearer ${store.getState().keycloak.token}`,
                     'Content-Type': 'application/json'
                 }
-            }).map(payload => actions.submitToWorkflowSuccess(payload))
-                .catch(error => {
+            }).map(payload => {
+                console.log(JSON.stringify(action));
+                PubSub.publish("submission", {
+                    submission: true,
+                    message: `${action.processName} successfully started`
+                });
+                return actions.submitToWorkflowSuccess(payload)
+            }).catch(error => {
                     return errorObservable(actions.submitToWorkflowFailure(), error)
                 })
         );
