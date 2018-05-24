@@ -14,19 +14,12 @@ import ErrorHandlingComponent from "./error/component/ErrorHandlingComponent";
 import InterventionsReport from "../pages/reports/components/InterventionsReport";
 
 
-const ReportRoutes = ({match}) => (
-    <div>
-
-    </div>
-);
-
-
 
 const Main = () => (
     <main>
             <Switch>
                 <Route name="Shift" exact path="/shift" render={() => (
-                    <ErrorHandlingComponent><ProfilePage /></ErrorHandlingComponent>
+                   <ProfilePage />
                 )}/>
                 <ShiftScopedRoute name="Tasks" exact path='/tasks' component={TasksPage} />
                 <ShiftScopedRoute name="Procedures" exact path='/procedures' component={ProcessesPage}/>

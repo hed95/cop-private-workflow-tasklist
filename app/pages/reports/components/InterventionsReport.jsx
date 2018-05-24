@@ -15,7 +15,7 @@ class InterventionsReport extends React.Component {
 
     renderReport(data) {
         const ringChart = dc.pieChart("#chart-ring"),
-            martialRowChart = dc.rowChart("#chart-row-martial"),
+            maritalRowChart = dc.rowChart("#chart-row-marital"),
             genderRowChart = dc.rowChart("#chart-row-gender");
 
         const eventData = data;
@@ -24,14 +24,14 @@ class InterventionsReport extends React.Component {
             hourDim = ndx.dimension(function (d) {
                 return d.hour;
             }),
-            martialDim = ndx.dimension(function (d) {
+            maritalDim = ndx.dimension(function (d) {
                 return d.maritalcode;
             }),
             genderDim = ndx.dimension(function (d) {
                 return d.gender;
             }),
             eventByHourGroup = hourDim.group(),
-            martialStatusByGroup = martialDim.group(),
+            maritalStatusByGroup = maritalDim.group(),
             genderByGroup = genderDim.group();
 
         ringChart
@@ -49,12 +49,12 @@ class InterventionsReport extends React.Component {
             .group(genderByGroup)
             .elasticX(true)
             .controlsUseVisibility(true);
-        martialRowChart
-            .dimension(martialDim)
-            .group(martialStatusByGroup)
+        maritalRowChart
+            .dimension(maritalDim)
+            .group(maritalStatusByGroup)
             .elasticX(true)
             .controlsUseVisibility(true)
-            .legend(dc.htmlLegend().container('#martial-legend').horizontal(true).highlightSelected(true));
+            .legend(dc.htmlLegend().container('#marital-legend').horizontal(true).highlightSelected(true));
 
         function show_empty_message(chart) {
             const is_empty = d3.sum(chart.group().all().map(chart.valueAccessor())) === 0;
@@ -73,7 +73,7 @@ class InterventionsReport extends React.Component {
             empty.transition().duration(1000).style('opacity', 1);
         }
 
-        martialRowChart.on('pretransition', show_empty_message);
+        maritalRowChart.on('pretransition', show_empty_message);
         genderRowChart.on('pretransition', show_empty_message);
         dc.renderAll();
     }
@@ -92,9 +92,9 @@ class InterventionsReport extends React.Component {
                 </div>
 
                 <div className="column-one-third">
-                    <div id="chart-row-martial" style={{width: '300px', height: '300px'}}><span>Events by Martial Status</span>
+                    <div id="chart-row-marital" style={{width: '300px', height: '300px'}}><span>Events by Marital Status</span>
                     </div>
-                    <div id="martial-legend" className="dc-html-legend-container"/>
+                    <div id="marital-legend" className="dc-html-legend-container"/>
 
                 </div>
 

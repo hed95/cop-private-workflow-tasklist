@@ -1,7 +1,7 @@
 import Immutable from 'immutable';
 import * as actions from './actionTypes';
 
-const {Map, List} = Immutable;
+const {Map} = Immutable;
 
 const initialState = new Map({
     loadingForm: true,
@@ -13,8 +13,11 @@ const initialState = new Map({
 
 function reducer(state = initialState, action) {
     switch (action.type) {
+        case actions.RESET_FORM:
+            return initialState;
         case actions.FETCH_FORM:
             return state.set('loadingForm', true)
+                .set('form', null)
                 .set('submittingToWorkflow', false)
                 .set('submissionToWorkflowSuccessful', false);
         case actions.FETCH_FORM_SUCCESS:

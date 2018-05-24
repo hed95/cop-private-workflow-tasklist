@@ -12,21 +12,28 @@ import {createForm} from "formiojs";
 class StartForm extends React.Component {
 
     componentDidMount() {
-        const formDataContext = this.props.formDataContext;
-        const formName = this.props.formName;
-        if (formDataContext) {
-            this.props.fetchFormWithContext(formName, formDataContext);
-        } else {
-            this.props.fetchForm(formName);
+        if (this.props.formName) {
+            const formDataContext = this.props.formDataContext;
+            const formName = this.props.formName;
+            if (formDataContext) {
+                this.props.fetchFormWithContext(formName, formDataContext);
+            } else {
+                this.props.fetchForm(formName);
+            }
         }
+
     }
 
+    componentWillUnmount() {
+        this.props.resetForm();
+    }
 
     render() {
         const {loadingForm} = this.props;
         const that = this;
-
+        let loading;
         if (!loadingForm && this.props.form) {
+            loading = <div/>
             $("#formio").empty();
             const parsedForm = this.props.form;
             createForm(document.getElementById("formio"), parsedForm, {
@@ -36,7 +43,7 @@ class StartForm extends React.Component {
                     console.log('IFrame: submitting form', submission);
                     const processKey = that.props.processKey;
                     const variableInput = parsedForm.components.find(c => c.key === 'submitVariableName');
-                    const variableName = variableInput ? variableInput.defaultValue: that.props.variableName;
+                    const variableName = variableInput ? variableInput.defaultValue : that.props.variableName;
                     that.props.submit(parsedForm._id, processKey, variableName, submission.data);
                     form.emit('submitDone');
                 });
@@ -48,14 +55,20 @@ class StartForm extends React.Component {
             }).catch(function (e) {
                 console.log('IFrame: caught formio error in promise', e);
             });
+        } else {
+            loading = <div>Loading form...</div>
         }
 
-        return <div> <div id="formio"/></div>
+        return <div>
+            {loading}
+            <div id="formio"/>
+        </div>
     }
 }
 
 StartForm.propTypes = {
     fetchForm: PropTypes.func.isRequired,
+    resetForm: PropTypes.func.isRequired,
     fetchFormWithContext: PropTypes.func.isRequired,
     loadingForm: PropTypes.bool
 };

@@ -19,6 +19,11 @@ class ProcessStartPage extends React.Component {
         this.props.fetchProcessDefinition(params.processKey);
     }
 
+    componentWillUnmount() {
+        this.props.reset();
+    }
+
+
     render() {
         const {isFetchingProcessDefinition, processDefinition, submissionToWorkflowSuccessful, submittingToWorkflow} = this.props;
         return <div className="grid-row">

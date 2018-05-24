@@ -1,3 +1,5 @@
 export const HANDLE_ERROR = "HANDLE_ERROR";
 
 export const RESET_ERROR = "RESET_ERROR";
+
+export const HANDLE_AUTHORISED= "HANDLE_AUTHORISED";

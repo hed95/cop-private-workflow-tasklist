@@ -30,7 +30,9 @@ const fetchProcessDefinitionFailure =  () => ({
     type: types.FETCH_PROCESS_DEFINITION_FAILURE
 });
 
-
+const reset = () => ({
+   type: types.RESET
+});
 
 export  {
     fetchProcessDefinitions,
@@ -38,6 +40,7 @@ export  {
     fetchProcessDefinitionsFailure,
     fetchProcessDefinition,
     fetchProcessDefinitionSuccess,
-    fetchProcessDefinitionFailure
+    fetchProcessDefinitionFailure,
+    reset
 
 }

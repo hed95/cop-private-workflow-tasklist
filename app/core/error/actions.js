@@ -5,7 +5,11 @@ const handleError = payload => ({
     payload
 });
 
+const handleAuthorised = () => ({
+    type: types.HANDLE_AUTHORISED
+});
 
 export {
-    handleError
+    handleError,
+    handleAuthorised
 }

@@ -5,7 +5,8 @@ const {Map} = Immutable;
 
 const initialState = new Map({
     hasError: false,
-    errors: new List([])
+    errors: new List([]),
+    unauthorised: false,
 });
 
 /**
@@ -22,6 +23,8 @@ function isJson(str) {
 
 function reducer(state = initialState, action) {
     switch (action.type) {
+        case actions.HANDLE_AUTHORISED:
+            return state.set("unauthorised", true);
         case actions.HANDLE_ERROR:
             const error = action.payload;
             const errorToReturn = {};

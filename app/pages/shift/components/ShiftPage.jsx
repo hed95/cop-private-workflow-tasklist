@@ -14,6 +14,8 @@ import {
     activeShiftSuccess, hasActiveShift, isFetchingShift, shift,
     submittingActiveShift
 } from "../../../core/shift/selectors";
+import {errors, hasError} from "../../../core/error/selectors";
+const uuidv4 = require('uuid/v4');
 
 class ShiftPage extends React.Component {
 
@@ -49,6 +51,13 @@ class ShiftPage extends React.Component {
             activeShiftSuccess,
             submittingActiveShift
         } = this.props;
+
+        const {hasError, errors} = this.props;
+        const items = errors.map((err) => {
+            return <li key={uuidv4()}>{err.get('url')} - [{err.get('status')} {err.get('error')}]
+                - {err.get('message')}</li>
+        });
+
         const headerToDisplay = !submittingActiveShift && !hasActiveShift ?
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <div className="notice">
@@ -61,7 +70,17 @@ class ShiftPage extends React.Component {
                 </div>
             </div> : <div/>;
         return <div>
+            {hasError ?
+                <div className="error-summary" role="alert" aria-labelledby="error-summary-heading-example-1"
+                     tabIndex="-1">
+                    <h2 className="heading-medium error-summary-heading" id="error-summary-heading-example-1">
+                        We are experiencing technical problems
+                    </h2>
+                    <ul className="error-summary-list">
+                        {items}
+                    </ul>
 
+                </div> : <div/>}
             {isFetchingShift ?
                 <div style={{display: 'flex', justifyContent: 'center'}}><Spinner
                     name="three-bounce" color="#005ea5"/></div>
@@ -106,7 +125,9 @@ export default connect((state) => {
         submittingFormForValidation: submittingFormForValidation(state),
         submittingActiveShift: submittingActiveShift(state),
         activeShiftSuccess: activeShiftSuccess(state),
-        shift: shift(state)
+        shift: shift(state),
+        hasError: hasError(state),
+        errors: errors(state),
     }
 }, mapDispatchToProps)(withRouter(ShiftPage))
 
