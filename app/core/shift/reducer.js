@@ -32,8 +32,7 @@ function reducer(state = initialState, action) {
         case actions.CREATE_ACTIVE_SHIFT_SUCCESS:
             return state.set('submittingActiveShift', false)
                 .set('activeShiftSuccess', true)
-                .set('hasActiveShift', true)
-                .set('shift', action.payload.entity);
+                .set('hasActiveShift', true);
         case actions.CREATE_ACTIVE_SHIFT_FAILURE:
             return state
                 .set("submittingActiveShift", false)

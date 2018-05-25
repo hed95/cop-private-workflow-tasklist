@@ -6,6 +6,7 @@ import {errorObservable} from "../error/epicUtil";
 import PubSub from "pubsub-js";
 
 const fetchActiveShift = (action$, store) =>
+
     action$.ofType(types.FETCH_ACTIVE_SHIFT)
         .mergeMap(action =>
             client({
@@ -19,6 +20,31 @@ const fetchActiveShift = (action$, store) =>
                         return errorObservable(actions.fetchActiveShiftFailure(), error);
                     }
                 ));
+
+
+const submit = (action$, store) =>
+    action$.ofType(types.SUBMIT_VALIDATION)
+        .mergeMap(action =>
+            client({
+                method: 'POST',
+                path: `/api/form/${action.formId}/submission`,
+                entity: {
+                    "data": action.submissionData
+                },
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`,
+                    'Content-Type': 'application/json'
+                }
+            }).take(1).map(payload => {
+                return {
+                    type: types.CREATE_ACTIVE_SHIFT,
+                    shiftInfo: payload.entity.data
+                }
+            }).catch(error => {
+                    return errorObservable(actions.submitFailure(), error);
+                }
+            ));
 
 const createActiveShift = (action$, store) =>
     action$.ofType(types.CREATE_ACTIVE_SHIFT)
@@ -37,10 +63,10 @@ const createActiveShift = (action$, store) =>
                     submission: true,
                     message: `Shift successfully started`
                 });
-                return actions.createActiveShiftSuccess(payload)
+                return actions.createActiveShiftSuccess(payload);
             }).catch(error => {
                     return errorObservable(actions.createActiveShiftFailure(), error);
                 }
             ));
 
-export default combineEpics(fetchActiveShift, createActiveShift);
+export default combineEpics(fetchActiveShift, submit, createActiveShift);

@@ -45,8 +45,8 @@ const submitFailure = () => ({
     type: types.SUBMIT_FAILURE
 });
 
-const submitToWork = (processKey, variableName, data, processName) => ({
-    type: types.SUBMIT_TO_WORKFKOW,
+const submitToWorkflow = (processKey, variableName, data, processName) => ({
+    type: types.SUBMIT_TO_WORKFLOW,
     processKey,
     variableName,
     data,
@@ -54,12 +54,12 @@ const submitToWork = (processKey, variableName, data, processName) => ({
 });
 
 const submitToWorkflowSuccess = (payload) => ({
-    type: types.SUBMIT_TO_WORKFKOW_SUCCESS,
+    type: types.SUBMIT_TO_WORKFLOW_SUCCESS,
     payload
 });
 
 const submitToWorkflowFailure = () => ({
-    type: types.SUBMIT_TO_WORKFKOW_FAILURE
+    type: types.SUBMIT_TO_WORKFLOW_FAILURE
 });
 
 
@@ -71,7 +71,7 @@ export {
     submit,
     submitSuccess,
     submitFailure,
-    submitToWork,
+    submitToWorkflow,
     submitToWorkflowSuccess,
     submitToWorkflowFailure,
     resetForm

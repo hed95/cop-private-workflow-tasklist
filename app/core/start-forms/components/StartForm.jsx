@@ -9,7 +9,7 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {createForm} from "formiojs";
 import {NAME} from "../../shift/constants";
-import {submittingActiveShift} from "../../shift/selectors";
+import {activeShiftSuccess, submittingActiveShift} from "../../shift/selectors";
 
 class StartForm extends React.Component {
 
@@ -26,7 +26,7 @@ class StartForm extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.submissionToWorkflowSuccessful || nextProps.activeShiftSuccess) {
+        if (nextProps.submissionToWorkflowSuccessful) {
             this.props.history.replace("/tasks");
         }
     }
@@ -92,7 +92,7 @@ export default connect((state) => {
         form: form(state),
         loadingForm: loadingForm(state),
         submissionToWorkflowSuccessful: submissionToWorkflowSuccessful(state),
-        activeShiftSuccess: submittingActiveShift(state)
+        submittingToWorkflow: submittingToWorkflow(state)
 
     }
 }, mapDispatchToProps)(withRouter(StartForm))

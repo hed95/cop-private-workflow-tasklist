@@ -2,7 +2,6 @@ import client from "../../common/rest/client";
 import {combineEpics} from "redux-observable";
 import * as actions from "./actions";
 import * as types from "./actionTypes";
-import * as sessionTypes from '../shift/actionTypes'
 import {errorObservable} from "../error/epicUtil";
 import PubSub from 'pubsub-js';
 
@@ -59,28 +58,20 @@ const submit = (action$, store) =>
                     'Content-Type': 'application/json'
                 }
             }).take(1).map(payload => {
-                if (action.processKey === 'activate-shift') {
-                    return {
-                        type: sessionTypes.CREATE_ACTIVE_SHIFT,
-                        shiftInfo: payload.entity.data
-                    }
-                } else {
-                    return {
-                        type: types.SUBMIT_TO_WORKFKOW,
-                        processKey: action.processKey,
-                        variableName: action.variableName,
-                        data: payload.entity.data,
-                        processName: action.processName
-                    }
+                return {
+                    type: types.SUBMIT_TO_WORKFLOW,
+                    processKey: action.processKey,
+                    variableName: action.variableName,
+                    data: payload.entity.data,
+                    processName: action.processName
                 }
-
             }).catch(error => {
                     return errorObservable(actions.submitFailure(), error);
                 }
             ));
 
 const submitToWorkflow = (action$, store) =>
-    action$.ofType(types.SUBMIT_TO_WORKFKOW)
+    action$.ofType(types.SUBMIT_TO_WORKFLOW)
         .mergeMap(action =>
             client({
                 method: 'POST',
@@ -103,8 +94,8 @@ const submitToWorkflow = (action$, store) =>
                 });
                 return actions.submitToWorkflowSuccess(payload)
             }).catch(error => {
-                    return errorObservable(actions.submitToWorkflowFailure(), error)
-                })
+                return errorObservable(actions.submitToWorkflowFailure(), error)
+            })
         );
 
 

@@ -27,8 +27,25 @@ const createActiveShiftFailure = () => ({
     type: types.CREATE_ACTIVE_SHIFT_FAILURE
 });
 
+const submit = (formId, submissionData)=> ({
+    type: types.SUBMIT_VALIDATION,
+    formId,
+    submissionData,
+});
+
+const submitSuccess = (payload) => ({
+    type: types.SUBMIT_VALIDATION_SUCCESS,
+    payload
+});
+
+const submitFailure = () => ({
+    type: types.SUBMIT_VALIDATION_FAILURE
+});
 
 export {
+    submit,
+    submitSuccess,
+    submitFailure,
     fetchActiveShift,
     fetchActiveShiftSuccess,
     fetchActiveShiftFailure,

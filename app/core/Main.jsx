@@ -4,22 +4,20 @@ import ProcessesPage from '../pages/procedures/components/ProceduresPage'
 import TasksPage from './../pages/tasks/components/TasksPage'
 import ReportsPage from './../pages/reports/components/ReportsPage'
 import MessagesPage from '../pages/messages/components/MessagesPage'
-import ProfilePage from "../pages/shift/components/ShiftPage";
+import ShiftPage from "../core/shift/components/ShiftPage";
 import AdminPage from "../pages/admin/components/AdminPage";
 import ShiftScopedRoute from "./shift/components/ShiftScopedRoute";
 import CalendarPage from "../pages/calendar/components/CalendarPage";
 import ProcessStartPage from "../pages/procedures/components/ProcedureStartPage";
 import TaskDetailsPage from "../pages/task/component/TaskDetailsPage";
-import ErrorHandlingComponent from "./error/component/ErrorHandlingComponent";
 import InterventionsReport from "../pages/reports/components/InterventionsReport";
-
 
 
 const Main = () => (
     <main>
             <Switch onUpdate={() => window.scrollTo(0, 0)}>
                 <Route name="Shift" exact path="/shift" render={() => (
-                   <ProfilePage />
+                   <ShiftPage />
                 )}/>
                 <ShiftScopedRoute name="Tasks" exact path='/tasks' component={TasksPage} />
                 <ShiftScopedRoute name="Procedures" exact path='/procedures' component={ProcessesPage}/>

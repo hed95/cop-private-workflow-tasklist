@@ -35,15 +35,15 @@ function reducer(state = initialState, action) {
         case actions.SUBMIT_FAILURE:
             return state.set('submittingFormForValidation', false);
 
-        case actions.SUBMIT_TO_WORKFKOW:
+        case actions.SUBMIT_TO_WORKFLOW:
             console.log('IFrame: Submitting to workflow');
              return state.set('submittingToWorkflow', true)
                 .set('submissionToWorkflowSuccessful', false);
-        case actions.SUBMIT_TO_WORKFKOW_SUCCESS:
+        case actions.SUBMIT_TO_WORKFLOW_SUCCESS:
             console.log('IFrame: Submission to workflow successful');
             return state.set('submittingToWorkflow', false)
                 .set('submissionToWorkflowSuccessful', true);
-        case actions.SUBMIT_TO_WORKFKOW_FAILURE:
+        case actions.SUBMIT_TO_WORKFLOW_FAILURE:
             return state.set('submittingToWorkflow', false)
                 .set('submissionToWorkflowSuccessful', false);
 
