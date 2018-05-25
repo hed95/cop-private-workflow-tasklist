@@ -35,8 +35,7 @@ class ShiftPage extends React.Component {
                     <legend>
                         <h3 className="heading-medium">Shift Details</h3>
                     </legend>
-                    <StartForm formName="createAnActiveShift" processKey="activate-shift" {...this.props}
-                               submission={this.props.shift}/>
+                    <StartForm formName="createAnActiveShift" processKey="activate-shift" {...this.props} />
                 </fieldset>
             </div>
 
@@ -48,7 +47,6 @@ class ShiftPage extends React.Component {
         const {
             hasActiveShift,
             isFetchingShift,
-            activeShiftSuccess,
             submittingActiveShift
         } = this.props;
 
@@ -86,12 +84,6 @@ class ShiftPage extends React.Component {
                     name="three-bounce" color="#005ea5"/></div>
                 : headerToDisplay
             }
-            {activeShiftSuccess ? <div className="govuk-box-highlight confirm-page new">
-                <span className="hod-checkmark"/>
-                <h2 className="heading-small">
-                    Shift details created. You can now navigate to other areas of the platform
-                </h2>
-            </div> : <div/>}
             {submittingActiveShift ?
                 <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
                     name="three-bounce" color="#005ea5"/></div> : <div/>
@@ -124,7 +116,6 @@ export default connect((state) => {
         isFetchingShift: isFetchingShift(state),
         submittingFormForValidation: submittingFormForValidation(state),
         submittingActiveShift: submittingActiveShift(state),
-        activeShiftSuccess: activeShiftSuccess(state),
         shift: shift(state),
         hasError: hasError(state),
         errors: errors(state),

@@ -17,7 +17,7 @@ import InterventionsReport from "../pages/reports/components/InterventionsReport
 
 const Main = () => (
     <main>
-            <Switch>
+            <Switch onUpdate={() => window.scrollTo(0, 0)}>
                 <Route name="Shift" exact path="/shift" render={() => (
                    <ProfilePage />
                 )}/>

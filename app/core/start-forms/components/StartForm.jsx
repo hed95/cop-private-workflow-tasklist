@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {
-    form, formLoadingFailed, loadingForm
+    form, formLoadingFailed, loadingForm, submissionToWorkflowSuccessful, submittingToWorkflow
 } from "../selectors";
 import {bindActionCreators} from "redux";
 import * as actions from "../actions";
@@ -8,6 +8,8 @@ import * as actions from "../actions";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {createForm} from "formiojs";
+import {NAME} from "../../shift/constants";
+import {submittingActiveShift} from "../../shift/selectors";
 
 class StartForm extends React.Component {
 
@@ -21,7 +23,12 @@ class StartForm extends React.Component {
                 this.props.fetchForm(formName);
             }
         }
+    }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.submissionToWorkflowSuccessful || nextProps.activeShiftSuccess) {
+            this.props.history.replace("/tasks");
+        }
     }
 
     componentWillUnmount() {
@@ -49,7 +56,6 @@ class StartForm extends React.Component {
                     that.props.submit(parsedForm._id,
                         processKey, variableName, submission.data, processName);
                     form.emit('submitDone');
-                    that.props.history.replace("/tasks");
                 });
                 form.on('error', (errors) => {
                     console.log('IFrame: we have errors!', errors);
@@ -84,6 +90,9 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 export default connect((state) => {
     return {
         form: form(state),
-        loadingForm: loadingForm(state)
+        loadingForm: loadingForm(state),
+        submissionToWorkflowSuccessful: submissionToWorkflowSuccessful(state),
+        activeShiftSuccess: submittingActiveShift(state)
+
     }
 }, mapDispatchToProps)(withRouter(StartForm))

@@ -10,6 +10,7 @@ import 'webpack-icons-installer/bootstrap';
 import '../public/styles/app.scss'
 import '../public/styles/fonts.css'
 import 'rxjs';
+import ScrollToTop from "./core/components/ScrollToTop";
 
 const store = configureStore();
 let kc = null;
@@ -22,8 +23,10 @@ const renderApp = (App) => {
                 <Provider store={store}>
                     <div>
                         <AppContainer>
-                            <BrowserRouter >
-                                <App/>
+                            <BrowserRouter>
+                                <ScrollToTop>
+                                    <App/>
+                                </ScrollToTop>
                             </BrowserRouter>
                         </AppContainer>
                     </div>

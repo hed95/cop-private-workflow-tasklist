@@ -18,9 +18,11 @@ function reducer(state = initialState, action) {
                 .set('activeShiftSuccess', false);
         case actions.FETCH_ACTIVE_SHIFT_SUCCESS:
             const data = action.payload.entity;
+            const hasShiftInfo = data && data.length !== 0;
+            const shiftInfo = hasShiftInfo? Immutable.fromJS(data[0]) : new Map({});
             return state.set('isFetchingShift', false)
-                .set('hasActiveShift', data && data.length !== 0)
-                .set('shift', Immutable.fromJS(data[0]));
+                .set('hasActiveShift', hasShiftInfo)
+                .set('shift', shiftInfo);
         case actions.FETCH_ACTIVE_SHIFT_FAILURE:
             return state.set('isFetchingShift', false)
                 .set('hasActiveShift', false);

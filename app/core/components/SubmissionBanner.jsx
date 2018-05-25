@@ -24,7 +24,7 @@ class SubmissionBanner extends React.Component {
     render() {
         const {submission, message} = this.state;
 
-        return submission? <div className="container">
+        return submission ? <div className="container">
                 <div className="govuk-box-highlight confirm-page new">
                     <span className="hod-checkmark"/>
                     <h2 className="heading-small">
