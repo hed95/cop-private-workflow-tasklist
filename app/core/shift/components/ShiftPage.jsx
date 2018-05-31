@@ -44,7 +44,6 @@ class ShiftPage extends React.Component {
                 noAlerts: true
             };
             if (shiftForm) {
-                alert(shift)
                 if (shift) {
                     const shiftSubmission = {
                         data: {
