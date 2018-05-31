@@ -15,8 +15,47 @@ const fetchTaskFormFailure = () => ({
     type: types.FETCH_TASK_FROM_FAILURE
 });
 
+
+const submitTaskForm = (formId, taskId, submission, variableName) => ({
+    type: types.SUBMIT_TASK_FORM,
+    formId,
+    taskId,
+    submission,
+    variableName
+});
+
+const submitTaskFormSuccess = (payload) => ({
+    type: types.SUBMIT_TASK_FORM_SUCCESS,
+    payload
+});
+
+const submitTaskFormFailure = () => ({
+    type: types.SUBMIT_TASK_FORM_FAILURE
+});
+
+const completeTask = (taskId, data) => ({
+    type: types.COMPLETE_TASK_FORM,
+    taskId,
+    data
+});
+
+const completeTaskSuccess = (payload) => ({
+    type: types.COMPLETE_TASK_FORM_SUCCESS,
+    payload
+});
+
+const completeTaskFailure = () => ({
+    type: types.COMPLETE_TASK_FORM_FAILURE
+});
+
 export {
     fetchTaskForm,
     fetchTaskFormSuccess,
-    fetchTaskFormFailure
+    fetchTaskFormFailure,
+    submitTaskForm,
+    submitTaskFormSuccess,
+    submitTaskFormFailure,
+    completeTask,
+    completeTaskSuccess,
+    completeTaskFailure
 }

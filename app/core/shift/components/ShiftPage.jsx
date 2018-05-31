@@ -4,25 +4,23 @@ import {connect} from "react-redux";
 
 import {bindActionCreators} from "redux";
 import {createStructuredSelector} from "reselect";
-import * as shiftActions from "../../../core/shift/actions";
-import * as formActions from "../../../core/start-forms/actions";
 
 import Spinner from 'react-spinkit';
 import ImmutablePropTypes from "react-immutable-proptypes";
 import {hasActiveShift, isFetchingShift, shift, submittingActiveShift} from "../../../core/shift/selectors";
 import {errors, hasError} from "../../../core/error/selectors";
-import {createForm} from "formiojs";
-import {form, loadingForm} from "../../start-forms/selectors";
-import {activeShiftSuccess} from "../selectors";
+import {activeShiftSuccess, loadingShiftForm, shiftForm} from "../selectors";
 import $ from "jquery";
+import {Form} from 'react-formio'
+import * as actions from "../actions";
 
 const uuidv4 = require('uuid/v4');
 
 class ShiftPage extends React.Component {
 
     componentDidMount() {
-        this.props.actions.shiftActions.fetchActiveShift();
-        this.props.actions.formActions.fetchForm("createAnActiveShift");
+        this.props.fetchActiveShift();
+        this.props.fetchShiftForm();
     }
 
 
@@ -32,13 +30,57 @@ class ShiftPage extends React.Component {
         }
     }
 
+    renderForm() {
+        const {shiftForm, shift, loadingShiftForm, isFetchingShift} = this.props;
+
+        if (loadingShiftForm && isFetchingShift) {
+            return <div>Loading Shift Details....</div>
+        } else {
+            const submit = (submission) => {
+                this.props.submit(shiftForm._id, submission.data);
+                this.form.formio.emit("submitDone");
+            };
+            const options = {
+                noAlerts: true
+            };
+            if (shiftForm) {
+                alert(shift)
+                if (shift) {
+                    const shiftSubmission = {
+                        data: {
+                            shiftminutes: shift.get('shiftminutes'),
+                            shifthours: shift.get('shifthours'),
+                            startdatetime: shift.get('startdatetime'),
+                            teamid: shift.get('teamid'),
+                            locationid: '' + shift.get('locationid'),
+                            commandid: shift.get('commandid'),
+                            subcommandid: shift.get('subcommandid'),
+                            phone: shift.get('phone')
+                        }
+                    };
+                    return <Form form={shiftForm} submission={shiftSubmission} options={options}
+                                   ref={(form) => this.form = form}
+                                   onSubmit={(submission) => {
+                                       this.props.submit(shiftForm._id, submission.data);
+                                       this.form.formio.emit("submitDone");
+                                   }
+                                   }/>
+                } else {
+                    return <Form form={shiftForm}
+                                   ref={(form) => this.form = form}
+                                   options={options} onSubmit={submit}/>
+                }
+            } else {
+                return <div/>
+            }
+        }
+    }
+
     render() {
         const {
             hasActiveShift,
             isFetchingShift,
             submittingActiveShift,
-            loadingForm,
-            form
         } = this.props;
 
         const {hasError, errors} = this.props;
@@ -46,6 +88,7 @@ class ShiftPage extends React.Component {
             return <li key={uuidv4()}>{err.get('url')} - [{err.get('status')} {err.get('error')}]
                 - {err.get('message')}</li>
         });
+
 
         const headerToDisplay = !submittingActiveShift && !hasActiveShift ?
             <div style={{display: 'flex', justifyContent: 'center'}}>
@@ -59,31 +102,6 @@ class ShiftPage extends React.Component {
                 </div>
             </div> : <div/>;
 
-        let loading;
-        const that = this;
-        if (!loadingForm && form) {
-            loading = <div/>;
-            $("#shiftform").empty();
-            const parsedForm = form;
-            createForm(document.getElementById("shiftform"), parsedForm, {
-                noAlerts: true
-            }).then(function (form) {
-                form.on('submit', (submission) => {
-                    console.log('IFrame: submitting form', submission);
-                    that.props.actions.shiftActions.submit(parsedForm._id, submission.data);
-                    form.emit('submitDone');
-                });
-                form.on('error', (errors) => {
-                    console.log('IFrame: we have errors!', errors);
-                    window.scrollTo(0, 0);
-                    form.emit('submitDone');
-                });
-            }).catch(function (e) {
-                console.log('IFrame: caught formio error in promise', e);
-            });
-        } else {
-            loading = <div>Loading form...</div>
-        }
 
         return <div>
             {hasError ?
@@ -97,12 +115,12 @@ class ShiftPage extends React.Component {
                     </ul>
 
                 </div> : <div/>}
-            {isFetchingShift ?
+            {isFetchingShift && !submittingActiveShift ?
                 <div style={{display: 'flex', justifyContent: 'center'}}><Spinner
                     name="three-bounce" color="#005ea5"/></div>
                 : headerToDisplay
             }
-            {submittingActiveShift ?
+            {!isFetchingShift && submittingActiveShift ?
                 <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
                     name="three-bounce" color="#005ea5"/></div> : <div/>
             }
@@ -113,32 +131,27 @@ class ShiftPage extends React.Component {
                         <legend>
                             <h3 className="heading-medium">Shift Details</h3>
                         </legend>
-                        {loading}
-                        <div id="shiftform"/>
+                        {this.renderForm()}
                     </fieldset>
                 </div>
 
             </div>
         </div>
+
     }
 }
 
 
 ShiftPage.propTypes = {
+    fetchShiftForm: PropTypes.func.isRequired,
+    fetchActiveShift: PropTypes.func.isRequired,
     isFetchingShift: PropTypes.bool,
     hasActiveShift: PropTypes.bool,
     shift: ImmutablePropTypes.map
 };
 
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        actions: {
-            shiftActions: bindActionCreators(shiftActions, dispatch),
-            formActions: bindActionCreators(formActions, dispatch)
-        }
-    };
-};
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect((state) => {
     return {
@@ -150,8 +163,8 @@ export default connect((state) => {
         shift: shift(state),
         hasError: hasError(state),
         errors: errors(state),
-        form: form(state),
-        loadingForm: loadingForm(state)
+        shiftForm: shiftForm(state),
+        loadingShiftForm: loadingShiftForm(state)
 
     }
 }, mapDispatchToProps)(withRouter(ShiftPage))

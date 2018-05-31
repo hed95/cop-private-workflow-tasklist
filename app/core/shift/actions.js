@@ -1,5 +1,22 @@
 import * as types from './actionTypes';
 
+
+const fetchShiftForm = () => ({
+    type : types.FETCH_SHIFT_FORM
+});
+
+
+
+const fetchShiftFormSuccess = payload => ({
+    type: types.FETCH_SHIFT_FORM_SUCCESS,
+    payload
+});
+
+const fetchShiftFormFailure = () => ({
+    type: types.FETCH_SHIFT_FORM_FAILURE
+});
+
+
 const fetchActiveShift = () => ({
     type: types.FETCH_ACTIVE_SHIFT
 });
@@ -51,5 +68,8 @@ export {
     fetchActiveShiftFailure,
     createActiveShift,
     createActiveShiftSuccess,
-    createActiveShiftFailure
+    createActiveShiftFailure,
+    fetchShiftForm,
+    fetchShiftFormSuccess,
+    fetchShiftFormFailure
 }

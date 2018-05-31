@@ -4,7 +4,7 @@ import * as actions from './actionTypes';
 const {Map} = Immutable;
 
 const initialState = new Map({
-    loadingForm: true,
+    loadingForm: false,
     form: null,
     submittingFormForValidation: false,
     submittingToWorkflow: false,

@@ -5,13 +5,32 @@ import {combineEpics} from "redux-observable";
 import {errorObservable} from "../error/epicUtil";
 import PubSub from "pubsub-js";
 
+
+const fetchShiftForm = (action$, store) =>
+    action$.ofType(types.FETCH_SHIFT_FORM)
+        .mergeMap(action =>
+            client({
+                method: 'GET',
+                path: `/api/translation/form/createAnActiveShift`,
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`
+                }
+            }).map(payload => actions.fetchShiftFormSuccess(payload))
+                .catch(error => {
+                        return errorObservable(actions.fetchShiftFormFailure(), error);
+                    }
+                ));
+
 const fetchActiveShift = (action$, store) =>
 
     action$.ofType(types.FETCH_ACTIVE_SHIFT)
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/platform-data/shift?email=eq.${store.getState().keycloak.tokenParsed.email}`,
+                path: `/api/platform-data/shift?email=eq.${store.getState().keycloak.tokenParsed.email}`+
+                            `&select=*,location(locationname)` +
+                            `,command(commandname),team(teamname), subcommand(commandname),staff(phone)`,
                 headers: {
                     "Accept": "application/json"
                 }
@@ -69,4 +88,4 @@ const createActiveShift = (action$, store) =>
                 }
             ));
 
-export default combineEpics(fetchActiveShift, submit, createActiveShift);
+export default combineEpics(fetchActiveShift, submit, createActiveShift, fetchShiftForm);

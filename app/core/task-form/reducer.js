@@ -1,11 +1,14 @@
 import Immutable from 'immutable';
 import * as actions from './actionTypes';
 
-const {Map, List} = Immutable;
+const {Map} = Immutable;
 
 const initialState = new Map({
     loadingTaskForm: true,
     form: null,
+    submittingTaskFormForValidation: false,
+    submittingTaskFormForCompletion: false,
+    taskFormCompleteSuccessful: false,
 });
 
 function reducer(state = initialState, action) {
@@ -19,6 +22,21 @@ function reducer(state = initialState, action) {
                 .set('form', data);
         case actions.FETCH_TASK_FROM_FAILURE:
             return state.set('loadingTaskForm', false);
+        case actions.SUBMIT_TASK_FORM:
+            return state.set('submittingTaskFormForValidation', true);
+        case actions.SUBMIT_TASK_FORM_SUCCESS:
+            return state.set('submittingTaskFormForValidation', false);
+        case actions.SUBMIT_TASK_FORM_FAILURE:
+            return state.set('submittingTaskFormForValidation', false)
+                .set('taskFormCompleteSuccessful', false);
+        case actions.COMPLETE_TASK_FORM:
+            return state.set('submittingTaskFormForCompletion', true);
+        case actions.COMPLETE_TASK_FORM_SUCCESS:
+                return state.set('submittingTaskFormForCompletion', false)
+                    .set('taskFormCompleteSuccessful', true);
+        case actions.COMPLETE_TASK_FORM_FAILURE:
+            return state.set('submittingTaskFormForCompletion', false)
+                .set('taskFormCompleteSuccessful', false);
         default:
             return state;
     }

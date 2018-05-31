@@ -3,8 +3,8 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import * as actions from "../actions";
 import {createStructuredSelector} from "reselect";
-import {isFetchingCreateCommentForm, form, showCreateComment} from "../selectors";
-import {createForm} from "formiojs";
+import {form, isFetchingCreateCommentForm} from "../selectors";
+import {Form} from 'react-formio'
 
 class CreateComment extends React.Component {
 
@@ -12,33 +12,33 @@ class CreateComment extends React.Component {
         this.props.fetchCreateCommentForm();
     }
 
-    render() {
-        const {isFetchingCreateCommentForm} = this.props;
-        const that = this;
-        if (!isFetchingCreateCommentForm && this.props.form) {
-            $("#createComment").empty();
-            const parsedForm = this.props.form;
-            createForm(document.getElementById("createComment"), parsedForm, {
-                noAlerts: true
-            }).then(function (form) {
-                form.on('submit', (submission) => {
-                    that.props.createComment({taskId: that.props.taskId, comment: submission.data});
-                    form.emit('submitDone');
-                    form.reset();
-                    form.render();
-                });
-                form.on('error', (errors) => {
-                    console.log('IFrame: we have errors!', errors);
-                    window.scrollTo(0, 0);
-                    form.emit('submitDone');
-                });
-            }).catch(function (e) {
-                console.log('IFrame: caught formio error in promise', e);
-            });
-        }
+    renderForm() {
+        const {isFetchingCreateCommentForm, form} = this.props;
+        if (isFetchingCreateCommentForm) {
+            return <div>Loading comment form....</div>
+        } else {
 
+            const options = {
+                noAlerts: true
+            };
+            if (form) {
+                return <Form form={form} options={options}
+                               ref={(form) => this.form = form}
+                               onSubmit={(submission) =>{
+                                   this.props.createComment({taskId: that.props.taskId, comment: submission.data});
+                                   this.form.formio.emit('submitDone');
+                                   this.form.formio.reset();
+                                   this.form.formio.render();
+                               }}/>
+            } else {
+                return <div/>
+            }
+        }
+    }
+
+    render() {
         return <div className="panel">
-            <div id="createComment"/>
+            {this.renderForm()}
         </div>
 
     }

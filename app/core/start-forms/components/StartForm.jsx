@@ -1,15 +1,13 @@
 import React, {PropTypes} from 'react'
 import {
-    form, formLoadingFailed, loadingForm, submissionToWorkflowSuccessful, submittingToWorkflow
+    form, loadingForm, submissionToWorkflowSuccessful, submittingToWorkflow
 } from "../selectors";
 import {bindActionCreators} from "redux";
 import * as actions from "../actions";
 
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import {createForm} from "formiojs";
-import {NAME} from "../../shift/constants";
-import {activeShiftSuccess, submittingActiveShift} from "../../shift/selectors";
+import {Form} from 'react-formio';
 
 class StartForm extends React.Component {
 
@@ -35,43 +33,38 @@ class StartForm extends React.Component {
         this.props.resetForm();
     }
 
-    render() {
-        const {loadingForm} = this.props;
-        const that = this;
-        let loading;
-        if (!loadingForm && this.props.form) {
-            loading = <div/>
-            $("#formio").empty();
-            const parsedForm = this.props.form;
-            createForm(document.getElementById("formio"), parsedForm, {
-                noAlerts: true
-            }).then(function (form) {
-                form.on('submit', (submission) => {
-                    console.log('IFrame: submitting form', submission);
-                    const processKey = that.props.processKey;
-                    const variableInput = parsedForm.components.find(c => c.key === 'submitVariableName');
-                    const variableName = variableInput ? variableInput.defaultValue : that.props.variableName;
-                    const processName = that.props.processName ? that.props.processName : processKey;
 
-                    that.props.submit(parsedForm._id,
-                        processKey, variableName, submission.data, processName);
-                    form.emit('submitDone');
-                });
-                form.on('error', (errors) => {
-                    console.log('IFrame: we have errors!', errors);
-                    window.scrollTo(0, 0);
-                    form.emit('submitDone');
-                });
-            }).catch(function (e) {
-                console.log('IFrame: caught formio error in promise', e);
-            });
+    renderForm() {
+        const {loadingForm, form, processName, processKey, variableName} = this.props;
+
+        if (loadingForm) {
+            return <div>Loading form for {processName} </div>
         } else {
-            loading = <div>Loading form...</div>
-        }
+            const options = {
+                noAlerts: true
+            };
+            if (form) {
+                const variableInput = form.components.find(c => c.key === 'submitVariableName');
+                const variableName = variableInput ? variableInput.defaultValue : variableName;
+                const process = processName ? processName : processKey;
+                return <Form form={form}
+                               ref={(form) => this.form = form}
+                               options={options} onSubmit={(submission) => {
+                    this.props.submit(form._id,
+                        processKey, variableName, submission.data, process);
+                    this.form.formio.emit("submitDone");
 
+                }}/>
+            } else {
+                return <div/>
+            }
+
+        }
+    }
+
+    render() {
         return <div>
-            {loading}
-            <div id="formio"/>
+            {this.renderForm()}
         </div>
     }
 }

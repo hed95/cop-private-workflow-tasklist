@@ -14,11 +14,17 @@ import ScrollToTop from "./core/components/ScrollToTop";
 
 const store = configureStore();
 let kc = null;
+const TWENTY_FIVE_MINS_INTERVAL = 25 * 60000;
+
 
 const renderApp = (App) => {
     kc.init({onLoad: 'login-required'}).success(authenticated => {
         if (authenticated) {
             store.getState().keycloak = kc;
+            setInterval(() => {
+                store.getState().keycloak.updateToken(TWENTY_FIVE_MINS_INTERVAL)
+                    .error(() => store.getState().keycloak.logout());
+            }, TWENTY_FIVE_MINS_INTERVAL);
             ReactDOM.render(
                 <Provider store={store}>
                     <div>
