@@ -36,6 +36,7 @@ function reducer(state = initialState, action) {
                 .set('shift', shiftInfo);
         case actions.FETCH_ACTIVE_SHIFT_FAILURE:
             return state.set('isFetchingShift', false)
+                .set('shift', null)
                 .set('hasActiveShift', false);
         case actions.CREATE_ACTIVE_SHIFT:
             return state.set('submittingActiveShift', true)

@@ -4,7 +4,8 @@ import {Observable} from "rxjs/Observable";
 
 const errorObservable = (failureAction, error) => {
     if (error.status.code === 401) {
-        return Observable.of(actions.handleAuthorised());
+        return Observable.concat(Observable.of(actions.handleAuthorised()),
+            Observable.of(failureAction));
     } else {
         return Observable.concat(Observable.of(failureAction),
             Observable.of(actions.handleError(error)));

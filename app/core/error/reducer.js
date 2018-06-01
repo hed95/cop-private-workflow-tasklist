@@ -48,6 +48,7 @@ function reducer(state = initialState, action) {
                 .set('errors',errors);
         case actions.RESET_ERROR:
             return state.set('hasError', false)
+                .set("unauthorised", false)
                 .set('errors', new List([]));
 
         default:

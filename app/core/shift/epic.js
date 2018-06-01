@@ -4,7 +4,7 @@ import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
 import {errorObservable} from "../error/epicUtil";
 import PubSub from "pubsub-js";
-
+import * as Rx from "rxjs/Observable";
 
 const fetchShiftForm = (action$, store) =>
     action$.ofType(types.FETCH_SHIFT_FORM)
@@ -28,17 +28,30 @@ const fetchActiveShift = (action$, store) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/platform-data/shift?email=eq.${store.getState().keycloak.tokenParsed.email}`+
-                            `&select=*,location(locationname)` +
-                            `,command(commandname),team(teamname), subcommand(commandname),staff(phone)`,
+                path: `/api/platform-data/shift?email=eq.${store.getState().keycloak.tokenParsed.email}`,
                 headers: {
                     "Accept": "application/json"
                 }
-            }).map(payload => actions.fetchActiveShiftSuccess(payload))
-                .catch(error => {
-                        return errorObservable(actions.fetchActiveShiftFailure(), error);
-                    }
-                ));
+            }).map(payload => {
+                if (payload.status.code === 200 && payload.entity.length === 0) {
+                    throw 'no data';
+                } else {
+                    return actions.fetchActiveShiftSuccess(payload)
+                }
+            }).retryWhen((errors) => {
+                return errors
+                    .takeWhile(error => error === 'no data')
+                    .delay(1000)
+                    .take(5)
+                    .concat(Rx.Observable.throw({
+                        status: {
+                            code: 401
+                        }
+                    }));
+            }).catch(error => {
+                    return errorObservable(actions.fetchActiveShiftFailure(), error);
+                }
+            ));
 
 
 const submit = (action$, store) =>
