@@ -9,7 +9,7 @@ const initialState = new Map({
     shift: null,
     submittingActiveShift: false,
     activeShiftSuccess: false,
-    loadingShiftForm: false,
+    loadingShiftForm: true,
     shiftForm: null
 });
 

@@ -32,8 +32,7 @@ class ShiftPage extends React.Component {
 
     renderForm() {
         const {shiftForm, shift, loadingShiftForm, isFetchingShift} = this.props;
-
-        if (loadingShiftForm && isFetchingShift) {
+        if (isFetchingShift || loadingShiftForm) {
             return <div>Loading Shift Details....</div>
         } else {
             const submit = (submission) => {
