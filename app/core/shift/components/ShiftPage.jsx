@@ -13,7 +13,7 @@ import {activeShiftSuccess, loadingShiftForm, shiftForm} from "../selectors";
 import $ from "jquery";
 import {Form} from 'react-formio'
 import * as actions from "../actions";
-
+import moment from 'moment';
 const uuidv4 = require('uuid/v4');
 
 class ShiftPage extends React.Component {
@@ -48,7 +48,7 @@ class ShiftPage extends React.Component {
                         data: {
                             shiftminutes: shift.get('shiftminutes'),
                             shifthours: shift.get('shifthours'),
-                            startdatetime: shift.get('startdatetime'),
+                            startdatetime: moment.utc(shift.get('startdatetime')),
                             teamid: shift.get('teamid'),
                             locationid: '' + shift.get('locationid'),
                             commandid: shift.get('commandid'),
