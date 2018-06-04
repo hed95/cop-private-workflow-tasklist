@@ -8,6 +8,7 @@ import errorCode from 'rest/interceptor/errorCode';
 import baseRegistry from 'rest/mime/registry';
 import halMimeType from 'rest/mime/type/application/hal';
 import templateUriInterceptor from 'rest/interceptor/template';
+import retry from 'rest/interceptor/retry';
 
 import uriListConverter from './api/uriListConverter';
 
@@ -20,6 +21,7 @@ const halRest = rest
     .wrap(templateUriInterceptor)
     .wrap(mime, { registry })
     .wrap(errorCode)
+    .wrap(retry)
     .wrap(defaultRequest, { headers: { Accept: 'application/hal+json' } });
 
 export default function () {

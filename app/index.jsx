@@ -18,11 +18,20 @@ let kc = null;
 const THREE_MINUTES = 3 * 60000;
 
 const renderApp = (App) => {
+    kc.onTokenExpired = () => {
+        kc.updateToken().success((refreshed) => {
+            if (refreshed) {
+                store.getState().keycloak = kc;
+            }
+        }).error(function () {
+            kc.logout();
+        });
+    };
     kc.init({onLoad: 'login-required', checkLoginIframe: false}).success(authenticated => {
         if (authenticated) {
             store.getState().keycloak = kc;
             setInterval(() => {
-                kc.updateToken().success(function (refreshed) {
+                kc.updateToken().success((refreshed) => {
                     if (refreshed) {
                         store.getState().keycloak = kc;
                     }
