@@ -25,7 +25,7 @@ class CreateComment extends React.Component {
                 return <Form form={form} options={options}
                                ref={(form) => this.form = form}
                                onSubmit={(submission) =>{
-                                   this.props.createComment({taskId: that.props.taskId, comment: submission.data});
+                                   this.props.createComment({taskId: this.props.taskId, comment: submission.data});
                                    this.form.formio.emit('submitDone');
                                    this.form.formio.reset();
                                    this.form.formio.render();

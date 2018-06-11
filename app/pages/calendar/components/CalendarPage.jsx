@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import 'moment/locale/en-gb';
 import $ from 'jquery';
 import 'fullcalendar/dist/fullcalendar.css';
@@ -7,14 +6,13 @@ import 'fullcalendar/dist/fullcalendar.js';
 import 'fullcalendar/dist/locale-all';
 
 
-class CampaignsPage extends React.Component {
+class CalendarPage extends React.Component {
 
     componentDidMount() {
         const {calendar} = this.refs;
 
         $(calendar).fullCalendar({
             events: [],
-            height: 650,
             nowIndicator: true,
             header: {
                 left: 'title',
@@ -44,4 +42,4 @@ class CampaignsPage extends React.Component {
     }
 }
 
-export default CampaignsPage;
+export default CalendarPage;

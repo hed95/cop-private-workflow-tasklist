@@ -5,6 +5,7 @@ import {combineEpics} from "redux-observable";
 import {errorObservable} from "../error/epicUtil";
 import PubSub from "pubsub-js";
 import * as Rx from "rxjs/Observable";
+import {retryOnForbidden} from "../util/retry";
 
 const fetchShiftForm = (action$, store) =>
     action$.ofType(types.FETCH_SHIFT_FORM)
@@ -16,7 +17,8 @@ const fetchShiftForm = (action$, store) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).map(payload => actions.fetchShiftFormSuccess(payload))
+            }).retryWhen(retryOnForbidden)
+                .map(payload => actions.fetchShiftFormSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchShiftFormFailure(), error);
                     }
@@ -32,7 +34,7 @@ const fetchActiveShift = (action$, store) =>
                 headers: {
                     "Accept": "application/json"
                 }
-            }).map(payload => {
+            }).retryWhen(retryOnForbidden).map(payload => {
                 if (payload.status.code === 200 && payload.entity.length === 0) {
                     throw 'no data';
                 } else {
@@ -73,7 +75,7 @@ const submit = (action$, store) =>
                     type: types.CREATE_ACTIVE_SHIFT,
                     shiftInfo: payload.entity.data
                 }
-            }).catch(error => {
+            }).retryWhen(retryOnForbidden).catch(error => {
                     return errorObservable(actions.submitFailure(), error);
                 }
             ));
@@ -90,7 +92,7 @@ const createActiveShift = (action$, store) =>
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 }
-            }).map(payload => {
+            }).retryWhen(retryOnForbidden).map(payload => {
                 PubSub.publish("submission", {
                     submission: true,
                     message: `Shift successfully started`

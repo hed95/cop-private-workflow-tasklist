@@ -10,7 +10,7 @@ import ShiftScopedRoute from "./shift/components/ShiftScopedRoute";
 import CalendarPage from "../pages/calendar/components/CalendarPage";
 import ProcessStartPage from "../pages/procedures/components/ProcedureStartPage";
 import TaskDetailsPage from "../pages/task/component/TaskDetailsPage";
-import InterventionsReport from "../pages/reports/components/InterventionsReport";
+import ReportPage from "../pages/reports/components/ReportPage";
 
 
 const Main = () => (
@@ -22,7 +22,7 @@ const Main = () => (
                 <ShiftScopedRoute name="Tasks" exact path='/tasks' component={TasksPage} />
                 <ShiftScopedRoute name="Procedures" exact path='/procedures' component={ProcessesPage}/>
                 <ShiftScopedRoute name="Reports" exact path='/reports' component={ReportsPage} />
-                <ShiftScopedRoute exact path="/reports/interventions" component={InterventionsReport}/>
+                <ShiftScopedRoute exact path="/report" component={ReportPage}/>
                 <ShiftScopedRoute name="Messages" exact path='/messages' component={MessagesPage}/>
                 <ShiftScopedRoute name="Calendar" exact path='/calendar' component={CalendarPage}/>
                 <ShiftScopedRoute name="Procedure Start Page" exact path="/procedure-start" component={ProcessStartPage}/>

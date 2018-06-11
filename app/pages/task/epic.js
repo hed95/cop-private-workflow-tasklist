@@ -3,6 +3,7 @@ import {errorObservable} from "../../core/error/epicUtil";
 import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
+import {retryOnForbidden} from "../../core/util/retry";
 
 
 const fetchComments = (action$, store) =>
@@ -127,7 +128,8 @@ const completeTask = (action$, store) =>
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 },
-            }).map(() => actions.completeTaskSuccess())
+            }).retryWhen(retryOnForbidden)
+                .map(() => actions.completeTaskSuccess())
                 .catch(error => {
                     return errorObservable(actions.completeTaskFailure(), error);
                 }));

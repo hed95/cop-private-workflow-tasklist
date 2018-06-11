@@ -65,7 +65,7 @@ class Header extends React.Component {
         };
 
         const isReports = (routerPath) => {
-            return routerPath.indexOf("reports") >= 1? 'active' : '';
+            return routerPath.indexOf("reports") >= 1 || routerPath.indexOf("report") >= 1? 'active' : '';
         };
 
         const adminRole = this.props.kc.realmAccess && this.props.kc.realmAccess.roles

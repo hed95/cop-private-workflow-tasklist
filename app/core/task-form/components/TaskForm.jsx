@@ -11,6 +11,7 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {Form} from 'react-formio';
 import {createStructuredSelector} from "reselect";
+import Spinner from 'react-spinkit';
 
 class TaskForm extends React.Component {
 

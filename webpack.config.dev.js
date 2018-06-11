@@ -9,6 +9,7 @@ const platformDataUrl = process.env.PLATFORM_DATA_URL;
 const workflowUrl = process.env.WORKFLOW_URL;
 const formIOUrl = process.env.FORM_URL;
 const translationServiceUrl = process.env.TRANSLATION_SERVICE_URL;
+const reportUrl = process.env.REPORT_SERVICE_URL;
 
 console.log("platformDataUrl " + platformDataUrl);
 console.log("workflowUrl " + workflowUrl);
@@ -43,6 +44,11 @@ module.exports = webpackMerge(commonConfig, {
                 pathRewrite: {
                     '^/api/platform-data' : ''
                 },
+                secure: false,
+                changeOrigin: true
+            },
+            "/api/reports": {
+                target: reportUrl,
                 secure: false,
                 changeOrigin: true
             },

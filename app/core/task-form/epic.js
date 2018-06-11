@@ -4,6 +4,7 @@ import {errorObservable} from "../error/epicUtil";
 import client from "../../common/rest/client";
 import {combineEpics} from "redux-observable";
 import PubSub from "pubsub-js";
+import {retryOnForbidden} from "../util/retry";
 
 const fetchTaskForm = (action$, store) =>
     action$.ofType(types.FETCH_TASK_FORM)
@@ -15,7 +16,7 @@ const fetchTaskForm = (action$, store) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).map(payload => actions.fetchTaskFormSuccess(payload))
+            }).retryWhen(retryOnForbidden).map(payload => actions.fetchTaskFormSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchTaskFormFailure(), error);
                     }
@@ -69,8 +70,7 @@ const completeTaskForm = (action$, store) =>
                         "Authorization": `Bearer ${store.getState().keycloak.token}`,
                         'Content-Type': 'application/json'
                     }
-                }).map(payload => {
-                    console.log(JSON.stringify(action));
+                }).retryWhen(retryOnForbidden).map(payload => {
                     PubSub.publish("submission", {
                         submission: true,
                         message: `Task successfully completed`

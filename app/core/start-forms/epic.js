@@ -4,6 +4,7 @@ import * as actions from "./actions";
 import * as types from "./actionTypes";
 import {errorObservable} from "../error/epicUtil";
 import PubSub from 'pubsub-js';
+import {retryOnForbidden} from "../util/retry";
 
 
 const fetchForm = (action$, store) =>
@@ -16,7 +17,7 @@ const fetchForm = (action$, store) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).map(payload => actions.fetchFormSuccess(payload))
+            }).retryWhen(retryOnForbidden).map(payload => actions.fetchFormSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchFormFailure(), error);
                     }
@@ -37,7 +38,7 @@ const fetchFormWithContext = (action$, store) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).map(payload => actions.fetchFormSuccess(payload))
+            }).retryWhen(retryOnForbidden).map(payload => actions.fetchFormSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchFormFailure(), error);
                     }
@@ -86,7 +87,7 @@ const submitToWorkflow = (action$, store) =>
                     "Authorization": `Bearer ${store.getState().keycloak.token}`,
                     'Content-Type': 'application/json'
                 }
-            }).map(payload => {
+            }).retryWhen(retryOnForbidden).map(payload => {
                 console.log(JSON.stringify(action));
                 PubSub.publish("submission", {
                     submission: true,

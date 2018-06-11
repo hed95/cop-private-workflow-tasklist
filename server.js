@@ -37,7 +37,7 @@ const workflowName =process.env.WORKFLOW_NAME;
 const formIOName = process.env.FORM_IO_NAME;
 const bpmnModelerName = process.env.WORKFLOW_MODELER;
 const translationServiceName =  process.env.TRANSLATION_SERVICE_NAME;
-
+const reportingServiceName = process.env.REPORTING_SERVICE_NAME;
 const intdomain = process.env.INT_DOMAIN;
 
 const platformDataUrl = `https://${platformData}.${intdomain}`;
@@ -45,12 +45,14 @@ const workflowUrl = `https://${workflowName}.${intdomain}`;
 const formIOUrl = `https://${formIOName}.${domain}`;
 const bpmnModelerUrl =  `https://${bpmnModelerName}.${domain}`;
 const translationServiceUrl = `https://${translationServiceName}.${intdomain}`;
+const reportingServiceUrl = `https://${reportingServiceName}.${domain}`;
 
 console.log("platformDataUrl " + platformDataUrl);
 console.log("workflowUrl " + workflowUrl);
 console.log("formIOUrl " + formIOUrl);
 console.log("bpmnModeler " + bpmnModelerUrl);
 console.log("translationServiceUrl " + translationServiceUrl);
+console.log("reportingServiceUrl " + reportingServiceUrl);
 
 
 
@@ -129,7 +131,7 @@ app.use('/api/translation', proxy(
     {
         target: translationServiceUrl,
         onProxyReq: function onProxyReq(proxyReq, req, res) {
-            console.log('Translation Service Proxy -->  ', req.method, req.path, '-->', formIOUrl, proxyReq.path);
+            console.log('Translation Service Proxy -->  ', req.method, req.path, '-->', translationServiceUrl, proxyReq.path);
         },
         onError: function onError(err, req, res) {
             console.error(err);
@@ -141,6 +143,24 @@ app.use('/api/translation', proxy(
         secure: false
     }
 ));
+
+app.use('/api/reports', proxy(
+    {
+        target: reportingServiceUrl,
+        onProxyReq: function onProxyReq(proxyReq, req, res) {
+            console.log('Reporting Service Proxy -->  ', req.method, req.path, '-->', reportingServiceUrl, proxyReq.path);
+        },
+        onError: function onError(err, req, res) {
+            console.error(err);
+            res.status(500);
+            res.json({error: 'Error when connecting to remote server.'});
+        },
+        logLevel: 'debug',
+        changeOrigin: true,
+        secure: false
+    }
+));
+
 
 
 app.get('/api/config', (req,res) => {

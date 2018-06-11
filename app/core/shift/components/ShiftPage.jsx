@@ -50,7 +50,7 @@ class ShiftPage extends React.Component {
                             shifthours: shift.get('shifthours'),
                             startdatetime: moment.utc(shift.get('startdatetime')),
                             teamid: shift.get('teamid'),
-                            locationid: '' + shift.get('locationid'),
+                            locationid: shift.get('locationid'),
                             commandid: shift.get('commandid'),
                             subcommandid: shift.get('subcommandid'),
                             phone: shift.get('phone')

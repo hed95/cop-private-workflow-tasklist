@@ -3,6 +3,7 @@ import {errorObservable} from "../../core/error/epicUtil";
 import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
+import {retryOnForbidden} from "../../core/util/retry";
 
 const fetchTasksAssignedToMe = (action$, store) =>
     action$.ofType(types.FETCH_TASKS_ASSIGNED_TO_ME)
@@ -14,7 +15,7 @@ const fetchTasksAssignedToMe = (action$, store) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).map(payload => actions.fetchTasksAssignedToMeSuccess(payload))
+            }).retryWhen(retryOnForbidden).map(payload => actions.fetchTasksAssignedToMeSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchTasksAssignedToMeFailure(), error);
                     }
@@ -31,7 +32,7 @@ const fetchMyGroupTasks = (action$, store) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).map(payload => actions.fetchMyGroupTasksSuccess(payload))
+            }).retryWhen(retryOnForbidden).map(payload => actions.fetchMyGroupTasksSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchMyGroupTasksFailure(), error);
                     }
@@ -48,7 +49,7 @@ const fetchUnassignedTasks = (action$, store) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).map(payload => actions.fetchUnassignedTasksSuccess(payload))
+            }).retryWhen(retryOnForbidden).map(payload => actions.fetchUnassignedTasksSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchUnassignedTasksFailure(), error);
                     }
@@ -64,7 +65,7 @@ const fetchTaskCounts = (action$, store) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).map(payload => actions.fetchTaskCountsSuccess(payload))
+            }).retryWhen(retryOnForbidden).map(payload => actions.fetchTaskCountsSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchTaskCountsFailure(), error);
                     }

@@ -8,6 +8,7 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import * as types from './actionTypes';
 import * as actions from './actions';
 import {errorObservable} from "../../core/error/epicUtil";
+import {retryOnForbidden} from "../../core/util/retry";
 
 const fetchNotifications = (action$, store) =>
     action$.ofType(types.FETCH_NOTIFICATIONS)
@@ -21,7 +22,7 @@ const fetchNotifications = (action$, store) =>
                             "Accept": "application/json",
                             "Authorization": `Bearer ${store.getState().keycloak.token}`
                         }
-                    }).map(payload => actions.fetchNotificationsSuccess(payload))
+                    }).retryWhen(retryOnForbidden).map(payload => actions.fetchNotificationsSuccess(payload))
                         .catch(error => {
                                 return errorObservable(actions.fetchNotificationsFailure(), error);
                             }
@@ -40,7 +41,7 @@ const acknowledgeNotification = (action$, store) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).map(payload => {
+            }).retryWhen(retryOnForbidden).map(payload => {
                 return actions.acknowledgeNotificationSuccess(payload)
             }) .catch(error => {
                     return errorObservable(actions.acknowledgeNotificationFailure(action.taskId), error);
