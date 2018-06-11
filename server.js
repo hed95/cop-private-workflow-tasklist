@@ -156,7 +156,7 @@ app.use('/api/reports', proxy(
             res.json({error: 'Error when connecting to remote server.'});
         },
         logLevel: 'debug',
-        changeOrigin: true,
+        changeOrigin: false,
         secure: false
     }
 ));
