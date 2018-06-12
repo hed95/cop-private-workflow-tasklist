@@ -5,7 +5,8 @@ const http = require('http');
 const app = express();
 const path = require('path');
 const proxy = require('http-proxy-middleware');
-const cors = require('cors')
+const cors = require('cors');
+const fs = require('fs');
 
 if (process.env.NODE_ENV === 'production') {
     log.info('Setting ca bundle');
