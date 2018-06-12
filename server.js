@@ -72,7 +72,7 @@ app.use('/api/platform-data', proxy(
         },
         logLevel: 'debug',
         changeOrigin: true,
-        secure: false
+        secure: true
     }
 ));
 
@@ -89,7 +89,7 @@ app.use('/api/workflow', proxy({
     },
     logLevel: 'debug',
     changeOrigin: true,
-    secure: false
+    secure: true
 }));
 
 app.use('/rest/camunda', proxy({
@@ -104,7 +104,7 @@ app.use('/rest/camunda', proxy({
     },
     logLevel: 'debug',
     changeOrigin: true,
-    secure: false
+    secure: true
 }));
 
 app.use('/api/form', proxy(
@@ -123,7 +123,7 @@ app.use('/api/form', proxy(
         },
         logLevel: 'debug',
         changeOrigin: true,
-        secure: false
+        secure: true
     }
 ));
 
@@ -140,7 +140,7 @@ app.use('/api/translation', proxy(
         },
         logLevel: 'debug',
         changeOrigin: true,
-        secure: false
+        secure: true
     }
 ));
 
@@ -157,7 +157,7 @@ app.use('/api/reports', proxy(
         },
         logLevel: 'debug',
         changeOrigin: true,
-        secure: false
+        secure: true
     }
 ));
 
