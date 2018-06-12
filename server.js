@@ -7,6 +7,18 @@ const path = require('path');
 const proxy = require('http-proxy-middleware');
 const cors = require('cors')
 
+if (process.env.NODE_ENV === 'production') {
+    log.info('Setting ca bundle');
+    const trustedCa = [
+        '/etc/ssl/certs/ca-bundle.crt'
+    ];
+
+    https.globalAgent.options.ca = [];
+    for (const ca of trustedCa) {
+        https.globalAgent.options.ca.push(fs.readFileSync(ca));
+    }
+    log.info('ca bundle set...');
+}
 
 const respond = (req, res) => {
     res.send('OK');
