@@ -1,3 +1,5 @@
+'use strict';
+
 const port = process.env.PORT || 8080;
 
 const express = require('express');
@@ -8,10 +10,9 @@ const path = require('path');
 const proxy = require('http-proxy-middleware');
 const cors = require('cors');
 const fs = require('fs');
-import * as log from 'winston';
 
 if (process.env.NODE_ENV === 'production') {
-    log.info('Setting ca bundle');
+    console.log('Setting ca bundle');
     const trustedCa = [
         '/etc/ssl/certs/ca-bundle.crt'
     ];
@@ -20,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
     for (const ca of trustedCa) {
         https.globalAgent.options.ca.push(fs.readFileSync(ca));
     }
-    log.info('ca bundle set...');
+    console.log('ca bundle set...');
 }
 
 const respond = (req, res) => {
@@ -48,17 +49,17 @@ console.log("translation name" + process.env.TRANSLATION_SERVICE_NAME);
 const domain = process.env.DOMAIN;
 
 const platformData = process.env.PLATFORM_DATA;
-const workflowName =process.env.WORKFLOW_NAME;
+const workflowName = process.env.WORKFLOW_NAME;
 const formIOName = process.env.FORM_IO_NAME;
 const bpmnModelerName = process.env.WORKFLOW_MODELER;
-const translationServiceName =  process.env.TRANSLATION_SERVICE_NAME;
+const translationServiceName = process.env.TRANSLATION_SERVICE_NAME;
 const reportingServiceName = process.env.REPORTING_SERVICE_NAME;
 const intdomain = process.env.INT_DOMAIN;
 
 const platformDataUrl = `https://${platformData}.${intdomain}`;
 const workflowUrl = `https://${workflowName}.${intdomain}`;
 const formIOUrl = `https://${formIOName}.${domain}`;
-const bpmnModelerUrl =  `https://${bpmnModelerName}.${domain}`;
+const bpmnModelerUrl = `https://${bpmnModelerName}.${domain}`;
 const translationServiceUrl = `https://${translationServiceName}.${intdomain}`;
 const reportingServiceUrl = `https://${reportingServiceName}.${domain}`;
 
@@ -70,12 +71,11 @@ console.log("translationServiceUrl " + translationServiceUrl);
 console.log("reportingServiceUrl " + reportingServiceUrl);
 
 
-
 app.use('/api/platform-data', proxy(
     {
         target: platformDataUrl,
         pathRewrite: {
-            '^/api/platform-data/' : ''
+            '^/api/platform-data/': ''
         },
         onProxyReq: function onProxyReq(proxyReq, req, res) {
             console.log('Platform Data Proxy -->  ', req.method, req.path, '-->', platformDataUrl, proxyReq.path);
@@ -126,7 +126,7 @@ app.use('/api/form', proxy(
     {
         target: formIOUrl,
         pathRewrite: {
-            '^/api/form' : '/form'
+            '^/api/form': '/form'
         },
         onProxyReq: function onProxyReq(proxyReq, req, res) {
             console.log('Form IO Proxy -->  ', req.method, req.path, '-->', formIOUrl, proxyReq.path);
@@ -177,14 +177,13 @@ app.use('/api/reports', proxy(
 ));
 
 
-
-app.get('/api/config', (req,res) => {
-   res.send({
-       'REALM': process.env.REALM,
-       'AUTH_URL': process.env.AUTH_URL,
-       'CLIENT_ID': process.env.CLIENT_ID,
-       'MODELER_URL' : bpmnModelerUrl
-   })
+app.get('/api/config', (req, res) => {
+    res.send({
+        'REALM': process.env.REALM,
+        'AUTH_URL': process.env.AUTH_URL,
+        'CLIENT_ID': process.env.CLIENT_ID,
+        'MODELER_URL': bpmnModelerUrl
+    })
 });
 
 app.all('*', function (req, res) {
