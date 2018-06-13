@@ -1,6 +1,6 @@
 'use strict';
 
-const port = process.env.PORT || 443;
+const port = process.env.PORT || 8080;
 
 const express = require('express');
 const https = require('https');
@@ -17,8 +17,10 @@ if (process.env.NODE_ENV === 'production') {
     ];
 
     https.globalAgent.options.ca = [];
+    http.globalAgent.options.ca = [];
     for (const ca of trustedCa) {
         https.globalAgent.options.ca.push(fs.readFileSync(ca));
+        http.globalAgent.options.ca.push(fs.readFileSync(ca));
     }
     console.log('ca bundle set...');
 }
@@ -190,7 +192,7 @@ app.all('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-const server = https.createServer(app).listen(app.get('port'), function () {
+const server = http.createServer(app).listen(app.get('port'), function () {
     console.log('TaskList Prod server listening on port ' + app.get('port'));
 });
 
