@@ -80,6 +80,7 @@ app.use('/api/platform-data', proxy(
         pathRewrite: {
             '^/api/platform-data/': ''
         },
+        agent: https.globalAgent,
         onProxyReq: function onProxyReq(proxyReq, req, res) {
             console.log('Platform Data Proxy -->  ', req.method, req.path, '-->', platformDataUrl, proxyReq.path);
         },
@@ -100,6 +101,7 @@ app.use('/api/workflow', proxy({
     onProxyReq: function onProxyReq(proxyReq, req, res) {
         console.log('Workflow Proxy -->  ', req.method, req.path, '-->', workflowUrl, proxyReq.path);
     },
+    agent: https.globalAgent,
     onError: function onError(err, req, res) {
         console.error(err);
         res.status(500);
@@ -112,6 +114,7 @@ app.use('/api/workflow', proxy({
 
 app.use('/rest/camunda', proxy({
     target: workflowUrl,
+    agent: https.globalAgent,
     onProxyReq: function onProxyReq(proxyReq, req, res) {
         console.log('Workflow Proxy Camunda REST-->  ', req.method, req.path, '-->', workflowUrl, proxyReq.path);
     },
@@ -131,6 +134,7 @@ app.use('/api/form', proxy(
         pathRewrite: {
             '^/api/form': '/form'
         },
+        agent: https.globalAgent,
         onProxyReq: function onProxyReq(proxyReq, req, res) {
             console.log('Form IO Proxy -->  ', req.method, req.path, '-->', formIOUrl, proxyReq.path);
         },
@@ -158,7 +162,8 @@ app.use('/api/translation', proxy(
         },
         logLevel: 'debug',
         changeOrigin: true,
-        secure: true
+        secure: true,
+        agent: https.globalAgent
     }
 ));
 
@@ -175,6 +180,7 @@ app.use('/api/reports', proxy(
         },
         logLevel: 'debug',
         changeOrigin: true,
+        agent: https.globalAgent,
         secure: true
     }
 ));
