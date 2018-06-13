@@ -1,6 +1,6 @@
 'use strict';
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 443;
 
 const express = require('express');
 const https = require('https');
