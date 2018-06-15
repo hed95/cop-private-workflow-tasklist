@@ -9,6 +9,7 @@ import {
 } from "../selectors";
 import LoadingBar from 'react-redux-loading-bar'
 import InfiniteScroll from 'react-infinite-scroller';
+import moment from 'moment';
 
 
 class MessagesPage extends React.Component {
@@ -63,20 +64,50 @@ const NotificationTask = ({task, action}) => {
     const taskDescription = task.getIn(['task', 'description']);
     const taskName = task.getIn(['task', 'name']);
 
+    const determineColour = (task) => {
+        const taskPriority = task.getIn(['task', 'priority']);
+        switch (taskPriority) {
+            case 1000:
+                return '#B10E1E';
+            case 100:
+                return '#F47738';
+            default:
+                return '#BFC1C3';
+        }
+    };
+
+    const determineTitle = (task) => {
+        const taskPriority = task.getIn(['task', 'priority']);
+        switch (taskPriority) {
+            case 1000:
+                return 'Emergency';
+            case 100:
+                return 'Urgent';
+            default:
+                return 'Info';
+        }
+    };
+
+    const created = (task) => {
+        const created = moment(task.getIn(['task', 'created']));
+        return created.fromNow(false);
+    };
+
     const onClick = e => {
         e.preventDefault();
         action.acknowledgeNotification(taskId);
     };
     return <div className="column-one-third">
-        <div className="flash-card">
+        <div className="flash-card" style={{'backgroundColor': determineColour(task)}}>
             <header>
-                <h2 className="heading-small">{taskName}</h2>
+                <h2 className="heading-small">{determineTitle(task)}: {taskName}</h2>
+                <h5 className="heading-xsmall">{created(task)}</h5>
             </header>
             <div className="grid-row">
                 <div className="column-full">
                     <a style={{'color': 'white'}} href={taskDescription}> {taskDescription}</a>
-                    <div className="form-group bottom-right-container" >
-                        <input className="button button-white" type="submit" value="Complete" onClick={onClick}
+                    <div className="form-group bottom-right-container">
+                        <input className="button" type="submit" value="Acknowledge" onClick={onClick}
                                disabled={action.acknowledgingTaskIds.contains(taskId)}/>
                     </div>
                 </div>
