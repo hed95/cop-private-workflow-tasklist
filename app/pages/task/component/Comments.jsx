@@ -52,7 +52,7 @@ class Comments extends React.Component {
                             color: '#6f777b',
                             fontSize: '16px',
                             lineHeight: '1.25'
-                        }}> on {moment(comment.get('time')).format("DD MMM YYYY @ HH:mm")}</span>
+                        }}> {moment(comment.get('time')).fromNow(false)}</span>
                             <div className="comment-body">
                                 <p>{comment.get('message')}</p>
                             </div>
