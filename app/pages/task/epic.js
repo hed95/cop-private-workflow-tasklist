@@ -61,10 +61,10 @@ const createComment = (action$, store) =>
             client({
                 method: 'POST',
                 entity: {
-                    "userId": action.comment.userId,
-                    "message": action.comment.message,
-                    "time": new Date(action.comment.time),
-                    "taskId": action.taskId
+                    "staffid": action.comment.staffid,
+                    "taskcomment": action.comment.message,
+                    "createdon": new Date(action.comment.time),
+                    "taskid": action.taskId
                 },
                 path: `/api/workflow/tasks/comments`,
                 headers: {
