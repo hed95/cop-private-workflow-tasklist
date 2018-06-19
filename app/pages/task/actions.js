@@ -20,6 +20,25 @@ const fetchCommentsFailure =  () => {
     }
 };
 
+const fetchVariables = (taskId) => {
+    return {
+        type: types.FETCH_PROCESS_VARIABLES,
+        taskId
+    }
+};
+
+const fetchVariablesSuccess = (payload) => {
+    return {
+        type: types.FETCH_PROCESS_VARIABLES_SUCCESS,
+        payload
+    }
+};
+
+const fetchVariablesFailure = () => {
+    return {
+        type: types.FETCH_PROCESS_VARIABLES_FAILURE
+    }
+};
 
 const createComment = ({taskId, comment}) => {
     return {
@@ -165,5 +184,8 @@ export {
     unclaimTaskFailure,
     completeTask,
     completeTaskSuccess,
-    completeTaskFailure
+    completeTaskFailure,
+    fetchVariablesFailure,
+    fetchVariables,
+    fetchVariablesSuccess
 }

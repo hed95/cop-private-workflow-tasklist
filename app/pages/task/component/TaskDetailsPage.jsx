@@ -2,7 +2,6 @@ import React, {PropTypes} from "react";
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 import Comments from "./Comments";
 import Info from "./Info";
-import Form from "./Form";
 import {
     candidateGroups,
     isFetchingTask, task, variables
@@ -15,6 +14,7 @@ import ImmutablePropTypes from "react-immutable-proptypes";
 import queryString from 'query-string';
 import Attachments from "./Attachments";
 import Audit from "./Audit";
+import TaskForm from "../../../core/task-form/components/TaskForm";
 const uuidv4 = require('uuid/v4');
 
 
@@ -24,6 +24,7 @@ class TaskDetailsPage extends React.Component {
         const params = queryString.parse(this.props.location.search);
         this.taskId = params.taskId;
         this.props.fetchTask(this.taskId);
+        this.props.fetchVariables(this.taskId);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -33,7 +34,7 @@ class TaskDetailsPage extends React.Component {
     }
 
     render() {
-        const {task} = this.props;
+        const {task, variables} = this.props;
 
         const hasFormKey = task && task.get('formKey');
         return <div>
@@ -51,7 +52,9 @@ class TaskDetailsPage extends React.Component {
                         <Info {...this.props} />
                     </TabPanel>
                     {hasFormKey ? <TabPanel key={uuidv4()}>
-                        <Form task={task}/>
+                        <fieldset>
+                            <TaskForm  {...this.props} />
+                        </fieldset>
                     </TabPanel> : null}
                     <TabPanel key={uuidv4()}>
                         <Comments taskId={this.taskId}/>
@@ -70,6 +73,7 @@ class TaskDetailsPage extends React.Component {
 
 TaskDetailsPage.propTypes = {
     fetchTask: PropTypes.func.isRequired,
+    fetchVariables:  PropTypes.func.isRequired,
     isFetchingTask: PropTypes.bool,
     task: ImmutablePropTypes.map
 };

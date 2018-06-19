@@ -26,19 +26,29 @@ class TaskForm extends React.Component {
     }
 
     renderForm() {
-        const {loadingTaskForm, form, task} = this.props;
+        const {loadingTaskForm, form, task, variables} = this.props;
         if (loadingTaskForm) {
-            return <div>Loading form for {task.getIn(['task', 'name'])} </div>
+            return <div>Loading form for {task.get('name')} </div>
         } else {
             const options = {
                 noAlerts: true
             };
             if (form) {
-                return <Form form={form} options={options} onSubmit={(submission) => {
-                    const variableInput = form.components.find(c => c.key === 'submitVariableName');
-                    const variableName = variableInput.defaultValue;
-                    this.props.submitTaskForm(form._id, task.get('id'), submission.data, variableName);
-                }}/>
+                const submissionData = variables['submissionData'];
+                if (submissionData) {
+                    return <Form form={form} options={options} submission={JSON.parse(submissionData)} onSubmit={(submission) => {
+                        const variableInput = form.components.find(c => c.key === 'submitVariableName');
+                        const variableName = variableInput.defaultValue;
+                        this.props.submitTaskForm(form._id, task.get('id'), submission.data, variableName);
+                    }}/>
+                } else {
+                    return <Form form={form} options={options} onSubmit={(submission) => {
+                        const variableInput = form.components.find(c => c.key === 'submitVariableName');
+                        const variableName = variableInput.defaultValue;
+                        this.props.submitTaskForm(form._id, task.get('id'), submission.data, variableName);
+                    }}/>
+                }
+
             } else {
                 return <div/>
             }

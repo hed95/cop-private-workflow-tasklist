@@ -35,7 +35,7 @@ class StartForm extends React.Component {
 
 
     renderForm() {
-        const {loadingForm, form, processName, processKey, variableName} = this.props;
+        const {loadingForm, form, processName, processKey, formName} = this.props;
 
         if (loadingForm) {
             return <div>Loading form for {processName} </div>
@@ -45,13 +45,10 @@ class StartForm extends React.Component {
             };
             if (form) {
                 const variableInput = form.components.find(c => c.key === 'submitVariableName');
-                const variableName = variableInput ? variableInput.defaultValue : variableName;
+                const variableName = variableInput ? variableInput.defaultValue : formName;
                 const process = processName ? processName : processKey;
-                return <Form form={form}
-                               ref={(form) => this.form = form}
-                               options={options} onSubmit={(submission) => {
-                    this.props.submit(form._id,
-                        processKey, variableName, submission.data, process);
+                return <Form form={form} ref={(form) => this.form = form} options={options} onSubmit={(submission) => {
+                    this.props.submit(form._id, processKey, variableName, submission.data, process);
                     this.form.formio.emit("submitDone");
 
                 }}/>

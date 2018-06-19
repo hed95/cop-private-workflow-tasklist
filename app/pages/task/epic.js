@@ -134,10 +134,29 @@ const completeTask = (action$, store) =>
                     return errorObservable(actions.completeTaskFailure(), error);
                 }));
 
+const fetchVariables = (action$, store) =>
+    action$.ofType(types.FETCH_PROCESS_VARIABLES)
+        .mergeMap(action =>
+            client({
+                method: 'GET',
+                path: `/api/workflow/tasks/${action.taskId}/variables`,
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`
+                }
+            }).retryWhen(retryOnForbidden)
+                .map(payload => actions.fetchVariablesSuccess(payload))
+                .catch(error => {
+                        return errorObservable(actions.fetchVariablesFailure(), error);
+                    }
+                ));
+
+
 export default combineEpics(fetchComments,
     fetchTask,
     createComment,
     fetchCreateCommentForm,
     claimTask,
     unclaimTask,
-    completeTask)
+    completeTask,
+    fetchVariables)
