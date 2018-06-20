@@ -53,7 +53,8 @@ class ShiftPage extends React.Component {
                             locationid: shift.get('locationid'),
                             commandid: shift.get('commandid'),
                             subcommandid: shift.get('subcommandid'),
-                            phone: shift.get('phone')
+                            phone: shift.get('phone'),
+                            currentlocationid: shift('currentlocationid')
                         }
                     };
                     return <Form form={shiftForm} submission={shiftSubmission} options={options}
