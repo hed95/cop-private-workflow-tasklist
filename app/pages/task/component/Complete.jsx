@@ -25,10 +25,9 @@ class Complete extends React.Component {
         const {task, kc} = this.props;
         const userId = kc.tokenParsed.email;
         const taskAssignee = task.get('assignee');
-        const formKey = task.get('formKey');
-        const displayButton = taskAssignee && taskAssignee === userId && !formKey;
-        return <input className="btn btn-primary" onClick={() => this.complete()}
-                   type="button" value="Complete" disabled={!displayButton}/>
+        const displayButton = taskAssignee && taskAssignee === userId;
+        return displayButton ? <input className="btn btn-primary" onClick={() => this.complete()}
+                   type="submit" value="Complete" disabled={!displayButton}/> : <div/>
 
 
 

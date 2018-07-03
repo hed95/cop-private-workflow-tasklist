@@ -5,15 +5,37 @@ import Complete from "./Complete";
 
 export default class Actions extends React.Component {
 
-    render() {
-        const {task} = this.props;
+    buildActions() {
+        const uuidv4 = require('uuid/v4');
 
-        return <div style={{paddingTop: '20px'}}>
+        const {task, variables} = this.props;
+        if (variables && variables['enabledActions']) {
+            const enabledActions = variables['enabledActions'];
+            const actions = [];
+            if (enabledActions.indexOf('unclaim') >= 1) {
+                actions.push(<Claim key={uuidv4()} task={task}/>)
+            }
+            if (enabledActions.indexOf('claim') >= 1) {
+                actions.push(<Unclaim key={uuidv4()} task={task} />)
+            }
+            if (enabledActions.indexOf('complete') >=1 ){
+                actions.push(<Complete key={uuidv4()} task={task}/>)
+            }
+            return <div>{actions}</div>
+        } else {
+            return <div />
+        }
+    }
+
+
+
+
+
+    render() {
+       return <div style={{paddingTop: '20px'}}>
 
             <div className="btn-group btn-block" role="group">
-                <Claim task={task}/>
-                <Unclaim task={task} />
-                <Complete task={task}/>
+                {this.buildActions()}
             </div>
             <div className="gov-panel" style={{paddingTop: '20px'}}>
                 <details>

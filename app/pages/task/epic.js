@@ -4,6 +4,7 @@ import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
 import {retryOnForbidden} from "../../core/util/retry";
+import moment from 'moment';
 
 
 const fetchComments = (action$, store) =>
@@ -27,7 +28,7 @@ const fetchTask = (action$, store) =>
     action$.ofType(types.FETCH_TASK)
         .mergeMap(action => client({
             method: 'GET',
-            path: `/api/workflow/tasks/${action.taskId}`,
+            path: `/api/workflow/tasks/${action.taskId}?includeVariables=true`,
             headers: {
                 "Accept": "application/json",
                 "Authorization": `Bearer ${store.getState().keycloak.token}`
@@ -63,8 +64,7 @@ const createComment = (action$, store) =>
                 entity: {
                     "staffid": action.comment.staffid,
                     "taskcomment": action.comment.message,
-                    "createdon": new Date(action.comment.time),
-                    "taskid": action.taskId
+                    "taskid": action.taskId,
                 },
                 path: `/api/workflow/tasks/comments`,
                 headers: {
@@ -134,23 +134,6 @@ const completeTask = (action$, store) =>
                     return errorObservable(actions.completeTaskFailure(), error);
                 }));
 
-const fetchVariables = (action$, store) =>
-    action$.ofType(types.FETCH_PROCESS_VARIABLES)
-        .mergeMap(action =>
-            client({
-                method: 'GET',
-                path: `/api/workflow/tasks/${action.taskId}/variables`,
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": `Bearer ${store.getState().keycloak.token}`
-                }
-            }).retryWhen(retryOnForbidden)
-                .map(payload => actions.fetchVariablesSuccess(payload))
-                .catch(error => {
-                        return errorObservable(actions.fetchVariablesFailure(), error);
-                    }
-                ));
-
 
 export default combineEpics(fetchComments,
     fetchTask,
@@ -158,5 +141,4 @@ export default combineEpics(fetchComments,
     fetchCreateCommentForm,
     claimTask,
     unclaimTask,
-    completeTask,
-    fetchVariables)
+    completeTask)

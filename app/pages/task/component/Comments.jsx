@@ -48,13 +48,13 @@ class Comments extends React.Component {
             {!isFetchingComments ? <div>
                     {this.state.pageOfItems.map((comment) => {
                         return <div key={comment.get('id')}>
-                            {comment.get('userId')} <span style={{
+                            {comment.get('email')} <span style={{
                             color: '#6f777b',
                             fontSize: '16px',
                             lineHeight: '1.25'
                         }}> {moment(comment.get('time')).fromNow(false)}</span>
                             <div className="comment-body">
-                                <p>{comment.get('message')}</p>
+                                <p>{comment.get('taskcomment')}</p>
                             </div>
                         </div>
                     })}

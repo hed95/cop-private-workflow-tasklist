@@ -27,11 +27,10 @@ class Info extends React.Component {
                     })}
                     <dt>Supporting Information</dt>
                     <dt>
-
                     </dt>
                 </dl>
             </div>
-            <Actions task={task}/>
+            <Actions task={task} variables={variables}/>
         </div>
 
 

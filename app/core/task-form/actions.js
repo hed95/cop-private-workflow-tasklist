@@ -48,6 +48,11 @@ const completeTaskFailure = () => ({
     type: types.COMPLETE_TASK_FORM_FAILURE
 });
 
+const resetForm = () => ({
+    type: types.RESET_FORM
+});
+
+
 export {
     fetchTaskForm,
     fetchTaskFormSuccess,
@@ -57,5 +62,6 @@ export {
     submitTaskFormFailure,
     completeTask,
     completeTaskSuccess,
-    completeTaskFailure
+    completeTaskFailure,
+    resetForm
 }

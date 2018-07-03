@@ -4,15 +4,17 @@ import * as actions from './actionTypes';
 const {Map} = Immutable;
 
 const initialState = new Map({
-    loadingTaskForm: true,
+    loadingTaskForm: false,
     form: null,
-    submittingTaskFormForValidation: false,
+    taskFormValidationSuccessful: null,
     submittingTaskFormForCompletion: false,
-    taskFormCompleteSuccessful: false,
+    taskFormCompleteSuccessful: null,
 });
 
 function reducer(state = initialState, action) {
     switch (action.type) {
+        case actions.RESET_FORM:
+            return initialState;
         case actions.FETCH_TASK_FORM:
             return state.set('loadingTaskForm', true)
                 .set('form', null);
@@ -22,21 +24,20 @@ function reducer(state = initialState, action) {
                 .set('form', data);
         case actions.FETCH_TASK_FROM_FAILURE:
             return state.set('loadingTaskForm', false);
-        case actions.SUBMIT_TASK_FORM:
-            return state.set('submittingTaskFormForValidation', true);
-        case actions.SUBMIT_TASK_FORM_SUCCESS:
-            return state.set('submittingTaskFormForValidation', false);
         case actions.SUBMIT_TASK_FORM_FAILURE:
-            return state.set('submittingTaskFormForValidation', false)
+            return state.set('taskFormValidationSuccessful', false)
                 .set('taskFormCompleteSuccessful', false);
         case actions.COMPLETE_TASK_FORM:
-            return state.set('submittingTaskFormForCompletion', true);
+            return state.set('submittingTaskFormForCompletion', true)
+                .set('taskFormValidationSuccessful', true);
         case actions.COMPLETE_TASK_FORM_SUCCESS:
-                return state.set('submittingTaskFormForCompletion', false)
-                    .set('taskFormCompleteSuccessful', true);
+            return state.set('submittingTaskFormForCompletion', false)
+                .set('taskFormCompleteSuccessful', true)
+                .set('taskFormValidationSuccessful', true);
         case actions.COMPLETE_TASK_FORM_FAILURE:
             return state.set('submittingTaskFormForCompletion', false)
-                .set('taskFormCompleteSuccessful', false);
+                .set('taskFormCompleteSuccessful', false)
+                .set('taskFormValidationSuccessful', false);
         default:
             return state;
     }

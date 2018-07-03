@@ -30,7 +30,7 @@ const submitTaskForm = (action$, store) =>
                 method: 'POST',
                 path: `/api/form/${action.formId}/submission`,
                 entity: {
-                    "data": action.submissionData
+                    "data": action.submission
                 },
                 headers: {
                     "Accept": "application/json",
@@ -43,8 +43,8 @@ const submitTaskForm = (action$, store) =>
                 };
 
                 data.variables[action.variableName] = {
-                    value: payload.entity.data,
-                    type: "json",
+                    value: JSON.stringify(payload.entity.data),
+                    type: 'Json',
                     valueInfo: {}
                 };
                 return {
@@ -57,29 +57,28 @@ const submitTaskForm = (action$, store) =>
                 }
             ));
 
+
 const completeTaskForm = (action$, store) =>
     action$.ofType(types.COMPLETE_TASK_FORM)
-        .mergeMap(action => {
-
-                return client({
-                    method: 'POST',
-                    path: `/api/workflow/task/${action.taskId}/form/_complete`,
-                    entity: action.data,
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": `Bearer ${store.getState().keycloak.token}`,
-                        'Content-Type': 'application/json'
-                    }
-                }).retryWhen(retryOnForbidden).map(payload => {
-                    PubSub.publish("submission", {
-                        submission: true,
-                        message: `Task successfully completed`
-                    });
-                    return actions.completeTaskSuccess(payload)
-                }).catch(error => {
-                    return errorObservable(actions.completeTaskFailure(), error)
-                })
-            }
+        .mergeMap(action =>
+            client({
+                method: 'POST',
+                path: `/api/workflow/tasks/${action.taskId}/form/_complete`,
+                entity: action.data,
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`,
+                    'Content-Type': 'application/json'
+                }
+            }).retryWhen(retryOnForbidden).map(payload => {
+                PubSub.publish("submission", {
+                    submission: true,
+                    message: `Task successfully completed`
+                });
+                return actions.completeTaskSuccess(payload)
+            }).catch(error => {
+                return errorObservable(actions.completeTaskFailure(), error)
+            })
         );
 
 

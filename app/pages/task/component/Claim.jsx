@@ -10,7 +10,7 @@ class Claim extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.claimSuccessful) {
-            this.props.history.push("/task?taskId=" + this.props.task.get('id'));
+            this.props.history.push(`/task?taskId=${this.props.task.get('id')}`);
         }
     }
 
@@ -20,9 +20,9 @@ class Claim extends React.Component {
         const taskAssignee = task.get('assignee');
         const displayButton = !taskAssignee || (taskAssignee !== userId);
 
-        return <input className="btn btn-primary"
+        return displayButton ? <input className="btn btn-primary btn-md" type="submit"
                       onClick={() =>
-                          this.props.claimTask(this.props.task.get('id'))} type="button" value="Claim" disabled={!displayButton}/>
+                          this.props.claimTask(this.props.task.get('id'))}  value="Claim"/> : <div/>
     }
 
 }

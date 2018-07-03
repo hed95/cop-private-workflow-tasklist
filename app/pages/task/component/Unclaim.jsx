@@ -26,7 +26,7 @@ class Unclaim extends React.Component {
         const userId = kc.tokenParsed.email;
         const taskAssignee = task.get('assignee');
         const displayButton = taskAssignee && taskAssignee === userId;
-        return <input className="btn btn-primary" onClick={() => this.unclaim()} type="button" value="Unclaim" disabled={!displayButton}/>;
+        return displayButton ? <input className="btn btn-primary" onClick={() => this.unclaim()} type="submit" value="Unclaim"/> : <div/>;
     }
 
 }

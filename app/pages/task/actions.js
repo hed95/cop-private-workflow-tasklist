@@ -20,26 +20,6 @@ const fetchCommentsFailure =  () => {
     }
 };
 
-const fetchVariables = (taskId) => {
-    return {
-        type: types.FETCH_PROCESS_VARIABLES,
-        taskId
-    }
-};
-
-const fetchVariablesSuccess = (payload) => {
-    return {
-        type: types.FETCH_PROCESS_VARIABLES_SUCCESS,
-        payload
-    }
-};
-
-const fetchVariablesFailure = () => {
-    return {
-        type: types.FETCH_PROCESS_VARIABLES_FAILURE
-    }
-};
-
 const createComment = ({taskId, comment}) => {
     return {
         type: types.CREATE_COMMENT,
@@ -163,6 +143,12 @@ const completeTaskFailure = () => {
     }
 };
 
+const clearTask = () => {
+    return {
+        type: types.CLEAR_TASK
+    }
+}
+
 export {
     fetchComments,
     fetchCommentsSuccess,
@@ -185,7 +171,5 @@ export {
     completeTask,
     completeTaskSuccess,
     completeTaskFailure,
-    fetchVariablesFailure,
-    fetchVariables,
-    fetchVariablesSuccess
+    clearTask
 }

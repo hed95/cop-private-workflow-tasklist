@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {
-    form, loadingForm, submissionToWorkflowSuccessful, submittingToWorkflow
+    form, loadingForm, submissionToWorkflowSuccessful, submittingToWorkflow, successfulFormValidation
 } from "../selectors";
 import {bindActionCreators} from "redux";
 import * as actions from "../actions";
@@ -24,12 +24,21 @@ class StartForm extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.submissionToWorkflowSuccessful) {
-            this.props.history.replace("/tasks");
+        if (this.form && this.form.formio.data.submit) {
+            if (nextProps.submissionToWorkflowSuccessful && nextProps.successfulFormValidation) {
+                this.form.formio.emit("submitDone");
+                this.props.history.replace("/tasks");
+            } else {
+                if (!nextProps.submittingToWorkflow) {
+                    this.form.formio.emit("error");
+                    this.form.formio.emit('change', this.form.formio.submission);
+                }
+            }
         }
     }
 
     componentWillUnmount() {
+        this.form = null;
         this.props.resetForm();
     }
 
@@ -49,7 +58,6 @@ class StartForm extends React.Component {
                 const process = processName ? processName : processKey;
                 return <Form form={form} ref={(form) => this.form = form} options={options} onSubmit={(submission) => {
                     this.props.submit(form._id, processKey, variableName, submission.data, process);
-                    this.form.formio.emit("submitDone");
 
                 }}/>
             } else {
@@ -82,7 +90,8 @@ export default connect((state) => {
         form: form(state),
         loadingForm: loadingForm(state),
         submissionToWorkflowSuccessful: submissionToWorkflowSuccessful(state),
-        submittingToWorkflow: submittingToWorkflow(state)
+        submittingToWorkflow: submittingToWorkflow(state),
+        successfulFormValidation: successfulFormValidation(state)
 
     }
 }, mapDispatchToProps)(withRouter(StartForm))

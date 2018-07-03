@@ -6,9 +6,9 @@ const {Map} = Immutable;
 const initialState = new Map({
     loadingForm: false,
     form: null,
-    submittingFormForValidation: false,
+    successfulFormValidation: null,
     submittingToWorkflow: false,
-    submissionToWorkflowSuccessful: false,
+    submissionToWorkflowSuccessful: null,
 });
 
 function reducer(state = initialState, action) {
@@ -26,26 +26,20 @@ function reducer(state = initialState, action) {
                 .set('form', data);
         case actions.FETCH_FORM_FAILURE:
             return state.set('loadingForm', false);
-
-        case actions.SUBMIT:
-            return state.set('submittingFormForValidation', true);
-        case actions.SUBMIT_SUCCESS:
-            console.log('IFrame: No errors from FromIO');
-            return state.set('submittingFormForValidation', true);
         case actions.SUBMIT_FAILURE:
-            return state.set('submittingFormForValidation', false);
-
+            return state.set('successfulFormValidation', false);
         case actions.SUBMIT_TO_WORKFLOW:
             console.log('IFrame: Submitting to workflow');
-             return state.set('submittingToWorkflow', true)
-                .set('submissionToWorkflowSuccessful', false);
+             return state.set('submittingToWorkflow', true);
         case actions.SUBMIT_TO_WORKFLOW_SUCCESS:
             console.log('IFrame: Submission to workflow successful');
             return state.set('submittingToWorkflow', false)
-                .set('submissionToWorkflowSuccessful', true);
+                .set('submissionToWorkflowSuccessful', true)
+                .set('successfulFormValidation', true);
         case actions.SUBMIT_TO_WORKFLOW_FAILURE:
             return state.set('submittingToWorkflow', false)
-                .set('submissionToWorkflowSuccessful', false);
+                .set('submissionToWorkflowSuccessful', false)
+                .set('successfulFormValidation', false);
 
         default:
             return state;

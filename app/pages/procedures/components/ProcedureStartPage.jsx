@@ -25,7 +25,7 @@ class ProcessStartPage extends React.Component {
 
 
     render() {
-        const {isFetchingProcessDefinition, processDefinition, submissionToWorkflowSuccessful, submittingToWorkflow} = this.props;
+        const {isFetchingProcessDefinition, processDefinition, submittingToWorkflow} = this.props;
         return <div className="grid-row">
             {submittingToWorkflow ?
                 <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner

@@ -12,7 +12,7 @@ class ReportPage extends React.Component {
         return <div>
             <Iframe url={url}
                     id="report"
-                    width="85%"
+                    width="95%"
                     height="100%"
                     position="absolute"
                     display="initial"

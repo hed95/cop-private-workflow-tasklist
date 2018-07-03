@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import {
     form, loadingTaskForm, submittingTaskFormForCompletion,
-    submittingTaskFormForValidation,
+    taskFormValidationSuccessful,
     taskFormCompleteSuccessful
 } from "../selectors";
 import {bindActionCreators} from "redux";
@@ -19,10 +19,25 @@ class TaskForm extends React.Component {
         this.props.fetchTaskForm(this.props.task);
     }
 
+
     componentWillReceiveProps(nextProps) {
-        if (nextProps.taskFormCompleteSuccessful) {
-            this.props.history.replace("/tasks");
+
+        if (this.form && this.form.formio.data.submit) {
+            if (nextProps.taskFormCompleteSuccessful && nextProps.taskFormValidationSuccessful) {
+                this.form.formio.emit("submitDone");
+                this.props.history.replace("/tasks");
+            } else {
+                if (!nextProps.submittingTaskFormForCompletion) {
+                    this.form.formio.emit("error");
+                    this.form.formio.emit('change', this.form.formio.submission);
+                }
+            }
         }
+    }
+
+    componentWillUnmount() {
+        this.form= null;
+        this.props.resetForm();
     }
 
     renderForm() {
@@ -33,21 +48,38 @@ class TaskForm extends React.Component {
             const options = {
                 noAlerts: true
             };
+
+            if (!task.get('assignee')) {
+                options.readOnly = true;
+            }
+
             if (form) {
+                const submit = form.components.find(c => c.key === 'submit');
                 const submissionData = variables['submissionData'];
-                if (submissionData) {
-                    return <Form form={form} options={options} submission={JSON.parse(submissionData)} onSubmit={(submission) => {
-                        const variableInput = form.components.find(c => c.key === 'submitVariableName');
-                        const variableName = variableInput.defaultValue;
-                        this.props.submitTaskForm(form._id, task.get('id'), submission.data, variableName);
-                    }}/>
+                if (submit) {
+                    const variableInput = form.components.find(c => c.key === 'submitVariableName');
+                    const variableName = variableInput.defaultValue;
+
+                    if (submissionData) {
+                        return <Form form={form} options={options} ref={(form) => this.form = form}
+                                     submission={JSON.parse(submissionData)} onSubmit={(submission) => {
+                            this.props.submitTaskForm(form._id, task.get('id'), submission.data, variableName);
+
+                        }}/>
+                    } else {
+                        return <Form form={form} ref={(form) => this.form = form} options={options}
+                                     onSubmit={(submission) => {
+                                         this.props.submitTaskForm(form._id, task.get('id'), submission.data, variableName);
+                                     }}/>
+                    }
+
                 } else {
-                    return <Form form={form} options={options} onSubmit={(submission) => {
-                        const variableInput = form.components.find(c => c.key === 'submitVariableName');
-                        const variableName = variableInput.defaultValue;
-                        this.props.submitTaskForm(form._id, task.get('id'), submission.data, variableName);
-                    }}/>
+                    return <Form form={form} options={
+                       options
+                    } ref={(form) => this.form = form}
+                                 submission={JSON.parse(submissionData)}/>
                 }
+
 
             } else {
                 return <div/>
@@ -60,11 +92,10 @@ class TaskForm extends React.Component {
         const {submittingTaskFormForCompletion, submittingTaskFormForValidation} = this.props;
         return <div>
             {submittingTaskFormForValidation || submittingTaskFormForCompletion ?
-                <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
+                <div style={{display: 'flex', justifyContent: 'center', paddingTop: '5px'}}><Spinner
                     name="three-bounce" color="#005ea5"/></div> : <div/>
             }
-
-            {this.renderForm()}
+            <div>{this.renderForm()}</div>
         </div>
     }
 }
@@ -72,6 +103,7 @@ class TaskForm extends React.Component {
 TaskForm.propTypes = {
     submitTaskForm: PropTypes.func.isRequired,
     fetchTaskForm: PropTypes.func.isRequired,
+    resetForm: PropTypes.func.isRequired,
     loadingTaskForm: PropTypes.bool
 };
 
@@ -79,7 +111,7 @@ TaskForm.propTypes = {
 const mapStateToProps = createStructuredSelector({
     form: form,
     loadingTaskForm: loadingTaskForm,
-    submittingTaskFormForValidation: submittingTaskFormForValidation,
+    taskFormValidationSuccessful: taskFormValidationSuccessful,
     submittingTaskFormForCompletion: submittingTaskFormForCompletion,
     taskFormCompleteSuccessful: taskFormCompleteSuccessful
 

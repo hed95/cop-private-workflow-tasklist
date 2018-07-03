@@ -24,7 +24,6 @@ class TaskDetailsPage extends React.Component {
         const params = queryString.parse(this.props.location.search);
         this.taskId = params.taskId;
         this.props.fetchTask(this.taskId);
-        this.props.fetchVariables(this.taskId);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -33,47 +32,54 @@ class TaskDetailsPage extends React.Component {
         }
     }
 
-    render() {
-        const {task, variables} = this.props;
+    componentWillUnmount() {
+        this.props.clearTask();
+    }
 
+    render() {
+        const {task, variables, isFetchingTask} = this.props;
         const hasFormKey = task && task.get('formKey');
-        return <div>
-            <h3 className="heading-medium">{task.get('name')}</h3>
-            <Tabs>
-                <TabList>
-                    <Tab>Details</Tab>
-                    {hasFormKey ? <Tab>Form</Tab> : null}
-                    <Tab>Comments</Tab>
-                    <Tab>Attachments</Tab>
-                    <Tab>Audit</Tab>
-                </TabList>
-                <div style={{paddingTop: '10px'}}>
-                    <TabPanel key={uuidv4()}>
-                        <Info {...this.props} />
-                    </TabPanel>
-                    {hasFormKey ? <TabPanel key={uuidv4()}>
-                        <fieldset>
-                            <TaskForm  {...this.props} />
-                        </fieldset>
-                    </TabPanel> : null}
-                    <TabPanel key={uuidv4()}>
-                        <Comments taskId={this.taskId}/>
-                    </TabPanel>
-                    <TabPanel key={uuidv4()}>
-                        <Attachments taskId={this.taskId} />
-                    </TabPanel>
-                    <TabPanel key={uuidv4()}>
-                        <Audit taskId={this.taskId} />
-                    </TabPanel>
-                </div>
-            </Tabs>
-        </div>
+        if (isFetchingTask) {
+            return <div>Loading task information</div>
+        } else {
+            return <div>
+                <h3 className="heading-medium">{task.get('name')}</h3>
+                <Tabs>
+                    <TabList>
+                        <Tab>Details</Tab>
+                        {hasFormKey ? <Tab>Form</Tab> : null}
+                        <Tab>Comments</Tab>
+                        <Tab>Attachments</Tab>
+                        <Tab>Audit</Tab>
+                    </TabList>
+                    <div style={{paddingTop: '10px'}}>
+                        <TabPanel key={uuidv4()}>
+                            <Info {...this.props} />
+                        </TabPanel>
+                        {hasFormKey ? <TabPanel key={uuidv4()}>
+                            <fieldset>
+                                <TaskForm task={task} variables={variables}/>
+                            </fieldset>
+                        </TabPanel> : null}
+                        <TabPanel key={uuidv4()}>
+                            <Comments taskId={this.taskId}/>
+                        </TabPanel>
+                        <TabPanel key={uuidv4()}>
+                            <Attachments taskId={this.taskId} />
+                        </TabPanel>
+                        <TabPanel key={uuidv4()}>
+                            <Audit taskId={this.taskId} />
+                        </TabPanel>
+                    </div>
+                </Tabs>
+            </div>
+        }
+
     }
 }
 
 TaskDetailsPage.propTypes = {
     fetchTask: PropTypes.func.isRequired,
-    fetchVariables:  PropTypes.func.isRequired,
     isFetchingTask: PropTypes.bool,
     task: ImmutablePropTypes.map
 };
