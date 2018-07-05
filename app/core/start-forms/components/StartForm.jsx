@@ -56,10 +56,11 @@ class StartForm extends React.Component {
                 const variableInput = form.components.find(c => c.key === 'submitVariableName');
                 const variableName = variableInput ? variableInput.defaultValue : formName;
                 const process = processName ? processName : processKey;
-                return <Form form={form} ref={(form) => this.form = form} options={options} onSubmit={(submission) => {
-                    this.props.submit(form._id, processKey, variableName, submission.data, process);
+                return <Form form={form} ref={(form) => this.form = form} options={options}
+                             onSubmit={(submission) => {
+                                 this.props.submit(form._id, processKey, variableName, submission.data, process);
 
-                }}/>
+                             }}/>
             } else {
                 return <div/>
             }

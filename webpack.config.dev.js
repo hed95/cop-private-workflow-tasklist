@@ -64,6 +64,13 @@ module.exports = webpackMerge(commonConfig, {
                     console.log('Workflow Proxy -->  ', req.method, req.path, '-->', `${workflowUrl}${proxyReq.path}`);
                 },
             },
+            "/rest/camunda": {
+                target: workflowUrl,
+                changeOrigin: true,
+                onProxyReq: function onProxyReq(proxyReq, req, res) {
+                    console.log('bretWorkflow Proxy -->  ', req.method, req.path, '-->', `${workflowUrl}${proxyReq.path}`);
+                },
+            },
             "/api/translation": {
                 target: translationServiceUrl,
                 changeOrigin: true
