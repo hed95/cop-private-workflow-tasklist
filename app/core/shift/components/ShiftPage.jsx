@@ -47,7 +47,6 @@ class ShiftPage extends React.Component {
         } else {
             const submit = (submission) => {
                 this.props.submit(shiftForm._id, submission.data);
-                this.form.formio.emit("submitDone");
             };
             const options = {
                 noAlerts: true
@@ -69,10 +68,7 @@ class ShiftPage extends React.Component {
                     };
                     return <Form form={shiftForm} submission={shiftSubmission} options={options}
                                    ref={(form) => this.form = form}
-                                   onSubmit={(submission) => {
-                                       this.props.submit(shiftForm._id, submission.data);
-                                   }
-                                   }/>
+                                   onSubmit={submit}/>
                 } else {
                     return <Form form={shiftForm}
                                    ref={(form) => this.form = form}
