@@ -25,7 +25,17 @@ class ShiftPage extends React.Component {
 
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.activeShiftSuccess) {
+
+        if (this.form && this.form.formio.data.submit) {
+            if (nextProps.activeShiftSuccess) {
+                this.form.formio.emit("submitDone");
+                this.props.history.replace("/tasks");
+            } else {
+                if (!nextProps.submittingActiveShift) {
+                    this.form.formio.emit("error");
+                    this.form.formio.emit('change', this.form.formio.submission);
+                }
+            }
             $('html,body').animate({scrollTop: 0}, 'slow');
         }
     }
@@ -61,7 +71,6 @@ class ShiftPage extends React.Component {
                                    ref={(form) => this.form = form}
                                    onSubmit={(submission) => {
                                        this.props.submit(shiftForm._id, submission.data);
-                                       this.form.formio.emit("submitDone");
                                    }
                                    }/>
                 } else {
