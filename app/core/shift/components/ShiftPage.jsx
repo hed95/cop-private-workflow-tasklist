@@ -25,25 +25,22 @@ class ShiftPage extends React.Component {
 
 
     componentWillReceiveProps(nextProps) {
-
         if (this.form && this.form.formio.data.submit) {
             if (nextProps.activeShiftSuccess) {
                 this.form.formio.emit("submitDone");
-                this.props.history.replace("/tasks");
             } else {
                 if (!nextProps.submittingActiveShift) {
                     this.form.formio.emit("error");
                     this.form.formio.emit('change', this.form.formio.submission);
                 }
             }
-            $('html,body').animate({scrollTop: 0}, 'slow');
         }
     }
 
     renderForm() {
         const {shiftForm, shift, loadingShiftForm, isFetchingShift} = this.props;
         if (isFetchingShift || loadingShiftForm) {
-            return <div>Loading Shift Details....</div>
+            return <div>Loading shift details....</div>
         } else {
             const submit = (submission) => {
                 this.props.submit(shiftForm._id, submission.data);
@@ -133,7 +130,7 @@ class ShiftPage extends React.Component {
                 <div className="column-full">
                     <fieldset>
                         <legend>
-                            <h3 className="heading-medium">Shift Details</h3>
+                            <h3 className="heading-medium">Shift details</h3>
                         </legend>
                         {this.renderForm()}
                     </fieldset>
@@ -157,7 +154,7 @@ ShiftPage.propTypes = {
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default connect((state) => {
+export default withRouter(connect((state) => {
     return {
         kc: state.keycloak,
         hasActiveShift: hasActiveShift(state),
@@ -171,5 +168,5 @@ export default connect((state) => {
         loadingShiftForm: loadingShiftForm(state)
 
     }
-}, mapDispatchToProps)(withRouter(ShiftPage))
+}, mapDispatchToProps)(ShiftPage))
 
