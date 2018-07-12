@@ -26,7 +26,7 @@ class ProcessesPage extends React.Component {
         const pointerStyle = {cursor: 'pointer'};
         return <div>
 
-            {isFetchingProcessDefinitions ? <div>Loading Processes....</div> : <div>
+            {isFetchingProcessDefinitions ? <div>Loading processes....</div> : <div>
                 <table>
                     <thead>
                     <tr>
