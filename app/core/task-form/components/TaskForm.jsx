@@ -22,7 +22,7 @@ class TaskForm extends React.Component {
 
     componentWillReceiveProps(nextProps) {
 
-        if (this.form && this.form.formio.data.submit) {
+        if (this.form && (this.form.formio && this.form.formio.data.submit)) {
             if (nextProps.taskFormCompleteSuccessful && nextProps.taskFormValidationSuccessful) {
                 this.form.formio.emit("submitDone");
                 this.props.history.replace("/tasks");
