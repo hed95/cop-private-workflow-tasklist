@@ -29,7 +29,7 @@ class StartForm extends React.Component {
                 this.form.formio.emit("submitDone");
                 this.props.history.replace("/tasks");
             } else {
-                if (!nextProps.submittingToWorkflow) {
+                if (nextProps.submittingToWorkflow !== true) {
                     this.form.formio.emit("error");
                     this.form.formio.emit('change', this.form.formio.submission);
                 }

@@ -27,7 +27,7 @@ class TaskForm extends React.Component {
                 this.form.formio.emit("submitDone");
                 this.props.history.replace("/tasks");
             } else {
-                if (!nextProps.submittingTaskFormForCompletion) {
+                if (nextProps.submittingTaskFormForCompletion !== true) {
                     this.form.formio.emit("error");
                     this.form.formio.emit('change', this.form.formio.submission);
                 }
