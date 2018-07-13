@@ -17,7 +17,9 @@ function reducer(state = initialState, action) {
             return initialState;
         case actions.FETCH_TASK_FORM:
             return state.set('loadingTaskForm', true)
-                .set('form', null);
+                .set('form', null)
+                .set('submittingTaskFormForCompletion', false)
+                .set('taskFormCompleteSuccessful', false);
         case actions.FETCH_TASK_FORM_SUCCESS:
             const data = action.payload.entity;
             return state.set('loadingTaskForm', false)
@@ -25,11 +27,9 @@ function reducer(state = initialState, action) {
         case actions.FETCH_TASK_FROM_FAILURE:
             return state.set('loadingTaskForm', false);
         case actions.SUBMIT_TASK_FORM_FAILURE:
-            return state.set('taskFormValidationSuccessful', false)
-                .set('taskFormCompleteSuccessful', false);
+            return state.set('taskFormValidationSuccessful', false);
         case actions.COMPLETE_TASK_FORM:
-            return state.set('submittingTaskFormForCompletion', true)
-                .set('taskFormValidationSuccessful', true);
+            return state.set('submittingTaskFormForCompletion', true);
         case actions.COMPLETE_TASK_FORM_SUCCESS:
             return state.set('submittingTaskFormForCompletion', false)
                 .set('taskFormCompleteSuccessful', true)
