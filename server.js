@@ -188,9 +188,9 @@ app.use('/api/reports', proxy(
 
 app.get('/api/config', (req, res) => {
     res.send({
-        'REALM': process.env.REALM,
+        'REALM': process.env.AUTH_REALM,
         'AUTH_URL': process.env.AUTH_URL,
-        'CLIENT_ID': process.env.CLIENT_ID,
+        'CLIENT_ID': process.env.AUTH_CLIENT_ID,
         'MODELER_URL': bpmnModelerUrl
     })
 });
