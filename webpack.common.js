@@ -21,9 +21,9 @@ module.exports = {
         new webpack.NamedModulesPlugin(),
         new webpack.DefinePlugin({
             'process.env': {
-                'REALM': JSON.stringify(process.env.REALM),
+                'REALM': JSON.stringify(process.env.AUTH_REALM),
                 'AUTH_URL': JSON.stringify(process.env.AUTH_URL),
-                'CLIENT_ID': JSON.stringify(process.env.CLIENT_ID)
+                'CLIENT_ID': JSON.stringify(process.env.AUTH_CLIENT_ID)
             }
         }),
         new HtmlWebpackPlugin({
