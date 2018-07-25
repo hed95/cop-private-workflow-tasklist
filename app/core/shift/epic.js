@@ -30,7 +30,7 @@ const fetchActiveShift = (action$, store) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/platform-data/shift?email=eq.${store.getState().keycloak.tokenParsed.email}`,
+                path: `/api/platform-data/shift?email=eq.${encodeURIComponent(store.getState().keycloak.tokenParsed.email)}`,
                 headers: {
                     "Accept": "application/json"
                 }
