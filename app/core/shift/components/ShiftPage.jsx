@@ -25,7 +25,7 @@ class ShiftPage extends React.Component {
 
 
     componentWillReceiveProps(nextProps) {
-        if (this.form && this.form.formio.data.submit) {
+        if (this.form && (this.form.formio && this.form.formio.data.submit)) {
             if (nextProps.activeShiftSuccess) {
                 this.form.formio.emit("submitDone");
             } else {
