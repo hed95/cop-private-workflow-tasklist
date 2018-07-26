@@ -35,9 +35,8 @@ const createActiveShift = (shiftInfo) => ({
     shiftInfo
 });
 
-const createActiveShiftSuccess = payload => ({
-    type: types.CREATE_ACTIVE_SHIFT_SUCCESS,
-    payload
+const createActiveShiftSuccess = () => ({
+    type: types.CREATE_ACTIVE_SHIFT_SUCCESS
 });
 
 const createActiveShiftFailure = () => ({

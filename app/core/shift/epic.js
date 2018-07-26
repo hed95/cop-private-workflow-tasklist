@@ -7,6 +7,18 @@ import PubSub from "pubsub-js";
 import * as Rx from "rxjs/Observable";
 import {retryOnForbidden} from "../util/retry";
 
+
+const shift = (email) => {
+    console.log(`Requesting shift details for ${email}`);
+    return client({
+        method: 'GET',
+        path: `/api/platform-data/shift?email=eq.${email}`,
+        headers: {
+            "Accept": "application/json"
+        }
+    })
+};
+
 const fetchShiftForm = (action$, store) =>
     action$.ofType(types.FETCH_SHIFT_FORM)
         .mergeMap(action =>
@@ -25,24 +37,17 @@ const fetchShiftForm = (action$, store) =>
                 ));
 
 const fetchActiveShift = (action$, store) =>
-
     action$.ofType(types.FETCH_ACTIVE_SHIFT)
         .mergeMap(action =>
-            client({
-                method: 'GET',
-                path: `/api/platform-data/shift?email=eq.${encodeURIComponent(store.getState().keycloak.tokenParsed.email)}`,
-                headers: {
-                    "Accept": "application/json"
-                }
-            }).retryWhen(retryOnForbidden).map(payload => {
+            shift(store.getState().keycloak.tokenParsed.email).retryWhen(retryOnForbidden).map(payload => {
                 if (payload.status.code === 200 && payload.entity.length === 0) {
-                    throw 'no data';
+                    throw 'no-data';
                 } else {
                     return actions.fetchActiveShiftSuccess(payload)
                 }
             }).retryWhen((errors) => {
                 return errors
-                    .takeWhile(error => error === 'no data')
+                    .takeWhile(error => error === 'no-data')
                     .delay(1000)
                     .take(5)
                     .concat(Rx.Observable.throw({
@@ -92,15 +97,53 @@ const createActiveShift = (action$, store) =>
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 }
-            }).retryWhen(retryOnForbidden).map(payload => {
-                PubSub.publish("submission", {
-                    submission: true,
-                    message: `Shift successfully started`
-                });
-                return actions.createActiveShiftSuccess(payload);
+            }).retryWhen(retryOnForbidden).map(() => {
+                return {
+                    type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE,
+                }
             }).catch(error => {
                     return errorObservable(actions.createActiveShiftFailure(), error);
                 }
             ));
 
-export default combineEpics(fetchActiveShift, submit, createActiveShift, fetchShiftForm);
+
+const fetchActiveShiftAfterCreation = (action$, store) =>
+    action$.ofType(types.FETCH_ACTIVE_SHIFT_AFTER_CREATE)
+        .mergeMap(action =>
+            shift(store.getState().keycloak.tokenParsed.email)
+                .flatMap(payload => {
+                    if (payload.status.code === 403) {
+                        throw 'not-authorized'
+                    } else if (payload.status.code === 200 && payload.entity.length === 0) {
+                        console.log(`Could not get shift details...retrying as async operation`);
+                        throw 'no-data';
+                    } else {
+                        console.log(`Shift details located...`);
+                        PubSub.publish("submission", {
+                            submission: true,
+                            message: `Shift successfully started`
+                        });
+                        return ([actions.fetchActiveShiftSuccess(payload),
+                            actions.createActiveShiftSuccess()]);
+                    }
+                }).retryWhen((errors) => {
+                    return errors
+                        .takeWhile((error) => {
+                            const retryableError = error === 'no-data' || error === 'not-authorized';
+                            console.log(`Retryable error while trying to get shift...`);
+                            return retryableError
+                        })
+                        .delay(5000)
+                        .take(5)
+                        .concat(Rx.Observable.throw({
+                            status: {
+                                code: 401
+                            }
+                        }));
+            }).catch(error => {
+                    console.log(`Failed to create shift information...${JSON.stringify(error.toString())}`);
+                    return errorObservable(actions.createActiveShiftFailure(), error);
+                }
+            ));
+
+export default combineEpics(fetchActiveShift, submit, createActiveShift, fetchShiftForm, fetchActiveShiftAfterCreation);
