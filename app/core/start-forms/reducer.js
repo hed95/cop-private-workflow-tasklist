@@ -6,7 +6,6 @@ const {Map} = Immutable;
 const initialState = new Map({
     loadingForm: false,
     form: null,
-    successfulFormValidation: null,
     submittingToWorkflow: false,
     submissionToWorkflowSuccessful: null,
 });
@@ -27,19 +26,17 @@ function reducer(state = initialState, action) {
         case actions.FETCH_FORM_FAILURE:
             return state.set('loadingForm', false);
         case actions.SUBMIT_FAILURE:
-            return state.set('successfulFormValidation', false);
+            return state.set('submissionToWorkflowSuccessful', false);
         case actions.SUBMIT_TO_WORKFLOW:
             console.log('IFrame: Submitting to workflow');
              return state.set('submittingToWorkflow', true);
         case actions.SUBMIT_TO_WORKFLOW_SUCCESS:
             console.log('IFrame: Submission to workflow successful');
             return state.set('submittingToWorkflow', false)
-                .set('submissionToWorkflowSuccessful', true)
-                .set('successfulFormValidation', true);
+                .set('submissionToWorkflowSuccessful', true);
         case actions.SUBMIT_TO_WORKFLOW_FAILURE:
             return state.set('submittingToWorkflow', false)
-                .set('submissionToWorkflowSuccessful', false)
-                .set('successfulFormValidation', false);
+                .set('submissionToWorkflowSuccessful', false);
 
         default:
             return state;

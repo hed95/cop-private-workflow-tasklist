@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import {
-    form, loadingForm, submissionToWorkflowSuccessful, submittingToWorkflow, successfulFormValidation
+    form, loadingForm, submissionToWorkflowSuccessful, submittingToWorkflow
 } from "../selectors";
 import {bindActionCreators} from "redux";
 import * as actions from "../actions";
@@ -25,7 +25,7 @@ class StartForm extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.form && this.form.formio.data.submit) {
-            if (nextProps.submissionToWorkflowSuccessful && nextProps.successfulFormValidation) {
+            if (nextProps.submissionToWorkflowSuccessful) {
                 this.form.formio.emit("submitDone");
                 this.props.history.replace("/tasks");
             } else {
@@ -91,8 +91,7 @@ export default connect((state) => {
         form: form(state),
         loadingForm: loadingForm(state),
         submissionToWorkflowSuccessful: submissionToWorkflowSuccessful(state),
-        submittingToWorkflow: submittingToWorkflow(state),
-        successfulFormValidation: successfulFormValidation(state)
+        submittingToWorkflow: submittingToWorkflow(state)
 
     }
 }, mapDispatchToProps)(withRouter(StartForm))

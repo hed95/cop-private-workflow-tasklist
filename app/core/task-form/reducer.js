@@ -6,7 +6,6 @@ const {Map} = Immutable;
 const initialState = new Map({
     loadingTaskForm: false,
     form: null,
-    taskFormValidationSuccessful: null,
     submittingTaskFormForCompletion: false,
     taskFormCompleteSuccessful: null,
 });
@@ -18,7 +17,6 @@ function reducer(state = initialState, action) {
         case actions.FETCH_TASK_FORM:
             return state.set('loadingTaskForm', true)
                 .set('form', null)
-                .set('submittingTaskFormForCompletion', false)
                 .set('taskFormCompleteSuccessful', false);
         case actions.FETCH_TASK_FORM_SUCCESS:
             const data = action.payload.entity;
@@ -27,18 +25,15 @@ function reducer(state = initialState, action) {
         case actions.FETCH_TASK_FROM_FAILURE:
             return state.set('loadingTaskForm', false);
         case actions.SUBMIT_TASK_FORM_FAILURE:
-            return state.set('taskFormValidationSuccessful', false)
-                .set('taskFormCompleteSuccessful', false);
+            return state.set('taskFormCompleteSuccessful', false);
         case actions.COMPLETE_TASK_FORM:
             return state.set('submittingTaskFormForCompletion', true);
         case actions.COMPLETE_TASK_FORM_SUCCESS:
             return state.set('submittingTaskFormForCompletion', false)
-                .set('taskFormCompleteSuccessful', true)
-                .set('taskFormValidationSuccessful', true);
+                .set('taskFormCompleteSuccessful', true);
         case actions.COMPLETE_TASK_FORM_FAILURE:
             return state.set('submittingTaskFormForCompletion', false)
-                .set('taskFormCompleteSuccessful', false)
-                .set('taskFormValidationSuccessful', false);
+                .set('taskFormCompleteSuccessful', false);
         default:
             return state;
     }

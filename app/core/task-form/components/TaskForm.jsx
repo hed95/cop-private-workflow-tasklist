@@ -22,7 +22,7 @@ class TaskForm extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.form && (this.form.formio && this.form.formio.data.submit)) {
-            if (nextProps.taskFormCompleteSuccessful && nextProps.taskFormValidationSuccessful) {
+            if (nextProps.taskFormCompleteSuccessful) {
                 this.form.formio.emit("submitDone");
                 this.props.history.replace("/tasks");
             } else {
@@ -88,9 +88,9 @@ class TaskForm extends React.Component {
     }
 
     render() {
-        const {submittingTaskFormForCompletion, submittingTaskFormForValidation} = this.props;
+        const {submittingTaskFormForCompletion} = this.props;
         return <div>
-            {submittingTaskFormForValidation || submittingTaskFormForCompletion ?
+            {submittingTaskFormForCompletion ?
                 <div style={{display: 'flex', justifyContent: 'center', paddingTop: '5px'}}><Spinner
                     name="three-bounce" color="#005ea5"/></div> : <div/>
             }
@@ -110,7 +110,6 @@ TaskForm.propTypes = {
 const mapStateToProps = createStructuredSelector({
     form: form,
     loadingTaskForm: loadingTaskForm,
-    taskFormValidationSuccessful: taskFormValidationSuccessful,
     submittingTaskFormForCompletion: submittingTaskFormForCompletion,
     taskFormCompleteSuccessful: taskFormCompleteSuccessful
 
