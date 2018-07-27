@@ -9,12 +9,12 @@ class ReportPage extends React.Component {
 
         const params = queryString.parse(this.props.location.search);
         const url = params.url;
-        return <div>
+        return <div style={{display:'flex', position:'relative', margin:'auto', justifyContent: 'center', height: '100vh'}}>
             <Iframe url={url}
                     id="report"
-                    width="95%"
+                    width="100%%"
                     height="100%"
-                    position="absolute"
+                    position="relative"
                     display="initial"
                     allowFullScreen/>
         </div>

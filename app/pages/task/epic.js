@@ -4,7 +4,6 @@ import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
 import {retryOnForbidden} from "../../core/util/retry";
-import moment from 'moment';
 
 
 const fetchComments = (action$, store) =>

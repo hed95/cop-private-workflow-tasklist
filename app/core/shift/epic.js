@@ -12,7 +12,7 @@ const shift = (email) => {
     console.log(`Requesting shift details for ${email}`);
     return client({
         method: 'GET',
-        path: `/api/platform-data/shift?email=eq.${email}`,
+        path: `/api/platform-data/shift?email=eq.${encodeURIComponent(email)}`,
         headers: {
             "Accept": "application/json"
         }

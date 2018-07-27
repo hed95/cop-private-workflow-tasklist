@@ -46,10 +46,10 @@ $icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 @import "../icons.css";
 @import "../../node_modules/flatpickr/dist/themes/airbnb.css";
 
-
 html {
   background-color: transparent;
 }
+
 .nav-menu {
   color: white;
   text-align: right;
@@ -197,7 +197,6 @@ html {
 .choices .form-control {
   width: 100%;
 }
-
 
 .btn {
   @extend .button
