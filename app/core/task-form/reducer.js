@@ -27,7 +27,8 @@ function reducer(state = initialState, action) {
         case actions.FETCH_TASK_FROM_FAILURE:
             return state.set('loadingTaskForm', false);
         case actions.SUBMIT_TASK_FORM_FAILURE:
-            return state.set('taskFormValidationSuccessful', false);
+            return state.set('taskFormValidationSuccessful', false)
+                .set('taskFormCompleteSuccessful', false);
         case actions.COMPLETE_TASK_FORM:
             return state.set('submittingTaskFormForCompletion', true);
         case actions.COMPLETE_TASK_FORM_SUCCESS:
