@@ -21,21 +21,20 @@ class TaskForm extends React.Component {
 
 
     componentWillReceiveProps(nextProps) {
-        if (this.form && (this.form.formio && this.form.formio.data.submit)) {
+        if (this.form && (this.form.formio && this.form.formio.data.submit)
+            && nextProps.submittingTaskFormForCompletion !== true) {
             if (nextProps.taskFormCompleteSuccessful) {
                 this.form.formio.emit("submitDone");
                 this.props.history.replace("/tasks");
             } else {
-                if (!nextProps.submittingTaskFormForCompletion) {
-                    this.form.formio.emit("error");
-                    this.form.formio.emit('change', this.form.formio.submission);
-                }
+                this.form.formio.emit("error");
+                this.form.formio.emit('change', this.form.formio.submission);
             }
         }
     }
 
     componentWillUnmount() {
-        this.form= null;
+        this.form = null;
         this.props.resetForm();
     }
 
@@ -74,7 +73,7 @@ class TaskForm extends React.Component {
 
                 } else {
                     return <Form form={form} options={
-                       options
+                        options
                     } ref={(form) => this.form = form}
                                  submission={JSON.parse(submissionData)}/>
                 }
