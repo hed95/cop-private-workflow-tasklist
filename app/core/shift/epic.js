@@ -133,8 +133,8 @@ const fetchActiveShiftAfterCreation = (action$, store) =>
                             console.log(`Retryable error while trying to get shift...`);
                             return retryableError
                         })
-                        .delay(5000)
-                        .take(5)
+                        .delay(1000)
+                        .take(10)
                         .concat(Rx.Observable.throw({
                             status: {
                                 code: 401

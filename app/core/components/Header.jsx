@@ -105,29 +105,29 @@ class Header extends React.Component {
                                 smallMenuClassName="small-menu"
                                 menu={
                                     <ul id="proposition-links" style={{width: navWidth}}>
-                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/shift')}
+                                        <li style={pointerStyle}><a id="shift" onClick={() => this.changeRoute('/shift')}
                                                                     className={routerPath === '/shift' ? 'active' : ''}>Shift</a>
                                         </li>
-                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/tasks')}
+                                        <li style={pointerStyle}><a id="tasks" onClick={() => this.changeRoute('/tasks')}
                                                                     className={isTask(routerPath) ? 'active' : ''}>Tasks</a>
                                         </li>
-                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/procedures')}
+                                        <li style={pointerStyle}><a id="procedures" onClick={() => this.changeRoute('/procedures')}
                                                                     className={isProcess(routerPath) ? 'active' : ''}>Procedures</a>
                                         </li>
-                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/reports')}
+                                        <li style={pointerStyle}><a id="reports" onClick={() => this.changeRoute('/reports')}
                                                                     className={isReports(routerPath)}>Reports</a>
                                         </li>
-                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/messages')}
+                                        <li style={pointerStyle}><a id="messages" onClick={() => this.changeRoute('/messages')}
                                                                     className={routerPath === '/messages' ? 'active' : ''}>Messages</a>
                                         </li>
-                                        <li style={pointerStyle}><a onClick={() => this.changeRoute('/calendar')}
+                                        <li style={pointerStyle}><a id="calendar" onClick={() => this.changeRoute('/calendar')}
                                                                     className={routerPath === '/calendar' ? 'active' : ''}>Calendar</a>
                                         </li>
                                         {adminRole ?
-                                            <li style={pointerStyle}><a onClick={() => this.changeRoute('/admin')}
+                                            <li style={pointerStyle}><a id="admin" onClick={() => this.changeRoute('/admin')}
                                                                         className={routerPath === '/admin' ? 'active' : ''}>Admin</a>
                                             </li> : <div/>}
-                                        <li style={pointerStyle}><a onClick={this.logout}>Logout</a></li>
+                                        <li style={pointerStyle}><a id="logout" onClick={this.logout}>Logout</a></li>
                                     </ul>
                                 }
                             />
