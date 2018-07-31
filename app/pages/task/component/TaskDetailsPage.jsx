@@ -1,7 +1,7 @@
 import React, {PropTypes} from "react";
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 import Comments from "./Comments";
-import Info from "./Info";
+import StandardTaskInfoPanel from "./StandardTaskInfoPanel";
 import {
     candidateGroups,
     isFetchingTask, task, variables
@@ -54,7 +54,7 @@ class TaskDetailsPage extends React.Component {
                     </TabList>
                     <div style={{paddingTop: '10px'}}>
                         <TabPanel key={uuidv4()}>
-                            <Info {...this.props} />
+                            <StandardTaskInfoPanel {...this.props} />
                         </TabPanel>
                         {hasFormKey ? <TabPanel key={uuidv4()}>
                             <fieldset>

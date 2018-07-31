@@ -4,7 +4,7 @@ import moment from "moment/moment";
 import {priority} from "../../../core/util/priority";
 const uuidv4 = require('uuid/v4');
 
-class Info extends React.Component {
+class StandardTaskInfoPanel extends React.Component {
 
     render() {
         const {task, candidateGroups, variables} = this.props;
@@ -37,4 +37,4 @@ class Info extends React.Component {
     }
 }
 
-export default Info;
+export default StandardTaskInfoPanel;

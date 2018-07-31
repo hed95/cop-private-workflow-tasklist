@@ -36,13 +36,13 @@ class ReportsPage extends React.Component {
         return <div>
             <h3 className="heading-medium">Reports Listing</h3>
             {loadingReports ? <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
-                name="three-bounce" color="#005ea5"/></div> : <div/>}
-
-            <table>
-                <tbody>
-                {items}
-                </tbody>
-            </table>
+                name="three-bounce" color="#005ea5"/></div> : <div>
+                <table>
+                    <tbody>
+                    {items}
+                    </tbody>
+                </table>
+            </div>}
         </div>
     }
 }
