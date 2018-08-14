@@ -22,6 +22,14 @@ class DashboardTitle extends React.Component {
         this.props.endShift();
     }
 
+
+    componentWillReceiveProps(nextProps) {
+        if (!nextProps.hasActiveShift) {
+            window.location.reload();
+        }
+    }
+
+
     render() {
 
         return <div className="grid-row" style={{width: '100%', height: '200px'}}>

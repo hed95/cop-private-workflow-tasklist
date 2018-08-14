@@ -20,12 +20,6 @@ class DashboardPage extends React.Component {
         this.props.fetchActiveShift();
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.hasActiveShift !== this.props.hasActiveShift) {
-            window.location.reload();
-        }
-    }
-
     render() {
         const {hasActiveShift, isFetchingShift} = this.props;
 
