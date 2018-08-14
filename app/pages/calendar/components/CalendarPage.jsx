@@ -38,7 +38,7 @@ class CalendarPage extends React.Component {
     }
 
     render() {
-        return <div ref='calendar'/>
+        return <div ref='calendar' style={{paddingTop: '20px'}}/>
     }
 }
 

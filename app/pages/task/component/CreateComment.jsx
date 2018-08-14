@@ -15,7 +15,7 @@ class CreateComment extends React.Component {
     renderForm() {
         const {isFetchingCreateCommentForm, form} = this.props;
         if (isFetchingCreateCommentForm) {
-            return <div>Loading comment form....</div>
+            return <div>Loading....</div>
         } else {
 
             const options = {
@@ -38,7 +38,7 @@ class CreateComment extends React.Component {
     }
 
     render() {
-        return <div className="panel">
+        return <div>
             {this.renderForm()}
         </div>
 

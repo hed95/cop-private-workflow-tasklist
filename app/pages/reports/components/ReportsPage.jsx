@@ -20,7 +20,6 @@ class ReportsPage extends React.Component {
     render() {
         const {loadingReports, reports} = this.props;
         const pointerStyle = {cursor: 'pointer'};
-
         const items = [];
         if (reports) {
             reports.forEach((report) => {
@@ -34,7 +33,15 @@ class ReportsPage extends React.Component {
         }
 
         return <div>
-            <h3 className="heading-medium">Reports Listing</h3>
+            <div className="grid-row" style={{width: '100%', height: '150px'}}>
+                <div className="column-one-half">
+                    <h2 className="heading-large">
+                    <span
+                        className="heading-secondary">Operational reports</span> {reports.size} reports
+                    </h2>
+                </div>
+
+            </div>
             {loadingReports ? <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
                 name="three-bounce" color="#005ea5"/></div> : <div>
                 <table>

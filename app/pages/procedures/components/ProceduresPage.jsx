@@ -25,7 +25,15 @@ class ProcessesPage extends React.Component {
         const {isFetchingProcessDefinitions, processDefinitions} = this.props;
         const pointerStyle = {cursor: 'pointer'};
         return <div>
+            <div className="grid-row" style={{width: '100%', height: '150px'}}>
+                <div className="column-one-half">
+                    <h2 className="heading-large">
+                    <span
+                        className="heading-secondary">Operational procedures</span> {processDefinitions.size} procedures
+                    </h2>
+                </div>
 
+            </div>
             {isFetchingProcessDefinitions ? <div>Loading processes....</div> : <div>
                 <table>
                     <thead>

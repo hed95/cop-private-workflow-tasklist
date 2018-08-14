@@ -52,7 +52,7 @@ class Comments extends React.Component {
                             color: '#6f777b',
                             fontSize: '16px',
                             lineHeight: '1.25'
-                        }}> {moment(comment.get('time')).fromNow(false)}</span>
+                        }}> {moment(comment.get('createdon')).fromNow(false)}</span>
                             <div className="comment-body">
                                 <p>{comment.get('taskcomment')}</p>
                             </div>
@@ -60,7 +60,7 @@ class Comments extends React.Component {
                     })}
                     <Pagination items={comments} pageSize={5} onChangePage={this.onChangePage} />
                 </div> :
-                <div>Loading comments...</div>}
+                <div/>}
 
                 <CreateComment taskId={this.props.taskId}/>
 

@@ -23,7 +23,7 @@ function isJson(str) {
 
 function reducer(state = initialState, action) {
     switch (action.type) {
-        case actions.HANDLE_AUTHORISED:
+        case actions.HANDLE_UNAUTHORISED:
             return state.set("unauthorised", true);
         case actions.HANDLE_ERROR:
             const error = action.payload;

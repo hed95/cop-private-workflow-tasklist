@@ -22,7 +22,7 @@ class AdminPage extends React.Component {
     }
 
     render() {
-        return <div>
+        return <div style={{paddingTop: '20px'}}>
             <div>
                 <Tabs>
                     <TabList>

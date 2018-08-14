@@ -6,7 +6,7 @@ class ScrollToTop extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.location.pathname !== prevProps.location.pathname) {
-            $('html,body').animate({scrollTop:0},'slow');
+            window.scrollTo(0, 0);
             return false;
         }
     }

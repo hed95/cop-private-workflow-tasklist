@@ -36,11 +36,6 @@ $path: "../../node_modules/govuk_frontend_toolkit/images/";
 @import "../../node_modules/govuk_template_ejs/assets/stylesheets/govuk-template.css";
 @import "../../node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.css";
 
-@import "../../node_modules/bootswatch/paper/variables";
-$icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-@import "../../node_modules/bootswatch/paper/bootswatch";
-
 @import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../../node_modules/formiojs/dist/formio.full.css";
 @import "../icons.css";
@@ -185,7 +180,9 @@ html {
 .has-error {
   @extend .error-message
 }
-
+.form-control {
+  border-radius: 0 !important;
+}
 .choices__input {
   font-size: inherit;
 }
@@ -335,6 +332,7 @@ html {
   display: block;
   padding: 5px 10px;
   text-decoration: none;
+  cursor: pointer;
 
   &:hover, &:focus {
     background: $highlight-colour;
@@ -425,7 +423,133 @@ html {
 }
 
 .details-iframe {
-  position:absolute;
+  position: absolute;
   height: 100%;
   width: 90%;
+}
+
+.breadcrumbs {
+  @include breadcrumbs;
+}
+
+nav[aria-label="navigation"] .pagination {
+  @include breadcrumbs;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+nav[aria-label="navigation"] .pagination > li > span {
+  position: relative;
+  color: $text-colour;
+  background-color: #fff;
+  border: 0 solid #ddd;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+nav[aria-label="navigation"] .pagination > li > span:hover {
+  color: $text-colour;
+  z-index: 3;
+  cursor: pointer;
+  background-color: #aaa;
+  border-color: #aaa;
+}
+
+nav[aria-label="navigation"] .pagination > .active > span {
+  padding-bottom: 2px;
+  border-bottom: 3px solid #aaa;
+  color: $text-colour;
+}
+
+nav[aria-label="navigation"] .pagination > li:last-child > span {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.button {
+  @include button;
+}
+
+
+.btn-primary {
+  @include button($button-colour);
+  text-transform: none;
+  font-size: medium !important;
+  border-radius: 0 !important;
+}
+
+.btn-default {
+  @include button($grey-2);
+  text-transform: none;
+  font-size: medium !important;
+  border-radius: 0 !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .__card {
+    display: block;
+    float: left;
+    margin-bottom: 30px;
+    width: 100%;
+  }
+}
+
+.__card {
+  display: block;
+  float: left;
+  margin-bottom: 30px;
+
+}
+
+.card__body {
+  display: block;
+  background-color: $panel-colour;
+  padding: 1em;
+  color: $text-colour;
+  text-decoration: none;
+
+  span {
+    display: block;
+  }
+}
+
+a.card__body {
+  color: $link-colour;
+
+  &:hover, &:focus {
+    cursor: pointer;
+    background-color: $highlight-colour;
+    color: $link-hover-colour;
+    text-decoration: none;
+  }
+}
+
+.card__footer {
+  display: block;
+  background-color: $highlight-colour;
+  padding: 1em;
+}
+
+.loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4,end) 900ms infinite;
+  animation: ellipsis steps(4,end) 900ms infinite;
+  content: "\2026";
+  width: 0;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 1.25em;
+  }
 }

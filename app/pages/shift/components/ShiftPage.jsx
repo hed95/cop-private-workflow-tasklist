@@ -3,17 +3,22 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 
 import {bindActionCreators} from "redux";
-import {createStructuredSelector} from "reselect";
 
-import Spinner from 'react-spinkit';
 import ImmutablePropTypes from "react-immutable-proptypes";
 import {hasActiveShift, isFetchingShift, shift, submittingActiveShift} from "../../../core/shift/selectors";
 import {errors, hasError} from "../../../core/error/selectors";
-import {activeShiftSuccess, loadingShiftForm, shiftForm} from "../selectors";
+import {
+    activeShiftSuccess,
+    isFetchingStaffDetails,
+    loadingShiftForm,
+    shiftForm,
+    staffDetails
+} from "../../../core/shift/selectors";
 import $ from "jquery";
 import {Form} from 'react-formio'
-import * as actions from "../actions";
+import * as actions from "../../../core/shift/actions";
 import moment from 'moment';
+
 const uuidv4 = require('uuid/v4');
 
 class ShiftPage extends React.Component {
@@ -25,30 +30,40 @@ class ShiftPage extends React.Component {
 
 
     componentWillReceiveProps(nextProps) {
-        if (this.form && (this.form.formio && this.form.formio.data.submit)) {
-            if (nextProps.activeShiftSuccess) {
-                $('html,body').animate({scrollTop: 0}, 'slow');
-                this.form.formio.emit("submitDone");
-            } else {
-                if (!nextProps.submittingActiveShift) {
+        if (this.form && this.form.formio) {
+            if (!nextProps.submittingActiveShift) {
+                if (nextProps.activeShiftSuccess) {
+                    this.form.formio.emit("submitDone");
+                    this.props.history.replace('/dashboard');
+                } else {
                     $('html,body').animate({scrollTop: 0}, 'slow');
                     this.form.formio.emit("error");
                     this.form.formio.emit('change', this.form.formio.submission);
                 }
             }
+
         }
     }
 
     renderForm() {
         const {shiftForm, shift, loadingShiftForm, isFetchingShift} = this.props;
         if (isFetchingShift || loadingShiftForm) {
-            return <div>Loading shift details....</div>
+            return <div/>
         } else {
             const submit = (submission) => {
                 this.props.submit(shiftForm._id, submission.data);
             };
             const options = {
-                noAlerts: true
+                noAlerts: true,
+                language: 'en',
+                i18n: {
+                    en: {
+                        cancel: 'Cancel',
+                        previous: 'Back',
+                        next: 'Next',
+                        submit: 'Start shift'
+                    }
+                },
             };
             if (shiftForm) {
                 if (shift) {
@@ -66,12 +81,12 @@ class ShiftPage extends React.Component {
                         }
                     };
                     return <Form form={shiftForm} submission={shiftSubmission} options={options}
-                                   ref={(form) => this.form = form}
-                                   onSubmit={submit}/>
+                                 ref={(form) => this.form = form}
+                                 onSubmit={submit}/>
                 } else {
                     return <Form form={shiftForm}
-                                   ref={(form) => this.form = form}
-                                   options={options} onSubmit={submit}/>
+                                 ref={(form) => this.form = form}
+                                 options={options} onSubmit={submit}/>
                 }
             } else {
                 return <div/>
@@ -81,7 +96,6 @@ class ShiftPage extends React.Component {
 
     render() {
         const {
-            hasActiveShift,
             isFetchingShift,
             submittingActiveShift,
         } = this.props;
@@ -93,20 +107,7 @@ class ShiftPage extends React.Component {
         });
 
 
-        const headerToDisplay = !submittingActiveShift && !hasActiveShift ?
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                <div className="notice">
-                    <i className="icon icon-important">
-                        <span className="visually-hidden">Warning</span>
-                    </i>
-                    <strong className="bold-small">
-                        Please enter your current task assignment before proceeding
-                    </strong>
-                </div>
-            </div> : <div/>;
-
-
-        return <div>
+        return <div style={{paddingTop: '20px'}}>
             {hasError ?
                 <div className="error-summary" role="alert" aria-labelledby="error-summary-heading-example-1"
                      tabIndex="-1">
@@ -119,23 +120,16 @@ class ShiftPage extends React.Component {
 
                 </div> : <div/>}
             {isFetchingShift && !submittingActiveShift ?
-                <div style={{display: 'flex', justifyContent: 'center'}}><Spinner
-                    name="three-bounce" color="#005ea5"/></div>
-                : headerToDisplay
+                <div className="loading">Loading shift details</div>
+                : <div/>
             }
             {!isFetchingShift && submittingActiveShift ?
-                <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
-                    name="three-bounce" color="#005ea5"/></div> : <div/>
+                <h2 className="heading-medium loading">Submitting shift details</h2> : <div/>
             }
 
             <div className="grid-row">
                 <div className="column-full">
-                    <fieldset>
-                        <legend>
-                            <h3 className="heading-medium">Shift details</h3>
-                        </legend>
-                        {this.renderForm()}
-                    </fieldset>
+                    {this.renderForm()}
                 </div>
 
             </div>
@@ -148,6 +142,7 @@ class ShiftPage extends React.Component {
 ShiftPage.propTypes = {
     fetchShiftForm: PropTypes.func.isRequired,
     fetchActiveShift: PropTypes.func.isRequired,
+    fetchStaffDetails: PropTypes.func.isRequired,
     isFetchingShift: PropTypes.bool,
     hasActiveShift: PropTypes.bool,
     shift: ImmutablePropTypes.map
@@ -167,8 +162,9 @@ export default withRouter(connect((state) => {
         hasError: hasError(state),
         errors: errors(state),
         shiftForm: shiftForm(state),
-        loadingShiftForm: loadingShiftForm(state)
+        loadingShiftForm: loadingShiftForm(state),
+        staffDetails: staffDetails(state),
+        isFetchingStaffDetails: isFetchingStaffDetails(state)
 
     }
 }, mapDispatchToProps)(ShiftPage))
-

@@ -19,8 +19,6 @@ const initialState = new Map({
         tasks: new List([]),
         total: 0
     }),
-    taskCounts: new Map({}),
-    isFetchingTaskCounts: false,
     tabIndex: 0
 });
 
@@ -61,16 +59,6 @@ function reducer(state = initialState, action) {
         case actions.FETCH_UNASSIGNED_TASKS_FAILURE:
             return state.setIn(['unassignedTasks', 'isFetchingUnassignedTasks'], false);
 
-        case actions.FETCH_TASK_COUNTS:
-            return state.set('isFetchingTaskCounts', true);
-        case actions.FETCH_TASK_COUNTS_SUCCESS:
-            return state.set('isFetchingTaskCounts', false)
-                .set('taskCounts', Immutable.fromJS(action.payload.entity));
-        case actions.FETCH_TASK_COUNTS_FAILURE:
-            return state.set('isFetchingTaskCounts', true);
-
-        case actions.SET_TAB_INDEX:
-            return state.set('tabIndex', action.index);
         default:
             return state;
     }

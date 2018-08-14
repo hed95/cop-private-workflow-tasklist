@@ -15,7 +15,7 @@ import moment from 'moment';
 class MessagesPage extends React.Component {
 
     componentDidMount() {
-        this.props.fetchNotifications("/api/workflow/notifications");
+        this.props.fetchNotifications();
     }
 
     render() {
@@ -36,13 +36,16 @@ class MessagesPage extends React.Component {
                 className="loading-bar"
             />
             {this.props.isFetching ?
-                <div className="data-item bold-small">Loading messages...</div> :
-                <div className="data">
-
-                    <span className="data-item bold-xlarge">{this.props.total}</span>
-                    <span className="data-item bold-small">Messages</span>
-                </div>}
-
+                <div className="data-item bold-small">Loading messages...</div> : <div/>
+            }
+            <div className="grid-row" style={{width: '100%', height: '150px'}}>
+                <div className="column-one-half">
+                    <h2 className="heading-large">
+                    <span
+                        className="heading-secondary">Operational messages</span> {this.props.notifications.size} messages
+                    </h2>
+                </div>
+            </div>
 
             <div className="grid-row">
                 <InfiniteScroll

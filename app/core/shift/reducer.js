@@ -10,7 +10,10 @@ const initialState = new Map({
     submittingActiveShift: false,
     activeShiftSuccess: null,
     loadingShiftForm: true,
-    shiftForm: null
+    shiftForm: null,
+    staffDetails: null,
+    isFetchingStaffDetails: true,
+    endingShift: false
 });
 
 function reducer(state = initialState, action) {
@@ -49,6 +52,24 @@ function reducer(state = initialState, action) {
             return state
                 .set("submittingActiveShift", false)
                 .set('activeShiftSuccess', false);
+        case actions.FETCH_STAFF_DETAILS:
+            return state.set('isFetchingStaffDetails', true);
+        case actions.FETCH_STAFF_DETAILS_SUCCESS:
+            const staffResponse = action.payload.entity;
+            const hasStaffDetails = staffResponse && staffResponse.length !== 0;
+            const staff = hasStaffDetails ? Immutable.fromJS(staffResponse[0]) : null;
+            return state.set('isFetchingStaffDetails', false)
+                .set('staffDetails', staff);
+        case actions.FETCH_STAFF_DETAILS_FAILURE:
+            return state.set('isFetchingStaffDetails', false);
+        case actions.END_SHIFT:
+            return state.set('endingShift', true);
+        case actions.END_SHIFT_SUCCESS:
+            return state.set('hasActiveShift', false)
+                .set('shift', null)
+                .set('endingShift', false);
+        case actions.END_SHIFT_FAILURE:
+            return state.set('endingShift', false);
         default:
             return state;
     }

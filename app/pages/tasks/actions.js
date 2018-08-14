@@ -63,32 +63,6 @@ const fetchUnassignedTasksFailure = () => {
 };
 
 
-const fetchTaskCounts = () => {
-    return {
-        type: types.FETCH_TASK_COUNTS
-    }
-};
-
-const fetchTaskCountsSuccess = (payload) => {
-    return {
-        type: types.FETCH_TASK_COUNTS_SUCCESS,
-        payload
-    }
-};
-
-const fetchTaskCountsFailure = () => {
-    return {
-        type: types.FETCH_TASK_COUNTS_FAILURE
-    }
-};
-
-const setTabIndex = (index) => {
-    return {
-        type: types.SET_TAB_INDEX,
-        index
-    }
-};
-
 
 export {
     fetchTasksAssignedToMe,
@@ -99,9 +73,5 @@ export {
     fetchMyGroupTasksFailure,
     fetchUnassignedTasks,
     fetchUnassignedTasksSuccess,
-    fetchUnassignedTasksFailure,
-    fetchTaskCounts,
-    fetchTaskCountsSuccess,
-    fetchTaskCountsFailure,
-    setTabIndex
+    fetchUnassignedTasksFailure
 }

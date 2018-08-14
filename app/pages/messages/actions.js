@@ -1,11 +1,12 @@
 import * as types from './actionTypes';
 
-const fetchNotifications = url => ({
-    type: types.FETCH_NOTIFICATIONS, url
+const fetchNotifications = () => ({
+    type: types.FETCH_NOTIFICATIONS,
 });
 
 const fetchNotificationsSuccess = payload => ({
-    type: types.FETCH_NOTIFICATIONS_SUCCESS, payload
+    type: types.FETCH_NOTIFICATIONS_SUCCESS,
+    payload
 });
 
 const fetchNotificationsFailure = () => ({
@@ -13,7 +14,8 @@ const fetchNotificationsFailure = () => ({
 });
 
 const acknowledgeNotification = taskId => ({
-    type: types.ACKNOWLEDGE_NOTIFICATION, taskId
+    type: types.ACKNOWLEDGE_NOTIFICATION,
+    taskId
 });
 
 const acknowledgeNotificationSuccess = payload => ({

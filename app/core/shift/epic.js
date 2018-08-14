@@ -2,10 +2,10 @@ import client from "../../common/rest/client";
 import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
-import {errorObservable} from "../error/epicUtil";
+import {errorObservable} from "../../core/error/epicUtil";
 import PubSub from "pubsub-js";
 import * as Rx from "rxjs/Observable";
-import {retryOnForbidden} from "../util/retry";
+import {retryOnForbidden} from "../../core/util/retry";
 
 
 const shift = (email) => {
@@ -19,12 +19,47 @@ const shift = (email) => {
     })
 };
 
+
+const endShift = (action$, store) =>
+    action$.ofType(types.END_SHIFT)
+        .mergeMap(action =>
+            client({
+                method: 'DELETE',
+                path: `/api/workflow/shift/${encodeURIComponent(store.getState().keycloak.tokenParsed.email)}?deletedReason=finished`,
+                headers: {
+                    "Accept": "application/json"
+                }
+            }).retryWhen(retryOnForbidden)
+                .map(payload => actions.endShiftSuccess(payload))
+                .catch(error => {
+                        return errorObservable(actions.endShiftFailure(), error);
+                    }
+                ));
+
+
+const fetchStaffDetails = (action$, store) =>
+    action$.ofType(types.FETCH_STAFF_DETAILS)
+        .mergeMap(action =>
+            client({
+                method: 'GET',
+                path: `/api/platform-data/staff?email=eq.${encodeURIComponent(store.getState().keycloak.tokenParsed.email)}`,
+                headers: {
+                    "Accept": "application/json"
+                }
+            }).retryWhen(retryOnForbidden)
+                .map(payload => actions.fetchStaffDetailsSuccess(payload))
+                .catch(error => {
+                        return errorObservable(actions.fetchStaffDetailsFailure(), error);
+                    }
+                ));
+
+
 const fetchShiftForm = (action$, store) =>
     action$.ofType(types.FETCH_SHIFT_FORM)
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/translation/form/createAnActiveShift`,
+                path: `/api/translation/form/startShift`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
@@ -127,23 +162,24 @@ const fetchActiveShiftAfterCreation = (action$, store) =>
                             actions.createActiveShiftSuccess()]);
                     }
                 }).retryWhen((errors) => {
-                    return errors
-                        .takeWhile((error) => {
-                            const retryableError = error === 'no-data' || error === 'not-authorized';
-                            console.log(`Retryable error while trying to get shift...`);
-                            return retryableError
-                        })
-                        .delay(1000)
-                        .take(10)
-                        .concat(Rx.Observable.throw({
-                            status: {
-                                code: 401
-                            }
-                        }));
+                return errors
+                    .takeWhile((error) => {
+                        const retryableError = error === 'no-data' || error === 'not-authorized';
+                        console.log(`Retryable error while trying to get shift...`);
+                        return retryableError
+                    })
+                    .delay(1000)
+                    .take(10)
+                    .concat(Rx.Observable.throw({
+                        status: {
+                            code: 401
+                        }
+                    }));
             }).catch(error => {
                     console.log(`Failed to create shift information...${JSON.stringify(error.toString())}`);
                     return errorObservable(actions.createActiveShiftFailure(), error);
                 }
             ));
 
-export default combineEpics(fetchActiveShift, submit, createActiveShift, fetchShiftForm, fetchActiveShiftAfterCreation);
+export default combineEpics(fetchActiveShift, submit, createActiveShift, fetchShiftForm,
+    fetchActiveShiftAfterCreation, fetchStaffDetails, endShift);

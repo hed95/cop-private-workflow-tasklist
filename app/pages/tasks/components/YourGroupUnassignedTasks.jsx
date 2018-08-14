@@ -9,7 +9,7 @@ import moment from "moment";
 import {priority} from "../../../core/util/priority";
 import {withRouter} from "react-router";
 
-class UnassignedTasks extends React.Component {
+class YourGroupUnassignedTasks extends React.Component {
 
     componentDidMount() {
         this.props.fetchUnassignedTasks("/api/workflow/tasks?unassignedOnly=true");
@@ -23,7 +23,7 @@ class UnassignedTasks extends React.Component {
     render() {
         const {unassignedTasks} = this.props;
         const pointerStyle = {cursor: 'pointer'};
-        return <div>
+        return <div style={{paddingTop: '20px'}}>
 
             <div className="data">
                 <span
@@ -56,7 +56,7 @@ class UnassignedTasks extends React.Component {
     }
 }
 
-UnassignedTasks.propTypes = {
+YourGroupUnassignedTasks.propTypes = {
     fetchUnassignedTasks: PropTypes.func.isRequired,
     unassignedTasks: ImmutablePropTypes.map
 };
@@ -67,4 +67,4 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UnassignedTasks));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(YourGroupUnassignedTasks));

@@ -118,7 +118,7 @@ class Pagination extends React.Component {
         const summary = `Showing ${pager.currentPage} — ${pager.totalPages} of ${pager.totalItems} results`;
         return (
             <div className="grid-row">
-                <nav role="navigation" aria-label="Pagination">
+                <nav role="navigation" aria-label="comments-pagination">
                     <div className="pagination__summary">{summary}</div>
                     <div className="gov-pagination">
                         <ul className="pagination">

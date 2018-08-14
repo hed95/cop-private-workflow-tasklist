@@ -17,7 +17,7 @@ const fetchNotifications = (action$, store) =>
                     Observable.of(showLoading('notifications')),
                     client({
                         method: 'GET',
-                        path: `${action.url}`,
+                        path: `/api/workflow/notifications?countOnly=false`,
                         headers: {
                             "Accept": "application/json",
                             "Authorization": `Bearer ${store.getState().keycloak.token}`

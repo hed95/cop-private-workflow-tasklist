@@ -5,8 +5,6 @@ const fetchShiftForm = () => ({
     type : types.FETCH_SHIFT_FORM
 });
 
-
-
 const fetchShiftFormSuccess = payload => ({
     type: types.FETCH_SHIFT_FORM_SUCCESS,
     payload
@@ -58,6 +56,32 @@ const submitFailure = () => ({
     type: types.SUBMIT_VALIDATION_FAILURE
 });
 
+const fetchStaffDetails = () => ({
+    type: types.FETCH_STAFF_DETAILS
+});
+const fetchStaffDetailsSuccess = (payload) => ({
+    type: types.FETCH_STAFF_DETAILS_SUCCESS,
+    payload
+});
+
+const fetchStaffDetailsFailure = () => ({
+    type: types.FETCH_STAFF_DETAILS_FAILURE,
+});
+
+
+const endShift = () => ({
+    type: types.END_SHIFT
+});
+
+const endShiftSuccess = (payload)  => ({
+    type: types.END_SHIFT_SUCCESS,
+    payload
+});
+
+const endShiftFailure = () => ({
+    type: types.END_SHIFT_FAILURE
+});
+
 export {
     submit,
     submitSuccess,
@@ -70,5 +94,11 @@ export {
     createActiveShiftFailure,
     fetchShiftForm,
     fetchShiftFormSuccess,
-    fetchShiftFormFailure
+    fetchShiftFormFailure,
+    fetchStaffDetails,
+    fetchStaffDetailsSuccess,
+    fetchStaffDetailsFailure,
+    endShift,
+    endShiftFailure,
+    endShiftSuccess
 }

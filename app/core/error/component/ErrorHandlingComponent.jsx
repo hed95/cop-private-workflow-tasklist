@@ -19,7 +19,7 @@ class ErrorHandlingComponent extends React.Component {
         });
 
         if (unauthorised) {
-            return <Redirect push to="/shift"/>
+            return <Redirect push to="/dashboard"/>
         } else {
             return <div> {hasError ?
                 <div className="error-summary" role="alert" aria-labelledby="error-summary-heading-example-1"

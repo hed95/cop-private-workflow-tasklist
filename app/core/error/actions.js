@@ -5,11 +5,16 @@ const handleError = payload => ({
     payload
 });
 
-const handleAuthorised = () => ({
-    type: types.HANDLE_AUTHORISED
+const handleUnauthorised = () => ({
+    type: types.HANDLE_UNAUTHORISED
+});
+
+const resetErrors = () => ({
+    type: types.RESET_ERROR
 });
 
 export {
     handleError,
-    handleAuthorised
+    handleUnauthorised,
+    resetErrors
 }

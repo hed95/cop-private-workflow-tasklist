@@ -55,20 +55,5 @@ const fetchUnassignedTasks = (action$, store) =>
                     }
                 ));
 
-const fetchTaskCounts = (action$, store) =>
-    action$.ofType(types.FETCH_TASK_COUNTS)
-        .mergeMap(action =>
-            client({
-                method: 'GET',
-                path: `/api/workflow/tasks/_task-counts`,
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": `Bearer ${store.getState().keycloak.token}`
-                }
-            }).retryWhen(retryOnForbidden).map(payload => actions.fetchTaskCountsSuccess(payload))
-                .catch(error => {
-                        return errorObservable(actions.fetchTaskCountsFailure(), error);
-                    }
-                ));
 
-export default combineEpics(fetchTasksAssignedToMe, fetchMyGroupTasks, fetchUnassignedTasks, fetchTaskCounts);
+export default combineEpics(fetchTasksAssignedToMe, fetchMyGroupTasks, fetchUnassignedTasks);
