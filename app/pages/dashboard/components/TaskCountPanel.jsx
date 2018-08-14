@@ -25,15 +25,18 @@ class TaskCountPanel extends React.Component {
     }
 
 
-    yourTasks() {
+    yourTasks(e) {
+        e.preventDefault();
         this.props.history.replace({ pathname: '/your-tasks'})
     }
 
-    yourTeamUnassignedTasks() {
+    yourTeamUnassignedTasks(e) {
+        e.preventDefault();
         this.props.history.replace({ pathname: '/your-group-unassigned-tasks'})
     }
 
-    yourTeamTotalTasks() {
+    yourTeamTotalTasks(e) {
+        e.preventDefault();
         this.props.history.replace({ pathname: '/your-group-tasks'})
     }
 

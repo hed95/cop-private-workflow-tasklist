@@ -28,7 +28,8 @@ class MessagesPanel extends React.Component {
         this.messages = this.messages.bind(this);
     }
 
-    messages() {
+    messages(e) {
+        e.preventDefault();
         this.props.history.replace({
             pathname: "/messages"
         });

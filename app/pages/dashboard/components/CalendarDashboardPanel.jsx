@@ -4,7 +4,8 @@ import {withRouter} from "react-router";
 class CalendarDashboardPanel extends React.Component {
 
 
-    calendar() {
+    calendar(e) {
+        e.preventDefault();
         this.props.history.replace({
             pathname: "/calendar"
         });

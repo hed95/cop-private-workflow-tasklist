@@ -4,7 +4,8 @@ import {withRouter} from "react-router";
 class ProceduresDashboardPanel extends React.Component {
 
 
-    procedures() {
+    procedures(e) {
+        e.preventDefault();
         this.props.history.replace({
             pathname: "/procedures", state: {
                 hasActiveShift: this.props.hasActiveShift

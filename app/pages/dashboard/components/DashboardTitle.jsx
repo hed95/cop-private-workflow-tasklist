@@ -7,11 +7,13 @@ import {endingShift, hasActiveShift} from "../../../core/shift/selectors";
 
 class DashboardTitle extends React.Component {
 
-    shift() {
+    shift(e) {
+        e.preventDefault();
         this.props.history.replace("/shift");
     }
 
-    endShift() {
+    endShift(e) {
+        e.preventDefault();
         this.props.endShift();
     }
 

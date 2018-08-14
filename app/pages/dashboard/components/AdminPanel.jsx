@@ -5,7 +5,8 @@ import connect from "react-redux/es/connect/connect";
 
 class AdminPanel extends React.Component {
 
-    admin() {
+    admin(e) {
+        e.preventDefault();
         this.props.history.replace({
             pathname: "/admin"
         });
