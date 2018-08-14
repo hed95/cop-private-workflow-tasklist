@@ -14,7 +14,7 @@ class ProceduresDashboardPanel extends React.Component {
     }
 
     render() {
-        return <li className="__card column-one-third">
+        return <li className="__card column-one-third" id="proceduresPanel">
             <a href="#" onClick={this.procedures.bind(this)} className="card__body">
                 <span className="bold-large">procedures</span>
             </a>

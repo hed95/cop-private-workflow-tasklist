@@ -93,7 +93,7 @@ class TaskForm extends React.Component {
                 <div style={{display: 'flex', justifyContent: 'center', paddingTop: '5px'}}><Spinner
                     name="three-bounce" color="#005ea5"/></div> : <div/>
             }
-            <div>{this.renderForm()}</div>
+            <div style={{paddingLeft: '10px'}}>{this.renderForm()}</div>
         </div>
     }
 }

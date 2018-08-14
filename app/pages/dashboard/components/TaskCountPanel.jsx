@@ -43,7 +43,7 @@ class TaskCountPanel extends React.Component {
     render() {
         const {taskCounts, isFetchingTaskCounts} = this.props;
         return <div>
-            <li className="__card column-one-third">
+            <li className="__card column-one-third" id="myTasksPanel">
                 <a href="#" onClick={this.yourTasks.bind(this)} className="card__body">
                     <span
                         className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('tasksAssignedToUser')}</span>
@@ -53,7 +53,7 @@ class TaskCountPanel extends React.Component {
                     <span className="font-small">Tasks assigned to you</span>
                 </div>
             </li>
-            <li className="__card column-one-third">
+            <li className="__card column-one-third" id="unassignedTasksPanel">
                 <a href="#" onClick={this.yourTeamUnassignedTasks.bind(this)} className="card__body">
                     <span className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('tasksUnassigned')}</span>
                     <span className="bold-small">unassigned tasks</span>
@@ -62,7 +62,7 @@ class TaskCountPanel extends React.Component {
                     <span className="font-small">Your team unassigned tasks</span>
                 </div>
             </li>
-            <li className="__card column-one-third">
+            <li className="__card column-one-third" id="myTeamTasks">
                 <a href="#" onClick={this.yourTeamTotalTasks.bind(this)} className="card__body">
                     <span
                         className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('totalTasksAllocatedToTeam')}</span>

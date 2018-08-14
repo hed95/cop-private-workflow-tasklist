@@ -11,7 +11,7 @@ class CalendarDashboardPanel extends React.Component {
         });
     }
     render() {
-        return <li className="__card column-one-third">
+        return <li className="__card column-one-third" id="calendarPanel">
             <a href="#" onClick={this.calendar.bind(this)} className="card__body">
                 <span className="bold-large">calendar</span>
             </a>

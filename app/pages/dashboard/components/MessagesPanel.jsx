@@ -37,7 +37,7 @@ class MessagesPanel extends React.Component {
     render() {
         const {isFetchingMessageCounts, messageCounts} = this.props;
 
-        return  <li className="__card column-one-third">
+        return  <li className="__card column-one-third" id="messagesPanel">
             <a href="#" onClick={this.messages.bind(this)} className="card__body">
                 <span className="bold-xlarge">{isFetchingMessageCounts? 0: messageCounts.getIn(['page', 'totalElements'])}</span>
                 <span className="bold-small">messages</span>

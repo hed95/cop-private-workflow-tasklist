@@ -35,14 +35,14 @@ class DashboardTitle extends React.Component {
             {this.props.hasActiveShift ?
                 <div className="column-one-half" style={{margin: '7% auto', textAlign: 'right'}}>
                     <div>
-                        <input className="btn btn-default" style={{margin: '0'}} type="submit" value="Edit shift"
+                        <input id="editShift" className="btn btn-default" style={{margin: '0'}} type="submit" value="Edit shift"
                                onClick={this.viewShift} disabled={this.props.endingShift}/> {' '}
-                        <input className="btn btn-primary" style={{margin: '0'}} type="submit" value="End shift"
+                        <input id="endShift" className="btn btn-primary" style={{margin: '0'}} type="submit" value="End shift"
                                onClick={this.endShift} disabled={this.props.endingShift}/>
                     </div>
 
                 </div> : <div className="column-one-half" style={{margin: '7% auto', textAlign: 'right'}}>
-                    <input className="btn btn-primary" type="submit" value="Start shift"
+                    <input id="startShift" className="btn btn-primary" type="submit" value="Start shift"
                            onClick={this.viewShift} />
                 </div>}
 

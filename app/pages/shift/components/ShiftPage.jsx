@@ -135,7 +135,7 @@ class ShiftPage extends React.Component {
             }
 
             <div className="grid-row">
-                <div className="column-full">
+                <div className="column-full" id="shiftWizardForm">
                     {this.renderForm()}
                 </div>
 
