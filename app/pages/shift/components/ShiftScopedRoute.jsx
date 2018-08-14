@@ -5,7 +5,6 @@ import {isFetchingShift, hasActiveShift} from '../../../core/shift/selectors';
 import * as actions from "../../../core/shift/actions";
 import {createStructuredSelector} from "reselect";
 import {Redirect, Route} from "react-router";
-import Spinner from 'react-spinkit';
 import ErrorHandlingComponent from "../../../core/error/component/ErrorHandlingComponent";
 import * as errorActions from "../../../core/error/actions";
 
@@ -24,8 +23,7 @@ class ShiftScopedRoute extends React.Component {
             return <div style={{paddingTop: '20px'}} className="loading">Checking your shift details</div>
         } else {
             if (hasActiveShift) {
-
-                return <Route render={(props) => <ErrorHandlingComponent><Component {...props} key={uuidv4()}/></ErrorHandlingComponent>} />
+                return <Route render={(props) =><ErrorHandlingComponent><Component {...props} key={uuidv4()}/></ErrorHandlingComponent>} />
             } else {
                 return <Route render={() => <Redirect to="/dashboard"/>}/>
             }
@@ -33,7 +31,6 @@ class ShiftScopedRoute extends React.Component {
 
     }
 }
-
 
 ShiftScopedRoute.propTypes = {
     fetchActiveShift: PropTypes.func.isRequired,

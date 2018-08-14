@@ -7,7 +7,12 @@ import {endingShift, hasActiveShift} from "../../../core/shift/selectors";
 
 class DashboardTitle extends React.Component {
 
-    shift(e) {
+    componentWillMount() {
+        this.endShift = this.endShift.bind(this);
+        this.viewShift = this.viewShift.bind(this);
+    }
+
+    viewShift(e) {
         e.preventDefault();
         this.props.history.replace("/shift");
     }
@@ -16,14 +21,6 @@ class DashboardTitle extends React.Component {
         e.preventDefault();
         this.props.endShift();
     }
-
-
-    componentWillReceiveProps(nextProps) {
-        if (!nextProps.hasActiveShift) {
-            this.props.history.replace("/dashboard");
-        }
-    }
-
 
     render() {
 
@@ -39,14 +36,14 @@ class DashboardTitle extends React.Component {
                 <div className="column-one-half" style={{margin: '7% auto', textAlign: 'right'}}>
                     <div>
                         <input className="btn btn-default" style={{margin: '0'}} type="submit" value="Edit shift"
-                               onClick={this.shift.bind(this)} disabled={this.props.endingShift}/> {' '}
+                               onClick={this.viewShift} disabled={this.props.endingShift}/> {' '}
                         <input className="btn btn-primary" style={{margin: '0'}} type="submit" value="End shift"
-                               onClick={this.endShift.bind(this)} disabled={this.props.endingShift}/>
+                               onClick={this.endShift} disabled={this.props.endingShift}/>
                     </div>
 
                 </div> : <div className="column-one-half" style={{margin: '7% auto', textAlign: 'right'}}>
                     <input className="btn btn-primary" type="submit" value="Start shift"
-                           onClick={this.shift.bind(this)} />
+                           onClick={this.viewShift} />
                 </div>}
 
         </div>

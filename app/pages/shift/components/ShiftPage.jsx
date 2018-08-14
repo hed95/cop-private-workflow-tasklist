@@ -5,15 +5,16 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
 import ImmutablePropTypes from "react-immutable-proptypes";
-import {hasActiveShift, isFetchingShift, shift, submittingActiveShift} from "../../../core/shift/selectors";
-import {errors, hasError} from "../../../core/error/selectors";
 import {
     activeShiftSuccess,
-    isFetchingStaffDetails,
+    hasActiveShift,
+    isFetchingShift,
     loadingShiftForm,
+    shift,
     shiftForm,
-    staffDetails
+    submittingActiveShift
 } from "../../../core/shift/selectors";
+import {errors, hasError} from "../../../core/error/selectors";
 import $ from "jquery";
 import {Form} from 'react-formio'
 import * as actions from "../../../core/shift/actions";
@@ -22,6 +23,10 @@ import moment from 'moment';
 const uuidv4 = require('uuid/v4');
 
 class ShiftPage extends React.Component {
+
+    componentWillMount() {
+        this.submit = this.submit.bind(this);
+    }
 
     componentDidMount() {
         this.props.fetchActiveShift();
@@ -45,14 +50,16 @@ class ShiftPage extends React.Component {
         }
     }
 
+    submit = (submission, shiftForm) => {
+        this.props.submit(shiftForm._id, submission.data);
+    };
+
     renderForm() {
         const {shiftForm, shift, loadingShiftForm, isFetchingShift} = this.props;
         if (isFetchingShift || loadingShiftForm) {
             return <div/>
         } else {
-            const submit = (submission) => {
-                this.props.submit(shiftForm._id, submission.data);
-            };
+
             const options = {
                 noAlerts: true,
                 language: 'en',
@@ -82,11 +89,11 @@ class ShiftPage extends React.Component {
                     };
                     return <Form form={shiftForm} submission={shiftSubmission} options={options}
                                  ref={(form) => this.form = form}
-                                 onSubmit={submit}/>
+                                 onSubmit={(submission) => this.submit(submission, shiftForm)}/>
                 } else {
                     return <Form form={shiftForm}
                                  ref={(form) => this.form = form}
-                                 options={options} onSubmit={submit}/>
+                                 options={options} onSubmit={(submission) => this.submit(submission, shiftForm)}/>
                 }
             } else {
                 return <div/>
@@ -142,7 +149,6 @@ class ShiftPage extends React.Component {
 ShiftPage.propTypes = {
     fetchShiftForm: PropTypes.func.isRequired,
     fetchActiveShift: PropTypes.func.isRequired,
-    fetchStaffDetails: PropTypes.func.isRequired,
     isFetchingShift: PropTypes.bool,
     hasActiveShift: PropTypes.bool,
     shift: ImmutablePropTypes.map
@@ -153,7 +159,6 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default withRouter(connect((state) => {
     return {
-        kc: state.keycloak,
         hasActiveShift: hasActiveShift(state),
         isFetchingShift: isFetchingShift(state),
         submittingActiveShift: submittingActiveShift(state),
@@ -162,9 +167,7 @@ export default withRouter(connect((state) => {
         hasError: hasError(state),
         errors: errors(state),
         shiftForm: shiftForm(state),
-        loadingShiftForm: loadingShiftForm(state),
-        staffDetails: staffDetails(state),
-        isFetchingStaffDetails: isFetchingStaffDetails(state)
+        loadingShiftForm: loadingShiftForm(state)
 
     }
 }, mapDispatchToProps)(ShiftPage))

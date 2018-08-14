@@ -20,6 +20,12 @@ class DashboardPage extends React.Component {
         this.props.fetchActiveShift();
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.hasActiveShift !== this.props.hasActiveShift) {
+            window.location.reload();
+        }
+    }
+
     render() {
         const {hasActiveShift, isFetchingShift} = this.props;
 
@@ -46,8 +52,7 @@ class DashboardPage extends React.Component {
 DashboardPage.propTypes = {
     fetchActiveShift: PropTypes.func.isRequired,
     isFetchingShift: PropTypes.bool,
-    hasActiveShift: PropTypes.bool,
-    shift: ImmutablePropTypes.map
+    hasActiveShift: PropTypes.bool
 };
 
 
@@ -56,7 +61,6 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 export default withRouter(connect((state) => {
     return {
         kc: state.keycloak,
-        hasActiveShift: hasActiveShift(state),
-        shift: shift(state),
+        hasActiveShift: hasActiveShift(state)
     }
 }, mapDispatchToProps)(DashboardPage))
