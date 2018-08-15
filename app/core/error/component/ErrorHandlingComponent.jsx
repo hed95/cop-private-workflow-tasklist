@@ -18,6 +18,10 @@ class ErrorHandlingComponent extends React.Component {
                 - {err.get('message')}</li>
         });
 
+        if (!unauthorised && !hasError) {
+            return <div>{this.props.children}</div>
+        }
+
         if (unauthorised) {
             return <Redirect push to="/dashboard"/>
         } else {

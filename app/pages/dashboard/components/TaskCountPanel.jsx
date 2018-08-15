@@ -9,6 +9,11 @@ import ImmutablePropTypes from "react-immutable-proptypes";
 
 
 class TaskCountPanel extends React.Component {
+    componentWillMount() {
+        this.yourTeamTotalTasks = this.yourTeamTotalTasks.bind(this);
+        this.yourTasks = this.yourTasks.bind(this);
+        this.yourTeamUnassignedTasks = this.yourTeamUnassignedTasks.bind(this);
+    }
 
     componentDidMount() {
         if (this.props.hasActiveShift) {
@@ -18,8 +23,8 @@ class TaskCountPanel extends React.Component {
         }
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.hasActiveShift !== prevProps.hasActiveShift) {
+    componentWillReceiveProps(nextProps) {
+        if (this.props.hasActiveShift !== nextProps.hasActiveShift) {
             this.props.fetchTaskCounts();
         }
     }
@@ -44,7 +49,7 @@ class TaskCountPanel extends React.Component {
         const {taskCounts, isFetchingTaskCounts} = this.props;
         return <div>
             <li className="__card column-one-third" id="myTasksPanel">
-                <a href="#" onClick={this.yourTasks.bind(this)} className="card__body">
+                <a href="#" onClick={this.yourTasks} className="card__body">
                     <span
                         className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('tasksAssignedToUser')}</span>
                     <span className="bold-small">tasks assigned to you</span>
@@ -54,7 +59,7 @@ class TaskCountPanel extends React.Component {
                 </div>
             </li>
             <li className="__card column-one-third" id="unassignedTasksPanel">
-                <a href="#" onClick={this.yourTeamUnassignedTasks.bind(this)} className="card__body">
+                <a href="#" onClick={this.yourTeamUnassignedTasks} className="card__body">
                     <span className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('tasksUnassigned')}</span>
                     <span className="bold-small">unassigned tasks</span>
                 </a>
@@ -63,7 +68,7 @@ class TaskCountPanel extends React.Component {
                 </div>
             </li>
             <li className="__card column-one-third" id="myTeamTasks">
-                <a href="#" onClick={this.yourTeamTotalTasks.bind(this)} className="card__body">
+                <a href="#" onClick={this.yourTeamTotalTasks} className="card__body">
                     <span
                         className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('totalTasksAllocatedToTeam')}</span>
                     <span className="bold-small">tasks allocated to your team</span>

@@ -15,20 +15,13 @@ const initialState = new Map({
 
 function reducer(state = initialState, action) {
     switch (action.type) {
+        case actions.CLEAR_NOTIFICATIONS:
+            return initialState;
         //fetch notifications
         case actions.FETCH_NOTIFICATIONS:
             return state.set('isFetching', true);
         case actions.FETCH_NOTIFICATIONS_SUCCESS:
             const data = action.payload.entity._embedded ? action.payload.entity._embedded.tasks : [];
-
-            const pagedNotifications = state.get('notifications');
-            let merged;
-            if (pagedNotifications.size !== 0) {
-                merged = pagedNotifications.concat(Immutable.fromJS(data));
-            } else {
-                merged = Immutable.fromJS(data);
-            }
-
             const total = action.payload.entity.page ? action.payload.entity.page.totalElements : 0;
             const pageSize = action.payload.entity.page ? action.payload.entity.page.size : 20;
             const links = action.payload.entity._links;
@@ -39,7 +32,7 @@ function reducer(state = initialState, action) {
                 nextPage = links.next.href;
                 hasMoreItems = true;
             }
-            return state.set('notifications', merged)
+            return state.set('notifications', Immutable.fromJS(data))
                 .set('isFetching', false)
                 .set('pageSize', pageSize)
                 .set('total', total)
@@ -47,7 +40,32 @@ function reducer(state = initialState, action) {
                 .set('hasMoreItems', hasMoreItems);
 
         case actions.FETCH_NOTIFICATIONS_FAILURE:
-            return state.set('isFetching', false).set('error', action.payload);
+            return state.set('isFetching', false);
+
+
+        case actions.FETCH_NOTIFICATIONS_NEXT_PAGE:
+            return state.set('isFetching', true);
+        case actions.FETCH_NOTIFICATIONS_NEXT_PAGE_SUCCESS:
+            const nextLinks = action.payload.entity._links;
+            let pageNext = null;
+            let moreItems = false;
+            const pagedNotifications = state.get('notifications');
+            const merged = pagedNotifications.size !== 0 ?
+                pagedNotifications.concat(Immutable.fromJS(action.payload.entity._embedded ? action.payload.entity._embedded.tasks : []))
+                : Immutable.fromJS(data);
+            if ("next" in nextLinks) {
+                pageNext = nextLinks.next.href;
+                moreItems = true;
+            }
+            return state.set('notifications', merged)
+                .set('isFetching', false)
+                .set('pageSize', action.payload.entity.page ? action.payload.entity.page.size : 20)
+                .set('total', action.payload.entity.page ? action.payload.entity.page.totalElements : 0)
+                .set('nextPage', pageNext)
+                .set('hasMoreItems', moreItems);
+
+        case actions.FETCH_NOTIFICATIONS_NEXT_PAGE_FAILURE:
+            return state.set('isFetching', false);
 
         case actions.ACKNOWLEDGE_NOTIFICATION:
             const acknowledgingTaskIds = state.get('acknowledgingTaskIds').add(action.taskId);

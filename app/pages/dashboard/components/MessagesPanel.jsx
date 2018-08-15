@@ -5,9 +5,10 @@ import {createStructuredSelector} from "reselect";
 import {isFetchingMessageCounts, messageCounts} from "../selectors";
 import {bindActionCreators} from "redux";
 import * as actions from "../actions";
-import connect from "react-redux/es/connect/connect";
+import {connect} from "react-redux";
 
 class MessagesPanel extends React.Component {
+
 
     componentDidMount() {
         if (this.props.hasActiveShift) {
@@ -17,8 +18,8 @@ class MessagesPanel extends React.Component {
         }
 
     }
-    componentDidUpdate(prevProps) {
-        if (this.props.hasActiveShift !== prevProps.hasActiveShift) {
+    componentWillReceiveProps(nextProps) {
+        if (this.props.hasActiveShift !== nextProps.hasActiveShift && nextProps.hasActiveShift) {
             this.props.fetchMessageCounts();
         }
     }
@@ -38,7 +39,7 @@ class MessagesPanel extends React.Component {
         const {isFetchingMessageCounts, messageCounts} = this.props;
 
         return  <li className="__card column-one-third" id="messagesPanel">
-            <a href="#" onClick={this.messages.bind(this)} className="card__body">
+            <a href="#" onClick={this.messages} className="card__body">
                 <span className="bold-xlarge">{isFetchingMessageCounts? 0: messageCounts.getIn(['page', 'totalElements'])}</span>
                 <span className="bold-small">messages</span>
             </a>

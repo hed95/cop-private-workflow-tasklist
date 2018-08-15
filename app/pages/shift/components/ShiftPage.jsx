@@ -26,6 +26,7 @@ class ShiftPage extends React.Component {
 
     componentWillMount() {
         this.submit = this.submit.bind(this);
+
     }
 
     componentDidMount() {
@@ -135,6 +136,7 @@ class ShiftPage extends React.Component {
             }
 
             <div className="grid-row">
+
                 <div className="column-full" id="shiftWizardForm">
                     {this.renderForm()}
                 </div>

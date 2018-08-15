@@ -13,6 +13,21 @@ const fetchNotificationsFailure = () => ({
     type: types.FETCH_NOTIFICATIONS_FAILURE,
 });
 
+const fetchNotificationsNextPage = (url) => ({
+    type: types.FETCH_NOTIFICATIONS_NEXT_PAGE,
+    url
+});
+
+const fetchNotificationsNextPageSuccess = payload => ({
+    type: types.FETCH_NOTIFICATIONS_NEXT_PAGE_SUCCESS,
+    payload
+});
+
+const fetchNotificationsNextPageFailure = () => ({
+    type: types.FETCH_NOTIFICATIONS_NEXT_PAGE_FAILURE,
+});
+
+
 const acknowledgeNotification = taskId => ({
     type: types.ACKNOWLEDGE_NOTIFICATION,
     taskId
@@ -28,6 +43,9 @@ const acknowledgeNotificationFailure = (taskId) => ({
     taskId: taskId
 });
 
+const clearNotifications = () => ({
+    type: types.CLEAR_NOTIFICATIONS,
+});
 
 export {
     fetchNotifications,
@@ -35,5 +53,9 @@ export {
     fetchNotificationsFailure,
     acknowledgeNotification,
     acknowledgeNotificationSuccess,
-    acknowledgeNotificationFailure
+    acknowledgeNotificationFailure,
+    fetchNotificationsNextPage,
+    fetchNotificationsNextPageSuccess,
+    fetchNotificationsNextPageFailure,
+    clearNotifications
 }

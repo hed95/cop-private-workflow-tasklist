@@ -7,7 +7,6 @@ import * as actions from '../actions';
 import {
     pageSize, hasMoreItems, isFetching, nextPage, notifications, total, acknowledgingTaskIds
 } from "../selectors";
-import LoadingBar from 'react-redux-loading-bar'
 import InfiniteScroll from 'react-infinite-scroller';
 import moment from 'moment';
 
@@ -16,6 +15,10 @@ class MessagesPage extends React.Component {
 
     componentDidMount() {
         this.props.fetchNotifications();
+    }
+
+    componentWillUnmount() {
+        this.props.clearNotifications();
     }
 
     render() {
@@ -28,13 +31,7 @@ class MessagesPage extends React.Component {
         });
 
         return <div>
-            <LoadingBar
-                updateTime={100}
-                maxProgress={100}
-                progressIncrease={4}
-                scope="notifications"
-                className="loading-bar"
-            />
+
             {this.props.isFetching ?
                 <div className="data-item bold-small">Loading messages...</div> : <div/>
             }
@@ -50,7 +47,7 @@ class MessagesPage extends React.Component {
             <div className="grid-row">
                 <InfiniteScroll
                     pageStart={0}
-                    loadMore={() => this.props.fetchNotifications(this.props.nextPage)}
+                    loadMore={() => this.props.fetchNotificationsNextPage(this.props.nextPage)}
                     initialLoad={false}
                     hasMore={this.props.hasMoreItems}>
                     <div>
@@ -121,7 +118,9 @@ const NotificationTask = ({task, action}) => {
 
 MessagesPage.propTypes = {
     fetchNotifications: PropTypes.func.isRequired,
+    fetchNotificationsNextPage: PropTypes.func.isRequired,
     acknowledgeNotification: PropTypes.func.isRequired,
+    clearNotifications: PropTypes.func.isRequired,
     notifications: ImmutablePropTypes.list.isRequired,
     isFetching: PropTypes.bool,
     total: PropTypes.number,

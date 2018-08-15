@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {isFetchingShift, hasActiveShift} from '../../../core/shift/selectors';
 import * as actions from "../../../core/shift/actions";
 import {createStructuredSelector} from "reselect";
-import {Redirect, Route, withRouter} from "react-router";
+import {Redirect, Route} from "react-router";
 import ErrorHandlingComponent from "../../../core/error/component/ErrorHandlingComponent";
 import * as errorActions from "../../../core/error/actions";
 
@@ -16,15 +16,17 @@ class ShiftScopedRoute extends React.Component {
         this.props.fetchActiveShift();
     }
 
+    componentWillMount(){
+        this.props.resetErrors();
+    }
+
     render() {
         const {component: Component, hasActiveShift, isFetchingShift} = this.props;
-        this.props.resetErrors();
         if (isFetchingShift) {
             return <div style={{paddingTop: '20px'}} className="loading">Checking your shift details</div>
         } else {
             if (hasActiveShift) {
-                return <Route render={(props) => <BackButton {...props}><ErrorHandlingComponent><Component {...props}
-                                                                                                key={uuidv4()}/></ErrorHandlingComponent></BackButton>}/>
+                return <Route render={(props) => <BackButton {...props}><ErrorHandlingComponent><Component {...props} key={uuidv4()}/></ErrorHandlingComponent></BackButton>}/>
             } else {
                 return <Route render={() => <Redirect to="/dashboard"/>}/>
             }

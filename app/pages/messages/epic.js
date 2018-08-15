@@ -14,7 +14,6 @@ const fetchNotifications = (action$, store) =>
     action$.ofType(types.FETCH_NOTIFICATIONS)
         .mergeMap(action =>
                 Observable.merge(
-                    Observable.of(showLoading('notifications')),
                     client({
                         method: 'GET',
                         path: `/api/workflow/notifications?countOnly=false`,
@@ -27,8 +26,25 @@ const fetchNotifications = (action$, store) =>
                                 return errorObservable(actions.fetchNotificationsFailure(), error);
                             }
                         )
-                        .concat(Observable.of(hideLoading('notifications'))),
                 ));
+
+const fetchNotificationsNextPage = (action$, store) =>
+    action$.ofType(types.FETCH_NOTIFICATIONS_NEXT_PAGE)
+        .mergeMap(action =>
+            Observable.merge(
+                client({
+                    method: 'GET',
+                    path: `${action.url}`,
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": `Bearer ${store.getState().keycloak.token}`
+                    }
+                }).retryWhen(retryOnForbidden).map(payload => actions.fetchNotificationsNextPageSuccess(payload))
+                    .catch(error => {
+                            return errorObservable(actions.fetchNotificationsNextPageFailure(), error);
+                        }
+                    )
+            ));
 
 
 const acknowledgeNotification = (action$, store) =>
@@ -48,4 +64,4 @@ const acknowledgeNotification = (action$, store) =>
                 }
             ));
 
-export default combineEpics(fetchNotifications, acknowledgeNotification);
+export default combineEpics(fetchNotifications, acknowledgeNotification, fetchNotificationsNextPage);
