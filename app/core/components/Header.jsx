@@ -25,6 +25,8 @@ class Header extends React.Component {
     }
 
     render() {
+
+        const pointerStyle = {cursor: 'pointer', alignContent: 'right'};
         return <div>
             <header role="banner" id="global-header" className="with-proposition">
                 <div className="header-wrapper">
@@ -41,6 +43,11 @@ class Header extends React.Component {
                             <div className="grid-row" style={{paddingTop:'10px'}}>
                                 <div className="column-two-thirds">
                                     <a href="#" onClick={(event) => this.dashboard(event)} id="proposition-name">Operational Activities</a>
+                                </div>
+                                <div className="column-one-third">
+                                    <ul id="proposition-links">
+                                        <li style={pointerStyle}><a id="logout" onClick={this.logout}>Logout</a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
