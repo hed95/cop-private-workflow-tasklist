@@ -54,7 +54,6 @@ class ShiftPage extends React.Component {
 
     submit = (submission, shiftForm) => {
         this.props.submit(shiftForm._id, submission.data);
-        this.form.formio.submitButton.setAttribute('disabled', true);
     };
 
     renderForm() {
@@ -152,7 +151,7 @@ class ShiftPage extends React.Component {
                 : <div/>
             }
             {!isFetchingShift && submittingActiveShift ?
-                <h2 className="heading-large loading">Submitting shift details</h2> : <div/>
+                <h2 className="heading-medium loading">Submitting shift details</h2> : <div/>
             }
 
             <div className="grid-row">
