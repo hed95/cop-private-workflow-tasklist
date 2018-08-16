@@ -14,27 +14,37 @@ import DashboardPage from "../pages/dashboard/components/DashboardPage";
 import YourTasks from "../pages/tasks/components/YourTasks";
 import YourGroupUnassignedTasks from "../pages/tasks/components/YourGroupUnassignedTasks";
 import YourGroupTasks from "../pages/tasks/components/YourGroupTasks";
+import ErrorHandlingComponent from "./error/component/ErrorHandlingComponent";
 
 
 const Main = () => (
     <main>
-            <Switch>
-                <Route name="Dashboard" exact path="/dashboard" component={DashboardPage}/>
-                <Route name="Shift" exact path="/shift" component={ShiftPage}/>
+        <Switch>
+            <Route name="Dashboard" exact path="/dashboard" render={
+                () => {
+                    return <ErrorHandlingComponent><DashboardPage/></ErrorHandlingComponent>
+                }
+            }/>
+            <Route name="Shift" exact path="/shift" render={
+                () => {
+                   return <ErrorHandlingComponent><ShiftPage/></ErrorHandlingComponent>
+                }
+            }/>
 
-                <ShiftScopedRoute name="Your tasks" exact path='/your-tasks' component={YourTasks}/>
-                <ShiftScopedRoute name="Your group unassigned tasks" exact path='/your-group-unassigned-tasks' component={YourGroupUnassignedTasks}/>
-                <ShiftScopedRoute name="Your group tasks" exact path='/your-group-tasks' component={YourGroupTasks}/>
-                <ShiftScopedRoute name="Procedures" exact path='/procedures' component={ProcessesPage}/>
-                <ShiftScopedRoute name="Reports" exact path='/reports' component={ReportsPage} />
-                <ShiftScopedRoute exact path="/report" component={ReportPage}/>
-                <ShiftScopedRoute name="Messages" exact path='/messages' component={MessagesPage}/>
-                <ShiftScopedRoute name="Calendar" exact path='/calendar' component={CalendarPage}/>
-                <ShiftScopedRoute name="Procedure Start Page" exact path="/procedure-start" component={ProcessStartPage}/>
-                <ShiftScopedRoute name="Task Details Page" exact path="/task" component={TaskDetailsPage}/>
-                <ShiftScopedRoute name="Admin" exact path="/admin" component={AdminPage}/>
-                <Redirect to="/dashboard"/>
-            </Switch>
+            <ShiftScopedRoute name="Your tasks" exact path='/your-tasks' component={YourTasks}/>
+            <ShiftScopedRoute name="Your group unassigned tasks" exact path='/your-group-unassigned-tasks'
+                              component={YourGroupUnassignedTasks}/>
+            <ShiftScopedRoute name="Your group tasks" exact path='/your-group-tasks' component={YourGroupTasks}/>
+            <ShiftScopedRoute name="Procedures" exact path='/procedures' component={ProcessesPage}/>
+            <ShiftScopedRoute name="Reports" exact path='/reports' component={ReportsPage}/>
+            <ShiftScopedRoute exact path="/report" component={ReportPage}/>
+            <ShiftScopedRoute name="Messages" exact path='/messages' component={MessagesPage}/>
+            <ShiftScopedRoute name="Calendar" exact path='/calendar' component={CalendarPage}/>
+            <ShiftScopedRoute name="Procedure Start Page" exact path="/procedure-start" component={ProcessStartPage}/>
+            <ShiftScopedRoute name="Task Details Page" exact path="/task" component={TaskDetailsPage}/>
+            <ShiftScopedRoute name="Admin" exact path="/admin" component={AdminPage}/>
+            <Redirect to="/dashboard"/>
+        </Switch>
     </main>
 );
 
