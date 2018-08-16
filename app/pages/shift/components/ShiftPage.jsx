@@ -8,10 +8,10 @@ import ImmutablePropTypes from "react-immutable-proptypes";
 import {
     activeShiftSuccess,
     hasActiveShift,
-    isFetchingShift,
+    isFetchingShift, isFetchingStaffDetails,
     loadingShiftForm,
     shift,
-    shiftForm,
+    shiftForm, staffDetails,
     submittingActiveShift
 } from "../../../core/shift/selectors";
 import {errors, hasError} from "../../../core/error/selectors";
@@ -32,6 +32,7 @@ class ShiftPage extends React.Component {
     componentDidMount() {
         this.props.fetchActiveShift();
         this.props.fetchShiftForm();
+        this.props.fetchStaffDetails();
     }
 
 
@@ -53,11 +54,12 @@ class ShiftPage extends React.Component {
 
     submit = (submission, shiftForm) => {
         this.props.submit(shiftForm._id, submission.data);
+        this.form.formio.submitButton.setAttribute('disabled', true);
     };
 
     renderForm() {
-        const {shiftForm, shift, loadingShiftForm, isFetchingShift} = this.props;
-        if (isFetchingShift || loadingShiftForm) {
+        const {shiftForm, shift, loadingShiftForm, isFetchingShift, isFetchingStaffDetails, staffDetails} = this.props;
+        if (isFetchingShift && loadingShiftForm && isFetchingStaffDetails) {
             return <div/>
         } else {
 
@@ -92,6 +94,24 @@ class ShiftPage extends React.Component {
                                  ref={(form) => this.form = form}
                                  onSubmit={(submission) => this.submit(submission, shiftForm)}/>
                 } else {
+                    if (staffDetails) {
+                        const shiftSubmission = {
+                            data: {
+                                shiftminutes: 0,
+                                shifthours: 8,
+                                startdatetime: moment.utc(moment()),
+                                teamid: staffDetails.get('defaultteamid'),
+                                locationid: staffDetails.get('defaultlocationid'),
+                                commandid: staffDetails.get('defaultcommandid'),
+                                subcommandid: staffDetails.get('defaultsubcommandid'),
+                                phone: staffDetails.get('phone'),
+                                currentlocationid: null
+                            }
+                        };
+                        return  <Form form={shiftForm} submission={shiftSubmission} options={options}
+                                      ref={(form) => this.form = form}
+                                      onSubmit={(submission) => this.submit(submission, shiftForm)}/>
+                    }
                     return <Form form={shiftForm}
                                  ref={(form) => this.form = form}
                                  options={options} onSubmit={(submission) => this.submit(submission, shiftForm)}/>
@@ -132,7 +152,7 @@ class ShiftPage extends React.Component {
                 : <div/>
             }
             {!isFetchingShift && submittingActiveShift ?
-                <h2 className="heading-medium loading">Submitting shift details</h2> : <div/>
+                <h2 className="heading-large loading">Submitting shift details</h2> : <div/>
             }
 
             <div className="grid-row">
@@ -151,9 +171,12 @@ class ShiftPage extends React.Component {
 ShiftPage.propTypes = {
     fetchShiftForm: PropTypes.func.isRequired,
     fetchActiveShift: PropTypes.func.isRequired,
+    fetchStaffDetails: PropTypes.func.isRequired,
     isFetchingShift: PropTypes.bool,
     hasActiveShift: PropTypes.bool,
-    shift: ImmutablePropTypes.map
+    isFetchingStaffDetails: PropTypes.bool,
+    shift: ImmutablePropTypes.map,
+    staffDetails: ImmutablePropTypes.map
 };
 
 
@@ -169,7 +192,10 @@ export default withRouter(connect((state) => {
         hasError: hasError(state),
         errors: errors(state),
         shiftForm: shiftForm(state),
-        loadingShiftForm: loadingShiftForm(state)
+        loadingShiftForm: loadingShiftForm(state),
+        staffDetails: staffDetails(state),
+        isFetchingStaffDetails: isFetchingStaffDetails(state)
+
 
     }
 }, mapDispatchToProps)(ShiftPage))

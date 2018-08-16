@@ -29,7 +29,7 @@ class DashboardPage extends React.Component {
                     <i className="icon icon-important">
                         <span className="visually-hidden">Warning</span>
                     </i>
-                    <strong className="bold-small">
+                    <strong className="bold-medium">
                         Please start your shift before proceeding
                     </strong>
                 </div>
