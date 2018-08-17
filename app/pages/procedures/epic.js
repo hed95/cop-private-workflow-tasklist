@@ -1,8 +1,6 @@
 import client from "../../common/rest/client";
 import * as types from "./actionTypes";
 import * as actions from "./actions";
-import * as errorActions from '../../core/error/actions';
-import {Observable} from "rxjs/Observable";
 import {combineEpics} from "redux-observable";
 import {errorObservable} from "../../core/error/epicUtil";
 import {retryOnForbidden} from "../../core/util/retry";

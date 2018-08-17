@@ -6,17 +6,11 @@ import {createStructuredSelector} from "reselect";
 import {connect} from "react-redux";
 import ImmutablePropTypes from "react-immutable-proptypes";
 import {Redirect} from "react-router";
-
-const uuidv4 = require('uuid/v4');
-
+import ErrorPanel from "./ErrorPanel";
 class ErrorHandlingComponent extends React.Component {
 
     render() {
-        const {hasError, errors, unauthorised} = this.props;
-        const items = errors.map((err) => {
-            return <li key={uuidv4()}>{err.get('url')} - [{err.get('status')} {err.get('error')}]
-                - {err.get('message')}</li>
-        });
+        const {hasError, unauthorised} = this.props;
 
         if (!unauthorised && !hasError) {
             return <div>{this.props.children}</div>
@@ -25,20 +19,9 @@ class ErrorHandlingComponent extends React.Component {
         if (unauthorised) {
             return <Redirect push to="/dashboard"/>
         } else {
-            return <div> {hasError ?
-                <div className="error-summary" role="alert" aria-labelledby="error-summary-heading-example-1"
-                     tabIndex="-1">
-                    <h2 className="heading-medium error-summary-heading" id="error-summary-heading-example-1">
-                        We are experiencing technical problems
-                    </h2>
-                    <ul className="error-summary-list">
-                        {items}
-                    </ul>
-
-                </div> : <div/>}
-
+            return <div>
+                <ErrorPanel {...this.props} />
                 {this.props.children}
-
             </div>
         }
     }

@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {isFetchingShift, hasActiveShift} from '../../../core/shift/selectors';
-import * as actions from "../../../core/shift/actions";
+import {isFetchingShift, hasActiveShift} from './selectors';
+import * as actions from "./actions";
 import {createStructuredSelector} from "reselect";
 import {Redirect, Route} from "react-router";
-import ErrorHandlingComponent from "../../../core/error/component/ErrorHandlingComponent";
-import * as errorActions from "../../../core/error/actions";
+import ErrorHandlingComponent from "../error/component/ErrorHandlingComponent";
+import * as errorActions from "../error/actions";
 
 const uuidv4 = require('uuid/v4');
 

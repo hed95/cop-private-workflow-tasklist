@@ -5,7 +5,7 @@ import ReportsPage from './../pages/reports/components/ReportsPage'
 import MessagesPage from '../pages/messages/components/MessagesPage'
 import ShiftPage from "../pages/shift/components/ShiftPage";
 import AdminPage from "../pages/admin/components/AdminPage";
-import ShiftScopedRoute from "../pages/shift/components/ShiftScopedRoute";
+import ShiftScopedRoute from "./shift/ShiftScopedRoute";
 import CalendarPage from "../pages/calendar/components/CalendarPage";
 import ProcessStartPage from "../pages/procedures/components/ProcedureStartPage";
 import TaskDetailsPage from "../pages/task/component/TaskDetailsPage";

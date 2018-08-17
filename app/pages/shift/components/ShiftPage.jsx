@@ -91,7 +91,8 @@ class ShiftPage extends React.Component {
                     };
                     return <Form form={shiftForm} submission={shiftSubmission} options={options}
                                  ref={(form) => this.form = form}
-                                 onSubmit={(submission) => this.submit(submission, shiftForm)}/>
+                                 onSubmit={(submission) => this.submit(submission, shiftForm)}
+                                 />
                 } else {
                     if (staffDetails) {
                         const shiftSubmission = {
@@ -125,9 +126,11 @@ class ShiftPage extends React.Component {
         const {
             isFetchingShift,
             submittingActiveShift,
+            hasError,
+            errors
+
         } = this.props;
 
-        const {hasError, errors} = this.props;
         const items = errors.map((err) => {
             return <li key={uuidv4()}>{err.get('url')} - [{err.get('status')} {err.get('error')}]
                 - {err.get('message')}</li>
@@ -155,7 +158,6 @@ class ShiftPage extends React.Component {
             }
 
             <div className="grid-row">
-
                 <div className="column-full" id="shiftWizardForm">
                     {this.renderForm()}
                 </div>

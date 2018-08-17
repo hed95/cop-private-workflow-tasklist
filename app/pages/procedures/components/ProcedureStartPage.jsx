@@ -1,7 +1,7 @@
 import * as React from "react";
 import {PropTypes} from "react";
 import StartForm from "../../../core/start-forms/components/StartForm";
-import {errorMessage, hasError, isFetchingProcessDefinition, processDefinition} from "../selectors";
+import {isFetchingProcessDefinition, processDefinition} from "../selectors";
 import {bindActionCreators} from "redux";
 import {createStructuredSelector} from "reselect";
 import * as actions from "../actions";

@@ -2,17 +2,17 @@ import React, {PropTypes} from 'react';
 import {withRouter} from "react-router";
 import DashboardTitle from "./DashboardTitle";
 import DashboardPanel from "./DashboardPanel";
-import ImmutablePropTypes from "react-immutable-proptypes";
 import {bindActionCreators} from "redux";
 import * as actions from "../../../core/shift/actions";
 import connect from "react-redux/es/connect/connect";
 import {
-    activeShiftSuccess,
-    hasActiveShift,
-    isFetchingShift, isFetchingStaffDetails, loadingShiftForm, shift, shiftForm, staffDetails,
-    submittingActiveShift
+    hasActiveShift
 } from "../../../core/shift/selectors";
 import {errors, hasError} from "../../../core/error/selectors";
+import ErrorPanel from "../../../core/error/component/ErrorPanel";
+
+const uuidv4 = require('uuid/v4');
+
 
 class DashboardPage extends React.Component {
 
@@ -37,12 +37,14 @@ class DashboardPage extends React.Component {
 
         return <div>
             {headerToDisplay}
-            <DashboardTitle hasActiveShift = {hasActiveShift} />
+            <ErrorPanel {...this.props} />
+            <DashboardTitle hasActiveShift={hasActiveShift}/>
             <DashboardPanel hasActiveShift={hasActiveShift}/>
         </div>
 
     }
 }
+
 DashboardPage.propTypes = {
     fetchActiveShift: PropTypes.func.isRequired,
     isFetchingShift: PropTypes.bool,
@@ -55,6 +57,8 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 export default withRouter(connect((state) => {
     return {
         kc: state.keycloak,
-        hasActiveShift: hasActiveShift(state)
+        hasActiveShift: hasActiveShift(state),
+        hasError: hasError(state),
+        errors: errors(state),
     }
 }, mapDispatchToProps)(DashboardPage))
