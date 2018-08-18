@@ -32,7 +32,7 @@ class Header extends React.Component {
                 <div className="header-wrapper">
                     <div className="header-global">
                         <div className="header-logo">
-                            <a href="https://www.gov.uk/" title="Go to the GOV.UK homepage" id="logo"
+                            <a href="https://www.gov.uk/government/organisations/border-force" title="Go to the GOV.UK homepage" id="logo"
                                className="content">
                                 <img src={img} width="36" height="32" alt=""/> UK Border Force
                             </a>

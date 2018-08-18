@@ -27,7 +27,8 @@ const endShift = (action$, store) =>
                 method: 'DELETE',
                 path: `/api/workflow/shift/${encodeURIComponent(store.getState().keycloak.tokenParsed.email)}?deletedReason=finished`,
                 headers: {
-                    "Accept": "application/json"
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
             }).retryWhen(retryOnForbidden)
                 .map(payload => actions.endShiftSuccess(payload))
