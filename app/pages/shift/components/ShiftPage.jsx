@@ -67,8 +67,7 @@ class ShiftPage extends React.Component {
                     en: {
                         cancel: 'Cancel',
                         previous: 'Back',
-                        next: 'Next',
-                        submit: 'Start shift'
+                        next: 'Next'
                     }
                 },
             };
@@ -87,11 +86,14 @@ class ShiftPage extends React.Component {
                             currentlocationid: shift.get('currentlocationid')
                         }
                     };
+                    options.i18n.en.submit = "Amend shift";
+
                     return <Form form={shiftForm} submission={shiftSubmission} options={options}
                                  ref={(form) => this.form = form}
                                  onSubmit={(submission) => this.submit(submission, shiftForm)}
                                  />
                 } else {
+                    options.i18n.en.submit = "Start shift";
                     if (staffDetails) {
                         const shiftSubmission = {
                             data: {
