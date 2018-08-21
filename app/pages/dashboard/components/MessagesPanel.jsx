@@ -32,7 +32,8 @@ class MessagesPanel extends React.Component {
     messages(e) {
         e.preventDefault();
         this.props.history.replace({
-            pathname: "/messages"
+            pathname: "/messages",
+            shiftPresent: this.props.hasActiveShift
         });
     }
     render() {

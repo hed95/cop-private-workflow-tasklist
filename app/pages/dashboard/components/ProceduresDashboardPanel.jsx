@@ -8,7 +8,7 @@ class ProceduresDashboardPanel extends React.Component {
         e.preventDefault();
         this.props.history.replace({
             pathname: "/procedures", state: {
-                hasActiveShift: this.props.hasActiveShift
+                shiftPresent: this.props.hasActiveShift
             }
         });
     }

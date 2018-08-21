@@ -10,7 +10,7 @@ const fetchTasksAssignedToMe = (action$, store) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `${action.url}?assignedToMeOnly=true`,
+                path: `${action.url}`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`

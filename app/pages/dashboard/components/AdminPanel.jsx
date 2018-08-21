@@ -8,7 +8,8 @@ class AdminPanel extends React.Component {
     admin(e) {
         e.preventDefault();
         this.props.history.replace({
-            pathname: "/admin"
+            pathname: "/admin",
+            shiftPresent: this.props.hasActiveShift
         });
     }
 

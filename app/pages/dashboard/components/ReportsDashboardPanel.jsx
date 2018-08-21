@@ -7,7 +7,8 @@ class ReportsDashboardPanel extends React.Component {
     reports(e) {
         e.preventDefault();
         this.props.history.replace({
-            pathname: "/reports"
+            pathname: "/reports",
+            shiftPresent: this.props.hasActiveShift
         });
     }
 

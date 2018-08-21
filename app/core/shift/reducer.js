@@ -70,6 +70,8 @@ function reducer(state = initialState, action) {
                 .set('endingShift', false);
         case actions.END_SHIFT_FAILURE:
             return state.set('endingShift', false);
+        case actions.SET_HAS_ACTIVE_SHIFT:
+            return state.set('hasActiveShift', true);
         default:
             return state;
     }

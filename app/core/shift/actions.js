@@ -82,6 +82,10 @@ const endShiftFailure = () => ({
     type: types.END_SHIFT_FAILURE
 });
 
+const setHasActiveShift =() =>({
+    type: types.SET_HAS_ACTIVE_SHIFT
+});
+
 export {
     submit,
     submitSuccess,
@@ -100,5 +104,6 @@ export {
     fetchStaffDetailsFailure,
     endShift,
     endShiftFailure,
-    endShiftSuccess
+    endShiftSuccess,
+    setHasActiveShift
 }

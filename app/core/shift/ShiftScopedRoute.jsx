@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {isFetchingShift, hasActiveShift} from './selectors';
 import * as actions from "./actions";
 import {createStructuredSelector} from "reselect";
-import {Redirect, Route} from "react-router";
+import {Redirect, Route, withRouter} from "react-router";
 import ErrorHandlingComponent from "../error/component/ErrorHandlingComponent";
 import * as errorActions from "../error/actions";
 
@@ -12,12 +12,16 @@ const uuidv4 = require('uuid/v4');
 
 class ShiftScopedRoute extends React.Component {
 
-    componentDidMount() {
-        this.props.fetchActiveShift();
-    }
-
-    componentWillMount(){
+    componentWillMount() {
         this.props.resetErrors();
+        if (!this.props.location.state || !this.props.location.state.shiftPresent) {
+            this.props.fetchActiveShift();
+        } else {
+            if (this.props.location.state.shiftPresent) {
+                console.log('User has shift defined');
+                this.props.setHasActiveShift();
+            }
+        }
     }
 
     render() {
@@ -47,6 +51,7 @@ class BackButton extends React.Component {
 
 ShiftScopedRoute.propTypes = {
     fetchActiveShift: PropTypes.func.isRequired,
+    setHasActiveShift: PropTypes.func.isRequired,
     resetErrors: PropTypes.func.isRequired,
     isFetchingShift: PropTypes.bool,
     hasActiveShift: PropTypes.bool
@@ -59,4 +64,4 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => bindActionCreators(Object.assign({}, actions, errorActions), dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShiftScopedRoute);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShiftScopedRoute));

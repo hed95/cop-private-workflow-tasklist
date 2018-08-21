@@ -35,8 +35,6 @@ function reducer(state = initialState, action) {
                 .setIn(['myTasks', 'total'], total);
         case actions.FETCH_TASKS_ASSIGNED_TO_ME_FAILURE:
             return state.set(['myTasks', 'isFetchingTasksAssignedToMe'], false);
-
-
         case actions.FETCH_MY_GROUP_TASKS:
             return state.setIn(['myGroupTasks', 'isFetchingMyGroupTasks'], true);
         case actions.FETCH_MY_GROUP_TASKS_SUCCESS:

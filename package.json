@@ -80,7 +80,7 @@
     "pubsub-js": "^1.6.0",
     "react": "^15.6.2",
     "react-dom": "^15.6.1",
-    "react-formio": "^2.1.1",
+    "react-formio": "^3.0.1",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-iframe": "^1.1.0",
     "react-immutable-proptypes": "^2.1.0",

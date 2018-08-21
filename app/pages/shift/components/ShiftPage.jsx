@@ -15,7 +15,6 @@ import {
     submittingActiveShift
 } from "../../../core/shift/selectors";
 import {errors, hasError} from "../../../core/error/selectors";
-import $ from "jquery";
 import {Form} from 'react-formio'
 import * as actions from "../../../core/shift/actions";
 import moment from 'moment';
@@ -43,7 +42,6 @@ class ShiftPage extends React.Component {
                     this.form.formio.emit("submitDone");
                     this.props.history.replace('/dashboard');
                 } else {
-                    $('html,body').animate({scrollTop: 0}, 'slow');
                     this.form.formio.emit("error");
                     this.form.formio.emit('change', this.form.formio.submission);
                 }
@@ -58,8 +56,8 @@ class ShiftPage extends React.Component {
 
     renderForm() {
         const {shiftForm, shift, loadingShiftForm, isFetchingShift, isFetchingStaffDetails, staffDetails} = this.props;
-        if (isFetchingShift && loadingShiftForm && isFetchingStaffDetails) {
-            return <div/>
+        if (isFetchingShift && loadingShiftForm && isFetchingStaffDetails && isFetchingShift) {
+            return <div className="loading">Loading shift details</div>
         } else {
 
             const options = {
@@ -136,7 +134,6 @@ class ShiftPage extends React.Component {
                 - {err.get('message')}</li>
         });
 
-
         return <div style={{paddingTop: '20px'}}>
             {hasError ?
                 <div className="error-summary" role="alert" aria-labelledby="error-summary-heading-example-1"
@@ -149,14 +146,9 @@ class ShiftPage extends React.Component {
                     </ul>
 
                 </div> : <div/>}
-            {isFetchingShift && !submittingActiveShift ?
-                <div className="loading">Loading shift details</div>
-                : <div/>
-            }
             {!isFetchingShift && submittingActiveShift ?
                 <h2 className="heading-medium loading">Submitting shift details</h2> : <div/>
             }
-
             <div className="grid-row">
                 <div className="column-full" id="shiftWizardForm">
                     {this.renderForm()}

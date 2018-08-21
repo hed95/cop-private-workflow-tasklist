@@ -7,7 +7,8 @@ class CalendarDashboardPanel extends React.Component {
     calendar(e) {
         e.preventDefault();
         this.props.history.replace({
-            pathname: "/calendar"
+            pathname: "/calendar",
+            shiftPresent: this.props.hasActiveShift
         });
     }
     render() {
