@@ -33,7 +33,13 @@ class DashboardPage extends React.Component {
                         Please start your shift before proceeding
                     </strong>
                 </div>
-            </div> : <div/>;
+            </div> : (isFetchingShift ? <div style={{paddingTop: '15px'}}>
+                <div>
+                    <strong className="bold loading">
+                        Checking if you have an active shift
+                    </strong>
+                </div>
+            </div> : <div />);
 
         return <div>
             {headerToDisplay}
