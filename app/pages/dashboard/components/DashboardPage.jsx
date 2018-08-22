@@ -6,7 +6,7 @@ import {bindActionCreators} from "redux";
 import * as actions from "../../../core/shift/actions";
 import connect from "react-redux/es/connect/connect";
 import {
-    hasActiveShift
+    hasActiveShift, isFetchingShift
 } from "../../../core/shift/selectors";
 import {errors, hasError} from "../../../core/error/selectors";
 import ErrorPanel from "../../../core/error/component/ErrorPanel";
@@ -60,5 +60,6 @@ export default withRouter(connect((state) => {
         hasActiveShift: hasActiveShift(state),
         hasError: hasError(state),
         errors: errors(state),
+        isFetchingShift: isFetchingShift(state)
     }
 }, mapDispatchToProps)(DashboardPage))
