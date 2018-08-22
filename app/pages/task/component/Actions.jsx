@@ -3,50 +3,45 @@ import Claim from "./Claim";
 import Unclaim from "./Unclaim";
 import Complete from "./Complete";
 
+const uuidv4 = require('uuid/v4');
+
 export default class Actions extends React.Component {
 
-    buildActions() {
-        const uuidv4 = require('uuid/v4');
-
-        const {task, variables} = this.props;
-        this.hasActions = false;
-        if (variables && variables['enabledActions']) {
-            this.hasActions = true;
-            const enabledActions = variables['enabledActions'];
-            const actions = [];
-            if (enabledActions.indexOf('unclaim') >= 1) {
-                actions.push(<Claim key={uuidv4()} task={task}/>)
-            }
-            if (enabledActions.indexOf('claim') >= 1) {
-                actions.push(<Unclaim key={uuidv4()} task={task} />)
-            }
-            if (enabledActions.indexOf('complete') >=1 ){
-                actions.push(<Complete key={uuidv4()} task={task}/>)
-            }
-            return <div>{actions}</div>
-        } else {
-            return <div />
-        }
-    }
 
     render() {
-        if (this.hasActions) {
-            return <div style={{paddingTop: '20px'}}>
+        const {variables, task} = this.props;
+        if (variables) {
+            const enabledActions = JSON.parse(variables['enabledActions']);
+            const actions = enabledActions.map((a) => {
+                if (a === 'unclaim') {
+                    return <Unclaim key={uuidv4()} task={task}/>;
+                }
+                if (a === 'claim') {
+                    return <Claim key={uuidv4()} task={task}/>;
+                }
+                if (a === 'complete') {
+                    return <Complete key={uuidv4()} task={task}/>;
+                }
+                return <div/>
+            });
+            return <div style={{paddingTop: '50px'}}>
                 <div className="btn-group btn-block" role="group">
-                    {this.buildActions()}
+                    {actions}
                 </div>
-                <div className="gov-panel" style={{paddingTop: '10px'}}>
-                    <details>
-                        <summary><span className="summary">Help with actions</span></summary>
-                        <div className="panel panel-border-wide">
-                            <ul className="list list-bullet">
-                                <li>Claim: The task will be assigned to you</li>
-                                <li>Unclaim: The task will be available for other members in your team to action</li>
-                                <li>Complete: Finish work</li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
+                {actions && actions.length >= 1 ?
+                    <div className="gov-panel" style={{paddingTop: '10px'}}>
+                        <details>
+                            <summary><span className="summary">Help with actions</span></summary>
+                            <div className="panel panel-border-wide">
+                                <ul className="list list-bullet">
+                                    <li>Claim: The task will be assigned to you</li>
+                                    <li>Unclaim: The task will be available for other members in your team to action
+                                    </li>
+                                    <li>Complete: Finish work</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </div> : <div/>}
             </div>
         } else {
             return <div/>

@@ -30,6 +30,7 @@ class StandardTaskInfoPanel extends React.Component {
                     </dt>
                 </dl>
             </div>
+
             <Actions task={task} variables={variables}/>
         </div>
 

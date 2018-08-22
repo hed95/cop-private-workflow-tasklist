@@ -15,6 +15,7 @@ import queryString from 'query-string';
 import Attachments from "./Attachments";
 import Audit from "./Audit";
 import TaskForm from "../../../core/task-form/components/TaskForm";
+import {withRouter} from "react-router";
 const uuidv4 = require('uuid/v4');
 
 
@@ -84,6 +85,7 @@ TaskDetailsPage.propTypes = {
     task: ImmutablePropTypes.map
 };
 
+
 const mapStateToProps = createStructuredSelector({
     isFetchingTask: isFetchingTask,
     task: task,
@@ -93,4 +95,4 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskDetailsPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TaskDetailsPage));
