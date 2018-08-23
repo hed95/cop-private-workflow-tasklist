@@ -12,7 +12,7 @@ import {withRouter} from "react-router";
 class YourGroupTasks extends React.Component {
 
     componentDidMount() {
-        this.props.fetchMyGroupTasks("/api/workflow/tasks");
+        this.props.fetchMyGroupTasks("/api/workflow/tasks?teamOnly=true");
         this.goToTask = this.goToTask.bind(this);
     }
 

@@ -12,7 +12,7 @@ import {withRouter} from "react-router";
 class YourTasks extends React.Component {
 
     componentDidMount() {
-        this.props.fetchTasksAssignedToMe("/api/workflow/tasks");
+        this.props.fetchTasksAssignedToMe("/api/workflow/tasks?assignedToMeOnly=true");
     }
     goToTask(taskId) {
         this.props.history.replace(`/task?taskId=${taskId}`);
