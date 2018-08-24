@@ -19,7 +19,7 @@ import {Form} from 'react-formio'
 import * as actions from "../../../core/shift/actions";
 import moment from 'moment';
 import Loader from 'react-loader-advanced';
-import Spinner from "react-spinkit";
+import {DataSpinner} from "../../../core/components/DataSpinner";
 
 const uuidv4 = require('uuid/v4');
 
@@ -58,8 +58,18 @@ class ShiftPage extends React.Component {
 
     renderForm() {
         const {shiftForm, shift, loadingShiftForm, isFetchingShift, isFetchingStaffDetails, staffDetails} = this.props;
-        if (isFetchingShift && loadingShiftForm && isFetchingStaffDetails && isFetchingShift) {
-            return <div className="loading">Loading shift details</div>
+
+        const onRender = () => {
+            if (this.form && this.form.formio) {
+                this.form.formio.cancelButton.onclick = (event) => {
+                    event.preventDefault();
+                    this.props.history.replace("/dashboard")
+                }
+            }
+        };
+
+        if (isFetchingShift && loadingShiftForm && isFetchingStaffDetails) {
+            return <DataSpinner message="Loading shift details..."/>
         } else {
 
             const options = {
@@ -91,7 +101,10 @@ class ShiftPage extends React.Component {
                     options.i18n.en.submit = "Amend shift";
 
                     return <Form form={shiftForm} submission={shiftSubmission} options={options}
-                                 ref={(form) => this.form = form}
+                                 ref={(form) => {
+                                     this.form = form;
+                                 }}
+                                 onRender={() => onRender()}
                                  onSubmit={(submission) => this.submit(submission, shiftForm)}
                     />
                 } else {
@@ -111,11 +124,15 @@ class ShiftPage extends React.Component {
                             }
                         };
                         return <Form form={shiftForm} submission={shiftSubmission} options={options}
-                                     ref={(form) => this.form = form}
+                                     ref={(form) => {
+                                         this.form = form;
+                                     }}
+                                     onRender={() => onRender()}
                                      onSubmit={(submission) => this.submit(submission, shiftForm)}/>
                     }
                     return <Form form={shiftForm}
                                  ref={(form) => this.form = form}
+                                 onRender={() => onRender()}
                                  options={options} onSubmit={(submission) => this.submit(submission, shiftForm)}/>
                 }
             } else {
@@ -128,7 +145,6 @@ class ShiftPage extends React.Component {
         const {
             isFetchingShift,
             submittingActiveShift,
-            activeShiftSuccess,
             hasError,
             errors
 
@@ -139,16 +155,7 @@ class ShiftPage extends React.Component {
                 - {err.get('message')}</li>
         });
 
-        const spinner = <div>
-            <div className="loader-content">
-                <Spinner
-                    name="line-spin-fade-loader" color="black"/>
-            </div>
-            <div className="loader-message"><strong className="bold">
-                Submitting your shift details...
-            </strong></div>
-        </div>;
-
+        const spinner = <DataSpinner message="Submitting your shift details..."/>;
 
         return <div style={{paddingTop: '20px'}}>
             {hasError ?
@@ -162,7 +169,8 @@ class ShiftPage extends React.Component {
                     </ul>
 
                 </div> : <div/>}
-            <Loader show={!isFetchingShift && submittingActiveShift} message={spinner} hideContentOnLoad={submittingActiveShift}
+            <Loader show={!isFetchingShift && submittingActiveShift} message={spinner}
+                    hideContentOnLoad={submittingActiveShift}
                     foregroundStyle={{color: 'black'}}
                     backgroundStyle={{backgroundColor: 'white'}}
             >
