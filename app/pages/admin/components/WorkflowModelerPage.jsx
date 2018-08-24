@@ -51,8 +51,9 @@ class WorkflowModelerPage extends React.Component {
                          allowFullScreen/>;
 
         return <div>
-            {loading ? <div style={{paddingTop: '20px', display: 'flex', justifyContent: 'center'}}><Spinner
-                name="three-bounce" color="#005ea5"/></div> : iframe}
+            {loading ? <div style={{paddingTop: '20px', display: 'flex', justifyContent: 'center'}}>
+                <Spinner
+                    name="line-spin-fade-loader" color="black"/></div> : iframe}
         </div>
     }
 }

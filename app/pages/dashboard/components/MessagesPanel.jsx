@@ -6,12 +6,19 @@ import {isFetchingMessageCounts, messageCounts} from "../selectors";
 import {bindActionCreators} from "redux";
 import * as actions from "../actions";
 import {connect} from "react-redux";
+import Poller from "../Poller";
 
 class MessagesPanel extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.poller = new Poller(1, "messageCounts");
+        this.messages = this.messages.bind(this);
+    }
 
     componentDidMount() {
         if (this.props.hasActiveShift) {
+            this.poller.startPoller(this.props.fetchMessageCounts);
             this.props.fetchMessageCounts();
         } else {
             this.props.setDefaultCounts();
@@ -20,13 +27,13 @@ class MessagesPanel extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
         if (this.props.hasActiveShift !== nextProps.hasActiveShift && nextProps.hasActiveShift) {
+            this.poller.startPoller(this.props.fetchMessageCounts);
             this.props.fetchMessageCounts();
         }
     }
 
-
-    componentWillMount() {
-        this.messages = this.messages.bind(this);
+    componentWillUnmount() {
+        this.poller.cancelPoller();
     }
 
     messages(e) {

@@ -18,6 +18,8 @@ import {errors, hasError} from "../../../core/error/selectors";
 import {Form} from 'react-formio'
 import * as actions from "../../../core/shift/actions";
 import moment from 'moment';
+import Loader from 'react-loader-advanced';
+import Spinner from "react-spinkit";
 
 const uuidv4 = require('uuid/v4');
 
@@ -91,7 +93,7 @@ class ShiftPage extends React.Component {
                     return <Form form={shiftForm} submission={shiftSubmission} options={options}
                                  ref={(form) => this.form = form}
                                  onSubmit={(submission) => this.submit(submission, shiftForm)}
-                                 />
+                    />
                 } else {
                     options.i18n.en.submit = "Start shift";
                     if (staffDetails) {
@@ -108,9 +110,9 @@ class ShiftPage extends React.Component {
                                 currentlocationid: null
                             }
                         };
-                        return  <Form form={shiftForm} submission={shiftSubmission} options={options}
-                                      ref={(form) => this.form = form}
-                                      onSubmit={(submission) => this.submit(submission, shiftForm)}/>
+                        return <Form form={shiftForm} submission={shiftSubmission} options={options}
+                                     ref={(form) => this.form = form}
+                                     onSubmit={(submission) => this.submit(submission, shiftForm)}/>
                     }
                     return <Form form={shiftForm}
                                  ref={(form) => this.form = form}
@@ -126,6 +128,7 @@ class ShiftPage extends React.Component {
         const {
             isFetchingShift,
             submittingActiveShift,
+            activeShiftSuccess,
             hasError,
             errors
 
@@ -135,6 +138,17 @@ class ShiftPage extends React.Component {
             return <li key={uuidv4()}>{err.get('url')} - [{err.get('status')} {err.get('error')}]
                 - {err.get('message')}</li>
         });
+
+        const spinner = <div>
+            <div className="loader-content">
+                <Spinner
+                    name="line-spin-fade-loader" color="black"/>
+            </div>
+            <div className="loader-message"><strong className="bold">
+                Submitting your shift details...
+            </strong></div>
+        </div>;
+
 
         return <div style={{paddingTop: '20px'}}>
             {hasError ?
@@ -148,15 +162,17 @@ class ShiftPage extends React.Component {
                     </ul>
 
                 </div> : <div/>}
-            {!isFetchingShift && submittingActiveShift ?
-                <h2 className="heading-medium loading">Submitting shift details</h2> : <div/>
-            }
-            <div className="grid-row">
-                <div className="column-full" id="shiftWizardForm">
-                    {this.renderForm()}
-                </div>
+            <Loader show={!isFetchingShift && submittingActiveShift} message={spinner} hideContentOnLoad={submittingActiveShift}
+                    foregroundStyle={{color: 'black'}}
+                    backgroundStyle={{backgroundColor: 'white'}}
+            >
+                <div className="grid-row">
+                    <div className="column-full" id="shiftWizardForm">
+                        {this.renderForm()}
+                    </div>
 
-            </div>
+                </div>
+            </Loader>
         </div>
 
     }

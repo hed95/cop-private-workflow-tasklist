@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Route, Link, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import * as actions from "../actions";
 import {createStructuredSelector} from "reselect";
 import {bindActionCreators} from "redux";
@@ -43,7 +43,7 @@ class ReportsPage extends React.Component {
 
             </div>
             {loadingReports ? <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
-                name="three-bounce" color="#005ea5"/></div> : <div>
+                name="line-spin-fade-loader" color="black"/></div> : <div>
                 <table>
                     <tbody>
                     {items}

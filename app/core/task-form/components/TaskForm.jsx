@@ -91,7 +91,7 @@ class TaskForm extends React.Component {
         return <div>
             {submittingTaskFormForCompletion ?
                 <div style={{display: 'flex', justifyContent: 'center', paddingTop: '5px'}}><Spinner
-                    name="three-bounce" color="#005ea5"/></div> : <div/>
+                    name="line-spin-fade-loader" color="black"/></div> : <div/>
             }
             <div style={{paddingLeft: '10px'}}>{this.renderForm()}</div>
         </div>

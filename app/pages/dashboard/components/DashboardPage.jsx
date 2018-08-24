@@ -10,9 +10,8 @@ import {
 } from "../../../core/shift/selectors";
 import {errors, hasError} from "../../../core/error/selectors";
 import ErrorPanel from "../../../core/error/component/ErrorPanel";
-
-const uuidv4 = require('uuid/v4');
-
+import Spinner from 'react-spinkit';
+import 'react-spinkit/css/wordpress.css';
 
 class DashboardPage extends React.Component {
 
@@ -39,14 +38,30 @@ class DashboardPage extends React.Component {
                         Checking if you have an active shift
                     </strong>
                 </div>
-            </div> : <div />);
+            </div> : <div/>);
 
-        return <div>
-            {headerToDisplay}
-            <ErrorPanel {...this.props} />
-            <DashboardTitle hasActiveShift={hasActiveShift}/>
-            <DashboardPanel hasActiveShift={hasActiveShift}/>
-        </div>
+
+        if (isFetchingShift) {
+            return <div>
+                <div className="loader-content">
+                    <Spinner
+                        name="line-spin-fade-loader" color="black"/>
+                </div>
+                <div className="loader-message"><strong className="bold">
+                    Checking if you have an active shift
+                </strong></div>
+            </div>
+
+
+        } else {
+            return <div>
+                {headerToDisplay}
+                <ErrorPanel {...this.props} />
+                <DashboardTitle hasActiveShift={hasActiveShift}/>
+                <DashboardPanel hasActiveShift={hasActiveShift}/>
+            </div>
+        }
+
 
     }
 }

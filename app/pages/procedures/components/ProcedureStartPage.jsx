@@ -32,7 +32,7 @@ class ProcessStartPage extends React.Component {
             <div className="grid-row">
                 {submittingToWorkflow ?
                     <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
-                        name="three-bounce" color="#005ea5"/></div> : <div></div>
+                        name="line-spin-fade-loader" color="black"/></div> : <div/>
                 }
                 <div className="column-full">
                     <fieldset>
