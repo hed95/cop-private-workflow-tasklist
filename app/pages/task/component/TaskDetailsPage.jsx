@@ -16,6 +16,7 @@ import Attachments from "./Attachments";
 import Audit from "./Audit";
 import TaskForm from "../../../core/task-form/components/TaskForm";
 import {withRouter} from "react-router";
+import {DataSpinner} from "../../../core/components/DataSpinner";
 const uuidv4 = require('uuid/v4');
 
 
@@ -41,7 +42,7 @@ class TaskDetailsPage extends React.Component {
         const {task, variables, isFetchingTask} = this.props;
         const hasFormKey = task && task.get('formKey');
         if (isFetchingTask) {
-            return <div>Loading task information</div>
+            return <DataSpinner message="Loading task information"/>
         } else {
             return <div>
                 <h3 className="heading-medium">{task.get('name')}</h3>

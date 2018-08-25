@@ -7,6 +7,7 @@ import {createStructuredSelector} from "reselect";
 import {Redirect, Route, withRouter} from "react-router";
 import ErrorHandlingComponent from "../error/component/ErrorHandlingComponent";
 import * as errorActions from "../error/actions";
+import {DataSpinner} from "../components/DataSpinner";
 
 const uuidv4 = require('uuid/v4');
 
@@ -27,7 +28,7 @@ class ShiftScopedRoute extends React.Component {
     render() {
         const {component: Component, hasActiveShift, isFetchingShift} = this.props;
         if (isFetchingShift) {
-            return <div style={{paddingTop: '20px'}} className="loading">Checking your shift details</div>
+            return <DataSpinner message={`Checking if you have an active shift`} />
         } else {
             if (hasActiveShift) {
                 return <Route render={(props) => <BackButton {...props}><ErrorHandlingComponent><Component {...props} key={uuidv4()}/></ErrorHandlingComponent></BackButton>}/>

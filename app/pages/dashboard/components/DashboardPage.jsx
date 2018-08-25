@@ -11,10 +11,12 @@ import {
 import {errors, hasError} from "../../../core/error/selectors";
 import ErrorPanel from "../../../core/error/component/ErrorPanel";
 import {DataSpinner} from "../../../core/components/DataSpinner";
+import * as errorActions from "../../../core/error/actions";
 
 class DashboardPage extends React.Component {
 
     componentDidMount() {
+        this.props.resetErrors();
         this.props.fetchActiveShift();
     }
 
@@ -57,12 +59,13 @@ class DashboardPage extends React.Component {
 
 DashboardPage.propTypes = {
     fetchActiveShift: PropTypes.func.isRequired,
+    resetErrors: PropTypes.func.isRequired,
     isFetchingShift: PropTypes.bool,
     hasActiveShift: PropTypes.bool
 };
 
 
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(Object.assign({}, actions, errorActions), dispatch);
 
 export default withRouter(connect((state) => {
     return {

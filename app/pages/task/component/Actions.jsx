@@ -10,7 +10,7 @@ export default class Actions extends React.Component {
 
     render() {
         const {variables, task} = this.props;
-        if (variables) {
+        if (variables && variables['enabledActions']) {
             const enabledActions = JSON.parse(variables['enabledActions']);
             const actions = enabledActions.map((a) => {
                 if (a === 'unclaim') {

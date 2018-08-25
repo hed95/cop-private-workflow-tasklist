@@ -11,6 +11,7 @@ const path = require('path');
 const proxy = require('http-proxy-middleware');
 const cors = require('cors');
 const fs = require('fs');
+const compression = require('compression');
 
 if (process.env.NODE_ENV === 'production') {
     console.log('Setting ca bundle');
@@ -34,6 +35,7 @@ const respond = (req, res) => {
 process.title = 'borders-workflow-tasklist';
 
 app.set('port', port);
+app.use(compression());
 
 app.use(express.static(__dirname + "/"));
 
