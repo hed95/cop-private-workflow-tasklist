@@ -25,9 +25,15 @@ const uuidv4 = require('uuid/v4');
 
 class ShiftPage extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.resetCancelButton = this.resetCancelButton.bind(this);
+        this.resetCancelButton();
+    }
+
+
     componentWillMount() {
         this.submit = this.submit.bind(this);
-
     }
 
     componentDidMount() {
@@ -56,25 +62,39 @@ class ShiftPage extends React.Component {
         this.props.submit(shiftForm._id, submission.data);
     };
 
-    renderForm() {
-        const {shiftForm, shift, loadingShiftForm, isFetchingShift, isFetchingStaffDetails, staffDetails} = this.props;
+    resetCancelButton = () => {
+        if (this.cancelButtonAdded = true) {
+            this.cancelButtonAdded = false;
+        }
+    };
 
+
+    renderForm() {
+
+
+        const {shiftForm, shift, loadingShiftForm, isFetchingShift, isFetchingStaffDetails, staffDetails} = this.props;
+        this.resetCancelButton();
         const onRender = () => {
-            if (this.form && this.form.formio) {
-                this.form.formio.cancelButton.onclick = (event) => {
-                    event.preventDefault();
-                    this.props.history.replace("/dashboard")
-                }
+            const hasCancelButton = $('.list-inline ul li:contains("Cancel")').length;
+            if (hasCancelButton === 0 && this.cancelButtonAdded !== true) {
+                $('.list-inline li:eq(0)').before("<li class=\"list-inline-item\"><button id=\"cancelButton\" class=\"btn btn-default btn-secondary btn-wizard-nav-cancel\">Cancel</button></li>");
+                $('#cancelButton').bind("click", (e) => {
+                    e.preventDefault();
+                    this.props.history.replace("/dashboard");
+                });
+                this.cancelButtonAdded = true;
             }
         };
 
         if (isFetchingShift && loadingShiftForm && isFetchingStaffDetails) {
             return <DataSpinner message="Loading shift details..."/>
         } else {
-
             const options = {
                 noAlerts: true,
                 language: 'en',
+                buttonSettings: {
+                    showCancel: false
+                },
                 i18n: {
                     en: {
                         cancel: 'Cancel',
@@ -104,6 +124,12 @@ class ShiftPage extends React.Component {
                                  ref={(form) => {
                                      this.form = form;
                                  }}
+                                 onNextPage={() => {
+                                     this.resetCancelButton();
+                                 }}
+                                 onPrevPage={() => {
+                                     this.resetCancelButton();
+                                 }}
                                  onRender={() => onRender()}
                                  onSubmit={(submission) => this.submit(submission, shiftForm)}
                     />
@@ -127,12 +153,24 @@ class ShiftPage extends React.Component {
                                      ref={(form) => {
                                          this.form = form;
                                      }}
+                                     onNextPage={() => {
+                                         this.resetCancelButton();
+                                     }}
+                                     onPrevPage={() => {
+                                         this.resetCancelButton();
+                                     }}
                                      onRender={() => onRender()}
                                      onSubmit={(submission) => this.submit(submission, shiftForm)}/>
                     }
                     return <Form form={shiftForm}
                                  ref={(form) => this.form = form}
                                  onRender={() => onRender()}
+                                 onNextPage={() => {
+                                     this.resetCancelButton();
+                                 }}
+                                 onPrevPage={() => {
+                                     this.resetCancelButton();
+                                 }}
                                  options={options} onSubmit={(submission) => this.submit(submission, shiftForm)}/>
                 }
             } else {
@@ -156,6 +194,8 @@ class ShiftPage extends React.Component {
         });
 
         const spinner = <DataSpinner message="Submitting your shift details..."/>;
+        const formToRender = this.renderForm();
+
 
         return <div style={{paddingTop: '20px'}}>
             {hasError ?
@@ -176,7 +216,7 @@ class ShiftPage extends React.Component {
             >
                 <div className="grid-row">
                     <div className="column-full" id="shiftWizardForm">
-                        {this.renderForm()}
+                        {formToRender}
                     </div>
 
                 </div>
