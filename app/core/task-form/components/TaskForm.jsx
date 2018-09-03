@@ -21,7 +21,7 @@ class TaskForm extends React.Component {
 
 
     componentWillReceiveProps(nextProps) {
-        if (this.form && (this.form.formio && this.form.formio.data.submit)
+        if (this.form && this.form.formio
             && nextProps.submittingTaskFormForCompletion !== true) {
             if (nextProps.taskFormCompleteSuccessful) {
                 this.form.formio.emit("submitDone");
@@ -32,7 +32,6 @@ class TaskForm extends React.Component {
             }
         }
     }
-
     componentWillUnmount() {
         this.form = null;
         this.props.resetForm();
