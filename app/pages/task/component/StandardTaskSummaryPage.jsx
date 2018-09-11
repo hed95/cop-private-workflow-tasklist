@@ -12,7 +12,7 @@ class StandardTaskSummaryPage extends React.Component {
         const {task, variables} = this.props;
         return <div style={{'paddingTop': '5px'}}>
             <TaskTitle {...this.props} />
-            <p className="lede">{task.get('description')}</p>
+            <p>{task.get('description')}</p>
             <Actions task={task} variables={variables}/>
         </div>
     }
