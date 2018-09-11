@@ -180,9 +180,11 @@ html {
 .has-error {
   @extend .error-message
 }
+
 .form-control {
   border-radius: 0 !important;
 }
+
 .choices__input {
   font-size: inherit;
 }
@@ -319,7 +321,7 @@ html {
 }
 
 .pagination {
-  padding: 0;
+  padding: 5px;
 }
 
 .pagination__item {
@@ -354,11 +356,8 @@ html {
 }
 
 .pagination__summary {
-  padding: 25px 0;
-
-  @media (min-width: 642px) {
-    float: right;
-  }
+  padding: 0 0;
+  text-align: center;
 }
 
 .btn-group .btn {
@@ -472,7 +471,6 @@ nav[aria-label="navigation"] .pagination > li:last-child > span {
   @include button;
 }
 
-
 .btn-primary {
   @include button($button-colour);
   text-transform: none;
@@ -536,8 +534,8 @@ a.card__body {
   overflow: hidden;
   display: inline-block;
   vertical-align: bottom;
-  -webkit-animation: ellipsis steps(4,end) 900ms infinite;
-  animation: ellipsis steps(4,end) 900ms infinite;
+  -webkit-animation: ellipsis steps(4, end) 900ms infinite;
+  animation: ellipsis steps(4, end) 900ms infinite;
   content: "\2026";
   width: 0;
 }
@@ -554,14 +552,12 @@ a.card__body {
   }
 }
 
-
 @media only screen and (max-width: 600px) {
   .sk-spinner {
     transform: scale(0.85);
   }
 
 }
-
 
 .loader-content {
   padding-top: 15%;
@@ -575,3 +571,21 @@ a.card__body {
   justify-content: center;
 }
 
+
+@media (max-width: 779px) {
+  .btn {
+    margin-bottom: 10px;
+  }
+}
+
+
+#commentContainer {
+  width: 750px;
+  position: relative;
+  margin:0 auto;
+  line-height: 1.4em;
+}
+
+@media only screen and (max-width: 479px){
+  #commentContainer { width: 100%; }
+}

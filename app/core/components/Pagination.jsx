@@ -119,9 +119,9 @@ class Pagination extends React.Component {
         return (
             <div className="grid-row">
                 <nav role="navigation" aria-label="comments-pagination">
-                    <div className="pagination__summary">{summary}</div>
                     <div className="gov-pagination">
-                        <ul className="pagination">
+                        <div className="pagination__summary small">{summary}</div>
+                        <ul className="pagination small">
                             <li className={pager.currentPage === 1 ? 'disabled' : ''}>
                                 <a onClick={() => this.setPage(1)}>First</a>
                             </li>

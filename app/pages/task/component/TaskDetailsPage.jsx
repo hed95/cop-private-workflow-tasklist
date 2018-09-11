@@ -1,99 +1,37 @@
-import React, {PropTypes} from "react";
-import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
-import Comments from "./Comments";
-import StandardTaskInfoPanel from "./StandardTaskInfoPanel";
-import {
-    candidateGroups,
-    isFetchingTask, task, variables
-} from "../selectors";
-import * as actions from "../actions";
+import React from 'react';
+import Actions from "./Actions";
 import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
-import {createStructuredSelector} from "reselect";
-import ImmutablePropTypes from "react-immutable-proptypes";
-import queryString from 'query-string';
-import Attachments from "./Attachments";
-import Audit from "./Audit";
+import {withRouter} from "react-router-dom";
+import connect from "react-redux/es/connect/connect";
+import TaskTitle from "./TaskTitle";
+import Comments from "./Comments";
 import TaskForm from "../../../core/task-form/components/TaskForm";
-import {withRouter} from "react-router";
-import {DataSpinner} from "../../../core/components/DataSpinner";
-const uuidv4 = require('uuid/v4');
-
 
 class TaskDetailsPage extends React.Component {
-
-    componentDidMount() {
-        const params = queryString.parse(this.props.location.search);
-        this.taskId = params.taskId;
-        this.props.fetchTask(this.taskId);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.taskId !== this.props.taskId) {
-            this.props.fetchTask(nextProps.taskId);
-        }
-    }
-
-    componentWillUnmount() {
-        this.props.clearTask();
-    }
-
     render() {
-        const {task, variables, isFetchingTask} = this.props;
+        const {task, candidateGroups, variables} = this.props;
         const hasFormKey = task && task.get('formKey');
-        if (isFetchingTask) {
-            return <DataSpinner message="Loading task information"/>
-        } else {
-            return <div>
-                <h3 className="heading-medium">{task.get('name')}</h3>
-                <Tabs>
-                    <TabList>
-                        <Tab>Details</Tab>
-                        {hasFormKey ? <Tab>Form</Tab> : null}
-                        <Tab>Comments</Tab>
-                        <Tab>Attachments</Tab>
-                        <Tab>Audit</Tab>
-                    </TabList>
-                    <div style={{paddingTop: '10px'}}>
-                        <TabPanel key={uuidv4()}>
-                            <StandardTaskInfoPanel {...this.props} />
-                        </TabPanel>
-                        {hasFormKey ? <TabPanel key={uuidv4()}>
-                            <fieldset>
-                                <TaskForm task={task} variables={variables}/>
-                            </fieldset>
-                        </TabPanel> : null}
-                        <TabPanel key={uuidv4()}>
-                            <Comments taskId={this.taskId}/>
-                        </TabPanel>
-                        <TabPanel key={uuidv4()}>
-                            <Attachments taskId={this.taskId} />
-                        </TabPanel>
-                        <TabPanel key={uuidv4()}>
-                            <Audit taskId={this.taskId} />
-                        </TabPanel>
-                    </div>
-                </Tabs>
+        return <div style={{'paddingTop': '5px'}}>
+            <TaskTitle {...this.props} />
+            <div className="grid-row">
+                <div className="column-two-thirds">
+                    <p className="lede">{task.get('description')}</p>
+                    {hasFormKey ? <TaskForm task={task} variables={variables}/> : <div/>}
+                </div>
+                <div className="column-one-third">
+                    <Comments taskId={task.get("id")}/>
+                </div>
             </div>
-        }
 
+            <Actions task={task} variables={variables}/>
+        </div>
     }
 }
 
-TaskDetailsPage.propTypes = {
-    fetchTask: PropTypes.func.isRequired,
-    isFetchingTask: PropTypes.bool,
-    task: ImmutablePropTypes.map
-};
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
-
-const mapStateToProps = createStructuredSelector({
-    isFetchingTask: isFetchingTask,
-    task: task,
-    candidateGroups: candidateGroups,
-    variables: variables
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TaskDetailsPage));
+export default withRouter(connect((state) => {
+    return {
+        kc: state.keycloak
+    }
+}, mapDispatchToProps)(TaskDetailsPage))

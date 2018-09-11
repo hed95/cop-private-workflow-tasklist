@@ -8,12 +8,14 @@ import {myTasks} from "../selectors";
 import {priority} from "../../../core/util/priority";
 import moment from "moment/moment";
 import {withRouter} from "react-router";
+import {DataSpinner} from "../../../core/components/DataSpinner";
 
 class YourTasks extends React.Component {
 
     componentDidMount() {
         this.props.fetchTasksAssignedToMe("/api/workflow/tasks?assignedToMeOnly=true");
     }
+
     goToTask(taskId) {
         this.props.history.replace(`/task?taskId=${taskId}`);
     }
@@ -22,35 +24,38 @@ class YourTasks extends React.Component {
     render() {
         const {myTasks} = this.props;
         const pointerStyle = {cursor: 'pointer'};
+        if (myTasks.get('isFetchingTasksAssignedToMe')) {
+            return <DataSpinner message="Fetching tasks assigned to you"/>
+        } else {
+            return <div style={{paddingTop: '20px'}}>
+                <div className="data">
+                    <span className="data-item bold-medium">{myTasks.get('total')} tasks assigned to you</span>
+                </div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th scope="col">Task name</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Due</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        myTasks.get('tasks').map((taskData) => {
+                            const task = taskData.get('task');
+                            return <tr style={pointerStyle} onClick={() => this.goToTask(task.get('id'))}
+                                       key={task.get('id')}>
+                                <td>{task.get('name')}</td>
+                                <td>{priority(task.get('priority'))}</td>
+                                <td>{moment().to(moment(task.get('due')))}</td>
+                            </tr>
+                        })
+                    }
 
-        return <div style={{paddingTop: '20px'}}>
-            <div className="data">
-                <span className="data-item bold-medium">{myTasks.get('total')} tasks assigned to you</span>
+                    </tbody>
+                </table>
             </div>
-            <table>
-                <thead>
-                <tr>
-                    <th scope="col">Task name</th>
-                    <th scope="col">Priority</th>
-                    <th scope="col">Due</th>
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    myTasks.get('tasks').map((taskData) => {
-                        const task = taskData.get('task');
-                        return <tr style={pointerStyle} onClick={() => this.goToTask(task.get('id'))}
-                                   key={task.get('id')}>
-                            <td>{task.get('name')}</td>
-                            <td>{priority(task.get('priority'))}</td>
-                            <td>{moment().to(moment(task.get('due')))}</td>
-                        </tr>
-                    })
-                }
-
-                </tbody>
-            </table>
-        </div>
+        }
     }
 }
 

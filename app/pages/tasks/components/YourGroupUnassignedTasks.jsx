@@ -8,6 +8,7 @@ import {unassignedTasks} from "../selectors";
 import moment from "moment";
 import {priority} from "../../../core/util/priority";
 import {withRouter} from "react-router";
+import {DataSpinner} from "../../../core/components/DataSpinner";
 
 class YourGroupUnassignedTasks extends React.Component {
 
@@ -23,36 +24,40 @@ class YourGroupUnassignedTasks extends React.Component {
     render() {
         const {unassignedTasks} = this.props;
         const pointerStyle = {cursor: 'pointer'};
-        return <div style={{paddingTop: '20px'}}>
+        if (unassignedTasks.get('isFetchingUnassignedTasks')) {
+            return <DataSpinner message="Fetching your group unassigned tasks"/>
+        } else {
+            return <div style={{paddingTop: '20px'}}>
 
-            <div className="data">
+                <div className="data">
                 <span
                     className="data-item bold-medium">{unassignedTasks.get('total')} unassigned {unassignedTasks.get('total') === 1 ? 'task' : 'tasks'}</span>
-            </div>
-            <table>
-                <thead>
-                <tr>
-                    <th scope="col">Task name</th>
-                    <th scope="col">Priority</th>
-                    <th scope="col">Due</th>
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    unassignedTasks.get('tasks').map((taskData) => {
-                        const task = taskData.get('task');
-                        return <tr style={pointerStyle} onClick={() => this.goToTask(task.get('id'))}
-                                   key={task.get('id')}>
-                            <td>{task.get('name')}</td>
-                            <td>{priority(task.get('priority'))}</td>
-                            <td>{moment().to(moment(task.get('due')))}</td>
-                        </tr>
-                    })
-                }
+                </div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th scope="col">Task name</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Due</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        unassignedTasks.get('tasks').map((taskData) => {
+                            const task = taskData.get('task');
+                            return <tr style={pointerStyle} onClick={() => this.goToTask(task.get('id'))}
+                                       key={task.get('id')}>
+                                <td>{task.get('name')}</td>
+                                <td>{priority(task.get('priority'))}</td>
+                                <td>{moment().to(moment(task.get('due')))}</td>
+                            </tr>
+                        })
+                    }
 
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
+        }
     }
 }
 

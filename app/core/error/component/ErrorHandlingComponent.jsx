@@ -18,7 +18,7 @@ class ErrorHandlingComponent extends React.Component {
 
         if (unauthorised) {
             return <Redirect push to="/dashboard"/>
-        } else {
+        } else {p
             return <div>
                 <ErrorPanel {...this.props} />
                 {this.props.children}

@@ -8,6 +8,7 @@ import {myGroupTasks} from "../selectors";
 import moment from "moment";
 import {priority} from "../../../core/util/priority";
 import {withRouter} from "react-router";
+import {DataSpinner} from "../../../core/components/DataSpinner";
 
 class YourGroupTasks extends React.Component {
 
@@ -23,38 +24,45 @@ class YourGroupTasks extends React.Component {
     render() {
         const {myGroupTasks} = this.props;
         const pointerStyle = {cursor: 'pointer'};
-        return <div style={{paddingTop: '20px'}}>
 
-            <div className="data">
+        if (myGroupTasks.get('isFetchingMyGroupTasks')) {
+            return <DataSpinner message="Fetching your group tasks"/>
+        } else {
+            return <div style={{paddingTop: '20px'}}>
+
+                <div className="data">
                 <span
                     className="data-item bold-medium">{myGroupTasks.get('total')} {myGroupTasks.get('total') === 1 ? 'task' : 'tasks'} allocated to your team</span>
-            </div>
-            <table>
-                <thead>
-                <tr>
-                    <th scope="col">Task name</th>
-                    <th scope="col">Priority</th>
-                    <th scope="col">Due</th>
-                    <th scope="col">Assignee</th>
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    myGroupTasks.get('tasks').map((taskData) => {
-                        const task = taskData.get('task');
-                        return <tr style={pointerStyle} onClick={() => this.goToTask(task.get('id'))}
-                                   key={task.get('id')}>
-                            <td>{task.get('name')}</td>
-                            <td>{priority(task.get('priority'))}</td>
-                            <td>{moment().to(moment(task.get('due')))}</td>
-                            <td>{task.get('assignee') ? task.get('assignee') : 'Unassigned'}</td>
-                        </tr>
-                    })
-                }
+                </div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th scope="col">Task name</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Due</th>
+                        <th scope="col">Assignee</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        myGroupTasks.get('tasks').map((taskData) => {
+                            const task = taskData.get('task');
+                            return <tr style={pointerStyle} onClick={() => this.goToTask(task.get('id'))}
+                                       key={task.get('id')}>
+                                <td>{task.get('name')}</td>
+                                <td>{priority(task.get('priority'))}</td>
+                                <td>{moment().to(moment(task.get('due')))}</td>
+                                <td>{task.get('assignee') ? task.get('assignee') : 'Unassigned'}</td>
+                            </tr>
+                        })
+                    }
 
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+
     }
 }
 

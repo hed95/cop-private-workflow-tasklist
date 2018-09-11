@@ -4,7 +4,7 @@ import * as actions from './actionTypes';
 const {Map, List} = Immutable;
 
 const initialState = new Map({
-    isFetchingTask: false,
+    isFetchingTask: true,
     isFetchingComments: false,
     isCreatingComment: false,
     comments: new List([]),

@@ -8,18 +8,25 @@ import {connect} from "react-redux";
 import {createStructuredSelector} from "reselect";
 import moment from "moment";
 import Pagination from "../../../core/components/Pagination";
+import ShowMore from 'react-show-more';
+
+const uuidv4 = require('uuid/v4');
+import Collapsible from 'react-collapsible';
 
 class Comments extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            pageOfItems: []
+            pageOfItems: [],
+            isOpen: true
         };
+
         this.onChangePage = this.onChangePage.bind(this);
     }
+
     onChangePage(pageOfItems) {
-        this.setState({ pageOfItems: pageOfItems });
+        this.setState({pageOfItems: pageOfItems});
     }
 
     componentDidMount() {
@@ -38,31 +45,44 @@ class Comments extends React.Component {
             this.props.fetchComments(`/api/workflow/tasks/${nextProps.taskId}/comments`);
         }
     }
+
     render() {
 
         const {isFetchingComments, comments} = this.props;
+        const pointerStyle = {cursor: 'pointer', textDecoration: 'underline'};
+
+        const commentsView = <Collapsible triggerStyle={pointerStyle} trigger={this.state.isOpen ? 'Hide all comments' : 'Show all comments'} open={true} onOpen={() =>{
+            this.setState({isOpen: true});
+        }} onClose={() => {
+            this.setState({isOpen: false});
+        }}><div>
+            {this.state.pageOfItems.map((comment) => {
+                return <div key={uuidv4()}>
+                            <span className="font-xsmall">{comment.get('email')} <span
+                                className="text-secondary"> {moment(comment.get('createdon')).fromNow(false)}</span></span>
+                    <div className="gov-panel">
+                        <div className="panel panel-border-wide small">
+                            <ShowMore
+                                lines={1}
+                                more='Show more'
+                                less='Show less'
+                                anchorClass=''>
+                                {comment.get('taskcomment')}
+                            </ShowMore>
+                        </div>
+                    </div>
+                </div>
+            })}
+            <Pagination items={comments} pageSize={5} onChangePage={this.onChangePage}/>
+        </div></Collapsible>;
         return <div>
             <div className="data">
-                <span className="data-item bold-medium">{comments.size} {comments.size === 1? 'comment' : 'comments'}</span>
+                <span
+                    className="data-item bold-medium">{comments.size} {comments.size === 1 ? 'comment' : 'comments'}</span>
             </div>
-            {!isFetchingComments ? <div>
-                    {this.state.pageOfItems.map((comment) => {
-                        return <div key={comment.get('id')}>
-                            {comment.get('email')} <span style={{
-                            color: '#6f777b',
-                            fontSize: '16px',
-                            lineHeight: '1.25'
-                        }}> {moment(comment.get('createdon')).fromNow(false)}</span>
-                            <div className="comment-body">
-                                <p>{comment.get('taskcomment')}</p>
-                            </div>
-                        </div>
-                    })}
-                    <Pagination items={comments} pageSize={5} onChangePage={this.onChangePage} />
-                </div> :
-                <div/>}
 
-                <CreateComment taskId={this.props.taskId}/>
+            {!isFetchingComments && comments.size !== 0 ? commentsView : <div/>}
+            <CreateComment taskId={this.props.taskId}/>
 
         </div>
     }

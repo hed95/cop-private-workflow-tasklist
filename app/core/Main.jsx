@@ -8,7 +8,7 @@ import AdminPage from "../pages/admin/components/AdminPage";
 import ShiftScopedRoute from "./shift/ShiftScopedRoute";
 import CalendarPage from "../pages/calendar/components/CalendarPage";
 import ProcessStartPage from "../pages/procedures/components/ProcedureStartPage";
-import TaskDetailsPage from "../pages/task/component/TaskDetailsPage";
+import TaskDetailsPage from "../pages/task/component/TaskPage";
 import ReportPage from "../pages/reports/components/ReportPage";
 import DashboardPage from "../pages/dashboard/components/DashboardPage";
 import YourTasks from "../pages/tasks/components/YourTasks";

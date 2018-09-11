@@ -22,7 +22,7 @@ class CreateComment extends React.Component {
                 noAlerts: true
             };
             if (form) {
-                return <Form form={form} options={options}
+                return <div><Form form={form} options={options}
                                ref={(form) => this.form = form}
                                onSubmit={(submission) =>{
                                    this.props.createComment({taskId: this.props.taskId, comment: submission.data});
@@ -30,7 +30,7 @@ class CreateComment extends React.Component {
                                    this.form.formio.resetValue();
                                    this.form.formio.render();
 
-                               }}/>
+                               }}/></div>
             } else {
                 return <div/>
             }
@@ -38,7 +38,7 @@ class CreateComment extends React.Component {
     }
 
     render() {
-        return <div>
+        return <div id="commentContainer">
             {this.renderForm()}
         </div>
 

@@ -84,7 +84,7 @@ const NotificationTask = ({task, action}) => {
             case 100:
                 return 'Urgent';
             default:
-                return 'StandardInfoPanel';
+                return 'Standard';
         }
     };
 

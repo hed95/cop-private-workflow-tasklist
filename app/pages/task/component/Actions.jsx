@@ -29,7 +29,7 @@ export default class Actions extends React.Component {
                     {actions}
                 </div>
                 {actions && actions.length >= 1 ?
-                    <div className="gov-panel" style={{paddingTop: '10px'}}>
+                    <div className="gov-panel" style={{paddingTop: '20px'}}>
                         <details>
                             <summary><span className="summary">Help with actions</span></summary>
                             <div className="panel panel-border-wide">
