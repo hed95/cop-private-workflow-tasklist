@@ -5,7 +5,7 @@ export default class NotFound extends React.Component {
     render() {
         const {resource, id} = this.props;
         return <div>
-            {resource} with {id} was not found
+            {resource} with identifier {id} was not found
         </div>
     }
 }
