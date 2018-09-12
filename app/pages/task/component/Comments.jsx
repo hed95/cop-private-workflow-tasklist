@@ -80,9 +80,8 @@ class Comments extends React.Component {
                 <span
                     className="data-item bold-medium">{comments.size} {comments.size === 1 ? 'comment' : 'comments'}</span>
             </div>
-
-            {!isFetchingComments && comments.size !== 0 ? commentsView : <div/>}
             <CreateComment taskId={this.props.taskId}/>
+            {!isFetchingComments && comments.size !== 0 ? commentsView : <div/>}
 
         </div>
     }

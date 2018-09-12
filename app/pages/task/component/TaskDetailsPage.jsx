@@ -17,13 +17,14 @@ class TaskDetailsPage extends React.Component {
                 <div className="column-two-thirds" style={{paddingTop: '10px'}}>
                     <p>{task.get('description')}</p>
                     {hasFormKey ? <TaskForm task={task} variables={variables}/> : <div/>}
+                    <Actions task={task} variables={variables}/>
                 </div>
                 <div className="column-one-third" style={{paddingTop: '10px'}}>
                     <Comments taskId={task.get("id")}/>
                 </div>
             </div>
 
-            <Actions task={task} variables={variables}/>
+
         </div>
     }
 }
