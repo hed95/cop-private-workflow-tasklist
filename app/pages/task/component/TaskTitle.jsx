@@ -17,17 +17,17 @@ export default class TaskTitle extends React.Component {
                 </div>
             </div>
             <div className="grid-row">
-                <div className="column-full text-secondary font-small">
-                    {!task.get('assignee') ?
-                        <div>Unassigned</div> : (task.get('assignee') !== this.props.kc.tokenParsed.email ? `Assigned to ${task.get('assignee')}` : "Assigned to you")}
-                </div>
-            </div>
-            <div className="grid-row">
                 <div
                     className="column-one-third text-secondary font-small">Due: {moment().to(moment(task.get('due')))}</div>
                 <div className="column-one-third text-secondary font-small">Priority: {taskPriority}</div>
                 <div
                     className="column-one-third text-secondary font-small">Team: {candidateGroups.toJS().toString()}</div>
+            </div>
+            <div className="grid-row">
+                <div className="column-full text-secondary font-small">
+                    {!task.get('assignee') ?
+                        <div>Unassigned</div> : (task.get('assignee') !== this.props.kc.tokenParsed.email ? `Assigned to ${task.get('assignee')}` : "Assigned to you")}
+                </div>
             </div>
         </div>
     }

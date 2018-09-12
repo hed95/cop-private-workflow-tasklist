@@ -9,9 +9,9 @@ import TaskForm from "../../../core/task-form/components/TaskForm";
 
 class TaskDetailsPage extends React.Component {
     render() {
-        const {task, candidateGroups, variables} = this.props;
+        const {task,variables} = this.props;
         const hasFormKey = task && task.get('formKey');
-        return <div style={{'paddingTop': '5px'}}>
+        return <div>
             <TaskTitle {...this.props} />
             <div className="grid-row">
                 <div className="column-two-thirds" style={{paddingTop: '10px'}}>
