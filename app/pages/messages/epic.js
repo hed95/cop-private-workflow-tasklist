@@ -3,7 +3,6 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/merge';
 import {combineEpics} from 'redux-observable';
 import client from '../../common/rest/client';
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
 
 import * as types from './actionTypes';
 import * as actions from './actions';

@@ -14,6 +14,7 @@ import form from './start-forms/index';
 import {routerReducer} from 'react-router-redux'
 import {combineEpics} from 'redux-observable';
 import dashboard from "../pages/dashboard";
+import appConfigReducer from "../common/appConfigReducer";
 
 export const rootEpic = combineEpics(
     notificationPage.epic,
@@ -32,6 +33,7 @@ export const rootReducer = combineReducers({
     loadingBar: loadingBarReducer,
     routing: routerReducer,
     keycloak: keycloakReducer,
+    appConfig: appConfigReducer,
     [notificationPage.constants.NAME]: notificationPage.reducer,
     [shift.constants.NAME]: shift.reducer,
     [form.constants.NAME]: form.reducer,

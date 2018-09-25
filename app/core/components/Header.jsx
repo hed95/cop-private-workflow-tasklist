@@ -25,14 +25,14 @@ class Header extends React.Component {
     }
 
     render() {
-
         const pointerStyle = {cursor: 'pointer', alignContent: 'right'};
         return <div>
             <header role="banner" id="global-header" className="with-proposition">
                 <div className="header-wrapper">
                     <div className="header-global">
                         <div className="header-logo">
-                            <a href="https://www.gov.uk/government/organisations/border-force" title="Go to the GOV.UK homepage" id="logo"
+                            <a href="https://www.gov.uk/government/organisations/border-force"
+                               title="Go to the GOV.UK homepage" id="logo"
                                className="content">
                                 <img src={img} width="36" height="32" alt=""/> UK Border Force
                             </a>
@@ -40,11 +40,12 @@ class Header extends React.Component {
                     </div>
                     <div className="header-proposition">
                         <div className="content">
-                            <div className="grid-row" style={{paddingTop:'10px'}}>
+                            <div className="grid-row" style={{paddingTop: '10px'}}>
                                 <div className="column-two-thirds">
-                                    <a href="#" onClick={(event) => this.dashboard(event)} id="proposition-name">Operational Activities</a>
+                                    <a href="#" onClick={(event) => this.dashboard(event)} id="proposition-name">Operational
+                                        Activities</a>
                                 </div>
-                                <div className="column-one-third">
+                                <div className="column-one-quarter">
                                     <ul id="proposition-links">
                                         <li style={pointerStyle}><a id="logout" onClick={this.logout}>Logout</a></li>
                                     </ul>
@@ -56,6 +57,12 @@ class Header extends React.Component {
                 </div>
             </header>
             <div id="global-header-bar"/>
+            <div className="phase-banner container">
+                <p>
+                    <strong className="phase-tag">{this.props.appConfig.uiVersion}</strong>
+                    <strong className="phase-tag">{this.props.appConfig.uiEnvironment}</strong>
+                </p>
+            </div>
             <LoadingBar
                 updateTime={100}
                 maxProgress={100}
@@ -72,6 +79,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
 export default withRouter(connect((state) => {
     return {
-        kc: state.keycloak
+        kc: state.keycloak,
+        appConfig: state.appConfig
     }
 }, mapDispatchToProps)(Header))

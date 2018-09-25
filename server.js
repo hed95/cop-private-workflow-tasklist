@@ -193,7 +193,9 @@ app.get('/api/config', (req, res) => {
         'REALM': process.env.AUTH_REALM,
         'AUTH_URL': process.env.AUTH_URL,
         'CLIENT_ID': process.env.AUTH_CLIENT_ID,
-        'MODELER_URL': bpmnModelerUrl
+        'MODELER_URL': bpmnModelerUrl,
+        "UI_VERSION": process.env.UI_VERSION,
+        "UI_ENVIRONMENT" : process.env.UI_ENVIRONMENT
     })
 });
 

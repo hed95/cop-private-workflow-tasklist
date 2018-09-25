@@ -67,6 +67,10 @@ if (process.env.NODE_ENV === 'production') {
             "url": data.AUTH_URL,
             "clientId": data.CLIENT_ID
         });
+        store.getState().appConfig = {
+            "uiVersion": data.UI_VERSION,
+            "uiEnvironment": data.UI_ENVIRONMENT
+        };
         renderApp(App);
     })
 } else {
@@ -75,6 +79,10 @@ if (process.env.NODE_ENV === 'production') {
         "url": process.env.AUTH_URL,
         "clientId": process.env.CLIENT_ID
     });
+    store.getState().appConfig = {
+        "uiVersion": process.env.UI_VERSION || "ALPHA",
+        "uiEnvironment": process.env.UI_ENVIRONMENT || 'Local'
+    };
     renderApp(App);
 
 }

@@ -1,20 +1,12 @@
 import React, {PropTypes} from "react";
-import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
-import Comments from "./Comments";
 import StandardTaskSummaryPage from "./StandardTaskSummaryPage";
-import {
-    candidateGroups,
-    isFetchingTask, task, variables
-} from "../selectors";
+import {candidateGroups, isFetchingTask, task, variables} from "../selectors";
 import * as actions from "../actions";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {createStructuredSelector} from "reselect";
 import ImmutablePropTypes from "react-immutable-proptypes";
 import queryString from 'query-string';
-import Attachments from "./Attachments";
-import Audit from "./Audit";
-import TaskForm from "../../../core/task-form/components/TaskForm";
 import {withRouter} from "react-router";
 import {DataSpinner} from "../../../core/components/DataSpinner";
 import TaskDetailsPage from "./TaskDetailsPage";
