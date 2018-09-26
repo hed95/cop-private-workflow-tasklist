@@ -25,7 +25,7 @@ class ProcessesPage extends React.Component {
         const {isFetchingProcessDefinitions, processDefinitions} = this.props;
         const pointerStyle = {cursor: 'pointer'};
         return <div>
-            <div className="grid-row" style={{width: '100%', height: '150px'}}>
+            <div className="grid-row">
                 <div className="column-one-half">
                     <h2 className="heading-large">
                     <span

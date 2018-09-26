@@ -33,7 +33,7 @@ class ReportsPage extends React.Component {
         }
 
         return <div>
-            <div className="grid-row" style={{width: '100%', height: '150px'}}>
+            <div className="grid-row">
                 <div className="column-one-half">
                     <h2 className="heading-large">
                     <span
