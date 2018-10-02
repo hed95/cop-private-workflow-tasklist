@@ -1,17 +1,19 @@
 import React, {PropTypes} from 'react'
 import {
     form, loadingTaskForm, submittingTaskFormForCompletion,
-    taskFormValidationSuccessful,
     taskFormCompleteSuccessful
 } from "../selectors";
 import {bindActionCreators} from "redux";
-import * as actions from "../actions";
+import * as taskFormActions from "../actions";
+import * as taskActions from '../../../pages/task/actions';
 
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {Form} from 'react-formio';
 import {createStructuredSelector} from "reselect";
 import Spinner from 'react-spinkit';
+import {unclaimSuccessful} from "../../../pages/task/selectors";
+import AppConstants from "../../../common/AppConstants";
 
 class TaskForm extends React.Component {
 
@@ -25,13 +27,18 @@ class TaskForm extends React.Component {
             && nextProps.submittingTaskFormForCompletion !== true) {
             if (nextProps.taskFormCompleteSuccessful) {
                 this.form.formio.emit("submitDone");
-                this.props.history.replace("/tasks");
+                this.props.history.replace(AppConstants.YOUR_TASKS_PATH);
             } else {
                 this.form.formio.emit("error");
                 this.form.formio.emit('change', this.form.formio.submission);
             }
         }
+
+        if (nextProps.unclaimSuccessful) {
+            this.props.history.push(AppConstants.DASHBOARD_PATH);
+        }
     }
+
     componentWillUnmount() {
         this.form = null;
         this.props.resetForm();
@@ -50,33 +57,34 @@ class TaskForm extends React.Component {
                 options.readOnly = true;
             }
 
-            if (form) {
-                const submit = form.components.find(c => c.key === 'submit');
-                const submissionData = variables['submissionData'];
-                if (submit) {
-                    const variableInput = form.components.find(c => c.key === 'submitVariableName');
-                    const variableName = variableInput.defaultValue;
-
-                    if (submissionData) {
-                        return <Form form={form} options={options} ref={(form) => this.form = form}
-                                     submission={JSON.parse(submissionData)} onSubmit={(submission) => {
-                            this.props.submitTaskForm(form._id, task.get('id'), submission.data, variableName);
-
-                        }}/>
-                    } else {
-                        return <Form form={form} ref={(form) => this.form = form} options={options}
-                                     onSubmit={(submission) => {
-                                         this.props.submitTaskForm(form._id, task.get('id'), submission.data, variableName);
-                                     }}/>
-                    }
-
-                } else {
-                    return <Form form={form} options={
-                        options
-                    } ref={(form) => this.form = form}
-                                 submission={JSON.parse(submissionData)}/>
+            const onCustomEvent = (event) => {
+                if (event.type === 'unclaim') {
+                    this.props.unclaimTask(task.get('id'));
                 }
+                if (event.type === 'cancel') {
+                    this.props.history.replace(AppConstants.YOUR_GROUP_TASKS_PATH);
+                }
+            };
 
+            if (form) {
+                const submissionData = variables['submissionData'];
+                const variableInput = form.components.find(c => c.key === 'submitVariableName');
+                const variableName = variableInput ? variableInput : form.path;
+
+                if (submissionData) {
+                    return <Form form={form} options={options} ref={(form) => this.form = form}
+                                 onCustomEvent={(event) => onCustomEvent(event)}
+                                 submission={JSON.parse(submissionData)} onSubmit={(submission) => {
+                        this.props.submitTaskForm(form._id, task.get('id'), submission.data, variableName);
+
+                    }}/>
+                } else {
+                    return <Form form={form} ref={(form) => this.form = form} options={options}
+                                 onCustomEvent={(event) => onCustomEvent(event)}
+                                 onSubmit={(submission) => {
+                                     this.props.submitTaskForm(form._id, task.get('id'), submission.data, variableName);
+                                 }}/>
+                }
 
             } else {
                 return <div/>
@@ -100,6 +108,7 @@ class TaskForm extends React.Component {
 TaskForm.propTypes = {
     submitTaskForm: PropTypes.func.isRequired,
     fetchTaskForm: PropTypes.func.isRequired,
+    unclaimTask: PropTypes.func.isRequired,
     resetForm: PropTypes.func.isRequired,
     loadingTaskForm: PropTypes.bool
 };
@@ -109,12 +118,12 @@ const mapStateToProps = createStructuredSelector({
     form: form,
     loadingTaskForm: loadingTaskForm,
     submittingTaskFormForCompletion: submittingTaskFormForCompletion,
-    taskFormCompleteSuccessful: taskFormCompleteSuccessful
-
+    taskFormCompleteSuccessful: taskFormCompleteSuccessful,
+    unclaimSuccessful: unclaimSuccessful
 });
 
 
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(Object.assign({}, taskFormActions, taskActions), dispatch);
 
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TaskForm));

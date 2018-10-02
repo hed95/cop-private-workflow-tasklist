@@ -28,7 +28,9 @@ class ProcessStartPage extends React.Component {
         const {isFetchingProcessDefinition, processDefinition, submittingToWorkflow} = this.props;
         const pointerStyle = {cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline'};
         return <div>
-            <div style={pointerStyle} onClick={(event) => this.props.history.replace('/procedures')}>Back to procedures</div>
+            <div style={pointerStyle} onClick={(event) => this.props.history.replace('/procedures')}>Back to
+                procedures
+            </div>
             <div className="grid-row">
                 {submittingToWorkflow ?
                     <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
@@ -38,9 +40,12 @@ class ProcessStartPage extends React.Component {
                     <fieldset>
                         {isFetchingProcessDefinition ? <div>Loading form...</div> : <div>
                             {processDefinition ? <div>
-                                <legend>
-                                    <h3 className="heading-medium">{processDefinition.getIn(['process-definition', 'name'])}</h3>
-                                </legend>
+
+                                <h2 className="heading-large">
+                    <span
+                        className="heading-secondary">Operational procedure</span> {processDefinition.getIn(['process-definition', 'name'])}
+                                </h2>
+
 
                                 <StartForm formName={processDefinition.get('formKey')}
                                            processKey={processDefinition.getIn(['process-definition', 'key'])}

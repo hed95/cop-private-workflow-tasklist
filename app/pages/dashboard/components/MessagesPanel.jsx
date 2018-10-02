@@ -7,6 +7,7 @@ import {bindActionCreators} from "redux";
 import * as actions from "../actions";
 import {connect} from "react-redux";
 import Poller from "../Poller";
+import AppConstants from "../../../common/AppConstants";
 
 class MessagesPanel extends React.Component {
 
@@ -39,7 +40,7 @@ class MessagesPanel extends React.Component {
     messages(e) {
         e.preventDefault();
         this.props.history.replace({
-            pathname: "/messages",
+            pathname: AppConstants.MESSAGES_PATH,
             shiftPresent: this.props.hasActiveShift
         });
     }

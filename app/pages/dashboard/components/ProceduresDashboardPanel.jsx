@@ -1,5 +1,7 @@
 import React from "react";
 import {withRouter} from "react-router";
+import App from "../../../core/App";
+import AppConstants from "../../../common/AppConstants";
 
 class ProceduresDashboardPanel extends React.Component {
 
@@ -7,7 +9,7 @@ class ProceduresDashboardPanel extends React.Component {
     procedures(e) {
         e.preventDefault();
         this.props.history.replace({
-            pathname: "/procedures", state: {
+            pathname: AppConstants.PROCEDURES_PATH, state: {
                 shiftPresent: this.props.hasActiveShift
             }
         });

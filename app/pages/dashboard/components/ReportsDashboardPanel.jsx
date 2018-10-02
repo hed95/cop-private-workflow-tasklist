@@ -1,5 +1,6 @@
 import React from "react";
 import {withRouter} from "react-router";
+import AppConstants from "../../../common/AppConstants";
 
 class ReportsDashboardPanel extends React.Component {
 
@@ -7,7 +8,7 @@ class ReportsDashboardPanel extends React.Component {
     reports(e) {
         e.preventDefault();
         this.props.history.replace({
-            pathname: "/reports",
+            pathname: AppConstants.REPORTS_PATH,
             shiftPresent: this.props.hasActiveShift
         });
     }

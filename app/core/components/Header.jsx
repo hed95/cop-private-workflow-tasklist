@@ -27,6 +27,7 @@ class Header extends React.Component {
     render() {
         const pointerStyle = {cursor: 'pointer', alignContent: 'right'};
         return <div>
+
             <header role="banner" id="global-header" className="with-proposition">
                 <div className="header-wrapper">
                     <div className="header-global">

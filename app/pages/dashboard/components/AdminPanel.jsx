@@ -2,13 +2,14 @@ import React from 'react'
 import {bindActionCreators} from "redux";
 import {withRouter} from "react-router-dom";
 import connect from "react-redux/es/connect/connect";
+import AppConstants from "../../../common/AppConstants";
 
 class AdminPanel extends React.Component {
 
     admin(e) {
         e.preventDefault();
         this.props.history.replace({
-            pathname: "/admin",
+            pathname: AppConstants.ADMIN_PATH,
             shiftPresent: this.props.hasActiveShift
         });
     }

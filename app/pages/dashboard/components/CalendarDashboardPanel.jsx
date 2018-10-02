@@ -1,5 +1,6 @@
 import React from 'react';
 import {withRouter} from "react-router";
+import AppConstants from "../../../common/AppConstants";
 
 class CalendarDashboardPanel extends React.Component {
 
@@ -7,7 +8,7 @@ class CalendarDashboardPanel extends React.Component {
     calendar(e) {
         e.preventDefault();
         this.props.history.replace({
-            pathname: "/calendar",
+            pathname: AppConstants.CALENDAR_PATH,
             shiftPresent: this.props.hasActiveShift
         });
     }

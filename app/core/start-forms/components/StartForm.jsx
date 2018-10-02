@@ -8,9 +8,10 @@ import * as actions from "../actions";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {Form} from 'react-formio';
+import NotFound from "../../components/NotFound";
+import AppConstants from "../../../common/AppConstants";
 
 class StartForm extends React.Component {
-
     componentDidMount() {
         if (this.props.formName) {
             const formDataContext = this.props.formDataContext;
@@ -27,7 +28,7 @@ class StartForm extends React.Component {
         if (this.form && this.form.formio.data.submit) {
             if (nextProps.submissionToWorkflowSuccessful) {
                 this.form.formio.emit("submitDone");
-                this.props.history.replace("/tasks");
+                this.props.history.replace(AppConstants.DASHBOARD_PATH);
             } else {
                 if (!nextProps.submittingToWorkflow) {
                     this.form.formio.emit("error");
@@ -42,36 +43,34 @@ class StartForm extends React.Component {
         this.props.resetForm();
     }
 
-
-    renderForm() {
+    render() {
         const {loadingForm, form, processName, processKey, formName} = this.props;
-
         if (loadingForm) {
             return <div>Loading form for {processName} </div>
         } else {
             const options = {
                 noAlerts: true
             };
+            const onCustomEvent = (event) => {
+                if (event.type === 'cancel') {
+                    this.props.history.replace(AppConstants.DASHBOARD_PATH);
+                }
+            };
             if (form) {
                 const variableInput = form.components.find(c => c.key === 'submitVariableName');
                 const variableName = variableInput ? variableInput.defaultValue : formName;
                 const process = processName ? processName : processKey;
                 return <Form form={form} ref={(form) => this.form = form} options={options}
+                             onCustomEvent={(event) => onCustomEvent(event)}
                              onSubmit={(submission) => {
                                  this.props.submit(form._id, processKey, variableName, submission.data, process);
 
                              }}/>
             } else {
-                return <div/>
+                return <NotFound resource="Form" id={this.props.formName}/>
             }
 
         }
-    }
-
-    render() {
-        return <div>
-            {this.renderForm()}
-        </div>
     }
 }
 
