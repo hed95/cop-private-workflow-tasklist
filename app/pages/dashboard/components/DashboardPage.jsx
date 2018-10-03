@@ -6,7 +6,7 @@ import {bindActionCreators} from "redux";
 import * as actions from "../../../core/shift/actions";
 import connect from "react-redux/es/connect/connect";
 import {
-    hasActiveShift, isFetchingShift
+    hasActiveShift, isFetchingShift, shift
 } from "../../../core/shift/selectors";
 import {errors, hasError} from "../../../core/error/selectors";
 import ErrorPanel from "../../../core/error/component/ErrorPanel";
@@ -48,8 +48,8 @@ class DashboardPage extends React.Component {
             return <div>
                 {headerToDisplay}
                 <ErrorPanel {...this.props} />
-                <DashboardTitle hasActiveShift={hasActiveShift}/>
-                <DashboardPanel hasActiveShift={hasActiveShift}/>
+                <DashboardTitle hasActiveShift={hasActiveShift} />
+                <DashboardPanel hasActiveShift={hasActiveShift} shift={this.props.shift}/>
             </div>
         }
 
@@ -73,6 +73,7 @@ export default withRouter(connect((state) => {
         hasActiveShift: hasActiveShift(state),
         hasError: hasError(state),
         errors: errors(state),
-        isFetchingShift: isFetchingShift(state)
+        isFetchingShift: isFetchingShift(state),
+        shift: shift(state)
     }
 }, mapDispatchToProps)(DashboardPage))
