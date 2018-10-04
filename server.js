@@ -169,6 +169,25 @@ app.use('/api/translation', proxy(
     }
 ));
 
+app.use('/ws/workflow', proxy(
+    {
+        target: workflowUrl,
+        onProxyReq: function onProxyReq(proxyReq, req, res) {
+            console.log('websocket workflow Service Proxy -->  ', req.method, req.path, '-->', workflowUrl, proxyReq.path);
+        },
+        onError: function onError(err, req, res) {
+            console.error(err);
+            res.status(500);
+            res.json({error: 'Error when connecting to remote server.'});
+        },
+        logLevel: 'debug',
+        changeOrigin: true,
+        secure: true,
+        ws: true,
+        agent: https.globalAgent
+    }
+));
+
 app.use('/api/reports', proxy(
     {
         target: reportingServiceUrl,

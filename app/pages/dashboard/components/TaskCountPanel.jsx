@@ -6,22 +6,24 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import * as actions from "../actions";
 import ImmutablePropTypes from "react-immutable-proptypes";
-import Poller from "../Poller";
 import AppConstants from "../../../common/AppConstants";
+import PubSub from "pubsub-js";
 
 class TaskCountPanel extends React.Component {
 
     constructor(props) {
         super(props);
-        this.poller = new Poller(1, "taskCounts");
         this.yourTeamTotalTasks = this.yourTeamTotalTasks.bind(this);
         this.yourTasks = this.yourTasks.bind(this);
         this.yourTeamUnassignedTasks = this.yourTeamUnassignedTasks.bind(this);
+        PubSub.subscribe('refreshCount', (msg, data) => {
+            console.log("Refreshing task count...");
+            this.props.fetchTaskCounts();
+        });
     }
 
     componentDidMount() {
         if (this.props.hasActiveShift) {
-            this.poller.startPoller(this.props.fetchTaskCounts);
             this.props.fetchTaskCounts();
         } else {
             this.props.setDefaultCounts();
@@ -29,14 +31,11 @@ class TaskCountPanel extends React.Component {
     }
 
     componentWillUnmount() {
-        this.poller.cancelPoller();
     }
-
 
 
     componentWillReceiveProps(nextProps) {
         if (this.props.hasActiveShift !== nextProps.hasActiveShift && nextProps.hasActiveShift) {
-            this.poller.startPoller(this.props.fetchTaskCounts);
             this.props.fetchTaskCounts();
         }
     }
@@ -44,7 +43,10 @@ class TaskCountPanel extends React.Component {
 
     yourTasks(e) {
         e.preventDefault();
-        this.props.history.replace({pathname: AppConstants.YOUR_TASKS_PATH, state: {shiftPresent: this.props.hasActiveShift}})
+        this.props.history.replace({
+            pathname: AppConstants.YOUR_TASKS_PATH,
+            state: {shiftPresent: this.props.hasActiveShift}
+        })
     }
 
     yourTeamUnassignedTasks(e) {
@@ -57,7 +59,10 @@ class TaskCountPanel extends React.Component {
 
     yourTeamTotalTasks(e) {
         e.preventDefault();
-        this.props.history.replace({pathname: AppConstants.YOUR_GROUP_TASKS_PATH, state: {shiftPresent: this.props.hasActiveShift}})
+        this.props.history.replace({
+            pathname: AppConstants.YOUR_GROUP_TASKS_PATH,
+            state: {shiftPresent: this.props.hasActiveShift}
+        })
     }
 
     render() {

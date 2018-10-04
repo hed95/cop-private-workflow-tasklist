@@ -6,20 +6,22 @@ import {isFetchingMessageCounts, messageCounts} from "../selectors";
 import {bindActionCreators} from "redux";
 import * as actions from "../actions";
 import {connect} from "react-redux";
-import Poller from "../Poller";
 import AppConstants from "../../../common/AppConstants";
+import PubSub from "pubsub-js";
 
 class MessagesPanel extends React.Component {
 
     constructor(props) {
         super(props);
-        this.poller = new Poller(1, "messageCounts");
         this.messages = this.messages.bind(this);
+        PubSub.subscribe('refreshCount', (msg, data) => {
+            console.log("Refreshing messages count...");
+            this.props.fetchTaskCounts();
+        });
     }
 
     componentDidMount() {
         if (this.props.hasActiveShift) {
-            this.poller.startPoller(this.props.fetchMessageCounts);
             this.props.fetchMessageCounts();
         } else {
             this.props.setDefaultCounts();
@@ -28,13 +30,11 @@ class MessagesPanel extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
         if (this.props.hasActiveShift !== nextProps.hasActiveShift && nextProps.hasActiveShift) {
-            this.poller.startPoller(this.props.fetchMessageCounts);
             this.props.fetchMessageCounts();
         }
     }
 
     componentWillUnmount() {
-        this.poller.cancelPoller();
     }
 
     messages(e) {

@@ -57,6 +57,10 @@ module.exports = webpackMerge(commonConfig, {
                 secure: false,
                 changeOrigin: true
             },
+            "/ws/workflow": {
+                target: workflowUrl,
+                ws: true
+            },
             "/api/workflow": {
                 target: workflowUrl,
                 changeOrigin: true,
