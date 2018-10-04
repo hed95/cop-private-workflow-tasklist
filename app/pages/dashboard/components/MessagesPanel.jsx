@@ -16,7 +16,7 @@ class MessagesPanel extends React.Component {
         this.messages = this.messages.bind(this);
         PubSub.subscribe('refreshCount', (msg, data) => {
             console.log("Refreshing messages count...");
-            this.props.fetchTaskCounts();
+            this.props.fetchMessageCounts();
         });
     }
 
