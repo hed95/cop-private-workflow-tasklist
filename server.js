@@ -173,8 +173,8 @@ app.use('/api/translation', proxy(
 const wsProxy = proxy(
     {
         target: workflowUrl,
-        onProxyReq: function onProxyReq(proxyReq, req, res) {
-            console.log('websocket workflow Service Proxy -->  ', req.method, req.path, '-->', workflowUrl, proxyReq.path);
+        onProxyReqWs: (...args) => {
+            console.log('websockets proxy req', args)
         },
         onError: function onError(err, req, res) {
             console.error(err);
