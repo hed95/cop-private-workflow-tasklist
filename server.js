@@ -169,7 +169,8 @@ app.use('/api/translation', proxy(
     }
 ));
 
-app.use('/ws/workflow', proxy(
+
+const wsProxy = proxy(
     {
         target: workflowUrl,
         onProxyReq: function onProxyReq(proxyReq, req, res) {
@@ -186,7 +187,8 @@ app.use('/ws/workflow', proxy(
         ws: true,
         agent: https.globalAgent
     }
-));
+);
+app.use('/ws/workflow', wsProxy);
 
 app.use('/api/reports', proxy(
     {
@@ -226,6 +228,7 @@ app.all('*', function (req, res) {
 const server = http.createServer(app).listen(app.get('port'), function () {
     console.log('TaskList Prod server listening on port ' + app.get('port'));
 });
+server.on('upgrade', wsProxy.upgrade);
 
 process.on('SIGTERM', shutDown);
 process.on('SIGINT', shutDown);
