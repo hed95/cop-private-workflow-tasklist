@@ -181,7 +181,7 @@ app.use('/ws/workflow', proxy(
             res.json({error: 'Error when connecting to remote server.'});
         },
         logLevel: 'debug',
-        changeOrigin: true,
+        changeOrigin: false,
         secure: true,
         ws: true,
         agent: https.globalAgent
