@@ -170,25 +170,6 @@ app.use('/api/translation', proxy(
 ));
 
 
-const wsProxy = proxy(
-    {
-        target: workflowUrl,
-        onProxyReqWs: (...args) => {
-            console.log('websockets proxy req', args)
-        },
-        onError: function onError(err, req, res) {
-            console.error(err);
-            res.status(500);
-            res.json({error: 'Error when connecting to remote server.'});
-        },
-        logLevel: 'debug',
-        changeOrigin: true,
-        secure: true,
-        ws: true,
-        agent: https.globalAgent
-    }
-);
-app.use('/ws/workflow', wsProxy);
 
 app.use('/api/reports', proxy(
     {
