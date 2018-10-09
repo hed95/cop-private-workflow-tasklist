@@ -209,7 +209,6 @@ app.all('*', function (req, res) {
 const server = http.createServer(app).listen(app.get('port'), function () {
     console.log('TaskList Prod server listening on port ' + app.get('port'));
 });
-server.on('upgrade', wsProxy.upgrade);
 
 process.on('SIGTERM', shutDown);
 process.on('SIGINT', shutDown);
