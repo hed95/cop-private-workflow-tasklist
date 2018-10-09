@@ -37,10 +37,11 @@ class DashboardPanel extends React.Component {
                 PubSub.publish("refreshCount", {});
             });
             this.subcriptions.set("userSub", userSub);
+            console.log("Number of subscriptions " + this.subcriptions.length);
 
         }, (error) => {
             if (error) {
-                console.log(`Failed to connect ${error}`);
+                console.log(`Failed to connect ${error}...will retry to connect in 60 seconds`);
             }
             if (this.connected) {
                 this.connected = false;
@@ -59,11 +60,13 @@ class DashboardPanel extends React.Component {
         }
         console.log("Disconnecting websocket");
         if (this.connected) {
-            this.subscriptions.forEach((subid, sub) => {
-               console.log("Disconnecting sub" + subid);
-                sub.unsubscribe();
-            });
-            this.subcriptions.clear();
+            if (this.subcriptions) {
+                this.subscriptions.forEach((subid, sub) => {
+                    console.log("Disconnecting sub" + subid);
+                    sub.unsubscribe();
+                });
+                this.subcriptions.clear();
+            }
             this.connected = null;
             this.stompClient.disconnect();
         }
