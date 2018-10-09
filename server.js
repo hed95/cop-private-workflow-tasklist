@@ -43,6 +43,13 @@ app.use(cors());
 app.get('/healthz', respond);
 app.get('/readiness', respond);
 
+
+const domain = process.env.DOMAIN;
+const bpmnModelerName = process.env.WORKFLOW_MODELER;
+const bpmnModelerUrl = `https://${bpmnModelerName}.${domain}`;
+console.log("bpmnModeler " + bpmnModelerUrl);
+
+
 app.get('/api/config', (req, res) => {
     res.send({
         'REALM': process.env.AUTH_REALM,
