@@ -15,7 +15,7 @@ class DashboardPanel extends React.Component {
 
     constructor(props) {
         super(props);
-        this.subcriptions = new Map();
+        this.websocketSubscriptions = [];
     }
 
     connect = () => {
@@ -31,16 +31,17 @@ class DashboardPanel extends React.Component {
             const teamSub = this.stompClient.subscribe(`/topic/task/${this.props.shift.get('teamid')}`, (msg) => {
                 PubSub.publish("refreshCount", {});
             });
-            this.subcriptions.set("teamSub", teamSub);
+            this.websocketSubscriptions.push(teamSub);
 
             const userSub = this.stompClient.subscribe(`/user/queue/task`, (msg) => {
                 PubSub.publish("refreshCount", {});
             });
-            this.subcriptions.set("userSub", userSub);
-            console.log("Number of subscriptions " + this.subcriptions.length);
+            this.websocketSubscriptions.push(userSub);
+            console.log("Number of subscriptions " + this.websocketSubscriptions.length);
 
         }, (error) => {
             if (error) {
+                this.websocketSubscriptions = [];
                 console.log(`Failed to connect ${error}...will retry to connect in 60 seconds`);
             }
             if (this.connected) {
@@ -60,12 +61,12 @@ class DashboardPanel extends React.Component {
         }
         console.log("Disconnecting websocket");
         if (this.connected) {
-            if (this.subcriptions) {
-                this.subscriptions.forEach((subid, sub) => {
-                    console.log("Disconnecting sub" + subid);
+            if (this.websocketSubscriptions) {
+                this.websocketSubscriptions.forEach((sub) => {
+                    console.log("Disconnecting sub" + sub.id);
                     sub.unsubscribe();
                 });
-                this.subcriptions.clear();
+                this.websocketSubscriptions = [];
             }
             this.connected = null;
             this.stompClient.disconnect();
