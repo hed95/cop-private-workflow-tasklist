@@ -13,32 +13,41 @@ import PubSub from "pubsub-js";
 
 class DashboardPanel extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.subcriptions = new Map();
+    }
+
     connect = () => {
         this.socket = new SockJS("/ws/workflow/tasks");
         this.stompClient = Stomp.over(this.socket);
         this.stompClient.debug = () => {};
+
         this.stompClient.connect({
             "Authorization": `Bearer ${this.props.kc.token}`
         }, () => {
             this.connected = true;
             console.log(`Connected to websocket server`);
-            this.stompClient.subscribe(`/topic/task/${this.props.shift.get('teamid')}`, (msg) => {
+            const teamSub = this.stompClient.subscribe(`/topic/task/${this.props.shift.get('teamid')}`, (msg) => {
                 PubSub.publish("refreshCount", {});
             });
-            this.stompClient.subscribe(`/user/queue/task`, (msg) => {
+            this.subcriptions.set("teamSub", teamSub);
+
+            const userSub = this.stompClient.subscribe(`/user/queue/task`, (msg) => {
                 PubSub.publish("refreshCount", {});
             });
+            this.subcriptions.set("userSub", userSub);
+
         }, (error) => {
             if (error) {
                 console.log(`Failed to connect ${error}`);
             }
             if (this.connected) {
                 this.connected = false;
-                this.retryCount = 0;
             }
             this._timeoutId =
                 setTimeout(this.connect(), () => {
-                    return 1000 * this.retryCount++
+                    return 60000;
                 });
         })
     };
@@ -50,6 +59,11 @@ class DashboardPanel extends React.Component {
         }
         console.log("Disconnecting websocket");
         if (this.connected) {
+            this.subscriptions.forEach((subid, sub) => {
+               console.log("Disconnecting sub" + subid);
+                sub.unsubscribe();
+            });
+            this.subcriptions.clear();
             this.connected = null;
             this.stompClient.disconnect();
         }
@@ -57,7 +71,6 @@ class DashboardPanel extends React.Component {
 
     componentDidMount() {
         if (this.props.hasActiveShift) {
-            this.retryCount = 0;
             this.connect = this.connect.bind(this);
             this.disconnect = this.disconnect.bind(this);
             this.connect();
