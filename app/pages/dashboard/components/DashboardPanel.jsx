@@ -14,7 +14,7 @@ import PubSub from "pubsub-js";
 class DashboardPanel extends React.Component {
 
     connect = () => {
-        this.socket = new SockJS("/ws/workflow/tasks", null, {});
+        this.socket = new SockJS("/ws/workflow/tasks");
         this.stompClient = Stomp.over(this.socket);
         this.stompClient.debug = () => {};
         this.stompClient.connect({
