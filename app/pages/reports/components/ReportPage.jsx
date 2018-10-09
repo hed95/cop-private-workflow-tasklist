@@ -9,7 +9,7 @@ class ReportPage extends React.Component {
     render() {
 
         const params = queryString.parse(this.props.location.search);
-        const url = params.url;
+        const reportName = params.reportName;
         const pointerStyle = {cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline', paddingBottom: '10px'};
 
         return <div>
@@ -22,7 +22,7 @@ class ReportPage extends React.Component {
                 justifyContent: 'center',
                 height: '100vh'
             }}>
-                <Iframe url={url}
+                <Iframe url={`/api/reports/${reportName}`}
                         id="report"
                         width="100%"
                         height="100%"

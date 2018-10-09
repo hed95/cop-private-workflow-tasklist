@@ -24,7 +24,7 @@ class ReportsPage extends React.Component {
         if (reports) {
             reports.forEach((report) => {
                 items.push(<tr key={uuidv4()} style={pointerStyle} onClick={() => {
-                    this.props.history.push(`/report?url=${report.get('url')}`)
+                    this.props.history.push(`/report?reportName=${report.get('htmlName')}`)
                 }}>
                     <td>{report.get('name')}</td>
                     <td>{report.get('description')}</td>
