@@ -52,6 +52,11 @@ module.exports = webpackMerge(commonConfig, {
                 secure: false,
                 changeOrigin: true
             },
+            "/reportspublic": {
+                target: reportUrl,
+                secure: false,
+                changeOrigin: true
+            },
             "/api/form": {
                 target: formIOUrl,
                 secure: false,

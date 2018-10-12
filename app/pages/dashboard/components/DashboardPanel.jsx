@@ -48,9 +48,7 @@ class DashboardPanel extends React.Component {
                 this.connected = false;
             }
             this._timeoutId =
-                setTimeout(this.connect(), () => {
-                    return 60000;
-                });
+                setTimeout(() => this.connect(), 60000);
         })
     };
 
@@ -72,6 +70,7 @@ class DashboardPanel extends React.Component {
             this.stompClient.disconnect();
         }
     };
+
 
     componentDidMount() {
         if (this.props.hasActiveShift) {
