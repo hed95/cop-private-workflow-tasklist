@@ -16,6 +16,9 @@ class DashboardPanel extends React.Component {
     constructor(props) {
         super(props);
         this.websocketSubscriptions = [];
+        this.retryCount = 0;
+        this.connect = this.connect.bind(this);
+        this.disconnect = this.disconnect.bind(this);
     }
 
     connect = () => {
@@ -40,15 +43,18 @@ class DashboardPanel extends React.Component {
             console.log("Number of subscriptions " + this.websocketSubscriptions.length);
 
         }, (error) => {
+            this.retryCount++;
             if (error) {
                 this.websocketSubscriptions = [];
-                console.log(`Failed to connect ${error}...will retry to connect in 60 seconds`);
+                console.log(`Failed to connect ${error}...will retry to connect in ${this.retryCount === 1 ? 6 : 60} seconds`);
             }
             if (this.connected) {
                 this.connected = false;
             }
+            let timeout = this.retryCount === 1 ? 6000 : 60000;
             this._timeoutId =
-                setTimeout(() => this.connect(), 60000);
+                setTimeout(() => this.connect(), timeout);
+
         })
     };
 
@@ -74,13 +80,13 @@ class DashboardPanel extends React.Component {
 
     componentDidMount() {
         if (this.props.hasActiveShift) {
-            this.connect = this.connect.bind(this);
-            this.disconnect = this.disconnect.bind(this);
             this.connect();
         }
     }
 
     componentWillUnmount() {
+        PubSub.clearAllSubscriptions();
+        this.retryCount = 0;
         this.disconnect();
     }
 
