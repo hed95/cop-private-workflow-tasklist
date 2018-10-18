@@ -32,7 +32,6 @@ pipeline:
     - docker tag $${DOCKER_NAME} $${DOCKER_SERVER}/$${DOCKER_GROUP}/$${DOCKER_NAME}:$${DRONE_COMMIT_BRANCH}
     - docker push $${DOCKER_SERVER}/$${DOCKER_GROUP}/$${DOCKER_NAME}:$${DRONE_COMMIT_BRANCH}
     when:
-      branch: master
       event: push
 
   tag_image_to_artifactory:
