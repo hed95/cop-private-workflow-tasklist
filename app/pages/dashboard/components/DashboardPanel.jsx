@@ -19,12 +19,17 @@ class DashboardPanel extends React.Component {
         this.retryCount = 0;
         this.connect = this.connect.bind(this);
         this.disconnect = this.disconnect.bind(this);
+        this.heartbeat = 10000;
+        this.heartbeatIncoming = this.heartbeat;
+        this.heartbeatOutgoing = this.heartbeat;
     }
 
     connect = () => {
         this.socket = new SockJS("/ws/workflow/tasks");
         this.stompClient = Stomp.over(this.socket);
         this.stompClient.debug = () => {};
+        this.client.heartbeat.outgoing = this.props.heartbeatOutgoing;
+        this.client.heartbeat.incoming = this.props.heartbeatIncoming;
 
         this.stompClient.connect({
             "Authorization": `Bearer ${this.props.kc.token}`
@@ -61,8 +66,9 @@ class DashboardPanel extends React.Component {
     disconnect = () => {
         if (this._timeoutId) {
             clearTimeout(this._timeoutId);
-            this._timeoutId = null
+            this._timeoutId = null;
         }
+        this.retryCount = 0;
         console.log("Disconnecting websocket");
         if (this.connected) {
             if (this.websocketSubscriptions) {
