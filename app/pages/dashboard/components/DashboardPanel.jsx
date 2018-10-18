@@ -28,8 +28,8 @@ class DashboardPanel extends React.Component {
         this.socket = new SockJS("/ws/workflow/tasks");
         this.stompClient = Stomp.over(this.socket);
         this.stompClient.debug = () => {};
-        this.client.heartbeat.outgoing = this.props.heartbeatOutgoing;
-        this.client.heartbeat.incoming = this.props.heartbeatIncoming;
+        this.stompClient.heartbeat.outgoing = this.props.heartbeatOutgoing;
+        this.stompClient.heartbeat.incoming = this.props.heartbeatIncoming;
 
         this.stompClient.connect({
             "Authorization": `Bearer ${this.props.kc.token}`
