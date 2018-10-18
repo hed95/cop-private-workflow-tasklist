@@ -19,17 +19,20 @@ class DashboardPanel extends React.Component {
         this.retryCount = 0;
         this.connect = this.connect.bind(this);
         this.disconnect = this.disconnect.bind(this);
-        this.heartbeat = 10000;
-        this.heartbeatIncoming = this.heartbeat;
-        this.heartbeatOutgoing = this.heartbeat;
     }
 
     connect = () => {
         this.socket = new SockJS("/ws/workflow/tasks");
         this.stompClient = Stomp.over(this.socket);
-        this.stompClient.debug = () => {};
-        this.stompClient.heartbeat.outgoing = this.props.heartbeatOutgoing;
-        this.stompClient.heartbeat.incoming = this.props.heartbeatIncoming;
+        const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
+
+        if (uiEnv !== 'development' &&  uiEnv !== 'local') {
+            this.stompClient.debug = () => {};
+        }
+
+        const heartBeat = 10000;
+        this.stompClient.heartbeat.outgoing = heartBeat;
+        this.stompClient.heartbeat.incoming = heartBeat;
 
         this.stompClient.connect({
             "Authorization": `Bearer ${this.props.kc.token}`
@@ -117,5 +120,6 @@ class DashboardPanel extends React.Component {
 export default withRouter(connect((state) => {
     return {
         kc: state.keycloak,
+        appConfig: state.appConfig
     }
 }, {})(DashboardPanel))
