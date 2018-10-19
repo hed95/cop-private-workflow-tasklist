@@ -13,7 +13,7 @@ import {DataSpinner} from "../../../core/components/DataSpinner";
 class YourGroupUnassignedTasks extends React.Component {
 
     componentDidMount() {
-        this.props.fetchUnassignedTasks("/api/workflow/tasks?unassignedOnly=true&sort=created,asc");
+        this.props.fetchUnassignedTasks("/api/workflow/tasks?unassignedOnly=true&sort=created,desc");
         this.goToTask = this.goToTask.bind(this);
     }
 
