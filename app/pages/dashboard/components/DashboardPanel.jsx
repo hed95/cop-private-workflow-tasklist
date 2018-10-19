@@ -30,7 +30,7 @@ class DashboardPanel extends React.Component {
             this.stompClient.debug = () => {};
         }
 
-        const heartBeat = 10000;
+        const heartBeat = 0;
         this.stompClient.heartbeat.outgoing = heartBeat;
         this.stompClient.heartbeat.incoming = heartBeat;
 
