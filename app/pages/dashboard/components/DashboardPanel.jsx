@@ -40,12 +40,12 @@ class DashboardPanel extends React.Component {
             this.connected = true;
             console.log(`Connected to websocket server`);
             const teamSub = this.stompClient.subscribe(`/topic/task/${this.props.shift.get('teamid')}`, (msg) => {
-                PubSub.publish("refreshCount", {});
+                PubSub.publishSync("refreshCount", {});
             });
             this.websocketSubscriptions.push(teamSub);
 
             const userSub = this.stompClient.subscribe(`/user/queue/task`, (msg) => {
-                PubSub.publish("refreshCount", {});
+                PubSub.publishSync("refreshCount", {});
             });
             this.websocketSubscriptions.push(userSub);
             console.log("Number of subscriptions " + this.websocketSubscriptions.length);
