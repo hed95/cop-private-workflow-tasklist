@@ -60,6 +60,10 @@ class DashboardPanel extends React.Component {
                 this.connected = false;
             }
             let timeout = this.retryCount === 1 ? 6000 : 60000;
+            if (this._timeoutId) {
+                clearTimeout(this._timeoutId);
+                this._timeoutId = null;
+            }
             this._timeoutId =
                 setTimeout(() => this.connect(), timeout);
 
