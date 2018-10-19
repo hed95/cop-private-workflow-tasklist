@@ -39,7 +39,7 @@ class MessagesPage extends React.Component {
                 <div className="column-one-half">
                     <h2 className="heading-large">
                     <span
-                        className="heading-secondary">Operational messages</span> {this.props.notifications.size} messages
+                        className="heading-secondary">Operational messages</span> {this.props.total} messages
                     </h2>
                 </div>
             </div>
