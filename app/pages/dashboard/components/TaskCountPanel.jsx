@@ -16,14 +16,14 @@ class TaskCountPanel extends React.Component {
         this.yourTeamTotalTasks = this.yourTeamTotalTasks.bind(this);
         this.yourTasks = this.yourTasks.bind(this);
         this.yourTeamUnassignedTasks = this.yourTeamUnassignedTasks.bind(this);
-        PubSub.subscribe('refreshCount', (msg, data) => {
-            console.log("Refreshing task count...");
-            this.props.fetchTaskCounts();
-        });
     }
 
     componentDidMount() {
         if (this.props.hasActiveShift) {
+            this.subToken = PubSub.subscribe('refreshCount', (msg, data) => {
+                console.log("Refreshing task count...");
+                this.props.fetchTaskCounts();
+            });
             this.props.fetchTaskCounts();
         } else {
             this.props.setDefaultCounts();
@@ -31,6 +31,9 @@ class TaskCountPanel extends React.Component {
     }
 
     componentWillUnmount() {
+        if (this.subToken) {
+            PubSub.unsubscribe(this.subToken);
+        }
     }
 
 

@@ -8,13 +8,14 @@ import * as Rx from "rxjs/Observable";
 import {retryOnForbidden} from "../../core/util/retry";
 
 
-const shift = (email) => {
+const shift = (email, token) => {
     console.log(`Requesting shift details for ${email}`);
     return client({
         method: 'GET',
         path: `/api/platform-data/shift?email=eq.${encodeURIComponent(email)}`,
         headers: {
-            "Accept": "application/json"
+            "Accept": "application/json",
+            "Authorization": `Bearer ${token}`
         }
     })
 };
@@ -45,7 +46,8 @@ const fetchStaffDetails = (action$, store) =>
                 method: 'GET',
                 path: `/api/platform-data/staff?email=eq.${encodeURIComponent(store.getState().keycloak.tokenParsed.email)}`,
                 headers: {
-                    "Accept": "application/json"
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
             }).retryWhen(retryOnForbidden)
                 .map(payload => actions.fetchStaffDetailsSuccess(payload))
@@ -75,7 +77,7 @@ const fetchShiftForm = (action$, store) =>
 const fetchActiveShift = (action$, store) =>
     action$.ofType(types.FETCH_ACTIVE_SHIFT)
         .mergeMap(action =>
-            shift(store.getState().keycloak.tokenParsed.email).retryWhen(retryOnForbidden).map(payload => {
+            shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token).retryWhen(retryOnForbidden).map(payload => {
                 if (payload.status.code === 200 && payload.entity.length === 0) {
                     throw 'no-data';
                 } else {
@@ -146,7 +148,7 @@ const createActiveShift = (action$, store) =>
 const fetchActiveShiftAfterCreation = (action$, store) =>
     action$.ofType(types.FETCH_ACTIVE_SHIFT_AFTER_CREATE)
         .mergeMap(action =>
-            shift(store.getState().keycloak.tokenParsed.email)
+            shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token)
                 .flatMap(payload => {
                     if (payload.status.code === 403) {
                         throw 'not-authorized'

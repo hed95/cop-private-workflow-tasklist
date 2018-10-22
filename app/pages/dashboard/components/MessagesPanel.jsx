@@ -14,14 +14,15 @@ class MessagesPanel extends React.Component {
     constructor(props) {
         super(props);
         this.messages = this.messages.bind(this);
-        PubSub.subscribe('refreshCount', (msg, data) => {
-            console.log("Refreshing messages count...");
-            this.props.fetchMessageCounts();
-        });
+
     }
 
     componentDidMount() {
         if (this.props.hasActiveShift) {
+            this.token = PubSub.subscribe('refreshCount', (msg, data) => {
+                console.log("Refreshing messages count...");
+                this.props.fetchMessageCounts();
+            });
             this.props.fetchMessageCounts();
         } else {
             this.props.setDefaultCounts();
@@ -35,6 +36,9 @@ class MessagesPanel extends React.Component {
     }
 
     componentWillUnmount() {
+        if (this.token) {
+            PubSub.unsubscribe(this.token);
+        }
     }
 
     messages(e) {
