@@ -1,6 +1,6 @@
 workspace:
   base: /build
-  path: src/github.com/ukhomeoffice/borders-private-workflow-tasklist
+  path: src/github.com/ukhomeoffice/cop-private-workflow-tasklist
 
 pipeline:
   build:
