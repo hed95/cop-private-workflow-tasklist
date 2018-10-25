@@ -98,7 +98,6 @@ class DashboardPanel extends React.Component {
     }
 
     componentWillUnmount() {
-        PubSub.clearAllSubscriptions();
         this.retryCount = 0;
         this.disconnect();
     }
