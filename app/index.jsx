@@ -81,7 +81,7 @@ if (process.env.NODE_ENV === 'production') {
     });
     store.getState().appConfig = {
         "uiVersion": process.env.UI_VERSION || "ALPHA",
-        "uiEnvironment": process.env.UI_ENVIRONMENT || 'Local'
+        "uiEnvironment": process.env.UI_ENVIRONMENT || 'LOCAL'
     };
     renderApp(App);
 

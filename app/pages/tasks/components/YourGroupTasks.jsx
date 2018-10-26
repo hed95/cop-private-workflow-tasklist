@@ -13,7 +13,7 @@ import {DataSpinner} from "../../../core/components/DataSpinner";
 class YourGroupTasks extends React.Component {
 
     componentDidMount() {
-        this.props.fetchMyGroupTasks("/api/workflow/tasks?teamOnly=true");
+        this.props.fetchMyGroupTasks("/api/workflow/tasks?teamOnly=true&sort=created,desc");
         this.goToTask = this.goToTask.bind(this);
     }
 
@@ -39,6 +39,7 @@ class YourGroupTasks extends React.Component {
                     <tr>
                         <th scope="col">Task name</th>
                         <th scope="col">Priority</th>
+                        <th scope="col">Created</th>
                         <th scope="col">Due</th>
                         <th scope="col">Assignee</th>
                     </tr>
@@ -51,6 +52,7 @@ class YourGroupTasks extends React.Component {
                                        key={task.get('id')}>
                                 <td>{task.get('name')}</td>
                                 <td>{priority(task.get('priority'))}</td>
+                                <td>{moment().to(moment(task.get('created')))}</td>
                                 <td>{moment().to(moment(task.get('due')))}</td>
                                 <td>{task.get('assignee') ? task.get('assignee') : 'Unassigned'}</td>
                             </tr>

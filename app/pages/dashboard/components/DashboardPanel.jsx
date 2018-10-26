@@ -24,7 +24,15 @@ class DashboardPanel extends React.Component {
     connect = () => {
         this.socket = new SockJS("/ws/workflow/tasks");
         this.stompClient = Stomp.over(this.socket);
-        this.stompClient.debug = () => {};
+        const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
+
+        if (uiEnv !== 'development' &&  uiEnv !== 'local') {
+            this.stompClient.debug = () => {};
+        }
+
+        const heartBeat = 5000;
+        this.stompClient.heartbeat.outgoing = heartBeat;
+        this.stompClient.heartbeat.incoming = heartBeat;
 
         this.stompClient.connect({
             "Authorization": `Bearer ${this.props.kc.token}`
@@ -32,12 +40,12 @@ class DashboardPanel extends React.Component {
             this.connected = true;
             console.log(`Connected to websocket server`);
             const teamSub = this.stompClient.subscribe(`/topic/task/${this.props.shift.get('teamid')}`, (msg) => {
-                PubSub.publish("refreshCount", {});
+                PubSub.publishSync("refreshCount", {});
             });
             this.websocketSubscriptions.push(teamSub);
 
             const userSub = this.stompClient.subscribe(`/user/queue/task`, (msg) => {
-                PubSub.publish("refreshCount", {});
+                PubSub.publishSync("refreshCount", {});
             });
             this.websocketSubscriptions.push(userSub);
             console.log("Number of subscriptions " + this.websocketSubscriptions.length);
@@ -52,6 +60,10 @@ class DashboardPanel extends React.Component {
                 this.connected = false;
             }
             let timeout = this.retryCount === 1 ? 6000 : 60000;
+            if (this._timeoutId) {
+                clearTimeout(this._timeoutId);
+                this._timeoutId = null;
+            }
             this._timeoutId =
                 setTimeout(() => this.connect(), timeout);
 
@@ -61,8 +73,9 @@ class DashboardPanel extends React.Component {
     disconnect = () => {
         if (this._timeoutId) {
             clearTimeout(this._timeoutId);
-            this._timeoutId = null
+            this._timeoutId = null;
         }
+        this.retryCount = 0;
         console.log("Disconnecting websocket");
         if (this.connected) {
             if (this.websocketSubscriptions) {
@@ -85,7 +98,6 @@ class DashboardPanel extends React.Component {
     }
 
     componentWillUnmount() {
-        PubSub.clearAllSubscriptions();
         this.retryCount = 0;
         this.disconnect();
     }
@@ -111,5 +123,6 @@ class DashboardPanel extends React.Component {
 export default withRouter(connect((state) => {
     return {
         kc: state.keycloak,
+        appConfig: state.appConfig
     }
 }, {})(DashboardPanel))
