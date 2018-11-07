@@ -59,9 +59,8 @@ function reducer(state = initialState, action) {
             const comment = action.payload.entity;
             const commentsFromState = state.get('comments');
             return state.set('isCreatingComment', false)
-                .set('comments', commentsFromState.push(Immutable.fromJS(comment)));
-
-        //fetch create comment form
+              .set('comments', commentsFromState.insert(0,Immutable.fromJS(comment)));
+      //fetch create comment form
         case actions.FETCH_CREATE_COMMENT_FORM:
             return state.set('isFetchingCreateCommentForm', true);
         case actions.FETCH_CREATE_COMMENT_FORM_SUCCESS:
