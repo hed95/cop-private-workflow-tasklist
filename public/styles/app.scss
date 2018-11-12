@@ -45,6 +45,10 @@ html {
   background-color: transparent;
 }
 
+body {
+  overscroll-behavior-y: none;
+}
+
 .nav-menu {
   color: white;
   text-align: right;
