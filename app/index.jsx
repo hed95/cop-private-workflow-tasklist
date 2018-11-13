@@ -11,6 +11,7 @@ import '../public/styles/app.scss'
 import '../public/styles/fonts.css'
 import 'rxjs';
 import ScrollToTop from "./core/components/ScrollToTop";
+import PubSub from 'pubsub-js';
 
 const store = configureStore();
 let kc = null;
@@ -29,6 +30,10 @@ const renderApp = (App) => {
     };
     kc.init({onLoad: 'login-required', checkLoginIframe: false}).success(authenticated => {
         if (authenticated) {
+          history.pushState(null, null, location.href);
+          window.onpopstate = () => {
+            history.go(1);
+          };
             store.getState().keycloak = kc;
             setInterval(() => {
                 kc.updateToken().success((refreshed) => {
