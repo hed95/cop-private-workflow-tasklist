@@ -593,3 +593,16 @@ a.card__body {
 @media only screen and (max-width: 479px){
   #commentContainer { width: 100%; }
 }
+
+
+table.narrowtable tr td,
+table.narrowtable tr th {
+  font-size: 14px;
+}
+
+
+table.narrowtable tr:nth-child(5) { border-bottom: solid #aaa; }
+
+table.widetable {
+  width: 100%;
+}
