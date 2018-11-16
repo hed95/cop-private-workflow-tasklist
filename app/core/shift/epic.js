@@ -79,6 +79,7 @@ const fetchActiveShift = (action$, store) =>
         .mergeMap(action =>
             shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token).retryWhen(retryOnForbidden).map(payload => {
                 if (payload.status.code === 200 && payload.entity.length === 0) {
+                    console.log('No data');
                     throw 'no-data';
                 } else {
                     return actions.fetchActiveShiftSuccess(payload)
@@ -86,8 +87,8 @@ const fetchActiveShift = (action$, store) =>
             }).retryWhen((errors) => {
                 return errors
                     .takeWhile(error => error === 'no-data')
-                    .delay(1000)
-                    .take(5)
+                    .delay(500)
+                    .take(1)
                     .concat(Rx.Observable.throw({
                         status: {
                             code: 401

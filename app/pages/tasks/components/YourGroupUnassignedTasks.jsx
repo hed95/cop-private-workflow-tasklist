@@ -9,6 +9,9 @@ import moment from "moment";
 import {priority} from "../../../core/util/priority";
 import {withRouter} from "react-router";
 import {DataSpinner} from "../../../core/components/DataSpinner";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+
 
 class YourGroupUnassignedTasks extends React.Component {
 
@@ -33,31 +36,31 @@ class YourGroupUnassignedTasks extends React.Component {
                 <span
                     className="data-item bold-medium">{unassignedTasks.get('total')} unassigned {unassignedTasks.get('total') === 1 ? 'task' : 'tasks'}</span>
                 </div>
-                <table>
-                    <thead>
-                    <tr>
-                        <th scope="col">Task name</th>
-                        <th scope="col">Priority</th>
-                        <th scope="col">Created</th>
-                        <th scope="col">Due</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                <Table>
+                    <Thead>
+                    <Tr>
+                        <Th scope="col">Task name</Th>
+                        <Th scope="col">Priority</Th>
+                        <Th scope="col">Created</Th>
+                        <Th scope="col">Due</Th>
+                    </Tr>
+                    </Thead>
+                    <Tbody>
                     {
                         unassignedTasks.get('tasks').map((taskData) => {
                             const task = taskData.get('task');
-                            return <tr style={pointerStyle} onClick={() => this.goToTask(task.get('id'))}
+                            return <Tr style={pointerStyle} onClick={() => this.goToTask(task.get('id'))}
                                        key={task.get('id')}>
-                                <td>{task.get('name')}</td>
-                                <td>{priority(task.get('priority'))}</td>
-                                <td>{moment().to(moment(task.get('created')))}</td>
-                                <td>{moment().to(moment(task.get('due')))}</td>
-                            </tr>
+                                <Td>{task.get('name')}</Td>
+                                <Td>{priority(task.get('priority'))}</Td>
+                                <Td>{moment().to(moment(task.get('created')))}</Td>
+                                <Td>{moment().to(moment(task.get('due')))}</Td>
+                            </Tr>
                         })
                     }
 
-                    </tbody>
-                </table>
+                    </Tbody>
+                </Table>
             </div>
         }
     }

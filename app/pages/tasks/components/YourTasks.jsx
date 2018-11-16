@@ -9,6 +9,8 @@ import {priority} from "../../../core/util/priority";
 import moment from "moment/moment";
 import {withRouter} from "react-router";
 import {DataSpinner} from "../../../core/components/DataSpinner";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 
 class YourTasks extends React.Component {
 
@@ -31,29 +33,29 @@ class YourTasks extends React.Component {
                 <div className="data">
                     <span className="data-item bold-medium">{myTasks.get('total')} tasks assigned to you</span>
                 </div>
-                <table>
-                    <thead>
-                    <tr>
-                        <th scope="col">Task name</th>
+                <Table>
+                    <Thead>
+                    <Tr>
+                        <Th scope="col">Task name</Th>
                         <th scope="col">Priority</th>
                         <th scope="col">Due</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                    </Tr>
+                    </Thead>
+                    <Tbody>
                     {
                         myTasks.get('tasks').map((taskData) => {
                             const task = taskData.get('task');
-                            return <tr style={pointerStyle} onClick={() => this.goToTask(task.get('id'))}
+                            return <Tr style={pointerStyle} onClick={() => this.goToTask(task.get('id'))}
                                        key={task.get('id')}>
-                                <td>{task.get('name')}</td>
-                                <td>{priority(task.get('priority'))}</td>
-                                <td>{moment().to(moment(task.get('due')))}</td>
-                            </tr>
+                                <Td>{task.get('name')}</Td>
+                                <Td>{priority(task.get('priority'))}</Td>
+                                <Td>{moment().to(moment(task.get('due')))}</Td>
+                            </Tr>
                         })
                     }
 
-                    </tbody>
-                </table>
+                    </Tbody>
+                </Table>
             </div>
         }
     }
