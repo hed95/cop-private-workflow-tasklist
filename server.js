@@ -57,7 +57,8 @@ app.get('/api/config', (req, res) => {
         'CLIENT_ID': process.env.AUTH_CLIENT_ID,
         'MODELER_URL': bpmnModelerUrl,
         "UI_VERSION": process.env.UI_VERSION,
-        "UI_ENVIRONMENT" : process.env.UI_ENVIRONMENT
+        "UI_ENVIRONMENT" : process.env.UI_ENVIRONMENT,
+        "AUTH_ACCESS_ROLE" : process.env.AUTH_ACCESS_ROLE
     })
 });
 

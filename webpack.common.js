@@ -23,7 +23,8 @@ module.exports = {
             'process.env': {
                 'REALM': JSON.stringify(process.env.AUTH_REALM),
                 'AUTH_URL': JSON.stringify(process.env.AUTH_URL),
-                'CLIENT_ID': JSON.stringify(process.env.AUTH_CLIENT_ID)
+                'CLIENT_ID': JSON.stringify(process.env.AUTH_CLIENT_ID),
+                'AUTH_ACCESS_ROLE' : JSON.stringify(process.env.AUTH_ACCESS_ROLE)
             }
         }),
         new HtmlWebpackPlugin({
