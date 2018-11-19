@@ -6,7 +6,8 @@ ENV NAME borders-workflow-tasklist
 
 WORKDIR /app
 
-RUN groupadd -r ${GROUP} && \
+RUN yum update -y && \
+    groupadd -r ${GROUP} && \
     useradd -r -g ${GROUP} ${USER} -d /app && \
     mkdir -p /app && \
     chown -R ${USER}:${GROUP} /app
