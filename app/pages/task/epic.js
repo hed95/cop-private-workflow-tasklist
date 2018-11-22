@@ -62,7 +62,7 @@ const createComment = (action$, store) =>
                 method: 'POST',
                 entity: {
                     "staffid": action.comment.staffid,
-                    "taskcomment": action.comment.message,
+                    "comment": action.comment.message,
                     "taskid": action.taskId,
                 },
                 path: `/api/workflow/tasks/comments`,

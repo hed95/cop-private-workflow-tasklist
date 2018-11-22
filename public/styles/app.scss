@@ -594,7 +594,9 @@ a.card__body {
   #commentContainer { width: 100%; }
 }
 
-
+table.narrowtable tr td {
+  word-wrap: break-word;
+}
 table.narrowtable tr td,
 table.narrowtable tr th {
   font-size: 14px;
@@ -606,3 +608,20 @@ table.narrowtable tr:nth-child(5) { border-bottom: solid #aaa; }
 table.widetable {
   width: 100%;
 }
+
+table.narrowtable-yourtasks tr td,
+table.narrowtable-yourtasks tr th {
+  font-size: 14px;
+}
+
+
+table.narrowtable-yourtasks tr:nth-child(4) { border-bottom: solid #aaa; }
+
+table.narrowtable-your-group-unassignedtasks tr:nth-child(5) { border-bottom: solid #aaa; }
+
+
+table.narrowtable-your-group-unassignedtasks tr td,
+table.narrowtable-your-group-unassignedtasks tr th {
+  font-size: 14px;
+}
+

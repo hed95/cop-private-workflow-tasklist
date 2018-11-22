@@ -67,7 +67,7 @@ class Comments extends React.Component {
                                 more='Show more'
                                 less='Show less'
                                 anchorClass=''>
-                                {comment.get('taskcomment')}
+                                {comment.get('comment')}
                             </ShowMore>
                         </div>
                     </div>

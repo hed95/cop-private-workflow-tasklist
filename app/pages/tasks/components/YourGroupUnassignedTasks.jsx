@@ -9,8 +9,7 @@ import moment from "moment";
 import {priority} from "../../../core/util/priority";
 import {withRouter} from "react-router";
 import {DataSpinner} from "../../../core/components/DataSpinner";
-import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
-import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+import ReactHyperResponsiveTable from 'react-hyper-responsive-table';
 
 
 class YourGroupUnassignedTasks extends React.Component {
@@ -30,45 +29,92 @@ class YourGroupUnassignedTasks extends React.Component {
         if (unassignedTasks.get('isFetchingUnassignedTasks')) {
             return <DataSpinner message="Fetching your group unassigned tasks"/>
         } else {
-            return <div style={{paddingTop: '20px'}}>
 
-                <div className="data">
-                <span
-                    className="data-item bold-medium">{unassignedTasks.get('total')} unassigned {unassignedTasks.get('total') === 1 ? 'task' : 'tasks'}</span>
+          const data = unassignedTasks ? unassignedTasks.get('tasks').map((taskData) => {
+            const task = taskData.get('task');
+            const taskId = task.get('id');
+
+            const linkElem = (prop) => {
+              return <div style={pointerStyle} onClick={() => this.goToTask(taskId)}>{prop}</div>;
+            };
+            const taskNameLink = linkElem(task.get('name'));
+            const priorityLink = linkElem(priority(task.get('priority')));
+            const createdOnLink = linkElem(moment().to(moment(task.get('created'))));
+            const dueOnLink = linkElem(moment().to(moment(task.get('due'))));
+
+            return {
+              id: taskId,
+              name: taskNameLink,
+              priority: priorityLink,
+              createdOn: createdOnLink,
+              due: dueOnLink,
+            };
+          }).toArray() : [];
+
+          const headers = {
+            name: 'Task name',
+            priority: 'Priority',
+            createdOn: 'Created',
+            due: 'Due',
+          };
+
+          const filterTasksByName = (value) => {
+            this.props.filterUnassignedTasksByName(value);
+          };
+
+          return (<div style={{ paddingTop: '20px' }}>
+            <div className="data">
+        <span
+          className="data-item bold-medium">{unassignedTasks.get('total')} unassigned {unassignedTasks.get('total') === 1 ? 'task' : 'tasks'}</span>
+          </div>
+            <div className="row">
+              <div className="column-one-half">
+                <div className="form-group">
+                  <label className="form-label" htmlFor="sortTask">Sort tasks by:</label>
+                  <select className="form-control" id="sortTask" name="sortTask"
+                          onChange={(event) => {
+                            const optionSelected = event.target.value;
+                            this.props.setUnassignedTasksSortValue(optionSelected);
+                            this.props.fetchUnassignedTasks(`/api/workflow/tasks?unassignedOnly=true&${optionSelected}`);
+                            }
+                          }
+                          value={unassignedTasks.get('sortValue')}>
+                    <option value="sort=due,desc">Latest due date</option>
+                    <option value="sort=due,asc">Oldest due date</option>
+                    <option value="sort=created,desc">Latest created date</option>
+                    <option value="sort=created,asc">Oldest created date</option>
+                    <option value="sort=priority,desc">Highest priority</option>
+                    <option value="sort=priority,asc">Lowest priority</option>
+                  </select>
                 </div>
-                <Table>
-                    <Thead>
-                    <Tr>
-                        <Th scope="col">Task name</Th>
-                        <Th scope="col">Priority</Th>
-                        <Th scope="col">Created</Th>
-                        <Th scope="col">Due</Th>
-                    </Tr>
-                    </Thead>
-                    <Tbody>
-                    {
-                        unassignedTasks.get('tasks').map((taskData) => {
-                            const task = taskData.get('task');
-                            return <Tr style={pointerStyle} onClick={() => this.goToTask(task.get('id'))}
-                                       key={task.get('id')}>
-                                <Td>{task.get('name')}</Td>
-                                <Td>{priority(task.get('priority'))}</Td>
-                                <Td>{moment().to(moment(task.get('created')))}</Td>
-                                <Td>{moment().to(moment(task.get('due')))}</Td>
-                            </Tr>
-                        })
-                    }
+              </div>
 
-                    </Tbody>
-                </Table>
+              <div className="column-one-half">
+                <div className="form-group">
+                  <label className="form-label" htmlFor="filterTaskName">Filter by task name:</label>
+                  <input className="form-control" id="filterTaskName" type="text" name="filterTaskName"
+                         onChange={(event) => filterTasksByName(event.target.value)}/>
+                </div>
+              </div>
             </div>
+
+            <ReactHyperResponsiveTable
+              headers={headers}
+              rows={data}
+              keyGetter={row => row.id}
+              breakpoint={578}
+              tableStyling={({ narrow }) => (narrow ? 'narrowtable-your-group-unassignedtasks' : 'widetable')}
+            />
+          </div>);
         }
     }
 }
 
 YourGroupUnassignedTasks.propTypes = {
     fetchUnassignedTasks: PropTypes.func.isRequired,
-    unassignedTasks: ImmutablePropTypes.map
+    unassignedTasks: ImmutablePropTypes.map,
+    filterUnassignedTasksByName: PropTypes.func.isRequired,
+    setUnassignedTasksSortValue: PropTypes.func.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({

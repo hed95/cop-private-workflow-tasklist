@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from '../actions';
-import { myGroupTasks } from '../selectors';
+import { yourGroupTasks } from '../selectors';
 import moment from 'moment';
 import { priority } from '../../../core/util/priority';
 import { withRouter } from 'react-router';
@@ -14,7 +14,7 @@ import ReactHyperResponsiveTable from 'react-hyper-responsive-table';
 class YourGroupTasks extends React.Component {
 
   componentDidMount() {
-    this.props.fetchMyGroupTasks('/api/workflow/tasks?teamOnly=true&sort=created,desc');
+    this.props.fetchYourGroupTasks('/api/workflow/tasks?teamOnly=true&sort=created,desc');
     this.goToTask = this.goToTask.bind(this);
   }
 
@@ -23,20 +23,25 @@ class YourGroupTasks extends React.Component {
   }
 
   render() {
-    const { myGroupTasks } = this.props;
+    const { yourGroupTasks } = this.props;
     const pointerStyle = { cursor: 'pointer' };
 
-    if (myGroupTasks.get('isFetchingMyGroupTasks')) {
+    if (yourGroupTasks.get('isFetchingYourGroupTasks')) {
       return <DataSpinner message="Fetching your group tasks" />;
     }
-    const data = myGroupTasks ? myGroupTasks.get('tasks').map((taskData) => {
+    const data = yourGroupTasks ? yourGroupTasks.get('tasks').map((taskData) => {
       const task = taskData.get('task');
       const taskId = task.get('id');
-      const taskNameLink = <div style={pointerStyle} onClick={() => this.goToTask(taskId)}>{task.get('name')}</div>;
-      const priorityLink = <div style={pointerStyle} onClick={() => this.goToTask(taskId)}>{priority(task.get('priority'))}</div>;
-      const createdOnLink = <div style={pointerStyle} onClick={() => this.goToTask(taskId)}>{ moment().to(moment(task.get('created')))}</div>;
-      const dueOnLink = <div style={pointerStyle} onClick={() => this.goToTask(taskId)}>{ moment().to(moment(task.get('due')))}</div>;
-      const assigneeLink =  <div style={pointerStyle} onClick={() => this.goToTask(taskId)}>{task.get('assignee') ? task.get('assignee') : 'Unassigned'}</div>;
+
+      const linkElem = (prop) => {
+        return <div style={pointerStyle} onClick={() => this.goToTask(taskId)}>{prop}</div>;
+      };
+      const taskNameLink = linkElem(task.get('name'));
+      const priorityLink = linkElem(priority(task.get('priority')));
+      const createdOnLink = linkElem(moment().to(moment(task.get('created'))));
+      const dueOnLink = linkElem(moment().to(moment(task.get('due'))));
+      const assigneeLink =  linkElem(task.get('assignee') ? task.get('assignee') : 'Unassigned');
+
       return {
         id: taskId,
         name: taskNameLink,
@@ -54,12 +59,47 @@ class YourGroupTasks extends React.Component {
       due: 'Due',
       assignee: 'Assignee'
     };
+    const filterTasksByName = (value) => {
+      this.props.filterYourGroupTasksByName(value);
+    };
     return (<div style={{ paddingTop: '20px' }}>
       <div className="data">
         <span
           className="data-item bold-medium"
-        >{myGroupTasks.get('total')} {myGroupTasks.get('total') === 1 ? 'task' : 'tasks'} allocated to your team</span>
+        >{yourGroupTasks.get('total')} {yourGroupTasks.get('total') === 1 ? 'task' : 'tasks'} allocated to your team</span>
       </div>
+
+      <div className="row">
+        <div className="column-one-half">
+          <div className="form-group">
+            <label className="form-label" htmlFor="sortTask">Sort tasks by:</label>
+            <select className="form-control" id="sortTask" name="sortTask"
+                    onChange={(event) => {
+                      const optionSelected = event.target.value;
+                      this.props.setYourGroupTasksSortValue(optionSelected);
+                      this.props.fetchYourGroupTasks(`/api/workflow/tasks?teamOnly=true&${optionSelected}`);
+                    }
+                    }
+                    value={yourGroupTasks.get('sortValue')}>
+              <option value="sort=due,desc">Latest due date</option>
+              <option value="sort=due,asc">Oldest due date</option>
+              <option value="sort=created,desc">Latest created date</option>
+              <option value="sort=created,asc">Oldest created date</option>
+              <option value="sort=priority,desc">Highest priority</option>
+              <option value="sort=priority,asc">Lowest priority</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="column-one-half">
+          <div className="form-group">
+            <label className="form-label" htmlFor="filterTaskName">Filter by task name or assignee:</label>
+            <input className="form-control" id="filterTaskName" type="text" name="filterTaskName"
+                   onChange={(event) => filterTasksByName(event.target.value)}/>
+          </div>
+        </div>
+      </div>
+
       <ReactHyperResponsiveTable
         headers={headers}
         rows={data}
@@ -72,12 +112,14 @@ class YourGroupTasks extends React.Component {
 }
 
 YourGroupTasks.propTypes = {
-  fetchMyGroupTasks: PropTypes.func.isRequired,
-  myGroupTasks: ImmutablePropTypes.map,
+  fetchYourGroupTasks: PropTypes.func.isRequired,
+  yourGroupTasks: ImmutablePropTypes.map,
+  filterYourGroupTasksByName: PropTypes.func.isRequired,
+  setYourGroupTasksSortValue: PropTypes.func.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
-  myGroupTasks,
+  yourGroupTasks,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

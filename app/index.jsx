@@ -31,9 +31,7 @@ const renderApp = (App, authorizedRole) => {
     };
     kc.init({onLoad: 'login-required', checkLoginIframe: false}).success(authenticated => {
         if (authenticated) {
-          console.log('Bearer ' + kc.token);
           store.getState().keycloak = kc;
-
           const hasPlatformRoleAccess = kc.realmAccess.roles.includes(authorizedRole);
           let rootDocument = document.getElementById('root');
           if (hasPlatformRoleAccess) {
