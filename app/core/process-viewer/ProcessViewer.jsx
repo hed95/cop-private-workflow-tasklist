@@ -3,8 +3,6 @@ import CustomBpmnViewer from './CustomBpmnViewer';
 import ZoomControls from './ZoomControls';
 import './bpmnio.css';
 
-let scale = 1;
-
 export default class ProcessViewer extends React.Component {
 
   componentDidMount() {
@@ -41,34 +39,32 @@ export default class ProcessViewer extends React.Component {
         console.log('error rendering', err);
       } else {
         this.bpmnModeler.getDefinitions();
-        this.bpmnModeler.get('canvas').zoom('fit-viewport');
+        this.scale = this.bpmnModeler.get('canvas').zoom('fit-viewport');
         console.log('successfully rendered');
       }
     });
   };
 
   handleZoom = () => {
-    this.bpmnModeler.get('canvas')
-      .zoom(scale);
+    this.bpmnModeler.get('canvas').zoom(this.scale);
   };
 
   handleZoomIn = () => {
-    scale += 0.1;
+    this.scale += 0.1;
     this.handleZoom();
   };
 
   handleZoomOut = () => {
-    if (scale <= 0.3) {
-      scale = 0.2;
+    if (this.scale <= 0.3) {
+      this.scale = 0.2;
     } else {
-      scale -= 0.1;
+      this.scale -= 0.1;
     }
     this.handleZoom();
   };
 
   handleZoomReset = () => {
-    scale = 1;
-    this.bpmnModeler.get('canvas').zoom('fit-viewport');
+    this.scale = this.bpmnModeler.get('canvas').zoom();
   };
 
   render() {
