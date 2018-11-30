@@ -18,6 +18,11 @@ class ProcessDiagramPage extends React.Component {
 
   }
 
+  componentWillUnmount() {
+    this.props.reset();
+  }
+
+
   render() {
     const {isFetchingProcessDefinition, processDefinition, processDefinitionXml, isFetchingProcessDefinitionXml} = this.props;
     const pointerStyle = {cursor: 'pointer', paddingTop: '2px', textDecoration: 'underline'};
