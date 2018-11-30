@@ -39,4 +39,21 @@ const fetchProcessDefinition = (action$, store) =>
                     }
                 ));
 
-export default combineEpics(fetchProcessDefinitions, fetchProcessDefinition);
+const fetchProcessDefinitionXml = (action$, store) =>
+  action$.ofType(types.FETCH_PROCESS_DEFINITION_XML)
+    .mergeMap(action =>
+      client({
+        method: 'GET',
+        path: `/rest/camunda/process-definition/key/${action.processDefinitionId}/xml`,
+        headers: {
+          "Accept": "application/json",
+          "Authorization": `Bearer ${store.getState().keycloak.token}`
+        }
+      }).retryWhen(retryOnForbidden).map(payload => actions.fetchProcessDefinitionXmlSuccess(payload))
+        .catch(error => {
+            return errorObservable(actions.fetchProcessDefinitionXmlFailure(), error);
+          }
+        ));
+
+
+export default combineEpics(fetchProcessDefinitions, fetchProcessDefinition, fetchProcessDefinitionXml);

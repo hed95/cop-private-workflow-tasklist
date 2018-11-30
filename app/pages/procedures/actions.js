@@ -34,6 +34,21 @@ const reset = () => ({
    type: types.RESET
 });
 
+const fetchProcessDefinitionXml = (processDefinitionId) => ({
+  type: types.FETCH_PROCESS_DEFINITION_XML,
+  processDefinitionId
+});
+
+const fetchProcessDefinitionXmlSuccess = (payload) =>({
+  type: types.FETCH_PROCESS_DEFINITION_XML_SUCCESS,
+  payload
+});
+
+const fetchProcessDefinitionXmlFailure = () =>({
+  type: types.FETCH_PROCESS_DEFINITION_XML_FAILURE
+});
+
+
 export  {
     fetchProcessDefinitions,
     fetchProcessDefinitionsSuccess,
@@ -41,6 +56,9 @@ export  {
     fetchProcessDefinition,
     fetchProcessDefinitionSuccess,
     fetchProcessDefinitionFailure,
-    reset
+    reset,
+    fetchProcessDefinitionXml,
+    fetchProcessDefinitionXmlSuccess,
+    fetchProcessDefinitionXmlFailure
 
 }

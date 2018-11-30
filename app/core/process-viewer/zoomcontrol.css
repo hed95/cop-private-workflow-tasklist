@@ -1,0 +1,122 @@
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    text-align: center;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1em;
+}
+
+
+
+.icon-plus:before {
+    font-family: FontAwesome;
+    content: "\f00e";
+}
+.icon-plus-circled:before {
+    content: "\f418";
+}
+.icon-minus:before {
+    font-family: FontAwesome;
+    content: "\f010";
+}
+
+.icon-size-reset:before {
+    font-family: FontAwesome;
+    content: "\f05b";
+}
+
+.icon-resize-full:before {
+    content: "\f425";
+}
+.icon-resize-small:before {
+    content: "\f426";
+}
+
+body:not(.shown) .io-zoom-controls {
+    display: none;
+}
+.io-control {
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+    padding: 5px;
+}
+
+.io-control-list {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+}
+.io-control-list a,
+.io-control-list a:visited,
+.io-control-list button {
+    padding: 0;
+    outline: none;
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 26px;
+    color: #555555;
+    background: none;
+    border: none;
+}
+.io-control-list a:hover,
+.io-control-list a:visited:hover,
+.io-control-list button:hover {
+    color: #333333;
+}
+.io-control-list a.inactive,
+.io-control-list a:visited.inactive,
+.io-control-list button.inactive {
+    color: #e0e0e0;
+    cursor: default;
+}
+.io-control hr {
+    border: none;
+    border-top: solid 1px #eee;
+}
+
+.io-zoom-controls {
+    width: auto;
+    position: fixed;
+    left: 20px;
+    bottom: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+
+}
+
+.io-zoom-controls .io-zoom-reset {
+    margin-bottom: 15%;
+}
+
+:full-screen .icon-resize:before {
+    content: "\e86e";
+}
+:-moz-full-screen .icon-resize:before {
+    content: "\e86e";
+}
+:-ms-full-screen .icon-resize:before {
+    content: "\e86e";
+}io-control
+ :-webkit-full-screen .icon-resize:before {
+     content: "\e86e";
+ }
+.icon-resize:before {
+    content: "\e86d";
+}
+.icon-resize:before {
+    content: "\e86d";
+}
+.icon-resize:before {
+    content: "\e86d";
+}
+.icon-resize:before {
+    content: "\e86d";
+}

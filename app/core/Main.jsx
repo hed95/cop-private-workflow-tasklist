@@ -15,6 +15,7 @@ import YourTasks from "../pages/tasks/components/YourTasks";
 import YourGroupUnassignedTasks from "../pages/tasks/components/YourGroupUnassignedTasks";
 import YourGroupTasks from "../pages/tasks/components/YourGroupTasks";
 import AppConstants from "../common/AppConstants";
+import ProcessDiagramPage from '../pages/procedures/components/ProcessDiagramPage';
 
 
 const Main = () => (
@@ -22,7 +23,6 @@ const Main = () => (
         <Switch>
             <Route name="Dashboard" exact path={AppConstants.DASHBOARD_PATH} component={DashboardPage}/>
             <Route name="Shift" exact path={AppConstants.SHIFT_PATH} component={ShiftPage}/>
-
             <ShiftScopedRoute name="Your tasks" exact path={AppConstants.YOUR_TASKS_PATH} component={YourTasks}/>
             <ShiftScopedRoute name="Your group unassigned tasks" exact path={AppConstants.YOUR_GROUP_UNASSIGNED_TASKS_PATH} component={YourGroupUnassignedTasks}/>
             <ShiftScopedRoute name="Your group tasks" exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={YourGroupTasks}/>
@@ -32,6 +32,7 @@ const Main = () => (
             <ShiftScopedRoute name="Messages" exact path={AppConstants.MESSAGES_PATH} component={MessagesPage}/>
             <ShiftScopedRoute name="Calendar" exact path={AppConstants.CALENDAR_PATH} component={CalendarPage}/>
             <ShiftScopedRoute name="Procedure Start Page" exact path={AppConstants.PROCEDURE_START_PATH} component={ProcessStartPage}/>
+            <ShiftScopedRoute name="Process Diagram Page" exact path={AppConstants.PROCESS_DIAGRAM_PATH} component={ProcessDiagramPage}/>
             <ShiftScopedRoute name="Task Details Page" exact path={AppConstants.TASK_PATH} component={TaskDetailsPage}/>
             <ShiftScopedRoute name="Admin" exact path={AppConstants.ADMIN_PATH} component={AdminPage}/>
             <Redirect to={AppConstants.DASHBOARD_PATH}/>
