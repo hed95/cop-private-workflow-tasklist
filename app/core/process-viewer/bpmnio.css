@@ -21,6 +21,6 @@ body.loaded .canvas svg {
 
 .cjs-powered-by,
 .bjs-powered-by {
-    position:fixed !important;
+    position:fixe !important;
     right:0;
 }
