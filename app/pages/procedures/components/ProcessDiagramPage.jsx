@@ -8,7 +8,7 @@ import { isFetchingProcessDefinition, processDefinition, isFetchingProcessDefini
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions';import {connect} from "react-redux";
 import Spinner from 'react-spinkit';
-
+import { isMobile }   from "react-device-detect";
 class ProcessDiagramPage extends React.Component {
 
   componentDidMount() {
@@ -20,8 +20,16 @@ class ProcessDiagramPage extends React.Component {
 
   render() {
     const {isFetchingProcessDefinition, processDefinition, processDefinitionXml, isFetchingProcessDefinitionXml} = this.props;
-
     const pointerStyle = {cursor: 'pointer', paddingTop: '2px', textDecoration: 'underline'};
+
+    if (isMobile) {
+      return <div>
+        <div style={pointerStyle} onClick={(event) => this.props.history.replace('/procedures')}>Back to
+          procedures
+        </div>
+        <div className="heading-medium">Process diagram not viewable on mobile screen</div>
+      </div>
+    };
 
     return <div>
       <div style={pointerStyle} onClick={(event) => this.props.history.replace('/procedures')}>Back to

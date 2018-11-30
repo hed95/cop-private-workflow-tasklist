@@ -624,3 +624,11 @@ table.narrowtable-your-group-unassignedtasks tr td,
 table.narrowtable-your-group-unassignedtasks tr th {
   font-size: 14px;
 }
+
+table.narrowtable-process tr td,
+table.narrowtable-process tr th {
+  font-size: 14px;
+}
+table.narrowtable-process tr:nth-child(2) {
+  border-bottom: solid #aaa;
+}

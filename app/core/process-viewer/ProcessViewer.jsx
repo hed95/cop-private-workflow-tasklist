@@ -72,7 +72,7 @@ export default class ProcessViewer extends React.Component {
   };
 
   render() {
-    const { processDefinition } = this.props;
+    const { processDefinition} = this.props;
     return <div>
       <div style={{ textAlign: 'center', marginTop: '5px' }}
            className="heading-medium">{processDefinition.getIn(['process-definition', 'name'])}</div>
