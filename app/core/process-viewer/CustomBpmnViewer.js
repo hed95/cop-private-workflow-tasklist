@@ -1,4 +1,4 @@
-import NavigatedViewer from 'bpmn-js/dist/bpmn-viewer.production.min';
+import NavigatedViewer from 'bpmn-js/dist/bpmn-navigated-viewer.production.min';
 import inherits from 'inherits';
 
 export default function CustomBpmnViewer(options) {
