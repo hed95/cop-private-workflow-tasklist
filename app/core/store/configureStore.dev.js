@@ -3,7 +3,11 @@ import { createStore, applyMiddleware } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { rootEpic, rootReducer } from '../rootReducer';
-const epicMiddleware = createEpicMiddleware(rootEpic);
+import client from "../../common/rest/client";
+
+const epicMiddleware = createEpicMiddleware(rootEpic, {
+  dependencies: {client: client}
+});
 
 export default function configureStore(initialState) {
     const store = createStore(rootReducer, initialState, composeWithDevTools(

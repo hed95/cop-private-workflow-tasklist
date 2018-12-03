@@ -1,4 +1,3 @@
-import client from "../../common/rest/client";
 import {errorObservable} from "../../core/error/epicUtil";
 import * as types from "./actionTypes";
 import * as actions from "./actions";
@@ -6,7 +5,7 @@ import {combineEpics} from "redux-observable";
 import {retryOnForbidden} from "../../core/util/retry";
 
 
-const fetchTaskCounts = (action$, store) =>
+const fetchTaskCounts = (action$, store, {client}) =>
     action$.ofType(types.FETCH_TASK_COUNTS)
         .mergeMap(action =>
             client({
@@ -23,7 +22,7 @@ const fetchTaskCounts = (action$, store) =>
                 ));
 
 
-const fetchMessageCounts = (action$, store) =>
+const fetchMessageCounts = (action$, store, {client}) =>
     action$.ofType(types.FETCH_NOTIFICATIONS_COUNT)
         .mergeMap(action =>
             client({

@@ -1,11 +1,10 @@
-import client from "../../common/rest/client";
 import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
 import {errorObservable} from "../../core/error/epicUtil";
 import {retryOnForbidden} from "../../core/util/retry";
 
-const fetchProcessDefinitions = (action$, store) =>
+const fetchProcessDefinitions = (action$, store, {client}) =>
     action$.ofType(types.FETCH_PROCESS_DEFINITIONS)
         .mergeMap(action => {
             return client({
@@ -23,7 +22,7 @@ const fetchProcessDefinitions = (action$, store) =>
         });
 
 
-const fetchProcessDefinition = (action$, store) =>
+const fetchProcessDefinition = (action$, store,  {client}) =>
     action$.ofType(types.FETCH_PROCESS_DEFINITION)
         .mergeMap(action =>
             client({
@@ -39,7 +38,7 @@ const fetchProcessDefinition = (action$, store) =>
                     }
                 ));
 
-const fetchProcessDefinitionXml = (action$, store) =>
+const fetchProcessDefinitionXml = (action$, store,  {client}) =>
   action$.ofType(types.FETCH_PROCESS_DEFINITION_XML)
     .mergeMap(action =>
       client({

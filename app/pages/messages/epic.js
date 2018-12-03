@@ -2,14 +2,13 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/merge';
 import {combineEpics} from 'redux-observable';
-import client from '../../common/rest/client';
 
 import * as types from './actionTypes';
 import * as actions from './actions';
 import {errorObservable} from "../../core/error/epicUtil";
 import {retryOnForbidden} from "../../core/util/retry";
 
-const fetchNotifications = (action$, store) =>
+const fetchNotifications = (action$, store, {client}) =>
     action$.ofType(types.FETCH_NOTIFICATIONS)
         .mergeMap(action =>
                 Observable.merge(
@@ -27,7 +26,7 @@ const fetchNotifications = (action$, store) =>
                         )
                 ));
 
-const fetchNotificationsNextPage = (action$, store) =>
+const fetchNotificationsNextPage = (action$, store, {client}) =>
     action$.ofType(types.FETCH_NOTIFICATIONS_NEXT_PAGE)
         .mergeMap(action =>
             Observable.merge(
@@ -46,7 +45,7 @@ const fetchNotificationsNextPage = (action$, store) =>
             ));
 
 
-const acknowledgeNotification = (action$, store) =>
+const acknowledgeNotification = (action$, store, {client}) =>
     action$.ofType(types.ACKNOWLEDGE_NOTIFICATION)
         .mergeMap(action =>
             client({

@@ -3,6 +3,17 @@ workspace:
   path: src/github.com/ukhomeoffice/cop-private-workflow-tasklist
 
 pipeline:
+  test:
+    image: node:8
+    commands:
+    - npm install
+    - npm test
+    when:
+      event:
+      - push
+      - pull_request
+      - tag
+
   build:
     image: docker:17.09.1
     environment:

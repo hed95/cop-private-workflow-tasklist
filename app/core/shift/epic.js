@@ -1,4 +1,3 @@
-import client from "../../common/rest/client";
 import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
@@ -8,7 +7,7 @@ import * as Rx from "rxjs/Observable";
 import {retryOnForbidden} from "../../core/util/retry";
 
 
-const shift = (email, token) => {
+const shift = (email, token, client) => {
     console.log(`Requesting shift details for ${email}`);
     return client({
         method: 'GET',
@@ -21,7 +20,7 @@ const shift = (email, token) => {
 };
 
 
-const endShift = (action$, store) =>
+const endShift = (action$, store, {client}) =>
     action$.ofType(types.END_SHIFT)
         .mergeMap(action =>
             client({
@@ -39,7 +38,7 @@ const endShift = (action$, store) =>
                 ));
 
 
-const fetchStaffDetails = (action$, store) =>
+const fetchStaffDetails = (action$, store, {client}) =>
     action$.ofType(types.FETCH_STAFF_DETAILS)
         .mergeMap(action =>
             client({
@@ -57,7 +56,7 @@ const fetchStaffDetails = (action$, store) =>
                 ));
 
 
-const fetchShiftForm = (action$, store) =>
+const fetchShiftForm = (action$, store, {client}) =>
     action$.ofType(types.FETCH_SHIFT_FORM)
         .mergeMap(action =>
             client({
@@ -74,10 +73,10 @@ const fetchShiftForm = (action$, store) =>
                     }
                 ));
 
-const fetchActiveShift = (action$, store) =>
+const fetchActiveShift = (action$, store, {client}) =>
     action$.ofType(types.FETCH_ACTIVE_SHIFT)
         .mergeMap(action =>
-            shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token).retryWhen(retryOnForbidden).map(payload => {
+            shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token, client).retryWhen(retryOnForbidden).map(payload => {
                 if (payload.status.code === 200 && payload.entity.length === 0) {
                     console.log('No data');
                     throw 'no-data';
@@ -100,7 +99,7 @@ const fetchActiveShift = (action$, store) =>
             ));
 
 
-const submit = (action$, store) =>
+const submit = (action$, store, {client}) =>
     action$.ofType(types.SUBMIT_VALIDATION)
         .mergeMap(action =>
             client({
