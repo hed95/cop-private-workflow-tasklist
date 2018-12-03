@@ -25,11 +25,11 @@ function reducer(state = initialState, action) {
     switch (action.type) {
         case actions.HANDLE_UNAUTHORISED:
             return state.set("unauthorised", true);
-        case actions.HANDLE_ERROR:
+      case actions.HANDLE_ERROR:
             const error = action.payload;
             const errorToReturn = {};
             errorToReturn.status =  error.status.code;
-            errorToReturn.url = error.request.method + " -> " + error.request.path;
+            errorToReturn.url = error.request ? error.request.method + " -> " + error.request.path : '';
             if (error.entity.error) {
                 errorToReturn.error = error.entity.error;
             }
