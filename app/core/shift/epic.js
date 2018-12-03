@@ -90,7 +90,7 @@ const fetchActiveShift = (action$, store, {client}) =>
                     .take(1)
                     .concat(Rx.Observable.throw({
                         status: {
-                            code: 401
+                            code: 403
                         }
                     }));
             }).catch(error => {
@@ -123,7 +123,7 @@ const submit = (action$, store, {client}) =>
                 }
             ));
 
-const createActiveShift = (action$, store) =>
+const createActiveShift = (action$, store, {client}) =>
     action$.ofType(types.CREATE_ACTIVE_SHIFT)
         .mergeMap(action =>
             client({
@@ -145,10 +145,10 @@ const createActiveShift = (action$, store) =>
             ));
 
 
-const fetchActiveShiftAfterCreation = (action$, store) =>
+const fetchActiveShiftAfterCreation = (action$, store, {client}) =>
     action$.ofType(types.FETCH_ACTIVE_SHIFT_AFTER_CREATE)
         .mergeMap(action =>
-            shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token)
+            shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token, client)
                 .flatMap(payload => {
                     if (payload.status.code === 403) {
                         throw 'not-authorized'
@@ -175,7 +175,7 @@ const fetchActiveShiftAfterCreation = (action$, store) =>
                     .take(10)
                     .concat(Rx.Observable.throw({
                         status: {
-                            code: 401
+                            code: 403
                         }
                     }));
             }).catch(error => {
