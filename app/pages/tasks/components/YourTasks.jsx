@@ -4,70 +4,115 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {createStructuredSelector} from "reselect";
 import * as actions from "../actions";
-import {myTasks} from "../selectors";
+import {yourTasks} from "../selectors";
 import {priority} from "../../../core/util/priority";
 import moment from "moment/moment";
 import {withRouter} from "react-router";
 import {DataSpinner} from "../../../core/components/DataSpinner";
-import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
-import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+import ReactHyperResponsiveTable from 'react-hyper-responsive-table';
 
 class YourTasks extends React.Component {
 
     componentDidMount() {
-        this.props.fetchTasksAssignedToMe("/api/workflow/tasks?assignedToMeOnly=true");
+        this.props.fetchTasksAssignedToYou("/api/workflow/tasks?assignedToMeOnly=true&sort=due,desc");
     }
 
     goToTask(taskId) {
         this.props.history.replace(`/task?taskId=${taskId}`);
     }
 
-
     render() {
-        const {myTasks} = this.props;
+        const {yourTasks} = this.props;
         const pointerStyle = {cursor: 'pointer'};
-        if (myTasks.get('isFetchingTasksAssignedToMe')) {
+        if (yourTasks.get('isFetchingTasksAssignedToYou')) {
             return <DataSpinner message="Fetching tasks assigned to you"/>
         } else {
+          const data = yourTasks ? yourTasks.get('tasks').map((taskData) => {
+            const task = taskData.get('task');
+            const taskId = task.get('id');
+
+            const linkElem = (prop) => {
+              return <div style={pointerStyle} onClick={() => this.goToTask(taskId)}>{prop}</div>;
+            };
+            const taskNameLink = linkElem(task.get('name'));
+            const priorityLink = linkElem(priority(task.get('priority')));
+            const createdOnLink = linkElem(moment().to(moment(task.get('created'))));
+            const dueOnLink = linkElem(moment().to(moment(task.get('due'))));
+
+            return {
+              id: taskId,
+              name: taskNameLink,
+              priority: priorityLink,
+              due: dueOnLink,
+              createdOn: createdOnLink
+            };
+          }).toArray() : [];
+          const headers = {
+            name: 'Task name',
+            priority: 'Priority',
+            due: 'Due',
+            createdOn: 'Created'
+          };
+
+          const filterTasksByName = (value) => {
+             this.props.filterYourTasksByName(value);
+          };
             return <div style={{paddingTop: '20px'}}>
                 <div className="data">
-                    <span className="data-item bold-medium">{myTasks.get('total')} tasks assigned to you</span>
+                    <span className="data-item bold-medium">{yourTasks.get('total')} tasks assigned to you</span>
                 </div>
-                <Table>
-                    <Thead>
-                    <Tr>
-                        <Th scope="col">Task name</Th>
-                        <th scope="col">Priority</th>
-                        <th scope="col">Due</th>
-                    </Tr>
-                    </Thead>
-                    <Tbody>
-                    {
-                        myTasks.get('tasks').map((taskData) => {
-                            const task = taskData.get('task');
-                            return <Tr style={pointerStyle} onClick={() => this.goToTask(task.get('id'))}
-                                       key={task.get('id')}>
-                                <Td>{task.get('name')}</Td>
-                                <Td>{priority(task.get('priority'))}</Td>
-                                <Td>{moment().to(moment(task.get('due')))}</Td>
-                            </Tr>
-                        })
-                    }
+                <div className="row">
+                  <div className="column-one-half">
+                    <div className="form-group">
+                      <label className="form-label" htmlFor="sortTask">Sort tasks by:</label>
+                      <select className="form-control" id="sortTask" name="sortTask"
+                              onChange={(event) => {
+                                  const optionSelected = event.target.value;
+                                  this.props.setYourTasksSortValue(optionSelected);
+                                  this.props.fetchTasksAssignedToYou(`/api/workflow/tasks?assignedToMeOnly=true&${optionSelected}`)
+                                }
+                              }
+                              value={yourTasks.get('sortValue')}>
+                        <option value="sort=due,desc">Latest due date</option>
+                        <option value="sort=due,asc">Oldest due date</option>
+                        <option value="sort=created,desc">Latest created date</option>
+                        <option value="sort=created,asc">Oldest created date</option>
+                        <option value="sort=priority,desc">Highest priority</option>
+                        <option value="sort=priority,asc">Lowest priority</option>
+                      </select>
+                    </div>
+                  </div>
 
-                    </Tbody>
-                </Table>
+                  <div className="column-one-half">
+                    <div className="form-group">
+                      <label className="form-label" htmlFor="filterTaskName">Filter by task name:</label>
+                      <input className="form-control" id="filterTaskName" type="text" name="filterTaskName"
+                             onChange={(event) => filterTasksByName(event.target.value)}/>
+                    </div>
+                  </div>
+                </div>
+
+              <ReactHyperResponsiveTable
+                headers={headers}
+                rows={data}
+                keyGetter={row => row.id}
+                breakpoint={578}
+                tableStyling={({ narrow }) => (narrow ? 'narrowtable-yourtasks' : 'widetable')}
+              />
             </div>
         }
     }
 }
 
 YourTasks.propTypes = {
-    fetchTasksAssignedToMe: PropTypes.func.isRequired,
-    myTasks: ImmutablePropTypes.map
+    fetchTasksAssignedToYou: PropTypes.func.isRequired,
+    filterYourTasksByName: PropTypes.func.isRequired,
+    setYourTasksSortValue: PropTypes.func.isRequired,
+    yourTasks: ImmutablePropTypes.map
 };
 
 const mapStateToProps = createStructuredSelector({
-    myTasks: myTasks
+    yourTasks: yourTasks,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

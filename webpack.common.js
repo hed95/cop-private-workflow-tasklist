@@ -97,6 +97,12 @@ module.exports = {
                         includePaths: ["node_modules/**/*.scss"]
                     }
                 }]
+            },
+            {
+              test: /\.bpmn$/,
+              use: {
+                loader: 'raw-loader'
+              }
             }
 
         ]

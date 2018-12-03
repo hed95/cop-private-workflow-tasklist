@@ -1,12 +1,11 @@
-import client from "../../common/rest/client";
 import {errorObservable} from "../../core/error/epicUtil";
 import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
-import {retryOnForbidden} from "../../core/util/retry";
+import {retry} from "../../core/util/retry";
 
-const fetchTasksAssignedToMe = (action$, store) =>
-    action$.ofType(types.FETCH_TASKS_ASSIGNED_TO_ME)
+const fetchTasksAssignedYou = (action$, store, {client}) =>
+    action$.ofType(types.FETCH_TASKS_ASSIGNED_TO_YOU)
         .mergeMap(action =>
             client({
                 method: 'GET',
@@ -15,15 +14,15 @@ const fetchTasksAssignedToMe = (action$, store) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).retryWhen(retryOnForbidden).map(payload => actions.fetchTasksAssignedToMeSuccess(payload))
+            }).retryWhen(retry).map(payload => actions.fetchTasksAssignedToYouSuccess(payload))
                 .catch(error => {
-                        return errorObservable(actions.fetchTasksAssignedToMeFailure(), error);
+                        return errorObservable(actions.fetchTasksAssignedToYouFailure(), error);
                     }
                 ));
 
 
-const fetchMyGroupTasks = (action$, store) =>
-    action$.ofType(types.FETCH_MY_GROUP_TASKS)
+const fetchYourGroupTasks = (action$, store, {client}) =>
+    action$.ofType(types.FETCH_YOUR_GROUP_TASKS)
         .mergeMap(action =>
             client({
                 method: 'GET',
@@ -32,14 +31,14 @@ const fetchMyGroupTasks = (action$, store) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).retryWhen(retryOnForbidden).map(payload => actions.fetchMyGroupTasksSuccess(payload))
+            }).retryWhen(retry).map(payload => actions.fetchYourGroupTasksSuccess(payload))
                 .catch(error => {
-                        return errorObservable(actions.fetchMyGroupTasksFailure(), error);
+                        return errorObservable(actions.fetchYourGroupTasksFailure(), error);
                     }
                 ));
 
 
-const fetchUnassignedTasks = (action$, store) =>
+const fetchUnassignedTasks = (action$, store, {client}) =>
     action$.ofType(types.FETCH_UNASSIGNED_TASKS)
         .mergeMap(action =>
             client({
@@ -49,11 +48,11 @@ const fetchUnassignedTasks = (action$, store) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).retryWhen(retryOnForbidden).map(payload => actions.fetchUnassignedTasksSuccess(payload))
+            }).retryWhen(retry).map(payload => actions.fetchUnassignedTasksSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchUnassignedTasksFailure(), error);
                     }
                 ));
 
 
-export default combineEpics(fetchTasksAssignedToMe, fetchMyGroupTasks, fetchUnassignedTasks);
+export default combineEpics(fetchTasksAssignedYou, fetchYourGroupTasks, fetchUnassignedTasks);

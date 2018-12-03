@@ -13,5 +13,6 @@ export default class AppConstants {
     static TASK_PATH="/task";
     static ADMIN_PATH="/admin";
     static SHIFT_PATH = "/shift";
+    static PROCESS_DIAGRAM_PATH = "/process-diagram";
 
 }

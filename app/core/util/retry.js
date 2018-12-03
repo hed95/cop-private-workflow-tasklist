@@ -1,18 +1,16 @@
-import * as Rx from "rxjs/Observable";
+import * as Rx from 'rxjs/Observable';
 
-export const retryOnForbidden = (errors) => {
-    return errors.flatMap((error) => {
-        if (error.status.code === 403) {
-            console.log('403...retrying...');
-            return Rx.Observable.of(error.status).delay(1000)
-        } else {
-            return Rx.Observable.throw(error);
-        }
-    }).delay(1000)
-        .take(5)
-        .concat(Rx.Observable.throw({
-            status: {
-                code: 401
-            }
-        }));
+export const retry = (errors) => {
+  const sourcesWithCatch = errors.flatMap(s => {
+    return Rx.Observable.throw(s);
+  });
+  return errors.flatMap((error) => {
+    if (error.status.code === 403 || (error.status.code >= 500)) {
+      console.log(`${error.status.code}...retrying...`);
+      return Rx.Observable.of(error.status).delay(1000);
+    } else {
+      return Rx.Observable.throw(error);
+    }
+  }).take(5)
+    .concat(sourcesWithCatch);
 };

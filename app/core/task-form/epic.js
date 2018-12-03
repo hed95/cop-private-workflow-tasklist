@@ -1,12 +1,11 @@
 import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {errorObservable} from "../error/epicUtil";
-import client from "../../common/rest/client";
 import {combineEpics} from "redux-observable";
 import PubSub from "pubsub-js";
-import {retryOnForbidden} from "../util/retry";
+import {retry} from "../util/retry";
 
-const fetchTaskForm = (action$, store) =>
+const fetchTaskForm = (action$, store, {client}) =>
     action$.ofType(types.FETCH_TASK_FORM)
         .mergeMap(action =>
             client({
@@ -16,14 +15,14 @@ const fetchTaskForm = (action$, store) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).retryWhen(retryOnForbidden).map(payload => actions.fetchTaskFormSuccess(payload))
+            }).retryWhen(retry).map(payload => actions.fetchTaskFormSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchTaskFormFailure(), error);
                     }
                 ));
 
 
-const submitTaskForm = (action$, store) =>
+const submitTaskForm = (action$, store, {client}) =>
     action$.ofType(types.SUBMIT_TASK_FORM)
         .mergeMap(action =>
             client({
@@ -58,7 +57,7 @@ const submitTaskForm = (action$, store) =>
             ));
 
 
-const completeTaskForm = (action$, store) =>
+const completeTaskForm = (action$, store, {client}) =>
     action$.ofType(types.COMPLETE_TASK_FORM)
         .mergeMap(action =>
             client({
@@ -70,7 +69,7 @@ const completeTaskForm = (action$, store) =>
                     "Authorization": `Bearer ${store.getState().keycloak.token}`,
                     'Content-Type': 'application/json'
                 }
-            }).retryWhen(retryOnForbidden).map(payload => {
+            }).retryWhen(retry).map(payload => {
                 PubSub.publish("submission", {
                     submission: true,
                     message: `Task successfully completed`

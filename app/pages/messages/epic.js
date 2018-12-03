@@ -2,14 +2,13 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/merge';
 import {combineEpics} from 'redux-observable';
-import client from '../../common/rest/client';
 
 import * as types from './actionTypes';
 import * as actions from './actions';
 import {errorObservable} from "../../core/error/epicUtil";
-import {retryOnForbidden} from "../../core/util/retry";
+import {retry} from "../../core/util/retry";
 
-const fetchNotifications = (action$, store) =>
+const fetchNotifications = (action$, store, {client}) =>
     action$.ofType(types.FETCH_NOTIFICATIONS)
         .mergeMap(action =>
                 Observable.merge(
@@ -20,14 +19,14 @@ const fetchNotifications = (action$, store) =>
                             "Accept": "application/json",
                             "Authorization": `Bearer ${store.getState().keycloak.token}`
                         }
-                    }).retryWhen(retryOnForbidden).map(payload => actions.fetchNotificationsSuccess(payload))
+                    }).retryWhen(retry).map(payload => actions.fetchNotificationsSuccess(payload))
                         .catch(error => {
                                 return errorObservable(actions.fetchNotificationsFailure(), error);
                             }
                         )
                 ));
 
-const fetchNotificationsNextPage = (action$, store) =>
+const fetchNotificationsNextPage = (action$, store, {client}) =>
     action$.ofType(types.FETCH_NOTIFICATIONS_NEXT_PAGE)
         .mergeMap(action =>
             Observable.merge(
@@ -38,7 +37,7 @@ const fetchNotificationsNextPage = (action$, store) =>
                         "Accept": "application/json",
                         "Authorization": `Bearer ${store.getState().keycloak.token}`
                     }
-                }).retryWhen(retryOnForbidden).map(payload => actions.fetchNotificationsNextPageSuccess(payload))
+                }).retryWhen(retry).map(payload => actions.fetchNotificationsNextPageSuccess(payload))
                     .catch(error => {
                             return errorObservable(actions.fetchNotificationsNextPageFailure(), error);
                         }
@@ -46,7 +45,7 @@ const fetchNotificationsNextPage = (action$, store) =>
             ));
 
 
-const acknowledgeNotification = (action$, store) =>
+const acknowledgeNotification = (action$, store, {client}) =>
     action$.ofType(types.ACKNOWLEDGE_NOTIFICATION)
         .mergeMap(action =>
             client({
@@ -56,7 +55,7 @@ const acknowledgeNotification = (action$, store) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).retryWhen(retryOnForbidden).map(payload => {
+            }).retryWhen(retry).map(payload => {
                 return actions.acknowledgeNotificationSuccess(payload)
             }) .catch(error => {
                     return errorObservable(actions.acknowledgeNotificationFailure(action.taskId), error);

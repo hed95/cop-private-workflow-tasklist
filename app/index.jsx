@@ -31,6 +31,7 @@ const renderApp = (App, authorizedRole) => {
     };
     kc.init({onLoad: 'login-required', checkLoginIframe: false}).success(authenticated => {
         if (authenticated) {
+          store.getState().keycloak = kc;
           const hasPlatformRoleAccess = kc.realmAccess.roles.includes(authorizedRole);
           let rootDocument = document.getElementById('root');
           if (hasPlatformRoleAccess) {
@@ -38,7 +39,6 @@ const renderApp = (App, authorizedRole) => {
             window.onpopstate = () => {
               history.go(1);
             };
-            store.getState().keycloak = kc;
             setInterval(() => {
               kc.updateToken().success((refreshed) => {
                 if (refreshed) {

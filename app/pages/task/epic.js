@@ -1,12 +1,11 @@
-import client from "../../common/rest/client";
 import {errorObservable} from "../../core/error/epicUtil";
 import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
-import {retryOnForbidden} from "../../core/util/retry";
+import {retry} from "../../core/util/retry";
 
 
-const fetchComments = (action$, store) =>
+const fetchComments = (action$, store, {client}) =>
     action$.ofType(types.FETCH_COMMENTS)
         .mergeMap(action =>
             client({
@@ -23,7 +22,7 @@ const fetchComments = (action$, store) =>
                 ));
 
 
-const fetchTask = (action$, store) =>
+const fetchTask = (action$, store, {client}) =>
     action$.ofType(types.FETCH_TASK)
         .mergeMap(action => client({
             method: 'GET',
@@ -39,7 +38,7 @@ const fetchTask = (action$, store) =>
             ));
 
 
-const fetchCreateCommentForm = (action$, store) =>
+const fetchCreateCommentForm = (action$, store, {client}) =>
     action$.ofType(types.FETCH_CREATE_COMMENT_FORM)
         .mergeMap(action =>
             client({
@@ -55,14 +54,14 @@ const fetchCreateCommentForm = (action$, store) =>
                     }
                 ));
 
-const createComment = (action$, store) =>
+const createComment = (action$, store, {client}) =>
     action$.ofType(types.CREATE_COMMENT)
         .mergeMap(action =>
             client({
                 method: 'POST',
                 entity: {
                     "staffid": action.comment.staffid,
-                    "taskcomment": action.comment.message,
+                    "comment": action.comment.message,
                     "taskid": action.taskId,
                 },
                 path: `/api/workflow/tasks/comments`,
@@ -78,7 +77,7 @@ const createComment = (action$, store) =>
                 ));
 
 
-const claimTask = (action$, store) =>
+const claimTask = (action$, store, {client}) =>
     action$.ofType(types.CLAIM_TASK)
         .mergeMap(action =>
             client({
@@ -97,7 +96,7 @@ const claimTask = (action$, store) =>
                 ));
 
 
-const unclaimTask = (action$, store) =>
+const unclaimTask = (action$, store, {client}) =>
     action$.ofType(types.UNCLAIM_TASK)
         .mergeMap(action =>
             client({
@@ -115,7 +114,7 @@ const unclaimTask = (action$, store) =>
                     }
                 ));
 
-const completeTask = (action$, store) =>
+const completeTask = (action$, store, {client}) =>
     action$.ofType(types.COMPLETE_TASK)
         .mergeMap(action =>
             client({
@@ -127,7 +126,7 @@ const completeTask = (action$, store) =>
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 },
-            }).retryWhen(retryOnForbidden)
+            }).retryWhen(retry)
                 .map(() => actions.completeTaskSuccess())
                 .catch(error => {
                     return errorObservable(actions.completeTaskFailure(), error);
