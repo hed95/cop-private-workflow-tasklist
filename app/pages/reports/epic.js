@@ -1,5 +1,5 @@
 import {errorObservable} from "../../core/error/epicUtil";
-import {retryOnForbidden} from "../../core/util/retry";
+import {retry} from "../../core/util/retry";
 import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
@@ -14,7 +14,7 @@ const fetchReports = (action$, store, {client}) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).retryWhen(retryOnForbidden).map(payload => actions.fetchReportsListSuccess(payload))
+            }).retryWhen(retry).map(payload => actions.fetchReportsListSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchReportsListFailure(), error);
                     }

@@ -1,0 +1,37 @@
+import * as actions from './actions';
+import reducer from './reducer';
+import Immutable from 'immutable';
+
+
+describe('error reducer', () => {
+  const initialState = reducer.initialState;
+  it('handles unauthorized', () => {
+    const state = reducer(initialState, actions.handleUnauthorised());
+    expect(state.get('unauthorised')).toEqual(true);
+  });
+  it('handle reset errors', () => {
+    const state = reducer(Immutable.fromJS({
+       hasError: true,
+       unauthorised: true,
+    }), actions.resetErrors());
+    expect(state.get('unauthorised')).toEqual(false);
+    expect(state.get('hasError')).toEqual(false);
+  });
+  it ('handle error', () => {
+    const action = actions.handleError({
+      status: {
+        code: 401
+      },
+      request: {
+        method : 'GET',
+        path: '/api/test'
+      },
+      entity: {
+        message: 'Failed'
+      }
+    });
+    const updatedState = reducer(initialState, action);
+    expect(updatedState.get('hasError')).toEqual(true);
+    expect(updatedState.get('errors').size).toEqual(1);
+  });
+});

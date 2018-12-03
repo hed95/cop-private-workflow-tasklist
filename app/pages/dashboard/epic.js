@@ -2,7 +2,7 @@ import {errorObservable} from "../../core/error/epicUtil";
 import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
-import {retryOnForbidden} from "../../core/util/retry";
+import {retry} from "../../core/util/retry";
 
 
 const fetchTaskCounts = (action$, store, {client}) =>
@@ -15,7 +15,7 @@ const fetchTaskCounts = (action$, store, {client}) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).retryWhen(retryOnForbidden).map(payload => actions.fetchTaskCountsSuccess(payload))
+            }).retryWhen(retry).map(payload => actions.fetchTaskCountsSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchTaskCountsFailure(), error);
                     }
@@ -32,7 +32,7 @@ const fetchMessageCounts = (action$, store, {client}) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).retryWhen(retryOnForbidden).map(payload => actions.fetchMessageCountsSuccess(payload))
+            }).retryWhen(retry).map(payload => actions.fetchMessageCountsSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchMessageCountsFailure(), error);
                     }

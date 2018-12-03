@@ -55,7 +55,7 @@ describe('Start form epic', () => {
 
     const client = () => Observable.throw({
       status: {
-        code: 500
+        code: 400
       }
     });
 
@@ -74,7 +74,7 @@ describe('Start form epic', () => {
             type: 'HANDLE_ERROR',
             payload: {
               status: {
-                code: 500
+                code: 400
               }
             }
           });
@@ -110,7 +110,7 @@ describe('Start form epic', () => {
 
     const client = () => Observable.throw({
       status: {
-        code: 500
+        code: 400
       }
     });
     Observable.concat(epic(action$, store, { client }))
@@ -127,7 +127,7 @@ describe('Start form epic', () => {
             type: 'HANDLE_ERROR',
             payload: {
               status: {
-                code: 500
+                code: 400
               }
             }
           });
@@ -171,7 +171,7 @@ describe('Start form epic', () => {
     );
     const client = () => Observable.throw({
       status: {
-        code: 500
+        code: 400
       }
     });
     Observable.concat(epic(action$, store, { client }))
@@ -188,7 +188,7 @@ describe('Start form epic', () => {
             type: 'HANDLE_ERROR',
             payload: {
               status: {
-                code: 500
+                code: 400
               }
             }
           });

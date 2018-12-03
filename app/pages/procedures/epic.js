@@ -2,7 +2,7 @@ import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
 import {errorObservable} from "../../core/error/epicUtil";
-import {retryOnForbidden} from "../../core/util/retry";
+import {retry} from "../../core/util/retry";
 
 const fetchProcessDefinitions = (action$, store, {client}) =>
     action$.ofType(types.FETCH_PROCESS_DEFINITIONS)
@@ -14,7 +14,7 @@ const fetchProcessDefinitions = (action$, store, {client}) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).retryWhen(retryOnForbidden).map(payload => actions.fetchProcessDefinitionsSuccess(payload))
+            }).retryWhen(retry).map(payload => actions.fetchProcessDefinitionsSuccess(payload))
                 .catch(error => {
                     return errorObservable(actions.fetchProcessDefinitionsFailure(), error);
                     }
@@ -32,7 +32,7 @@ const fetchProcessDefinition = (action$, store,  {client}) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).retryWhen(retryOnForbidden).map(payload => actions.fetchProcessDefinitionSuccess(payload))
+            }).retryWhen(retry).map(payload => actions.fetchProcessDefinitionSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchProcessDefinitionFailure(), error);
                     }
@@ -48,7 +48,7 @@ const fetchProcessDefinitionXml = (action$, store,  {client}) =>
           "Accept": "application/json",
           "Authorization": `Bearer ${store.getState().keycloak.token}`
         }
-      }).retryWhen(retryOnForbidden).map(payload => actions.fetchProcessDefinitionXmlSuccess(payload))
+      }).retryWhen(retry).map(payload => actions.fetchProcessDefinitionXmlSuccess(payload))
         .catch(error => {
             return errorObservable(actions.fetchProcessDefinitionXmlFailure(), error);
           }

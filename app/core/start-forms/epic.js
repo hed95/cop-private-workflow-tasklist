@@ -3,7 +3,7 @@ import * as actions from './actions';
 import * as types from './actionTypes';
 import { errorObservable } from '../error/epicUtil';
 import PubSub from 'pubsub-js';
-import { retryOnForbidden } from '../util/retry';
+import { retry } from '../util/retry';
 
 
 const fetchForm = (action$, store, { client }) =>
@@ -17,7 +17,7 @@ const fetchForm = (action$, store, { client }) =>
           'Authorization': `Bearer ${store.getState().keycloak.token}`
         }
       })
-        .retryWhen(retryOnForbidden)
+        .retryWhen(retry)
         .map(payload => actions.fetchFormSuccess(payload))
         .catch(error => {
             return errorObservable(actions.fetchFormFailure(), error);
@@ -40,7 +40,7 @@ const fetchFormWithContext = (action$, store, { client }) =>
           'Authorization': `Bearer ${store.getState().keycloak.token}`
         }
       })
-        .retryWhen(retryOnForbidden)
+        .retryWhen(retry)
         .map(payload => actions.fetchFormSuccess(payload))
         .catch(error => {
             return errorObservable(actions.fetchFormFailure(), error);
@@ -62,7 +62,7 @@ const submit = (action$, store, { client }) =>
           'Content-Type': 'application/json'
         }
       })
-        .retryWhen(retryOnForbidden)
+        .retryWhen(retry)
         .map(payload => {
           return {
             type: types.SUBMIT_TO_WORKFLOW,
@@ -94,7 +94,7 @@ const submitToWorkflow = (action$, store, { client }) =>
           'Content-Type': 'application/json'
         }
       })
-        .retryWhen(retryOnForbidden)
+        .retryWhen(retry)
         .map(payload => {
           console.log(JSON.stringify(action));
           PubSub.publish('submission', {

@@ -1,25 +1,13 @@
 import Immutable, { List } from 'immutable';
 import * as actions from './actionTypes';
 
-const { Map } = Immutable;
+const { Map} = Immutable;
 
-const initialState = new Map({
+export const initialState = new Map({
   hasError: false,
   errors: new List([]),
   unauthorised: false,
 });
-
-/**
- * @return {boolean}
- */
-function isJson(str) {
-  try {
-    JSON.parse(str);
-  } catch (e) {
-    return false;
-  }
-  return true;
-}
 
 function reducer(state = initialState, action) {
   switch (action.type) {
@@ -35,12 +23,10 @@ function reducer(state = initialState, action) {
         if (error.entity.message) {
           errorToReturn.message = error.entity.message;
         } else {
-          errorToReturn.message = isJson(error.entity) ? error.entity : error.message;
+          errorToReturn.message = error.entity ? error.entity : error.message;
         }
       }
-
-
-      if (!error.message) {
+      if (!errorToReturn.message) {
         errorToReturn.message = 'Failed to execute action';
       }
       errorToReturn.raw = error;

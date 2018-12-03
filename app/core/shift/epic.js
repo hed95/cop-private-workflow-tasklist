@@ -4,7 +4,7 @@ import {combineEpics} from "redux-observable";
 import {errorObservable} from "../../core/error/epicUtil";
 import PubSub from "pubsub-js";
 import * as Rx from "rxjs/Observable";
-import {retryOnForbidden} from "../../core/util/retry";
+import {retry} from "../../core/util/retry";
 
 
 const shift = (email, token, client) => {
@@ -30,7 +30,7 @@ const endShift = (action$, store, {client}) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).retryWhen(retryOnForbidden)
+            }).retryWhen(retry)
                 .map(payload => actions.endShiftSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.endShiftFailure(), error);
@@ -48,7 +48,7 @@ const fetchStaffDetails = (action$, store, {client}) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).retryWhen(retryOnForbidden)
+            }).retryWhen(retry)
                 .map(payload => actions.fetchStaffDetailsSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchStaffDetailsFailure(), error);
@@ -66,7 +66,7 @@ const fetchShiftForm = (action$, store, {client}) =>
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
-            }).retryWhen(retryOnForbidden)
+            }).retryWhen(retry)
                 .map(payload => actions.fetchShiftFormSuccess(payload))
                 .catch(error => {
                         return errorObservable(actions.fetchShiftFormFailure(), error);
@@ -76,7 +76,7 @@ const fetchShiftForm = (action$, store, {client}) =>
 const fetchActiveShift = (action$, store, {client}) =>
     action$.ofType(types.FETCH_ACTIVE_SHIFT)
         .mergeMap(action =>
-            shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token, client).retryWhen(retryOnForbidden).map(payload => {
+            shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token, client).retryWhen(retry).map(payload => {
                 if (payload.status.code === 200 && payload.entity.length === 0) {
                     console.log('No data');
                     throw 'no-data';
@@ -118,7 +118,7 @@ const submit = (action$, store, {client}) =>
                     type: types.CREATE_ACTIVE_SHIFT,
                     shiftInfo: payload.entity.data
                 }
-            }).retryWhen(retryOnForbidden).catch(error => {
+            }).retryWhen(retry).catch(error => {
                     return errorObservable(actions.submitFailure(), error);
                 }
             ));
@@ -135,7 +135,7 @@ const createActiveShift = (action$, store, {client}) =>
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 }
-            }).retryWhen(retryOnForbidden).map(() => {
+            }).retryWhen(retry).map(() => {
                 return {
                     type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE,
                 }

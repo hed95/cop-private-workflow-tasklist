@@ -64,7 +64,8 @@ export default class ProcessViewer extends React.Component {
   };
 
   handleZoomReset = () => {
-    this.scale = this.bpmnModeler.get('canvas').zoom();
+    this.scale = this.bpmnModeler.get('canvas').zoom('fit-viewport');
+
   };
 
   render() {
