@@ -69,7 +69,7 @@ class TaskForm extends React.Component {
 
       if (form) {
         const formVariableSubmissionName = `${form.name}::submissionData`;
-        const submissionData = variables['submissionData'] ? variables['submissionData'] : variables[formVariableSubmissionName];
+        const submissionData = variables['submissionData'] ? variables['submissionData'] : (variables[formVariableSubmissionName] ? variables[formVariableSubmissionName] : null);
         const variableInput = form.components.find(c => c.key === 'submitVariableName');
         const variableName = variableInput ? variableInput.defaultValue : form.name;
 
@@ -77,6 +77,7 @@ class TaskForm extends React.Component {
           return <Form form={form} options={options} ref={(form) => this.form = form}
                        onCustomEvent={(event) => onCustomEvent(event)}
                        submission={JSON.parse(submissionData)} onSubmit={(submission) => {
+            delete(submission.data['submission']);
             this.props.submitTaskForm(form._id, task.get('id'), submission.data, variableName);
 
           }}/>;

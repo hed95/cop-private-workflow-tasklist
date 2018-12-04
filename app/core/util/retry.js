@@ -11,6 +11,5 @@ export const retry = (errors) => {
     } else {
       return Rx.Observable.throw(error);
     }
-  }).take(5)
-    .concat(sourcesWithCatch);
+  }).take(5).concat(sourcesWithCatch);
 };
