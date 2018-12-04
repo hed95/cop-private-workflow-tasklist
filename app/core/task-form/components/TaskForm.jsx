@@ -77,7 +77,6 @@ class TaskForm extends React.Component {
           return <Form form={form} options={options} ref={(form) => this.form = form}
                        onCustomEvent={(event) => onCustomEvent(event)}
                        submission={JSON.parse(submissionData)} onSubmit={(submission) => {
-            delete(submission.data['submission']);
             this.props.submitTaskForm(form._id, task.get('id'), submission.data, variableName);
 
           }}/>;
