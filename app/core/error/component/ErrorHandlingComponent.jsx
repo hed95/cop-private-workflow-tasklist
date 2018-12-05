@@ -8,7 +8,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Redirect } from 'react-router';
 import ErrorPanel from './ErrorPanel';
 
-
 class ErrorHandlingComponent extends React.Component {
 
   render() {
