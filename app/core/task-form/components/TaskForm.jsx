@@ -69,7 +69,7 @@ class TaskForm extends React.Component {
 
       if (form) {
         const formVariableSubmissionName = `${form.name}::submissionData`;
-        const submissionData = variables['submissionData'] ? variables['submissionData'] : variables[formVariableSubmissionName];
+        const submissionData = variables['submissionData'] ? variables['submissionData'] : (variables[formVariableSubmissionName] ? variables[formVariableSubmissionName] : null);
         const variableInput = form.components.find(c => c.key === 'submitVariableName');
         const variableName = variableInput ? variableInput.defaultValue : form.name;
 

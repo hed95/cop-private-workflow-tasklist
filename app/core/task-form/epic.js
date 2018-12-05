@@ -29,7 +29,7 @@ const submitTaskForm = (action$, store, {client}) =>
                 method: 'POST',
                 path: `/api/form/${action.formId}/submission`,
                 entity: {
-                    "data": action.submission
+                    "data": JSON.stringify(action.submission)
                 },
                 headers: {
                     "Accept": "application/json",
