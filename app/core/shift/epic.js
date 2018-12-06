@@ -76,7 +76,8 @@ const fetchShiftForm = (action$, store, {client}) =>
 const fetchActiveShift = (action$, store, {client}) =>
     action$.ofType(types.FETCH_ACTIVE_SHIFT)
         .mergeMap(action =>
-            shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token, client).retryWhen(retry).map(payload => {
+            shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token, client)
+             .retryWhen(retry).map(payload => {
                 if (payload.status.code === 200 && payload.entity.length === 0) {
                     console.log('No data');
                     throw 'no-data';

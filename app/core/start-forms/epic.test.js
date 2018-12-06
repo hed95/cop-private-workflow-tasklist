@@ -214,6 +214,6 @@ describe('Start form epic', () => {
         expect(PubSub.publish).toHaveBeenCalled();
         done();
       });
-  })
+  });
 });
 

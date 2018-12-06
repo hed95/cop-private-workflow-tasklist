@@ -3,7 +3,7 @@ import * as actions from './actionTypes';
 
 const {Map} = Immutable;
 
-const initialState = new Map({
+export const initialState = new Map({
     isFetchingShift: true,
     hasActiveShift: false,
     shift: null,

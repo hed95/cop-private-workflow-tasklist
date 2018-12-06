@@ -5,11 +5,13 @@ export const retry = (errors) => {
     return Rx.Observable.throw(s);
   });
   return errors.flatMap((error) => {
-    if (error.status.code === 403 || (error.status.code >= 500)) {
-      console.log(`${error.status.code}...retrying...`);
+    const statusCode = error.status.code;
+    if ((statusCode === 403 || statusCode === 401) || (statusCode >= 500)) {
+      console.log(`${statusCode}...retrying...`);
       return Rx.Observable.of(error.status).delay(1000);
     } else {
       return Rx.Observable.throw(error);
     }
-  }).take(5).concat(sourcesWithCatch);
+  }).take(5)
+    .concat(sourcesWithCatch);
 };

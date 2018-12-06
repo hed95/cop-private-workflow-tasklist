@@ -5,7 +5,7 @@
   "author": "",
   "license": "",
   "scripts": {
-    "test": "jest",
+    "test": "REACT_SPINKIT_NO_STYLES=true jest",
     "dev": "webpack-dev-server --config webpack.config.dev.js --watch --colors",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.production.js"
   },
