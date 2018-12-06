@@ -77,22 +77,24 @@ const fetchActiveShift = (action$, store, {client}) =>
     action$.ofType(types.FETCH_ACTIVE_SHIFT)
         .mergeMap(action =>
             shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token, client)
-             .retryWhen(retry).map(payload => {
+             .retryWhen(retry)
+             .map(payload => {
                 if (payload.status.code === 200 && payload.entity.length === 0) {
                     console.log('No data');
-                    throw 'no-data';
+                    throw {
+                      status: {
+                        code: 403
+                      }
+                    };
                 } else {
                     return actions.fetchActiveShiftSuccess(payload)
                 }
             }).retryWhen((errors) => {
                 return errors
-                    .takeWhile(error => error === 'no-data')
-                    .delay(500)
-                    .take(1)
-                    .concat(Rx.Observable.throw({
-                        status: {
-                            code: 403
-                        }
+                    .takeWhile(error => error.status.code === 403)
+                    .take(0)
+                    .concat(errors.flatMap(s => {
+                      return Rx.Observable.throw(s);
                     }));
             }).catch(error => {
                     return errorObservable(actions.fetchActiveShiftFailure(), error);
@@ -150,34 +152,35 @@ const fetchActiveShiftAfterCreation = (action$, store, {client}) =>
     action$.ofType(types.FETCH_ACTIVE_SHIFT_AFTER_CREATE)
         .mergeMap(action =>
             shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token, client)
-                .flatMap(payload => {
-                    if (payload.status.code === 403) {
-                        throw 'not-authorized'
-                    } else if (payload.status.code === 200 && payload.entity.length === 0) {
+              .retryWhen(retry)
+              .flatMap(payload => {
+                if (payload.status.code === 200 && payload.entity.length === 0) {
                         console.log(`Could not get shift details...retrying as async operation`);
-                        throw 'no-data';
+                      throw {
+                        status: {
+                          code: 403
+                        }
+                      }
                     } else {
                         console.log(`Shift details located...`);
                         PubSub.publish("submission", {
                             submission: true,
                             message: `Shift successfully started`
                         });
-                        return ([actions.fetchActiveShiftSuccess(payload),
-                            actions.createActiveShiftSuccess()]);
+                        return ([actions.createActiveShiftSuccess(),
+                          actions.fetchActiveShiftSuccess(payload)]);
                     }
                 }).retryWhen((errors) => {
                 return errors
                     .takeWhile((error) => {
-                        const retryableError = error === 'no-data' || error === 'not-authorized';
+                        const retryableError = error.status.code === 403;
                         console.log(`Retryable error while trying to get shift...`);
                         return retryableError
                     })
                     .delay(1000)
                     .take(10)
-                    .concat(Rx.Observable.throw({
-                        status: {
-                            code: 403
-                        }
+                    .concat(errors.flatMap(s => {
+                      return Rx.Observable.throw(s);
                     }));
             }).catch(error => {
                     console.log(`Failed to create shift information...${JSON.stringify(error.toString())}`);

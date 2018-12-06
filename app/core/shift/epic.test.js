@@ -8,6 +8,15 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
 import epic from './epic';
 import 'rxjs';
+import PubSub from 'pubsub-js';
+
+jest.setTimeout(10000);
+
+jest.mock('pubsub-js', ()=>({
+  subscribe:jest.fn(),
+  unsubscribe: jest.fn(),
+  publish: jest.fn()
+}));
 
 
 describe('shift epic', () => {
@@ -160,26 +169,53 @@ describe('shift epic', () => {
         done();
       });
   });
-  // it('can fetchActiveShift retry if 503', (done)=> {
-  //   const action$ = ActionsObservable.of(
-  //     { type: types.FETCH_ACTIVE_SHIFT, payload: {}}
-  //   );
-  //   const payload = {
-  //     status: {
-  //       code: 503
-  //     }
-  //   };
-  //   const client = () => Observable.throw(payload);
-  //
-  //  Observable.concat(epic(action$, store, { client }))
-  //     .toArray()
-  //     .subscribe( (data) => {
-  //       const submitFailure = data[0];
-  //       const error = data[1];
-  //       expect(submitFailure.type).toEqual('HANDLE_ERROR');
-  //       expect(error.type).toEqual('FETCH_ACTIVE_SHIFT_FAILURE');
-  //     },err => {}, () => {
-  //       done();
-  //     });
-  // });
+  it('can fetchActiveShift retry if 503', (done)=> {
+    const action$ = ActionsObservable.of(
+      { type: types.FETCH_ACTIVE_SHIFT, payload: {}}
+    );
+    const payload = {
+      status: {
+        code: 503
+      }
+    };
+    const client = () => Observable.from(Promise.reject(payload));
+
+   Observable.concat(epic(action$, store, { client }))
+      .toArray()
+      .subscribe( (data) => {
+        const fetchFailure = data[0];
+        const error = data[1];
+        expect(fetchFailure.type)
+          .toEqual('FETCH_ACTIVE_SHIFT_FAILURE');
+        expect(error.type)
+          .toEqual('HANDLE_ERROR');
+        done();
+      });
+  });
+  it ('can fetchActiveShiftAfterCreation', (done) => {
+    const action$ = ActionsObservable.of(
+      { type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE, payload: {}}
+    );
+    const payload = {
+      status: {
+        code: 200
+      },
+      entity: [{
+        staffid: 'staffid'
+      }]
+    };
+    const client = () => Observable.of(payload);
+
+    Observable.concat(epic(action$, store, { client }))
+      .toArray()
+      .subscribe((actualOutput) => {
+        const createActiveShift = actualOutput[0];
+        expect(createActiveShift.type).toEqual('CREATE_ACTIVE_SHIFT_SUCCESS');
+        const fetchActiveShift = actualOutput[1];
+        expect(fetchActiveShift.type).toEqual('FETCH_ACTIVE_SHIFT_SUCCESS');
+        expect(PubSub.publish).toHaveBeenCalled();
+        done();
+      });
+  });
+
 });
