@@ -28,8 +28,7 @@ function reducer(state = initialState, action) {
         case actions.FETCH_SHIFT_FORM_FAILURE:
             return state.set('loadingShiftForm', false);
         case actions.FETCH_ACTIVE_SHIFT:
-            return state.set('isFetchingShift', true)
-                .set('activeShiftSuccess', false);
+            return state.set('isFetchingShift', true);
         case actions.FETCH_ACTIVE_SHIFT_SUCCESS:
             const data = action.payload.entity;
             const hasShiftInfo = data && data.length !== 0;
@@ -42,8 +41,7 @@ function reducer(state = initialState, action) {
                 .set('shift', null)
                 .set('hasActiveShift', false);
         case actions.CREATE_ACTIVE_SHIFT:
-            return state.set('submittingActiveShift', true)
-                .set('activeShiftSuccess', false);
+            return state.set('submittingActiveShift', true);
         case actions.CREATE_ACTIVE_SHIFT_SUCCESS:
             return state.set('submittingActiveShift', false)
                 .set('activeShiftSuccess', true)
