@@ -1,5 +1,5 @@
 describe('MessagesPage', () => {
-  it('renders messages page', () => {
+  it('renders loading when fetching messages', () => {
 
   });
 });
