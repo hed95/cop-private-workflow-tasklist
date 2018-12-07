@@ -155,7 +155,7 @@ const fetchActiveShiftAfterCreation = (action$, store, {client}) =>
               .retryWhen(retry)
               .flatMap(payload => {
                 if (payload.status.code === 200 && payload.entity.length === 0) {
-                        console.log(`Could not get shift details...retrying as async operation`);
+                      console.log(`Empty shift details returned...retying as shift creation is asynchronous`);
                       throw {
                         status: {
                           code: 403
@@ -170,20 +170,21 @@ const fetchActiveShiftAfterCreation = (action$, store, {client}) =>
                         return ([actions.createActiveShiftSuccess(),
                           actions.fetchActiveShiftSuccess(payload)]);
                     }
-                }).retryWhen((errors) => {
+                })
+               .retryWhen((errors) => {
                 return errors
                     .takeWhile((error) => {
                         const retryableError = error.status.code === 403;
                         console.log(`Retryable error while trying to get shift...`);
-                        return retryableError
+                        return retryableError;
                     })
                     .delay(1000)
                     .take(10)
                     .concat(errors.flatMap(s => {
                       return Rx.Observable.throw(s);
                     }));
-            }).catch(error => {
-                    console.log(`Failed to create shift information...${JSON.stringify(error.toString())}`);
+                }).catch(error => {
+                    console.log(`Failed to create shift information...${JSON.stringify(error)}`);
                     return errorObservable(actions.createActiveShiftFailure(), error);
                 }
             ));

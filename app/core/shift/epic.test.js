@@ -10,7 +10,7 @@ import epic from './epic';
 import 'rxjs';
 import PubSub from 'pubsub-js';
 
-jest.setTimeout(10000);
+jest.setTimeout(50000);
 
 jest.mock('pubsub-js', ()=>({
   subscribe:jest.fn(),
@@ -217,5 +217,59 @@ describe('shift epic', () => {
         done();
       });
   });
+  it ('can retry and fail for fetchActiveShiftAfterCreation if no data returned', (done) => {
+    const action$ = ActionsObservable.of(
+      { type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE, payload: {}}
+    );
+    const response = {
+      status: {
+        code: 200
+      },
+      entity: []
+    };
+    const client = () => Observable.defer(() => Observable.from(Promise.resolve(response)));
 
+    Observable.concat(epic(action$, store, {client}))
+      .toArray()
+      .subscribe((actualOutput) => {
+        expect(actualOutput[0].type).toEqual('HANDLE_UNAUTHORISED');
+        expect(actualOutput[1].type).toEqual('CREATE_ACTIVE_SHIFT_FAILURE');
+        done();
+      });
+  });
+  it ('can retry and succeed for fetchActiveShiftAfterCreation', (done) => {
+    const action$ = ActionsObservable.of(
+      { type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE, payload: {}}
+    );
+    const response = {
+      status: {
+        code: 200
+      },
+      entity: []
+    };
+    let counter = 0;
+    const client = () => Observable.defer(() => {
+      counter++;
+      console.log('counter ' + counter);
+      if (counter === 5) {
+        return Observable.from(Promise.resolve({
+          status: {
+            code: 200
+          },
+          entity: [{
+            staffid: 'staffid'
+          }]
+        }));
+      } else {
+        return Observable.from(Promise.resolve(response));
+      }
+    });
+
+    epic(action$, store, { client })
+      .subscribe((actualOutput) => {
+        expect(actualOutput.type)
+          .toEqual('CREATE_ACTIVE_SHIFT_SUCCESS');
+        done();
+      });
+  });
 });
