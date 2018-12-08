@@ -53,5 +53,21 @@ describe('Messages reducer', () => {
     expect(expected.get('pageSize')).toEqual(1);
     expect(expected.get('nextPage')).toEqual('next');
     expect(expected.get('hasMoreItems')).toEqual(true);
-  })
+  });
+  it('handles acknowlegeNotification', () => {
+    const expected = reducer(initialStateToTest, actions.acknowledgeNotification('newTaskId'));
+    expect(expected.get('acknowledgingTaskIds').size).toEqual(1);
+  });
+  it('handles acknowledgeNotificationSuccess', () => {
+    const updatedState = reducer(initialStateToTest, actions.acknowledgeNotification('taskId'));
+    expect(updatedState.get('acknowledgingTaskIds').size).toEqual(1);
+
+    const expected = reducer(initialStateToTest, actions.acknowledgeNotificationSuccess({
+      entity: {
+        id: 'taskId'
+      }
+    }));
+    expect(expected.get('acknowledgingTaskIds').size).toEqual(0);
+
+  });
 });
