@@ -19,6 +19,7 @@ describe('SubmissionBanner', () => {
       submission: true,
       message: 'test'
     });
-    expect(wrapper.html()).toEqual('<div class="container" id="successfulSubmission"><div class="govuk-box-highlight confirm-page new"><span class="hod-checkmark"></span><h2 class="heading-small">test</h2></div></div>')
+    expect(wrapper.html())
+      .toEqual('<div class="container" id="successfulSubmission"><div class="govuk-box-highlight confirm-page new"><span class="hod-checkmark"></span><h2 class="heading-small">test</h2></div></div>')
   });
 });

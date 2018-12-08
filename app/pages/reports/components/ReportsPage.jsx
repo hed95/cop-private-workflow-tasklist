@@ -10,7 +10,7 @@ import Spinner from 'react-spinkit';
 const uuidv4 = require('uuid/v4');
 
 
-class ReportsPage extends React.Component {
+export class ReportsPage extends React.Component {
 
     componentDidMount() {
         this.props.fetchReportsList();
@@ -23,7 +23,7 @@ class ReportsPage extends React.Component {
         const items = [];
         if (reports) {
             reports.forEach((report) => {
-                items.push(<tr key={uuidv4()} style={pointerStyle} onClick={() => {
+                items.push(<tr key={uuidv4()} id="report" style={pointerStyle} onClick={() => {
                     this.props.history.push(`/report?reportName=${report.get('htmlName')}`)
                 }}>
                     <td>{report.get('name')}</td>

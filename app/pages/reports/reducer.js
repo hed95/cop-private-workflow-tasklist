@@ -3,7 +3,7 @@ import * as actions from './actionTypes';
 
 const {Map} = Immutable;
 
-const initialState = new Map({
+export const initialState = new Map({
     reports: [],
     loadingReports: false
 });
@@ -11,8 +11,7 @@ const initialState = new Map({
 function reducer(state = initialState, action) {
     switch (action.type) {
         case actions.FETCH_REPORTS_LIST:
-            return state.set('loadingReports', true)
-                .set('form', null);
+            return state.set('loadingReports', true);
         case actions.FETCH_REPORTS_LIST_SUCCESS:
             const data = action.payload.entity;
             return state.set('loadingReports', false)
