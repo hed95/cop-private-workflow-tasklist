@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   form,
   loadingForm, submissionToFormIOSuccessful,
@@ -54,7 +55,7 @@ export class StartForm extends React.Component {
   render() {
     const { loadingForm, form, processName, processKey, formName } = this.props;
     if (loadingForm) {
-      return <div>Loading form for {processName} </div>;
+      return <div>Loading form for {processName}</div>;
     } else {
       const options = {
         noAlerts: true

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {PropTypes} from "react";
+import PropTypes from 'prop-types';
 import StartForm from "../../../core/start-forms/components/StartForm";
 import {isFetchingProcessDefinition, processDefinition} from "../selectors";
 import {bindActionCreators} from "redux";

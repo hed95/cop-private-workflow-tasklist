@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { errors, hasError, unauthorised } from '../selectors';
 import * as actions from '../actions';
 import { bindActionCreators } from 'redux';

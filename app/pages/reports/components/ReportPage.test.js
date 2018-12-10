@@ -2,7 +2,7 @@ import { shallow } from 'enzyme/build/index';
 import { ReportPage } from './ReportPage';
 import React from 'react';
 import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15/build/index';
+import Adapter from 'enzyme-adapter-react-16/build/index';
 
 
 Enzyme.configure({ adapter: new Adapter() });

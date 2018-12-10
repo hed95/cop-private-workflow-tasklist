@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React  from 'react';
+import PropTypes from 'prop-types';
 import ProcessViewer from '../../../core/process-viewer/ProcessViewer';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';

@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {withRouter} from "react-router";
 import ImmutablePropTypes from "react-immutable-proptypes";
 import {createStructuredSelector} from "reselect";

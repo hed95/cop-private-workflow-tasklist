@@ -1,6 +1,6 @@
 import React from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom';
-import ProcessesPage from '../pages/procedures/components/ProceduresPage'
+import ProceduresPage from '../pages/procedures/components/ProceduresPage'
 import ReportsPage from './../pages/reports/components/ReportsPage'
 import MessagesPage from '../pages/messages/components/MessagesPage'
 import ShiftPage from "../pages/shift/components/ShiftPage";
@@ -26,7 +26,7 @@ const Main = () => (
             <ShiftScopedRoute name="Your tasks" exact path={AppConstants.YOUR_TASKS_PATH} component={YourTasks}/>
             <ShiftScopedRoute name="Your group unassigned tasks" exact path={AppConstants.YOUR_GROUP_UNASSIGNED_TASKS_PATH} component={YourGroupUnassignedTasks}/>
             <ShiftScopedRoute name="Your group tasks" exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={YourGroupTasks}/>
-            <ShiftScopedRoute name="Procedures" exact path={AppConstants.PROCEDURES_PATH} component={ProcessesPage}/>
+            <ShiftScopedRoute name="Procedures" exact path={AppConstants.PROCEDURES_PATH} component={ProceduresPage}/>
             <ShiftScopedRoute name="Reports" exact path={AppConstants.REPORTS_PATH} component={ReportsPage} />
             <ShiftScopedRoute exact path={AppConstants.REPORT_PATH} component={ReportPage}/>
             <ShiftScopedRoute name="Messages" exact path={AppConstants.MESSAGES_PATH} component={MessagesPage}/>

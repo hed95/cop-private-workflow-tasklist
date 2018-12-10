@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   isFetchingProcessDefinitions,
   processDefinitions
@@ -10,9 +11,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 import ReactHyperResponsiveTable from 'react-hyper-responsive-table';
-import { isMobile }   from "react-device-detect";
+import { isMobile }  from "react-device-detect";
 
-class ProcessesPage extends React.Component {
+export class ProceduresPage extends React.Component {
 
   componentDidMount() {
     this.props.fetchProcessDefinitions();
@@ -60,7 +61,7 @@ class ProcessesPage extends React.Component {
         </div>
 
       </div>
-      {isFetchingProcessDefinitions ? <div>Loading processes....</div> :
+      {isFetchingProcessDefinitions ? <div id="loading">Loading processes....</div> :
           <ReactHyperResponsiveTable
           headers={headers}
           rows={data}
@@ -74,7 +75,7 @@ class ProcessesPage extends React.Component {
   }
 }
 
-ProcessesPage.propTypes = {
+ProceduresPage.propTypes = {
   fetchProcessDefinitions: PropTypes.func.isRequired,
   processDefinitions: ImmutablePropTypes.list.isRequired,
   isFetchingProcessDefinitions: PropTypes.bool
@@ -87,4 +88,4 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ProcessesPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ProceduresPage));

@@ -1,4 +1,5 @@
-import React, {PropTypes} from "react";
+import React from "react";
+import PropTypes from 'prop-types';
 import StandardTaskSummaryPage from "./StandardTaskSummaryPage";
 import {candidateGroups, isFetchingTask, task, variables} from "../selectors";
 import * as actions from "../actions";
