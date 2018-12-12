@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 import ReactHyperResponsiveTable from 'react-hyper-responsive-table';
-import { isMobile }  from "react-device-detect";
+import * as types  from "react-device-detect";
 
 export class ProceduresPage extends React.Component {
 
@@ -42,7 +42,7 @@ export class ProceduresPage extends React.Component {
         }
     }).toArray() : [];
 
-    const headers = !isMobile ? {
+    const headers = !types.isMobile ? {
       name: 'Name',
       description: 'Description',
       diagram : ''

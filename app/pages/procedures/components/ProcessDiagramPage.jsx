@@ -38,7 +38,7 @@ class ProcessDiagramPage extends React.Component {
     };
 
     return <div>
-      <div style={pointerStyle} onClick={(event) => this.props.history.replace('/procedures')}>Back to
+      <div id="backToProcedures" style={pointerStyle} onClick={(event) => this.props.history.replace('/procedures')}>Back to
         procedures
       </div>
       {isFetchingProcessDefinition && isFetchingProcessDefinitionXml ?  <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20%'}}><Spinner

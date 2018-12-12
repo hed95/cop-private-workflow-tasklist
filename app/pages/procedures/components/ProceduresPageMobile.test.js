@@ -1,10 +1,10 @@
 jest.mock('react-device-detect', () => ({
-  isMobile: false
+  isMobile: true
 }));
 
 import React from 'react';
 import Enzyme from 'enzyme';
-import { mount,shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
@@ -27,30 +27,12 @@ describe('ProceduresPage', () => {
   });
   const fetchProcessDefinitions = jest.fn();
 
-  it('renders loading when fetching data', () => {
-    const props = {
-      isFetchingProcessDefinitions: true,
-      processDefinitions: List([])
-    };
-    const wrapper = shallow(<ProceduresPage
-      store={store}
-      {...props}
-      fetchProcessDefinitions={fetchProcessDefinitions}
-    />);
-
-    console.log(wrapper.html());
-    expect(fetchProcessDefinitions).toBeCalled();
-    expect(wrapper.find('.heading-large').text()).toEqual('Operational procedures 0 procedures');
-    expect(wrapper.find('#loading').text()).toEqual('Loading processes....');
-    expect(fetchProcessDefinitions).toBeCalled();
-  });
-
-  it('renders  a list of procedures with procedure view', async () => {
+  it('renders  a list of procedures without procedure view if mobile', async () => {
     window.matchMedia = window.matchMedia || function() {
       return {
-        matches : true,
-        addListener : function() {},
-        removeListener: function() {}
+        matches : false,
+        addListener : () => {},
+        removeListener:() => {}
       };
     };
     const props = {
@@ -74,21 +56,20 @@ describe('ProceduresPage', () => {
       {...props}
       fetchProcessDefinitions={fetchProcessDefinitions}
     />);
-
     console.log(wrapper.html());
     expect(fetchProcessDefinitions).toBeCalled();
     expect(wrapper.find('.heading-large').text()).toEqual('Operational procedures 2 procedures');
+
     const tableWrapper = wrapper.find('table');
     expect(tableWrapper.exists()).toEqual(true);
 
-    const rows = wrapper.find('.widetable');
+    const rows = wrapper.find('.narrowtable-process');
     expect(rows.length).toEqual(1);
 
     const firstRowColumns = rows.first().find('td').map(column => column.text());
-    expect(firstRowColumns.length).toEqual(6);
+    expect(firstRowColumns.length).toEqual(4);
     expect(firstRowColumns[0]).toEqual('processA');
     expect(firstRowColumns[1]).toEqual('processADescription');
-    expect(firstRowColumns[2]).toEqual('View procedure');
-    window.matchMedia = null;
+
   });
 });
