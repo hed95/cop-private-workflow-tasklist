@@ -21,14 +21,6 @@ module.exports = {
   mode: devMode ? 'development' : 'production',
   plugins: [
     new webpack.NamedModulesPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'REALM': JSON.stringify(process.env.AUTH_REALM),
-        'AUTH_URL': JSON.stringify(process.env.AUTH_URL),
-        'CLIENT_ID': JSON.stringify(process.env.AUTH_CLIENT_ID),
-        'AUTH_ACCESS_ROLE': JSON.stringify(process.env.AUTH_ACCESS_ROLE)
-      }
-    }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
       favicon: './public/favicon.ico'
