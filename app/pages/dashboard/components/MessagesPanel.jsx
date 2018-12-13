@@ -10,7 +10,7 @@ import {connect} from "react-redux";
 import AppConstants from "../../../common/AppConstants";
 import PubSub from "pubsub-js";
 
-class MessagesPanel extends React.Component {
+export class MessagesPanel extends React.Component {
 
     constructor(props) {
         super(props);

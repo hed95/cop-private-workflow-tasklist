@@ -10,7 +10,7 @@ import ImmutablePropTypes from "react-immutable-proptypes";
 import AppConstants from "../../../common/AppConstants";
 import PubSub from "pubsub-js";
 
-class TaskCountPanel extends React.Component {
+export class TaskCountPanel extends React.Component {
 
     constructor(props) {
         super(props);
@@ -72,7 +72,7 @@ class TaskCountPanel extends React.Component {
     render() {
         const {taskCounts, isFetchingTaskCounts} = this.props;
         return <div>
-            <li className="__card column-one-third" id="myTasksPanel">
+            <li className="__card column-one-third" id="yourTasksPanel">
                 <a href="#" onClick={this.yourTasks} className="card__body">
                     <span
                         className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('tasksAssignedToUser')}</span>
@@ -91,7 +91,7 @@ class TaskCountPanel extends React.Component {
                     <span className="font-small">Your team unassigned tasks</span>
                 </div>
             </li>
-            <li className="__card column-one-third" id="myTeamTasks">
+            <li className="__card column-one-third" id="youTeamTasks">
                 <a href="#" onClick={this.yourTeamTotalTasks} className="card__body">
                     <span
                         className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('totalTasksAllocatedToTeam')}</span>
