@@ -30,11 +30,7 @@ describe('MessagesPanel', () => {
     const props = {
       hasActiveShift: false,
       isFetchingMessageCounts: false,
-      messageCounts: Immutable.fromJS({
-        page: {
-          totalElements: 0
-        }
-      })
+      messageCounts: 0
     };
     const wrapper = await mount(<MessagesPanel
       store={store}
@@ -56,11 +52,7 @@ describe('MessagesPanel', () => {
     const props = {
       hasActiveShift: true,
       isFetchingMessageCounts: false,
-      messageCounts: Immutable.fromJS({
-        page: {
-          totalElements: 10
-        }
-      })
+      messageCounts: 10
     };
     const wrapper = await mount(<MessagesPanel
       store={store}

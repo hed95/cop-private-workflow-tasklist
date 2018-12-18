@@ -7,6 +7,7 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {loadingReports, reports} from "../selectors";
 import Spinner from 'react-spinkit';
+import { DataSpinner } from '../../../core/components/DataSpinner';
 
 const uuidv4 = require('uuid/v4');
 
@@ -43,8 +44,8 @@ export class ReportsPage extends React.Component {
                 </div>
 
             </div>
-            {loadingReports ? <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
-                name="line-spin-fade-loader" color="black"/></div> : <div>
+            {loadingReports ? <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><DataSpinner
+                message="Loading reports"/></div> : <div>
                 <table>
                     <tbody>
                     {items}

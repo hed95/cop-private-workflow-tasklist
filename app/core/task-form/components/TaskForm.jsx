@@ -15,6 +15,7 @@ import { createStructuredSelector } from 'reselect';
 import Spinner from 'react-spinkit';
 import { unclaimSuccessful } from '../../../pages/task/selectors';
 import AppConstants from '../../../common/AppConstants';
+import { DataSpinner } from '../../components/DataSpinner';
 
 class TaskForm extends React.Component {
 
@@ -100,8 +101,8 @@ class TaskForm extends React.Component {
     const { submittingTaskFormForCompletion } = this.props;
     return <div>
       {submittingTaskFormForCompletion ?
-        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '5px' }}><Spinner
-          name="line-spin-fade-loader" color="black"/></div> : <div/>
+        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '5px' }}><DataSpinner
+          message="Completing task" /></div> : <div/>
       }
       <div>{this.renderForm()}</div>
     </div>;

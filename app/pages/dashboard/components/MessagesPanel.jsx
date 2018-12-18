@@ -54,7 +54,7 @@ export class MessagesPanel extends React.Component {
 
         return  <li className="__card column-one-third" id="messagesPanel">
             <a href="#" onClick={this.messages} className="card__body">
-                <span className="bold-xlarge">{isFetchingMessageCounts? 0: messageCounts.getIn(['page', 'totalElements'])}</span>
+                <span className="bold-xlarge">{isFetchingMessageCounts? 0: messageCounts}</span>
                 <span className="bold-small">messages</span>
             </a>
             <div className="card__footer">
@@ -67,7 +67,7 @@ export class MessagesPanel extends React.Component {
 
 MessagesPanel.propTypes = {
     fetchMessageCounts: PropTypes.func.isRequired,
-    messageCounts: ImmutablePropTypes.map,
+    messageCounts: PropTypes.number,
     isFetchingMessageCounts: PropTypes.bool
 };
 

@@ -11,6 +11,7 @@ import {withRouter} from "react-router";
 import queryString from 'query-string';
 import {submissionToWorkflowSuccessful, submittingToWorkflow} from "../../../core/start-forms/selectors";
 import Spinner from 'react-spinkit';
+import { DataSpinner } from '../../../core/components/DataSpinner';
 
 class ProcessStartPage extends React.Component {
 
@@ -33,8 +34,8 @@ class ProcessStartPage extends React.Component {
             </div>
             <div className="grid-row">
                 {submittingToWorkflow ?
-                    <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
-                        name="line-spin-fade-loader" color="black"/></div> : <div/>
+                    <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><DataSpinner
+                       message="Starting procedure..."/></div> : <div/>
                 }
                 <div className="column-full">
                     <fieldset>
