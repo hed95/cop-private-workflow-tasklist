@@ -62,7 +62,7 @@ class YourTasks extends React.Component {
                 <div className="data">
                     <span className="data-item bold-medium">{yourTasks.get('total')} tasks assigned to you</span>
                 </div>
-                <div className="row">
+                <div className="grid-row">
                   <div className="column-one-half">
                     <div className="form-group">
                       <label className="form-label" htmlFor="sortTask">Sort tasks by:</label>

@@ -70,7 +70,7 @@ class YourGroupTasks extends React.Component {
         >{yourGroupTasks.get('total')} {yourGroupTasks.get('total') === 1 ? 'task' : 'tasks'} allocated to your team</span>
       </div>
 
-      <div className="row">
+      <div className="grid-row">
         <div className="column-one-half">
           <div className="form-group">
             <label className="form-label" htmlFor="sortTask">Sort tasks by:</label>

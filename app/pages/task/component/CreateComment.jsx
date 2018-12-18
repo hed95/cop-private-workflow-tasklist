@@ -6,7 +6,6 @@ import * as actions from '../actions';
 import { createStructuredSelector } from 'reselect';
 import { form, isFetchingCreateCommentForm } from '../selectors';
 import { Form } from 'react-formio';
-import AppConstants from '../../../common/AppConstants';
 
 class CreateComment extends React.Component {
 

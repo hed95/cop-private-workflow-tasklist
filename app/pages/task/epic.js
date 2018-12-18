@@ -3,6 +3,28 @@ import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
 import {retry} from "../../core/util/retry";
+import moment from 'moment';
+
+const updateDueDate = (action$, store, {client}) =>
+  action$.ofType(types.UPDATE_DUE_DATE)
+    .mergeMap(action =>
+      client({
+        method: 'PUT',
+        path: `/api/workflow/tasks/${action.taskId}`,
+        entity: {
+            "id": action.taskId,
+            "due": moment(action.dueDate, 'DD-MM-YYYY HH:mm').utc()
+        },
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": `Bearer ${store.getState().keycloak.token}`
+        }
+      }).map(() => actions.fetchTask(action.taskId))
+        .catch(error => {
+            return errorObservable(actions.updateDueDateFailure(), error);
+          }
+        ));
 
 
 const fetchComments = (action$, store, {client}) =>
@@ -139,4 +161,5 @@ export default combineEpics(fetchComments,
     fetchCreateCommentForm,
     claimTask,
     unclaimTask,
-    completeTask)
+    completeTask,
+  updateDueDate)

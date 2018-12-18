@@ -68,7 +68,7 @@ class YourGroupUnassignedTasks extends React.Component {
         <span
           className="data-item bold-medium">{unassignedTasks.get('total')} unassigned {unassignedTasks.get('total') === 1 ? 'task' : 'tasks'}</span>
           </div>
-            <div className="row">
+            <div className="grid-row">
               <div className="column-one-half">
                 <div className="form-group">
                   <label className="form-label" htmlFor="sortTask">Sort tasks by:</label>
