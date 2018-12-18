@@ -6,7 +6,7 @@ import {withRouter} from "react-router-dom";
 import * as actions from "../actions";
 import {unclaimSuccessful} from "../selectors";
 
-class Unclaim extends React.Component {
+export class Unclaim extends React.Component {
 
     componentDidMount() {
         this.unclaim = this.unclaim.bind(this);

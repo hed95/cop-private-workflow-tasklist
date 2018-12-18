@@ -2,7 +2,7 @@ import React from 'react';
 import Actions from './Actions';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import connect from 'react-redux/es/connect/connect';
+import { connect } from 'react-redux';
 import TaskTitle from './TaskTitle';
 import Comments from './Comments';
 import TaskForm from '../../../core/task-form/components/TaskForm';
@@ -12,7 +12,8 @@ import moment from 'moment';
 import * as actions from '../actions';
 import PropTypes from 'prop-types';
 
-class TaskDetailsPage extends React.Component {
+export class TaskDetailsPage extends React.Component {
+
   componentDidMount() {
     flatpickr(document.querySelector('#updateDueDate'), {
       enableTime: true,
@@ -33,7 +34,7 @@ class TaskDetailsPage extends React.Component {
       <TaskTitle {...this.props} />
       <div className="grid-row">
         <div className="column-two-thirds" style={{ paddingTop: '10px' }}>
-          <p>{task.get('description')}</p>
+          <p id="taskDescription">{task.get('description')}</p>
           {hasFormKey ? <TaskForm task={task} variables={variables}/> :
             <Actions task={task} variables={variables}/>}
         </div>
@@ -48,7 +49,7 @@ class TaskDetailsPage extends React.Component {
                 className="glyphicon glyphicon-calendar"/></span>
             </div>
           </div>
-          <Comments taskId={task.get('id')}/>
+          <Comments taskId={task.get('id')} {...this.props} />
         </div>
       </div>
 

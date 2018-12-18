@@ -6,7 +6,7 @@ import {withRouter} from "react-router-dom";
 import * as actions from "../actions";
 import {completeSuccessful} from "../selectors";
 
-class Complete extends React.Component {
+export class Complete extends React.Component {
 
     componentDidMount() {
         this.complete = this.complete.bind(this);

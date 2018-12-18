@@ -6,7 +6,7 @@ import {withRouter} from "react-router-dom";
 import * as actions from "../actions";
 import {claimSuccessful} from "../selectors";
 
-class Claim extends React.Component {
+export class Claim extends React.Component {
 
 
     componentWillReceiveProps(nextProps) {
