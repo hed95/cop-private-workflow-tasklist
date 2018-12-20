@@ -225,8 +225,7 @@ class ShiftPage extends React.Component {
       <Loader show={!isFetchingShift && submittingActiveShift} message={spinner}
               hideContentOnLoad={submittingActiveShift}
               foregroundStyle={{ color: 'black' }}
-              backgroundStyle={{ backgroundColor: 'white' }}
-      >
+              backgroundStyle={{ backgroundColor: 'white' }}>
         <div className="grid-row">
           <div className="column-full" id="shiftWizardForm">
             {formToRender}
@@ -269,7 +268,6 @@ export default withRouter(connect((state) => {
     loadingShiftForm: loadingShiftForm(state),
     staffDetails: staffDetails(state),
     isFetchingStaffDetails: isFetchingStaffDetails(state)
-
 
   };
 }, mapDispatchToProps)(ShiftPage));

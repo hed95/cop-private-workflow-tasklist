@@ -1,9 +1,11 @@
 import * as types from "./actionTypes";
 
-const fetchTasksAssignedToYou = (url) => {
+const fetchTasksAssignedToYou = (sortValue, filterValue, skipLoading) => {
     return {
         type: types.FETCH_TASKS_ASSIGNED_TO_YOU,
-        url
+        sortValue,
+        filterValue,
+        skipLoading
     }
 };
 
@@ -62,18 +64,6 @@ const fetchUnassignedTasksFailure = () => {
     }
 };
 
-const filterYourTasksByName = (value) => {
-    return {
-        type: types.FILTER_YOUR_TASKS_BY_NAME,
-        value
-    }
-};
-const setYourTasksSortValue = (value) => {
-  return {
-    type: types.SET_YOUR_TASKS_SORT_VALUE,
-    value
-  }
-};
 
 const setYourGroupTasksSortValue = (value) => {
   return {
@@ -114,10 +104,8 @@ export {
     fetchUnassignedTasks,
     fetchUnassignedTasksSuccess,
     fetchUnassignedTasksFailure,
-    filterYourTasksByName,
-    setYourTasksSortValue,
     setYourGroupTasksSortValue,
     filterYourGroupTasksByName,
     filterUnassignedTasksByName,
-    setUnassignedTasksSortValue
+    setUnassignedTasksSortValue,
 }

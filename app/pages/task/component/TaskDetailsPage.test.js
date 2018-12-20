@@ -1,6 +1,6 @@
 import React from 'react';
 import Enzyme from 'enzyme';
-import { mount, shallow} from 'enzyme';
+import { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
@@ -39,7 +39,7 @@ describe('TaskDetailsPage', () => {
       store={store}
       {...props}
       updateDueDate={updateDueDate}
-    />, {attachTo: document.body});
+    />);
     console.log(wrapper.html());
     expect(wrapper.find('#taskName').text()).toEqual('test');
     expect(wrapper.find('#taskAssignee').text()).toEqual('Unassigned');
@@ -48,9 +48,5 @@ describe('TaskDetailsPage', () => {
     expect(wrapper.find('#taskDescription').text()).toEqual('test');
     const dueDateInput = wrapper.find('#updateDueDate');
     expect(dueDateInput.props().defaultValue).toEqual(dueDate.format("DD-MM-YYYY HH:mm"));
-
-    console.log(wrapper.html());
-
-
   });
 });

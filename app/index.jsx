@@ -14,10 +14,11 @@ import ScrollToTop from "./core/components/ScrollToTop";
 import Header from './core/components/Header';
 import Footer from './core/components/Footer';
 import UnauthorizedPage from './core/components/UnauthorizedPage';
+import AppConstants from './common/AppConstants';
 const store = configureStore();
 let kc = null;
 
-const THREE_MINUTES = 3 * 60000;
+
 
 const renderApp = (App, authorizedRole) => {
     kc.onTokenExpired = () => {
@@ -47,7 +48,7 @@ const renderApp = (App, authorizedRole) => {
               }).error(function () {
                 kc.logout();
               })
-            }, THREE_MINUTES);
+            }, AppConstants.THREE_MINUTES);
             ReactDOM.render(
               <Provider store={store}>
                 <div>

@@ -35,7 +35,7 @@ class ProcessDiagramPage extends React.Component {
         </div>
         <div className="heading-medium">Process diagram not viewable on mobile screen</div>
       </div>
-    };
+    }
 
     return <div>
       <div id="backToProcedures" style={pointerStyle} onClick={(event) => this.props.history.replace('/procedures')}>Back to

@@ -15,7 +15,8 @@ import PropTypes from 'prop-types';
 export class TaskDetailsPage extends React.Component {
 
   componentDidMount() {
-    flatpickr(document.querySelector('#updateDueDate'), {
+    const {updateDueDate} = this.refs;
+    flatpickr(updateDueDate, {
       enableTime: true,
       dateFormat: 'd-m-Y H:i',
       minDate: 'today',
@@ -42,7 +43,7 @@ export class TaskDetailsPage extends React.Component {
           <div className="form-group">
             <label className="form-label" htmlFor="updateDueDate">Change due date:</label>
             <div className="input-group">
-              <input className="form-control" id="updateDueDate" type="text" name="updateDueDate"
+              <input className="form-control" ref="updateDueDate" id="updateDueDate" type="text" name="updateDueDate"
                      defaultValue={moment(task.get('due'))
                        .format('DD-MM-YYYY HH:mm')}/>
               <span className="input-group-addon"><span

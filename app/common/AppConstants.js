@@ -14,5 +14,6 @@ export default class AppConstants {
     static ADMIN_PATH="/admin";
     static SHIFT_PATH = "/shift";
     static PROCESS_DIAGRAM_PATH = "/process-diagram";
+    static  THREE_MINUTES = 3 * 60000;
 
 }
