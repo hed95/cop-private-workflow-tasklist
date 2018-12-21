@@ -12,21 +12,20 @@ import { withRouter } from 'react-router';
 import { DataSpinner } from '../../../core/components/DataSpinner';
 import ReactHyperResponsiveTable from 'react-hyper-responsive-table';
 import AppConstants from "../../../common/AppConstants";
+import {debounce, throttle} from 'throttle-debounce';
 
 export class YourTasks extends React.Component {
 
   componentDidMount() {
-    this.loadYourTasks(false);
+    this.loadYourTasks(false, 'sort=due,desc');
+    const that = this;
     this.timeoutId = setInterval(() => {
-      this.loadYourTasks(true)
+      const {yourTasks} = that.props;
+      this.loadYourTasks(true, yourTasks.get('yourTasksSortValue'), yourTasks.get('yourTasksFilterValue'))
     }, AppConstants.THREE_MINUTES);
   }
 
-  loadYourTasks(skipLoading) {
-    const yourTasksFilterValue = sessionStorage.getItem('yourTasksFilterValue')
-      ? atob(sessionStorage.getItem('yourTasksFilterValue')) : null;
-    const yourTasksSortValue = sessionStorage.getItem('yourTasksSortValue')
-      ? atob(sessionStorage.getItem('yourTasksSortValue')) : 'sort=due,desc';
+  loadYourTasks(skipLoading, yourTasksSortValue, yourTasksFilterValue = null) {
     this.props.fetchTasksAssignedToYou(yourTasksSortValue, yourTasksFilterValue, skipLoading);
   }
 
@@ -35,8 +34,6 @@ export class YourTasks extends React.Component {
   }
 
   componentWillUnmount() {
-    sessionStorage.removeItem('yourTasksFilterValue');
-    sessionStorage.removeItem('yourTasksSortValue');
     clearTimeout(this.timeoutId);
   }
 
@@ -50,23 +47,15 @@ export class YourTasks extends React.Component {
         .map((taskData) => {
           const task = taskData.get('task');
           const taskId = task.get('id');
-
           const linkElem = (prop) => {
             return <div style={pointerStyle} onClick={() => this.goToTask(taskId)}>{prop}</div>;
           };
-          const taskNameLink = linkElem(task.get('name'));
-          const priorityLink = linkElem(priority(task.get('priority')));
-          const createdOnLink = linkElem(moment()
-            .to(moment(task.get('created'))));
-          const dueOnLink = linkElem(moment()
-            .to(moment(task.get('due'))));
-
           return {
             id: taskId,
-            name: taskNameLink,
-            priority: priorityLink,
-            due: dueOnLink,
-            createdOn: createdOnLink
+            name: linkElem(task.get('name')),
+            priority: linkElem(priority(task.get('priority'))),
+            due: linkElem(moment().to(moment(task.get('due')))),
+            createdOn: linkElem(moment().to(moment(task.get('created'))))
           };
         })
         .toArray() : [];
@@ -77,15 +66,25 @@ export class YourTasks extends React.Component {
         createdOn: 'Created'
       };
 
-      const filterTasksByName = (yourTasksFilterValue) => {
-        const { yourTasks } = this.props;
-        const yourTasksSortValue = yourTasks.get('yourTasksSortValue');
-        if (yourTasksFilterValue) {
-          sessionStorage.setItem('yourTasksFilterValue', btoa(yourTasksFilterValue));
+
+      const debounceSearch = (sortValue, filterValue) => {
+        if (filterValue.length <= 2 || filterValue.endsWith(' ')) {
+          throttle(200, () => {
+            this.props.fetchTasksAssignedToYou(sortValue, filterValue, true);
+          })();
         } else {
-          sessionStorage.removeItem('yourTasksFilterValue');
+          debounce(500, () => {
+            this.props.fetchTasksAssignedToYou(sortValue, filterValue, true);
+          })();
         }
-        this.props.fetchTasksAssignedToYou(yourTasksSortValue, yourTasksFilterValue, true);
+
+      };
+      const filterTasksByName = (event) => {
+        event.persist();
+        const { yourTasks } = this.props;
+        const yourTasksFilterValue = event.target.value;
+        const yourTasksSortValue = yourTasks.get('yourTasksSortValue');
+        debounceSearch(yourTasksSortValue, yourTasksFilterValue);
       };
       return <div style={{ paddingTop: '20px' }}>
         <div className="data" id="yourTasksTotalCount">
@@ -99,10 +98,9 @@ export class YourTasks extends React.Component {
               <select className="form-control" id="sortTask" name="sortTask"
                       onChange={(event) => {
                         const yourTasksSortValue = event.target.value;
-                        sessionStorage.setItem('yourTasksSortValue', btoa(yourTasksSortValue));
-                        this.props.fetchTasksAssignedToYou(yourTasksSortValue, yourTasks.get('yourTasksFilterValue'), true);
-                      }
-                      }
+                        this.props.fetchTasksAssignedToYou(yourTasksSortValue,
+                          yourTasks.get('yourTasksFilterValue'), true);
+                      }}
                       value={yourTasks.get('yourTasksSortValue')}>
                 <option value="sort=due,desc">Latest due date</option>
                 <option value="sort=due,asc">Oldest due date</option>
@@ -116,9 +114,9 @@ export class YourTasks extends React.Component {
 
           <div className="column-one-half">
             <div className="form-group">
-              <label className="form-label" htmlFor="filterTaskName">Filter by task name:</label>
+              <label className="form-label" htmlFor="filterTaskName">Search by task name:</label>
               <input className="form-control" id="filterTaskName" type="text" name="filterTaskName"
-                     onChange={(event) => filterTasksByName(event.target.value)}
+                     onChange={filterTasksByName}
                      defaultValue={yourTasks.get('yourTasksFilterValue')}/>
             </div>
           </div>

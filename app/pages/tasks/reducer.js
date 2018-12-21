@@ -7,7 +7,6 @@ export const initialState = new Map({
   yourTasks: new Map({
     isFetchingTasksAssignedToYou: false,
     tasks: new List([]),
-    original: new List([]),
     total: 0,
     yourTasksSortValue: 'sort=due,desc',
     yourTasksFilterValue: null
@@ -32,18 +31,19 @@ function reducer(state = initialState, action) {
   switch (action.type) {
     //tasks assigned to you
     case actions.FETCH_TASKS_ASSIGNED_TO_YOU:
-      return state.setIn(['yourTasks', 'isFetchingTasksAssignedToYou'], !action.skipLoading)
+      return state
+        .setIn(['yourTasks', 'isFetchingTasksAssignedToYou'], !action.skipLoading)
         .setIn(['yourTasks', 'yourTasksFilterValue'], action.filterValue)
         .setIn(['yourTasks', 'yourTasksSortValue'], action.sortValue);
     case actions.FETCH_TASKS_ASSIGNED_TO_YOU_SUCCESS:
       const tasks = action.payload.entity._embedded ? action.payload.entity._embedded.tasks : [];
-      const total = action.payload.entity.page.totalElements;
-      return state.setIn(['yourTasks', 'isFetchingTasksAssignedToYou'], false)
+      return state
+        .setIn(['yourTasks', 'isFetchingTasksAssignedToYou'], false)
         .setIn(['yourTasks', 'tasks'], Immutable.fromJS(tasks))
-        .setIn(['yourTasks', 'total'], total)
-        .setIn(['yourTasks', 'original'], Immutable.fromJS(tasks));
+        .setIn(['yourTasks', 'total'], action.payload.entity.page.totalElements);
     case actions.FETCH_TASKS_ASSIGNED_TO_YOU_FAILURE:
-      return state.set(['yourTasks', 'isFetchingTasksAssignedToYou'], false);
+      return state
+        .setIn(['yourTasks', 'isFetchingTasksAssignedToYou'], false);
 
     case actions.FETCH_YOUR_GROUP_TASKS:
       return state.setIn(['yourGroupTasks', 'isFetchingYourGroupTasks'], true);
@@ -76,37 +76,39 @@ function reducer(state = initialState, action) {
     case actions.SET_UNASSIGNED_TASKS_SORT_VALUE:
       return state.setIn(['unassignedTasks', 'sortValue'], action.value);
 
-      case actions.FILTER_GROUP_YOUR_TASKS_BY_NAME:
-        const filterValue = action.value.toLowerCase();
-        if (filterValue) {
-          const originalGroupTasks = state.getIn(['yourGroupTasks', 'original']);
-          const updatedGroupTasks = originalGroupTasks.filter((task) => {
-            const taskName = task.getIn(['task','name']);
-            const assigneeName = task.getIn(['task', 'assignee']);
-            return taskName.toLowerCase().includes(filterValue) ||
-              (assigneeName ? assigneeName.includes(filterValue) : false);
-          });
-          return state.setIn(['yourGroupTasks', 'tasks'], updatedGroupTasks);
-        } else {
-          return state.setIn(['yourGroupTasks', 'tasks'],
-            state.getIn(['yourGroupTasks', 'original']));
-        }
-      case actions.FILTER_GROUP_UNASSIGNED_TASKS_BY_NAME:
-        const unassignedFilterValue = action.value.toLowerCase();
-        if (unassignedFilterValue) {
-          const originalGroupTasks = state.getIn(['unassignedTasks', 'original']);
-          const updatedGroupTasks = originalGroupTasks.filter((task) => {
-            const taskName = task.getIn(['task','name']);
-            return taskName.toLowerCase().includes(unassignedFilterValue);
-          });
-          return state.setIn(['unassignedTasks', 'tasks'], updatedGroupTasks);
-        } else {
-          return state.setIn(['unassignedTasks', 'tasks'],
-            state.getIn(['unassignedTasks', 'original']));
-        }
-        default:
-            return state;
-    }
+    case actions.FILTER_GROUP_YOUR_TASKS_BY_NAME:
+      const filterValue = action.value.toLowerCase();
+      if (filterValue) {
+        const originalGroupTasks = state.getIn(['yourGroupTasks', 'original']);
+        const updatedGroupTasks = originalGroupTasks.filter((task) => {
+          const taskName = task.getIn(['task', 'name']);
+          const assigneeName = task.getIn(['task', 'assignee']);
+          return taskName.toLowerCase()
+              .includes(filterValue) ||
+            (assigneeName ? assigneeName.includes(filterValue) : false);
+        });
+        return state.setIn(['yourGroupTasks', 'tasks'], updatedGroupTasks);
+      } else {
+        return state.setIn(['yourGroupTasks', 'tasks'],
+          state.getIn(['yourGroupTasks', 'original']));
+      }
+    case actions.FILTER_GROUP_UNASSIGNED_TASKS_BY_NAME:
+      const unassignedFilterValue = action.value.toLowerCase();
+      if (unassignedFilterValue) {
+        const originalGroupTasks = state.getIn(['unassignedTasks', 'original']);
+        const updatedGroupTasks = originalGroupTasks.filter((task) => {
+          const taskName = task.getIn(['task', 'name']);
+          return taskName.toLowerCase()
+            .includes(unassignedFilterValue);
+        });
+        return state.setIn(['unassignedTasks', 'tasks'], updatedGroupTasks);
+      } else {
+        return state.setIn(['unassignedTasks', 'tasks'],
+          state.getIn(['unassignedTasks', 'original']));
+      }
+    default:
+      return state;
+  }
 }
 
 

@@ -18,6 +18,7 @@ describe('YourTasks Page', () => {
   const date = moment();
   const yourTasks = Immutable.fromJS({
     isFetchingTasksAssignedToYou: false,
+    yourTasksSortValue: 'sort=due,desc',
     total: 1,
     tasks: [{
       task: {
@@ -99,7 +100,7 @@ describe('YourTasks Page', () => {
     expect(sessionStorage.length).toEqual(0);
   });
 
-  it('renders your tasks on sort change and stores in session storage', async() => {
+  it('renders your tasks on sort change', async() => {
     const props = {
       yourTasks: yourTasks
     };
@@ -110,22 +111,17 @@ describe('YourTasks Page', () => {
     />);
 
     expect(fetchTasksAssignedToYou).toBeCalled();
+
     const sortTaskInput = wrapper.find('#sortTask');
     sortTaskInput.simulate('change', {target: { value : 'sort=created,desc'}});
-    expect(sessionStorage.length).toEqual(1);
-    expect(atob(sessionStorage.getItem('yourTasksSortValue'))).toEqual('sort=created,desc');
-    expect(fetchTasksAssignedToYou).toBeCalled();
-
+    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=created,desc', undefined, true);
 
     sortTaskInput.simulate('change', {target: { value : 'sort=test,desc'}});
-    expect(sessionStorage.length).toEqual(1);
-    expect(atob(sessionStorage.getItem('yourTasksSortValue'))).toEqual('sort=test,desc');
+    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=test,desc', undefined, true);
 
-    wrapper.unmount();
-    expect(sessionStorage.length).toEqual(0);
   });
 
-  it('renders your tasks on filter value and stores in session storage', async() => {
+  it('renders your tasks on filter value', async() => {
     const props = {
       yourTasks: yourTasks
     };
@@ -134,57 +130,54 @@ describe('YourTasks Page', () => {
       {...props}
       fetchTasksAssignedToYou={fetchTasksAssignedToYou}
     />);
+
 
     expect(fetchTasksAssignedToYou).toBeCalled();
     const yourTaskFilterInput = wrapper.find('#filterTaskName');
+
     yourTaskFilterInput.simulate('change', {target: { value : 'ABC'}});
-    expect(sessionStorage.length).toEqual(1);
-    expect(atob(sessionStorage.getItem('yourTasksFilterValue'))).toEqual('ABC');
+    jest.advanceTimersByTime(600);
+    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,desc', 'ABC', true);
 
     yourTaskFilterInput.simulate('change', {target: { value : 'APPLES'}});
-    expect(sessionStorage.length).toEqual(1);
-    expect(atob(sessionStorage.getItem('yourTasksFilterValue'))).toEqual('APPLES');
+    jest.advanceTimersByTime(600);
+    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,desc', 'APPLES', true);
 
-    wrapper.unmount();
-    expect(sessionStorage.length).toEqual(0);
   });
 
   it('executes timer', async() => {
     const props = {
-      yourTasks: yourTasks
+      yourTasks: Immutable.fromJS({
+        isFetchingTasksAssignedToYou: false,
+        yourTasksSortValue: 'sort=due,desc',
+        yourTasksFilterValue: 'TEST',
+        total: 1,
+        tasks: [{
+          task: {
+            id: 'id',
+            name: 'test',
+            priority: 1000,
+            due: date,
+            created: date,
+          }
+
+        }]
+      })
     };
+
     const wrapper = await mount(<YourTasks
       store={store}
       {...props}
       fetchTasksAssignedToYou={fetchTasksAssignedToYou}
     />);
-    expect(fetchTasksAssignedToYou).toBeCalled();
-    jest.advanceTimersByTime(AppConstants.THREE_MINUTES);
-    expect(fetchTasksAssignedToYou).toBeCalled();
+    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,desc', null, false);
 
+    //kick off timer
+    jest.advanceTimersByTime(AppConstants.THREE_MINUTES);
+    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,desc', 'TEST', true);
+
+    //
     wrapper.unmount();
     expect(clearTimeout).toBeCalled();
   });
-  it('sortFilter present even after page refresh', async() => {
-    const props = {
-      yourTasks: yourTasks
-    };
-    const wrapper = await mount(<YourTasks
-      store={store}
-      {...props}
-      fetchTasksAssignedToYou={fetchTasksAssignedToYou}
-    />);
-
-    const sortTaskInput = wrapper.find('#sortTask');
-
-    sortTaskInput.simulate('change', {target: { value : 'sort=created,desc'}});
-    expect(sessionStorage.length).toEqual(1);
-
-    wrapper.update();
-    expect(sessionStorage.length).toEqual(1);
-
-    wrapper.unmount();
-    expect(sessionStorage.length).toEqual(0);
-  });
-
 });
