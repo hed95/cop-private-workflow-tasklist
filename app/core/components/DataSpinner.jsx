@@ -4,7 +4,7 @@ import Spinner from 'react-spinkit';
 
 export class DataSpinner extends React.Component {
     render() {
-        return <div>
+        return <div id="dataSpinner">
             <div className="loader-content">
                 <Spinner
                     name="line-spin-fade-loader" color="black"/>

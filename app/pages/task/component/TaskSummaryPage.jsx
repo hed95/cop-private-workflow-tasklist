@@ -4,7 +4,7 @@ import TaskTitle from "./TaskTitle";
 import Comments from "./Comments";
 
 
-class StandardTaskSummaryPage extends React.Component {
+class TaskSummaryPage extends React.Component {
 
     render() {
         const {task, variables} = this.props;
@@ -25,4 +25,4 @@ class StandardTaskSummaryPage extends React.Component {
     }
 }
 
-export default StandardTaskSummaryPage;
+export default TaskSummaryPage;

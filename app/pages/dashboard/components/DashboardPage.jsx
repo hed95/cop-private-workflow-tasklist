@@ -5,7 +5,7 @@ import DashboardTitle from "./DashboardTitle";
 import DashboardPanel from "./DashboardPanel";
 import {bindActionCreators} from "redux";
 import * as actions from "../../../core/shift/actions";
-import connect from "react-redux/es/connect/connect";
+import {connect} from "react-redux";
 import {
     hasActiveShift, isFetchingShift, shift
 } from "../../../core/shift/selectors";
@@ -14,7 +14,7 @@ import ErrorPanel from "../../../core/error/component/ErrorPanel";
 import {DataSpinner} from "../../../core/components/DataSpinner";
 import * as errorActions from "../../../core/error/actions";
 
-class DashboardPage extends React.Component {
+export class DashboardPage extends React.Component {
 
     componentDidMount() {
         this.props.resetErrors();
@@ -46,7 +46,7 @@ class DashboardPage extends React.Component {
         if (isFetchingShift) {
             return <DataSpinner message="Checking if you have an active shift"/>;
         } else {
-            return <div>
+            return <div id="dashboardContent">
                 {headerToDisplay}
                 <ErrorPanel {...this.props} />
                 <DashboardTitle hasActiveShift={hasActiveShift} />

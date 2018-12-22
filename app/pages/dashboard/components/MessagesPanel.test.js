@@ -6,6 +6,9 @@ import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import { MessagesPanel } from './MessagesPanel';
 import PubSub from 'pubsub-js';
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router-dom';
+import { ProceduresDashboardPanel } from './ProceduresDashboardPanel';
 const { Map} = Immutable;
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -69,5 +72,27 @@ describe('MessagesPanel', () => {
     expect(messagesPanel.find('.bold-xlarge').text()).toEqual('10');
     expect(messagesPanel.find('.bold-small').text()).toEqual('messages');
 
+  });
+  it('navigates to messages page on click', async() => {
+    const history = createMemoryHistory("/messages");
+
+    const props = {
+      history: history,
+      hasActiveShift: true,
+      isFetchingMessageCounts: false,
+      messageCounts: 10
+    };
+    const wrapper = await mount(<Router history={history}><MessagesPanel
+      store={store}
+      {...props}
+      fetchMessageCounts={fetchMessageCounts}
+      setDefaultCounts={setDefaultCounts}
+    /></Router>);
+
+    const messagesPageLink = wrapper.find('#messagesPageLink');
+    expect(messagesPageLink.exists()).toEqual(true);
+
+    messagesPageLink.simulate('click');
+    expect(props.history.location.pathname).toEqual('/messages');
   });
 });

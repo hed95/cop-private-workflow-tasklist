@@ -1,0 +1,3755 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Calendar Dashboard Panel renders calendar dashboard panel 1`] = `
+ReactWrapper {
+  Symbol(enzyme.__unrendered__): <CalendarDashboardPanel
+    hasActiveShift={true}
+    store={
+      Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      }
+    }
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__node__): Object {
+    "instance": CalendarDashboardPanel {
+      "_reactInternalFiber": FiberNode {
+        "_debugID": 50,
+        "_debugIsCurrentlyTiming": false,
+        "_debugOwner": FiberNode {
+          "_debugID": 49,
+          "_debugIsCurrentlyTiming": false,
+          "_debugOwner": null,
+          "_debugSource": null,
+          "actualDuration": 0,
+          "actualStartTime": -1,
+          "alternate": null,
+          "child": [Circular],
+          "childExpirationTime": 0,
+          "effectTag": 1,
+          "elementType": [Function],
+          "expirationTime": 0,
+          "firstContextDependency": null,
+          "firstEffect": null,
+          "index": 0,
+          "key": null,
+          "lastEffect": null,
+          "memoizedProps": Object {
+            "Component": [Function],
+            "context": null,
+            "props": Object {
+              "hasActiveShift": true,
+              "store": Object {
+                "clearActions": [Function],
+                "dispatch": [Function],
+                "getActions": [Function],
+                "getState": [Function],
+                "replaceReducer": [Function],
+                "subscribe": [Function],
+              },
+            },
+          },
+          "memoizedState": Object {
+            "context": null,
+            "mount": true,
+            "props": Object {
+              "hasActiveShift": true,
+              "store": Object {
+                "clearActions": [Function],
+                "dispatch": [Function],
+                "getActions": [Function],
+                "getState": [Function],
+                "replaceReducer": [Function],
+                "subscribe": [Function],
+              },
+            },
+          },
+          "mode": 0,
+          "nextEffect": FiberNode {
+            "_debugID": 47,
+            "_debugIsCurrentlyTiming": false,
+            "_debugOwner": null,
+            "_debugSource": null,
+            "actualDuration": 0,
+            "actualStartTime": -1,
+            "alternate": FiberNode {
+              "_debugID": 47,
+              "_debugIsCurrentlyTiming": false,
+              "_debugOwner": null,
+              "_debugSource": null,
+              "actualDuration": 0,
+              "actualStartTime": -1,
+              "alternate": [Circular],
+              "child": null,
+              "childExpirationTime": 0,
+              "effectTag": 0,
+              "elementType": null,
+              "expirationTime": 1073741823,
+              "firstContextDependency": null,
+              "firstEffect": null,
+              "index": 0,
+              "key": null,
+              "lastEffect": null,
+              "memoizedProps": null,
+              "memoizedState": null,
+              "mode": 0,
+              "nextEffect": null,
+              "pendingProps": null,
+              "ref": null,
+              "return": null,
+              "selfBaseDuration": 0,
+              "sibling": null,
+              "stateNode": Object {
+                "containerInfo": <div>
+                  <li
+                    class="__card column-one-third"
+                    id="calendarPanel"
+                  >
+                    <a
+                      class="card__body"
+                      href="#"
+                      id="calendarPageLink"
+                    >
+                      <span
+                        class="bold-large"
+                      >
+                        calendar
+                      </span>
+                    </a>
+                    <div
+                      class="card__footer"
+                    >
+                      <span
+                        class="font-small"
+                      >
+                        Operational calendar
+                      </span>
+                    </div>
+                  </li>
+                </div>,
+                "context": Object {},
+                "current": [Circular],
+                "didError": false,
+                "earliestPendingTime": 0,
+                "earliestSuspendedTime": 0,
+                "expirationTime": 0,
+                "finishedWork": null,
+                "firstBatch": null,
+                "hydrate": false,
+                "interactionThreadID": 12,
+                "latestPendingTime": 0,
+                "latestPingedTime": 0,
+                "latestSuspendedTime": 0,
+                "memoizedInteractions": Set {},
+                "nextExpirationTimeToWorkOn": 0,
+                "nextScheduledRoot": null,
+                "pendingChildren": null,
+                "pendingCommitExpirationTime": 0,
+                "pendingContext": null,
+                "pendingInteractionMap": Map {},
+                "timeoutHandle": -1,
+              },
+              "tag": 3,
+              "treeBaseDuration": 0,
+              "type": null,
+              "updateQueue": Object {
+                "baseState": null,
+                "firstCapturedEffect": null,
+                "firstCapturedUpdate": null,
+                "firstEffect": null,
+                "firstUpdate": Object {
+                  "callback": null,
+                  "expirationTime": 1073741823,
+                  "next": null,
+                  "nextEffect": null,
+                  "payload": Object {
+                    "element": <WrapperComponent
+                      Component={[Function]}
+                      context={null}
+                      props={
+                        Object {
+                          "hasActiveShift": true,
+                          "store": Object {
+                            "clearActions": [Function],
+                            "dispatch": [Function],
+                            "getActions": [Function],
+                            "getState": [Function],
+                            "replaceReducer": [Function],
+                            "subscribe": [Function],
+                          },
+                        }
+                      }
+                    />,
+                  },
+                  "tag": 0,
+                },
+                "lastCapturedEffect": null,
+                "lastCapturedUpdate": null,
+                "lastEffect": null,
+                "lastUpdate": Object {
+                  "callback": null,
+                  "expirationTime": 1073741823,
+                  "next": null,
+                  "nextEffect": null,
+                  "payload": Object {
+                    "element": <WrapperComponent
+                      Component={[Function]}
+                      context={null}
+                      props={
+                        Object {
+                          "hasActiveShift": true,
+                          "store": Object {
+                            "clearActions": [Function],
+                            "dispatch": [Function],
+                            "getActions": [Function],
+                            "getState": [Function],
+                            "replaceReducer": [Function],
+                            "subscribe": [Function],
+                          },
+                        }
+                      }
+                    />,
+                  },
+                  "tag": 0,
+                },
+              },
+            },
+            "child": [Circular],
+            "childExpirationTime": 0,
+            "effectTag": 32,
+            "elementType": null,
+            "expirationTime": 0,
+            "firstContextDependency": null,
+            "firstEffect": [Circular],
+            "index": 0,
+            "key": null,
+            "lastEffect": [Circular],
+            "memoizedProps": null,
+            "memoizedState": Object {
+              "element": <WrapperComponent
+                Component={[Function]}
+                context={null}
+                props={
+                  Object {
+                    "hasActiveShift": true,
+                    "store": Object {
+                      "clearActions": [Function],
+                      "dispatch": [Function],
+                      "getActions": [Function],
+                      "getState": [Function],
+                      "replaceReducer": [Function],
+                      "subscribe": [Function],
+                    },
+                  }
+                }
+              />,
+            },
+            "mode": 0,
+            "nextEffect": null,
+            "pendingProps": null,
+            "ref": null,
+            "return": null,
+            "selfBaseDuration": 0,
+            "sibling": null,
+            "stateNode": Object {
+              "containerInfo": <div>
+                <li
+                  class="__card column-one-third"
+                  id="calendarPanel"
+                >
+                  <a
+                    class="card__body"
+                    href="#"
+                    id="calendarPageLink"
+                  >
+                    <span
+                      class="bold-large"
+                    >
+                      calendar
+                    </span>
+                  </a>
+                  <div
+                    class="card__footer"
+                  >
+                    <span
+                      class="font-small"
+                    >
+                      Operational calendar
+                    </span>
+                  </div>
+                </li>
+              </div>,
+              "context": Object {},
+              "current": [Circular],
+              "didError": false,
+              "earliestPendingTime": 0,
+              "earliestSuspendedTime": 0,
+              "expirationTime": 0,
+              "finishedWork": null,
+              "firstBatch": null,
+              "hydrate": false,
+              "interactionThreadID": 12,
+              "latestPendingTime": 0,
+              "latestPingedTime": 0,
+              "latestSuspendedTime": 0,
+              "memoizedInteractions": Set {},
+              "nextExpirationTimeToWorkOn": 0,
+              "nextScheduledRoot": null,
+              "pendingChildren": null,
+              "pendingCommitExpirationTime": 0,
+              "pendingContext": null,
+              "pendingInteractionMap": Map {},
+              "timeoutHandle": -1,
+            },
+            "tag": 3,
+            "treeBaseDuration": 0,
+            "type": null,
+            "updateQueue": Object {
+              "baseState": Object {
+                "element": <WrapperComponent
+                  Component={[Function]}
+                  context={null}
+                  props={
+                    Object {
+                      "hasActiveShift": true,
+                      "store": Object {
+                        "clearActions": [Function],
+                        "dispatch": [Function],
+                        "getActions": [Function],
+                        "getState": [Function],
+                        "replaceReducer": [Function],
+                        "subscribe": [Function],
+                      },
+                    }
+                  }
+                />,
+              },
+              "firstCapturedEffect": null,
+              "firstCapturedUpdate": null,
+              "firstEffect": null,
+              "firstUpdate": null,
+              "lastCapturedEffect": null,
+              "lastCapturedUpdate": null,
+              "lastEffect": null,
+              "lastUpdate": null,
+            },
+          },
+          "pendingProps": Object {
+            "Component": [Function],
+            "context": null,
+            "props": Object {
+              "hasActiveShift": true,
+              "store": Object {
+                "clearActions": [Function],
+                "dispatch": [Function],
+                "getActions": [Function],
+                "getState": [Function],
+                "replaceReducer": [Function],
+                "subscribe": [Function],
+              },
+            },
+          },
+          "ref": null,
+          "return": FiberNode {
+            "_debugID": 47,
+            "_debugIsCurrentlyTiming": false,
+            "_debugOwner": null,
+            "_debugSource": null,
+            "actualDuration": 0,
+            "actualStartTime": -1,
+            "alternate": FiberNode {
+              "_debugID": 47,
+              "_debugIsCurrentlyTiming": false,
+              "_debugOwner": null,
+              "_debugSource": null,
+              "actualDuration": 0,
+              "actualStartTime": -1,
+              "alternate": [Circular],
+              "child": null,
+              "childExpirationTime": 0,
+              "effectTag": 0,
+              "elementType": null,
+              "expirationTime": 1073741823,
+              "firstContextDependency": null,
+              "firstEffect": null,
+              "index": 0,
+              "key": null,
+              "lastEffect": null,
+              "memoizedProps": null,
+              "memoizedState": null,
+              "mode": 0,
+              "nextEffect": null,
+              "pendingProps": null,
+              "ref": null,
+              "return": null,
+              "selfBaseDuration": 0,
+              "sibling": null,
+              "stateNode": Object {
+                "containerInfo": <div>
+                  <li
+                    class="__card column-one-third"
+                    id="calendarPanel"
+                  >
+                    <a
+                      class="card__body"
+                      href="#"
+                      id="calendarPageLink"
+                    >
+                      <span
+                        class="bold-large"
+                      >
+                        calendar
+                      </span>
+                    </a>
+                    <div
+                      class="card__footer"
+                    >
+                      <span
+                        class="font-small"
+                      >
+                        Operational calendar
+                      </span>
+                    </div>
+                  </li>
+                </div>,
+                "context": Object {},
+                "current": [Circular],
+                "didError": false,
+                "earliestPendingTime": 0,
+                "earliestSuspendedTime": 0,
+                "expirationTime": 0,
+                "finishedWork": null,
+                "firstBatch": null,
+                "hydrate": false,
+                "interactionThreadID": 12,
+                "latestPendingTime": 0,
+                "latestPingedTime": 0,
+                "latestSuspendedTime": 0,
+                "memoizedInteractions": Set {},
+                "nextExpirationTimeToWorkOn": 0,
+                "nextScheduledRoot": null,
+                "pendingChildren": null,
+                "pendingCommitExpirationTime": 0,
+                "pendingContext": null,
+                "pendingInteractionMap": Map {},
+                "timeoutHandle": -1,
+              },
+              "tag": 3,
+              "treeBaseDuration": 0,
+              "type": null,
+              "updateQueue": Object {
+                "baseState": null,
+                "firstCapturedEffect": null,
+                "firstCapturedUpdate": null,
+                "firstEffect": null,
+                "firstUpdate": Object {
+                  "callback": null,
+                  "expirationTime": 1073741823,
+                  "next": null,
+                  "nextEffect": null,
+                  "payload": Object {
+                    "element": <WrapperComponent
+                      Component={[Function]}
+                      context={null}
+                      props={
+                        Object {
+                          "hasActiveShift": true,
+                          "store": Object {
+                            "clearActions": [Function],
+                            "dispatch": [Function],
+                            "getActions": [Function],
+                            "getState": [Function],
+                            "replaceReducer": [Function],
+                            "subscribe": [Function],
+                          },
+                        }
+                      }
+                    />,
+                  },
+                  "tag": 0,
+                },
+                "lastCapturedEffect": null,
+                "lastCapturedUpdate": null,
+                "lastEffect": null,
+                "lastUpdate": Object {
+                  "callback": null,
+                  "expirationTime": 1073741823,
+                  "next": null,
+                  "nextEffect": null,
+                  "payload": Object {
+                    "element": <WrapperComponent
+                      Component={[Function]}
+                      context={null}
+                      props={
+                        Object {
+                          "hasActiveShift": true,
+                          "store": Object {
+                            "clearActions": [Function],
+                            "dispatch": [Function],
+                            "getActions": [Function],
+                            "getState": [Function],
+                            "replaceReducer": [Function],
+                            "subscribe": [Function],
+                          },
+                        }
+                      }
+                    />,
+                  },
+                  "tag": 0,
+                },
+              },
+            },
+            "child": [Circular],
+            "childExpirationTime": 0,
+            "effectTag": 32,
+            "elementType": null,
+            "expirationTime": 0,
+            "firstContextDependency": null,
+            "firstEffect": [Circular],
+            "index": 0,
+            "key": null,
+            "lastEffect": [Circular],
+            "memoizedProps": null,
+            "memoizedState": Object {
+              "element": <WrapperComponent
+                Component={[Function]}
+                context={null}
+                props={
+                  Object {
+                    "hasActiveShift": true,
+                    "store": Object {
+                      "clearActions": [Function],
+                      "dispatch": [Function],
+                      "getActions": [Function],
+                      "getState": [Function],
+                      "replaceReducer": [Function],
+                      "subscribe": [Function],
+                    },
+                  }
+                }
+              />,
+            },
+            "mode": 0,
+            "nextEffect": null,
+            "pendingProps": null,
+            "ref": null,
+            "return": null,
+            "selfBaseDuration": 0,
+            "sibling": null,
+            "stateNode": Object {
+              "containerInfo": <div>
+                <li
+                  class="__card column-one-third"
+                  id="calendarPanel"
+                >
+                  <a
+                    class="card__body"
+                    href="#"
+                    id="calendarPageLink"
+                  >
+                    <span
+                      class="bold-large"
+                    >
+                      calendar
+                    </span>
+                  </a>
+                  <div
+                    class="card__footer"
+                  >
+                    <span
+                      class="font-small"
+                    >
+                      Operational calendar
+                    </span>
+                  </div>
+                </li>
+              </div>,
+              "context": Object {},
+              "current": [Circular],
+              "didError": false,
+              "earliestPendingTime": 0,
+              "earliestSuspendedTime": 0,
+              "expirationTime": 0,
+              "finishedWork": null,
+              "firstBatch": null,
+              "hydrate": false,
+              "interactionThreadID": 12,
+              "latestPendingTime": 0,
+              "latestPingedTime": 0,
+              "latestSuspendedTime": 0,
+              "memoizedInteractions": Set {},
+              "nextExpirationTimeToWorkOn": 0,
+              "nextScheduledRoot": null,
+              "pendingChildren": null,
+              "pendingCommitExpirationTime": 0,
+              "pendingContext": null,
+              "pendingInteractionMap": Map {},
+              "timeoutHandle": -1,
+            },
+            "tag": 3,
+            "treeBaseDuration": 0,
+            "type": null,
+            "updateQueue": Object {
+              "baseState": Object {
+                "element": <WrapperComponent
+                  Component={[Function]}
+                  context={null}
+                  props={
+                    Object {
+                      "hasActiveShift": true,
+                      "store": Object {
+                        "clearActions": [Function],
+                        "dispatch": [Function],
+                        "getActions": [Function],
+                        "getState": [Function],
+                        "replaceReducer": [Function],
+                        "subscribe": [Function],
+                      },
+                    }
+                  }
+                />,
+              },
+              "firstCapturedEffect": null,
+              "firstCapturedUpdate": null,
+              "firstEffect": null,
+              "firstUpdate": null,
+              "lastCapturedEffect": null,
+              "lastCapturedUpdate": null,
+              "lastEffect": null,
+              "lastUpdate": null,
+            },
+          },
+          "selfBaseDuration": 0,
+          "sibling": null,
+          "stateNode": WrapperComponent {
+            "_reactInternalFiber": [Circular],
+            "_reactInternalInstance": Object {},
+            "context": Object {},
+            "props": Object {
+              "Component": [Function],
+              "context": null,
+              "props": Object {
+                "hasActiveShift": true,
+                "store": Object {
+                  "clearActions": [Function],
+                  "dispatch": [Function],
+                  "getActions": [Function],
+                  "getState": [Function],
+                  "replaceReducer": [Function],
+                  "subscribe": [Function],
+                },
+              },
+            },
+            "refs": Object {},
+            "state": Object {
+              "context": null,
+              "mount": true,
+              "props": Object {
+                "hasActiveShift": true,
+                "store": Object {
+                  "clearActions": [Function],
+                  "dispatch": [Function],
+                  "getActions": [Function],
+                  "getState": [Function],
+                  "replaceReducer": [Function],
+                  "subscribe": [Function],
+                },
+              },
+            },
+            "updater": Object {
+              "enqueueForceUpdate": [Function],
+              "enqueueReplaceState": [Function],
+              "enqueueSetState": [Function],
+              "isMounted": [Function],
+            },
+          },
+          "tag": 1,
+          "treeBaseDuration": 0,
+          "type": [Function],
+          "updateQueue": null,
+        },
+        "_debugSource": null,
+        "actualDuration": 0,
+        "actualStartTime": -1,
+        "alternate": null,
+        "child": FiberNode {
+          "_debugID": 51,
+          "_debugIsCurrentlyTiming": false,
+          "_debugOwner": [Circular],
+          "_debugSource": null,
+          "actualDuration": 0,
+          "actualStartTime": -1,
+          "alternate": null,
+          "child": FiberNode {
+            "_debugID": 52,
+            "_debugIsCurrentlyTiming": false,
+            "_debugOwner": [Circular],
+            "_debugSource": null,
+            "actualDuration": 0,
+            "actualStartTime": -1,
+            "alternate": null,
+            "child": FiberNode {
+              "_debugID": 54,
+              "_debugIsCurrentlyTiming": false,
+              "_debugOwner": [Circular],
+              "_debugSource": null,
+              "actualDuration": 0,
+              "actualStartTime": -1,
+              "alternate": null,
+              "child": null,
+              "childExpirationTime": 0,
+              "effectTag": 0,
+              "elementType": "span",
+              "expirationTime": 0,
+              "firstContextDependency": null,
+              "firstEffect": null,
+              "index": 0,
+              "key": null,
+              "lastEffect": null,
+              "memoizedProps": Object {
+                "children": "calendar",
+                "className": "bold-large",
+              },
+              "memoizedState": null,
+              "mode": 0,
+              "nextEffect": null,
+              "pendingProps": Object {
+                "children": "calendar",
+                "className": "bold-large",
+              },
+              "ref": null,
+              "return": [Circular],
+              "selfBaseDuration": 0,
+              "sibling": null,
+              "stateNode": <span
+                class="bold-large"
+              >
+                calendar
+              </span>,
+              "tag": 5,
+              "treeBaseDuration": 0,
+              "type": "span",
+              "updateQueue": null,
+            },
+            "childExpirationTime": 0,
+            "effectTag": 0,
+            "elementType": "a",
+            "expirationTime": 0,
+            "firstContextDependency": null,
+            "firstEffect": null,
+            "index": 0,
+            "key": null,
+            "lastEffect": null,
+            "memoizedProps": Object {
+              "children": <span
+                className="bold-large"
+              >
+                calendar
+              </span>,
+              "className": "card__body",
+              "href": "#",
+              "id": "calendarPageLink",
+              "onClick": [Function],
+            },
+            "memoizedState": null,
+            "mode": 0,
+            "nextEffect": null,
+            "pendingProps": Object {
+              "children": <span
+                className="bold-large"
+              >
+                calendar
+              </span>,
+              "className": "card__body",
+              "href": "#",
+              "id": "calendarPageLink",
+              "onClick": [Function],
+            },
+            "ref": null,
+            "return": [Circular],
+            "selfBaseDuration": 0,
+            "sibling": FiberNode {
+              "_debugID": 53,
+              "_debugIsCurrentlyTiming": false,
+              "_debugOwner": [Circular],
+              "_debugSource": null,
+              "actualDuration": 0,
+              "actualStartTime": -1,
+              "alternate": null,
+              "child": FiberNode {
+                "_debugID": 55,
+                "_debugIsCurrentlyTiming": false,
+                "_debugOwner": [Circular],
+                "_debugSource": null,
+                "actualDuration": 0,
+                "actualStartTime": -1,
+                "alternate": null,
+                "child": null,
+                "childExpirationTime": 0,
+                "effectTag": 0,
+                "elementType": "span",
+                "expirationTime": 0,
+                "firstContextDependency": null,
+                "firstEffect": null,
+                "index": 0,
+                "key": null,
+                "lastEffect": null,
+                "memoizedProps": Object {
+                  "children": "Operational calendar",
+                  "className": "font-small",
+                },
+                "memoizedState": null,
+                "mode": 0,
+                "nextEffect": null,
+                "pendingProps": Object {
+                  "children": "Operational calendar",
+                  "className": "font-small",
+                },
+                "ref": null,
+                "return": [Circular],
+                "selfBaseDuration": 0,
+                "sibling": null,
+                "stateNode": <span
+                  class="font-small"
+                >
+                  Operational calendar
+                </span>,
+                "tag": 5,
+                "treeBaseDuration": 0,
+                "type": "span",
+                "updateQueue": null,
+              },
+              "childExpirationTime": 0,
+              "effectTag": 0,
+              "elementType": "div",
+              "expirationTime": 0,
+              "firstContextDependency": null,
+              "firstEffect": null,
+              "index": 1,
+              "key": null,
+              "lastEffect": null,
+              "memoizedProps": Object {
+                "children": <span
+                  className="font-small"
+                >
+                  Operational calendar
+                </span>,
+                "className": "card__footer",
+              },
+              "memoizedState": null,
+              "mode": 0,
+              "nextEffect": null,
+              "pendingProps": Object {
+                "children": <span
+                  className="font-small"
+                >
+                  Operational calendar
+                </span>,
+                "className": "card__footer",
+              },
+              "ref": null,
+              "return": [Circular],
+              "selfBaseDuration": 0,
+              "sibling": null,
+              "stateNode": <div
+                class="card__footer"
+              >
+                <span
+                  class="font-small"
+                >
+                  Operational calendar
+                </span>
+              </div>,
+              "tag": 5,
+              "treeBaseDuration": 0,
+              "type": "div",
+              "updateQueue": null,
+            },
+            "stateNode": <a
+              class="card__body"
+              href="#"
+              id="calendarPageLink"
+            >
+              <span
+                class="bold-large"
+              >
+                calendar
+              </span>
+            </a>,
+            "tag": 5,
+            "treeBaseDuration": 0,
+            "type": "a",
+            "updateQueue": null,
+          },
+          "childExpirationTime": 0,
+          "effectTag": 0,
+          "elementType": "li",
+          "expirationTime": 0,
+          "firstContextDependency": null,
+          "firstEffect": null,
+          "index": 0,
+          "key": null,
+          "lastEffect": null,
+          "memoizedProps": Object {
+            "children": Array [
+              <a
+                className="card__body"
+                href="#"
+                id="calendarPageLink"
+                onClick={[Function]}
+              >
+                <span
+                  className="bold-large"
+                >
+                  calendar
+                </span>
+              </a>,
+              <div
+                className="card__footer"
+              >
+                <span
+                  className="font-small"
+                >
+                  Operational calendar
+                </span>
+              </div>,
+            ],
+            "className": "__card column-one-third",
+            "id": "calendarPanel",
+          },
+          "memoizedState": null,
+          "mode": 0,
+          "nextEffect": null,
+          "pendingProps": Object {
+            "children": Array [
+              <a
+                className="card__body"
+                href="#"
+                id="calendarPageLink"
+                onClick={[Function]}
+              >
+                <span
+                  className="bold-large"
+                >
+                  calendar
+                </span>
+              </a>,
+              <div
+                className="card__footer"
+              >
+                <span
+                  className="font-small"
+                >
+                  Operational calendar
+                </span>
+              </div>,
+            ],
+            "className": "__card column-one-third",
+            "id": "calendarPanel",
+          },
+          "ref": null,
+          "return": [Circular],
+          "selfBaseDuration": 0,
+          "sibling": null,
+          "stateNode": <li
+            class="__card column-one-third"
+            id="calendarPanel"
+          >
+            <a
+              class="card__body"
+              href="#"
+              id="calendarPageLink"
+            >
+              <span
+                class="bold-large"
+              >
+                calendar
+              </span>
+            </a>
+            <div
+              class="card__footer"
+            >
+              <span
+                class="font-small"
+              >
+                Operational calendar
+              </span>
+            </div>
+          </li>,
+          "tag": 5,
+          "treeBaseDuration": 0,
+          "type": "li",
+          "updateQueue": null,
+        },
+        "childExpirationTime": 0,
+        "effectTag": 1,
+        "elementType": [Function],
+        "expirationTime": 0,
+        "firstContextDependency": null,
+        "firstEffect": null,
+        "index": 0,
+        "key": null,
+        "lastEffect": null,
+        "memoizedProps": Object {
+          "hasActiveShift": true,
+          "store": Object {
+            "clearActions": [Function],
+            "dispatch": [Function],
+            "getActions": [Function],
+            "getState": [Function],
+            "replaceReducer": [Function],
+            "subscribe": [Function],
+          },
+        },
+        "memoizedState": null,
+        "mode": 0,
+        "nextEffect": null,
+        "pendingProps": Object {
+          "hasActiveShift": true,
+          "store": Object {
+            "clearActions": [Function],
+            "dispatch": [Function],
+            "getActions": [Function],
+            "getState": [Function],
+            "replaceReducer": [Function],
+            "subscribe": [Function],
+          },
+        },
+        "ref": null,
+        "return": FiberNode {
+          "_debugID": 49,
+          "_debugIsCurrentlyTiming": false,
+          "_debugOwner": null,
+          "_debugSource": null,
+          "actualDuration": 0,
+          "actualStartTime": -1,
+          "alternate": null,
+          "child": [Circular],
+          "childExpirationTime": 0,
+          "effectTag": 1,
+          "elementType": [Function],
+          "expirationTime": 0,
+          "firstContextDependency": null,
+          "firstEffect": null,
+          "index": 0,
+          "key": null,
+          "lastEffect": null,
+          "memoizedProps": Object {
+            "Component": [Function],
+            "context": null,
+            "props": Object {
+              "hasActiveShift": true,
+              "store": Object {
+                "clearActions": [Function],
+                "dispatch": [Function],
+                "getActions": [Function],
+                "getState": [Function],
+                "replaceReducer": [Function],
+                "subscribe": [Function],
+              },
+            },
+          },
+          "memoizedState": Object {
+            "context": null,
+            "mount": true,
+            "props": Object {
+              "hasActiveShift": true,
+              "store": Object {
+                "clearActions": [Function],
+                "dispatch": [Function],
+                "getActions": [Function],
+                "getState": [Function],
+                "replaceReducer": [Function],
+                "subscribe": [Function],
+              },
+            },
+          },
+          "mode": 0,
+          "nextEffect": FiberNode {
+            "_debugID": 47,
+            "_debugIsCurrentlyTiming": false,
+            "_debugOwner": null,
+            "_debugSource": null,
+            "actualDuration": 0,
+            "actualStartTime": -1,
+            "alternate": FiberNode {
+              "_debugID": 47,
+              "_debugIsCurrentlyTiming": false,
+              "_debugOwner": null,
+              "_debugSource": null,
+              "actualDuration": 0,
+              "actualStartTime": -1,
+              "alternate": [Circular],
+              "child": null,
+              "childExpirationTime": 0,
+              "effectTag": 0,
+              "elementType": null,
+              "expirationTime": 1073741823,
+              "firstContextDependency": null,
+              "firstEffect": null,
+              "index": 0,
+              "key": null,
+              "lastEffect": null,
+              "memoizedProps": null,
+              "memoizedState": null,
+              "mode": 0,
+              "nextEffect": null,
+              "pendingProps": null,
+              "ref": null,
+              "return": null,
+              "selfBaseDuration": 0,
+              "sibling": null,
+              "stateNode": Object {
+                "containerInfo": <div>
+                  <li
+                    class="__card column-one-third"
+                    id="calendarPanel"
+                  >
+                    <a
+                      class="card__body"
+                      href="#"
+                      id="calendarPageLink"
+                    >
+                      <span
+                        class="bold-large"
+                      >
+                        calendar
+                      </span>
+                    </a>
+                    <div
+                      class="card__footer"
+                    >
+                      <span
+                        class="font-small"
+                      >
+                        Operational calendar
+                      </span>
+                    </div>
+                  </li>
+                </div>,
+                "context": Object {},
+                "current": [Circular],
+                "didError": false,
+                "earliestPendingTime": 0,
+                "earliestSuspendedTime": 0,
+                "expirationTime": 0,
+                "finishedWork": null,
+                "firstBatch": null,
+                "hydrate": false,
+                "interactionThreadID": 12,
+                "latestPendingTime": 0,
+                "latestPingedTime": 0,
+                "latestSuspendedTime": 0,
+                "memoizedInteractions": Set {},
+                "nextExpirationTimeToWorkOn": 0,
+                "nextScheduledRoot": null,
+                "pendingChildren": null,
+                "pendingCommitExpirationTime": 0,
+                "pendingContext": null,
+                "pendingInteractionMap": Map {},
+                "timeoutHandle": -1,
+              },
+              "tag": 3,
+              "treeBaseDuration": 0,
+              "type": null,
+              "updateQueue": Object {
+                "baseState": null,
+                "firstCapturedEffect": null,
+                "firstCapturedUpdate": null,
+                "firstEffect": null,
+                "firstUpdate": Object {
+                  "callback": null,
+                  "expirationTime": 1073741823,
+                  "next": null,
+                  "nextEffect": null,
+                  "payload": Object {
+                    "element": <WrapperComponent
+                      Component={[Function]}
+                      context={null}
+                      props={
+                        Object {
+                          "hasActiveShift": true,
+                          "store": Object {
+                            "clearActions": [Function],
+                            "dispatch": [Function],
+                            "getActions": [Function],
+                            "getState": [Function],
+                            "replaceReducer": [Function],
+                            "subscribe": [Function],
+                          },
+                        }
+                      }
+                    />,
+                  },
+                  "tag": 0,
+                },
+                "lastCapturedEffect": null,
+                "lastCapturedUpdate": null,
+                "lastEffect": null,
+                "lastUpdate": Object {
+                  "callback": null,
+                  "expirationTime": 1073741823,
+                  "next": null,
+                  "nextEffect": null,
+                  "payload": Object {
+                    "element": <WrapperComponent
+                      Component={[Function]}
+                      context={null}
+                      props={
+                        Object {
+                          "hasActiveShift": true,
+                          "store": Object {
+                            "clearActions": [Function],
+                            "dispatch": [Function],
+                            "getActions": [Function],
+                            "getState": [Function],
+                            "replaceReducer": [Function],
+                            "subscribe": [Function],
+                          },
+                        }
+                      }
+                    />,
+                  },
+                  "tag": 0,
+                },
+              },
+            },
+            "child": [Circular],
+            "childExpirationTime": 0,
+            "effectTag": 32,
+            "elementType": null,
+            "expirationTime": 0,
+            "firstContextDependency": null,
+            "firstEffect": [Circular],
+            "index": 0,
+            "key": null,
+            "lastEffect": [Circular],
+            "memoizedProps": null,
+            "memoizedState": Object {
+              "element": <WrapperComponent
+                Component={[Function]}
+                context={null}
+                props={
+                  Object {
+                    "hasActiveShift": true,
+                    "store": Object {
+                      "clearActions": [Function],
+                      "dispatch": [Function],
+                      "getActions": [Function],
+                      "getState": [Function],
+                      "replaceReducer": [Function],
+                      "subscribe": [Function],
+                    },
+                  }
+                }
+              />,
+            },
+            "mode": 0,
+            "nextEffect": null,
+            "pendingProps": null,
+            "ref": null,
+            "return": null,
+            "selfBaseDuration": 0,
+            "sibling": null,
+            "stateNode": Object {
+              "containerInfo": <div>
+                <li
+                  class="__card column-one-third"
+                  id="calendarPanel"
+                >
+                  <a
+                    class="card__body"
+                    href="#"
+                    id="calendarPageLink"
+                  >
+                    <span
+                      class="bold-large"
+                    >
+                      calendar
+                    </span>
+                  </a>
+                  <div
+                    class="card__footer"
+                  >
+                    <span
+                      class="font-small"
+                    >
+                      Operational calendar
+                    </span>
+                  </div>
+                </li>
+              </div>,
+              "context": Object {},
+              "current": [Circular],
+              "didError": false,
+              "earliestPendingTime": 0,
+              "earliestSuspendedTime": 0,
+              "expirationTime": 0,
+              "finishedWork": null,
+              "firstBatch": null,
+              "hydrate": false,
+              "interactionThreadID": 12,
+              "latestPendingTime": 0,
+              "latestPingedTime": 0,
+              "latestSuspendedTime": 0,
+              "memoizedInteractions": Set {},
+              "nextExpirationTimeToWorkOn": 0,
+              "nextScheduledRoot": null,
+              "pendingChildren": null,
+              "pendingCommitExpirationTime": 0,
+              "pendingContext": null,
+              "pendingInteractionMap": Map {},
+              "timeoutHandle": -1,
+            },
+            "tag": 3,
+            "treeBaseDuration": 0,
+            "type": null,
+            "updateQueue": Object {
+              "baseState": Object {
+                "element": <WrapperComponent
+                  Component={[Function]}
+                  context={null}
+                  props={
+                    Object {
+                      "hasActiveShift": true,
+                      "store": Object {
+                        "clearActions": [Function],
+                        "dispatch": [Function],
+                        "getActions": [Function],
+                        "getState": [Function],
+                        "replaceReducer": [Function],
+                        "subscribe": [Function],
+                      },
+                    }
+                  }
+                />,
+              },
+              "firstCapturedEffect": null,
+              "firstCapturedUpdate": null,
+              "firstEffect": null,
+              "firstUpdate": null,
+              "lastCapturedEffect": null,
+              "lastCapturedUpdate": null,
+              "lastEffect": null,
+              "lastUpdate": null,
+            },
+          },
+          "pendingProps": Object {
+            "Component": [Function],
+            "context": null,
+            "props": Object {
+              "hasActiveShift": true,
+              "store": Object {
+                "clearActions": [Function],
+                "dispatch": [Function],
+                "getActions": [Function],
+                "getState": [Function],
+                "replaceReducer": [Function],
+                "subscribe": [Function],
+              },
+            },
+          },
+          "ref": null,
+          "return": FiberNode {
+            "_debugID": 47,
+            "_debugIsCurrentlyTiming": false,
+            "_debugOwner": null,
+            "_debugSource": null,
+            "actualDuration": 0,
+            "actualStartTime": -1,
+            "alternate": FiberNode {
+              "_debugID": 47,
+              "_debugIsCurrentlyTiming": false,
+              "_debugOwner": null,
+              "_debugSource": null,
+              "actualDuration": 0,
+              "actualStartTime": -1,
+              "alternate": [Circular],
+              "child": null,
+              "childExpirationTime": 0,
+              "effectTag": 0,
+              "elementType": null,
+              "expirationTime": 1073741823,
+              "firstContextDependency": null,
+              "firstEffect": null,
+              "index": 0,
+              "key": null,
+              "lastEffect": null,
+              "memoizedProps": null,
+              "memoizedState": null,
+              "mode": 0,
+              "nextEffect": null,
+              "pendingProps": null,
+              "ref": null,
+              "return": null,
+              "selfBaseDuration": 0,
+              "sibling": null,
+              "stateNode": Object {
+                "containerInfo": <div>
+                  <li
+                    class="__card column-one-third"
+                    id="calendarPanel"
+                  >
+                    <a
+                      class="card__body"
+                      href="#"
+                      id="calendarPageLink"
+                    >
+                      <span
+                        class="bold-large"
+                      >
+                        calendar
+                      </span>
+                    </a>
+                    <div
+                      class="card__footer"
+                    >
+                      <span
+                        class="font-small"
+                      >
+                        Operational calendar
+                      </span>
+                    </div>
+                  </li>
+                </div>,
+                "context": Object {},
+                "current": [Circular],
+                "didError": false,
+                "earliestPendingTime": 0,
+                "earliestSuspendedTime": 0,
+                "expirationTime": 0,
+                "finishedWork": null,
+                "firstBatch": null,
+                "hydrate": false,
+                "interactionThreadID": 12,
+                "latestPendingTime": 0,
+                "latestPingedTime": 0,
+                "latestSuspendedTime": 0,
+                "memoizedInteractions": Set {},
+                "nextExpirationTimeToWorkOn": 0,
+                "nextScheduledRoot": null,
+                "pendingChildren": null,
+                "pendingCommitExpirationTime": 0,
+                "pendingContext": null,
+                "pendingInteractionMap": Map {},
+                "timeoutHandle": -1,
+              },
+              "tag": 3,
+              "treeBaseDuration": 0,
+              "type": null,
+              "updateQueue": Object {
+                "baseState": null,
+                "firstCapturedEffect": null,
+                "firstCapturedUpdate": null,
+                "firstEffect": null,
+                "firstUpdate": Object {
+                  "callback": null,
+                  "expirationTime": 1073741823,
+                  "next": null,
+                  "nextEffect": null,
+                  "payload": Object {
+                    "element": <WrapperComponent
+                      Component={[Function]}
+                      context={null}
+                      props={
+                        Object {
+                          "hasActiveShift": true,
+                          "store": Object {
+                            "clearActions": [Function],
+                            "dispatch": [Function],
+                            "getActions": [Function],
+                            "getState": [Function],
+                            "replaceReducer": [Function],
+                            "subscribe": [Function],
+                          },
+                        }
+                      }
+                    />,
+                  },
+                  "tag": 0,
+                },
+                "lastCapturedEffect": null,
+                "lastCapturedUpdate": null,
+                "lastEffect": null,
+                "lastUpdate": Object {
+                  "callback": null,
+                  "expirationTime": 1073741823,
+                  "next": null,
+                  "nextEffect": null,
+                  "payload": Object {
+                    "element": <WrapperComponent
+                      Component={[Function]}
+                      context={null}
+                      props={
+                        Object {
+                          "hasActiveShift": true,
+                          "store": Object {
+                            "clearActions": [Function],
+                            "dispatch": [Function],
+                            "getActions": [Function],
+                            "getState": [Function],
+                            "replaceReducer": [Function],
+                            "subscribe": [Function],
+                          },
+                        }
+                      }
+                    />,
+                  },
+                  "tag": 0,
+                },
+              },
+            },
+            "child": [Circular],
+            "childExpirationTime": 0,
+            "effectTag": 32,
+            "elementType": null,
+            "expirationTime": 0,
+            "firstContextDependency": null,
+            "firstEffect": [Circular],
+            "index": 0,
+            "key": null,
+            "lastEffect": [Circular],
+            "memoizedProps": null,
+            "memoizedState": Object {
+              "element": <WrapperComponent
+                Component={[Function]}
+                context={null}
+                props={
+                  Object {
+                    "hasActiveShift": true,
+                    "store": Object {
+                      "clearActions": [Function],
+                      "dispatch": [Function],
+                      "getActions": [Function],
+                      "getState": [Function],
+                      "replaceReducer": [Function],
+                      "subscribe": [Function],
+                    },
+                  }
+                }
+              />,
+            },
+            "mode": 0,
+            "nextEffect": null,
+            "pendingProps": null,
+            "ref": null,
+            "return": null,
+            "selfBaseDuration": 0,
+            "sibling": null,
+            "stateNode": Object {
+              "containerInfo": <div>
+                <li
+                  class="__card column-one-third"
+                  id="calendarPanel"
+                >
+                  <a
+                    class="card__body"
+                    href="#"
+                    id="calendarPageLink"
+                  >
+                    <span
+                      class="bold-large"
+                    >
+                      calendar
+                    </span>
+                  </a>
+                  <div
+                    class="card__footer"
+                  >
+                    <span
+                      class="font-small"
+                    >
+                      Operational calendar
+                    </span>
+                  </div>
+                </li>
+              </div>,
+              "context": Object {},
+              "current": [Circular],
+              "didError": false,
+              "earliestPendingTime": 0,
+              "earliestSuspendedTime": 0,
+              "expirationTime": 0,
+              "finishedWork": null,
+              "firstBatch": null,
+              "hydrate": false,
+              "interactionThreadID": 12,
+              "latestPendingTime": 0,
+              "latestPingedTime": 0,
+              "latestSuspendedTime": 0,
+              "memoizedInteractions": Set {},
+              "nextExpirationTimeToWorkOn": 0,
+              "nextScheduledRoot": null,
+              "pendingChildren": null,
+              "pendingCommitExpirationTime": 0,
+              "pendingContext": null,
+              "pendingInteractionMap": Map {},
+              "timeoutHandle": -1,
+            },
+            "tag": 3,
+            "treeBaseDuration": 0,
+            "type": null,
+            "updateQueue": Object {
+              "baseState": Object {
+                "element": <WrapperComponent
+                  Component={[Function]}
+                  context={null}
+                  props={
+                    Object {
+                      "hasActiveShift": true,
+                      "store": Object {
+                        "clearActions": [Function],
+                        "dispatch": [Function],
+                        "getActions": [Function],
+                        "getState": [Function],
+                        "replaceReducer": [Function],
+                        "subscribe": [Function],
+                      },
+                    }
+                  }
+                />,
+              },
+              "firstCapturedEffect": null,
+              "firstCapturedUpdate": null,
+              "firstEffect": null,
+              "firstUpdate": null,
+              "lastCapturedEffect": null,
+              "lastCapturedUpdate": null,
+              "lastEffect": null,
+              "lastUpdate": null,
+            },
+          },
+          "selfBaseDuration": 0,
+          "sibling": null,
+          "stateNode": WrapperComponent {
+            "_reactInternalFiber": [Circular],
+            "_reactInternalInstance": Object {},
+            "context": Object {},
+            "props": Object {
+              "Component": [Function],
+              "context": null,
+              "props": Object {
+                "hasActiveShift": true,
+                "store": Object {
+                  "clearActions": [Function],
+                  "dispatch": [Function],
+                  "getActions": [Function],
+                  "getState": [Function],
+                  "replaceReducer": [Function],
+                  "subscribe": [Function],
+                },
+              },
+            },
+            "refs": Object {},
+            "state": Object {
+              "context": null,
+              "mount": true,
+              "props": Object {
+                "hasActiveShift": true,
+                "store": Object {
+                  "clearActions": [Function],
+                  "dispatch": [Function],
+                  "getActions": [Function],
+                  "getState": [Function],
+                  "replaceReducer": [Function],
+                  "subscribe": [Function],
+                },
+              },
+            },
+            "updater": Object {
+              "enqueueForceUpdate": [Function],
+              "enqueueReplaceState": [Function],
+              "enqueueSetState": [Function],
+              "isMounted": [Function],
+            },
+          },
+          "tag": 1,
+          "treeBaseDuration": 0,
+          "type": [Function],
+          "updateQueue": null,
+        },
+        "selfBaseDuration": 0,
+        "sibling": null,
+        "stateNode": [Circular],
+        "tag": 1,
+        "treeBaseDuration": 0,
+        "type": [Function],
+        "updateQueue": null,
+      },
+      "_reactInternalInstance": Object {},
+      "context": Object {},
+      "props": Object {
+        "hasActiveShift": true,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+      },
+      "refs": Object {},
+      "state": null,
+      "updater": Object {
+        "enqueueForceUpdate": [Function],
+        "enqueueReplaceState": [Function],
+        "enqueueSetState": [Function],
+        "isMounted": [Function],
+      },
+    },
+    "key": undefined,
+    "nodeType": "class",
+    "props": Object {
+      "hasActiveShift": true,
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+    },
+    "ref": null,
+    "rendered": Object {
+      "instance": <li
+        class="__card column-one-third"
+        id="calendarPanel"
+      >
+        <a
+          class="card__body"
+          href="#"
+          id="calendarPageLink"
+        >
+          <span
+            class="bold-large"
+          >
+            calendar
+          </span>
+        </a>
+        <div
+          class="card__footer"
+        >
+          <span
+            class="font-small"
+          >
+            Operational calendar
+          </span>
+        </div>
+      </li>,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <a
+            className="card__body"
+            href="#"
+            id="calendarPageLink"
+            onClick={[Function]}
+          >
+            <span
+              className="bold-large"
+            >
+              calendar
+            </span>
+          </a>,
+          <div
+            className="card__footer"
+          >
+            <span
+              className="font-small"
+            >
+              Operational calendar
+            </span>
+          </div>,
+        ],
+        "className": "__card column-one-third",
+        "id": "calendarPanel",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": <a
+            class="card__body"
+            href="#"
+            id="calendarPageLink"
+          >
+            <span
+              class="bold-large"
+            >
+              calendar
+            </span>
+          </a>,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <span
+              className="bold-large"
+            >
+              calendar
+            </span>,
+            "className": "card__body",
+            "href": "#",
+            "id": "calendarPageLink",
+            "onClick": [Function],
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": <span
+                class="bold-large"
+              >
+                calendar
+              </span>,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "calendar",
+                "className": "bold-large",
+              },
+              "ref": null,
+              "rendered": Array [
+                "calendar",
+              ],
+              "type": "span",
+            },
+          ],
+          "type": "a",
+        },
+        Object {
+          "instance": <div
+            class="card__footer"
+          >
+            <span
+              class="font-small"
+            >
+              Operational calendar
+            </span>
+          </div>,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <span
+              className="font-small"
+            >
+              Operational calendar
+            </span>,
+            "className": "card__footer",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": <span
+                class="font-small"
+              >
+                Operational calendar
+              </span>,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "Operational calendar",
+                "className": "font-small",
+              },
+              "ref": null,
+              "rendered": Array [
+                "Operational calendar",
+              ],
+              "type": "span",
+            },
+          ],
+          "type": "div",
+        },
+      ],
+      "type": "li",
+    },
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": CalendarDashboardPanel {
+        "_reactInternalFiber": FiberNode {
+          "_debugID": 50,
+          "_debugIsCurrentlyTiming": false,
+          "_debugOwner": FiberNode {
+            "_debugID": 49,
+            "_debugIsCurrentlyTiming": false,
+            "_debugOwner": null,
+            "_debugSource": null,
+            "actualDuration": 0,
+            "actualStartTime": -1,
+            "alternate": null,
+            "child": [Circular],
+            "childExpirationTime": 0,
+            "effectTag": 1,
+            "elementType": [Function],
+            "expirationTime": 0,
+            "firstContextDependency": null,
+            "firstEffect": null,
+            "index": 0,
+            "key": null,
+            "lastEffect": null,
+            "memoizedProps": Object {
+              "Component": [Function],
+              "context": null,
+              "props": Object {
+                "hasActiveShift": true,
+                "store": Object {
+                  "clearActions": [Function],
+                  "dispatch": [Function],
+                  "getActions": [Function],
+                  "getState": [Function],
+                  "replaceReducer": [Function],
+                  "subscribe": [Function],
+                },
+              },
+            },
+            "memoizedState": Object {
+              "context": null,
+              "mount": true,
+              "props": Object {
+                "hasActiveShift": true,
+                "store": Object {
+                  "clearActions": [Function],
+                  "dispatch": [Function],
+                  "getActions": [Function],
+                  "getState": [Function],
+                  "replaceReducer": [Function],
+                  "subscribe": [Function],
+                },
+              },
+            },
+            "mode": 0,
+            "nextEffect": FiberNode {
+              "_debugID": 47,
+              "_debugIsCurrentlyTiming": false,
+              "_debugOwner": null,
+              "_debugSource": null,
+              "actualDuration": 0,
+              "actualStartTime": -1,
+              "alternate": FiberNode {
+                "_debugID": 47,
+                "_debugIsCurrentlyTiming": false,
+                "_debugOwner": null,
+                "_debugSource": null,
+                "actualDuration": 0,
+                "actualStartTime": -1,
+                "alternate": [Circular],
+                "child": null,
+                "childExpirationTime": 0,
+                "effectTag": 0,
+                "elementType": null,
+                "expirationTime": 1073741823,
+                "firstContextDependency": null,
+                "firstEffect": null,
+                "index": 0,
+                "key": null,
+                "lastEffect": null,
+                "memoizedProps": null,
+                "memoizedState": null,
+                "mode": 0,
+                "nextEffect": null,
+                "pendingProps": null,
+                "ref": null,
+                "return": null,
+                "selfBaseDuration": 0,
+                "sibling": null,
+                "stateNode": Object {
+                  "containerInfo": <div>
+                    <li
+                      class="__card column-one-third"
+                      id="calendarPanel"
+                    >
+                      <a
+                        class="card__body"
+                        href="#"
+                        id="calendarPageLink"
+                      >
+                        <span
+                          class="bold-large"
+                        >
+                          calendar
+                        </span>
+                      </a>
+                      <div
+                        class="card__footer"
+                      >
+                        <span
+                          class="font-small"
+                        >
+                          Operational calendar
+                        </span>
+                      </div>
+                    </li>
+                  </div>,
+                  "context": Object {},
+                  "current": [Circular],
+                  "didError": false,
+                  "earliestPendingTime": 0,
+                  "earliestSuspendedTime": 0,
+                  "expirationTime": 0,
+                  "finishedWork": null,
+                  "firstBatch": null,
+                  "hydrate": false,
+                  "interactionThreadID": 12,
+                  "latestPendingTime": 0,
+                  "latestPingedTime": 0,
+                  "latestSuspendedTime": 0,
+                  "memoizedInteractions": Set {},
+                  "nextExpirationTimeToWorkOn": 0,
+                  "nextScheduledRoot": null,
+                  "pendingChildren": null,
+                  "pendingCommitExpirationTime": 0,
+                  "pendingContext": null,
+                  "pendingInteractionMap": Map {},
+                  "timeoutHandle": -1,
+                },
+                "tag": 3,
+                "treeBaseDuration": 0,
+                "type": null,
+                "updateQueue": Object {
+                  "baseState": null,
+                  "firstCapturedEffect": null,
+                  "firstCapturedUpdate": null,
+                  "firstEffect": null,
+                  "firstUpdate": Object {
+                    "callback": null,
+                    "expirationTime": 1073741823,
+                    "next": null,
+                    "nextEffect": null,
+                    "payload": Object {
+                      "element": <WrapperComponent
+                        Component={[Function]}
+                        context={null}
+                        props={
+                          Object {
+                            "hasActiveShift": true,
+                            "store": Object {
+                              "clearActions": [Function],
+                              "dispatch": [Function],
+                              "getActions": [Function],
+                              "getState": [Function],
+                              "replaceReducer": [Function],
+                              "subscribe": [Function],
+                            },
+                          }
+                        }
+                      />,
+                    },
+                    "tag": 0,
+                  },
+                  "lastCapturedEffect": null,
+                  "lastCapturedUpdate": null,
+                  "lastEffect": null,
+                  "lastUpdate": Object {
+                    "callback": null,
+                    "expirationTime": 1073741823,
+                    "next": null,
+                    "nextEffect": null,
+                    "payload": Object {
+                      "element": <WrapperComponent
+                        Component={[Function]}
+                        context={null}
+                        props={
+                          Object {
+                            "hasActiveShift": true,
+                            "store": Object {
+                              "clearActions": [Function],
+                              "dispatch": [Function],
+                              "getActions": [Function],
+                              "getState": [Function],
+                              "replaceReducer": [Function],
+                              "subscribe": [Function],
+                            },
+                          }
+                        }
+                      />,
+                    },
+                    "tag": 0,
+                  },
+                },
+              },
+              "child": [Circular],
+              "childExpirationTime": 0,
+              "effectTag": 32,
+              "elementType": null,
+              "expirationTime": 0,
+              "firstContextDependency": null,
+              "firstEffect": [Circular],
+              "index": 0,
+              "key": null,
+              "lastEffect": [Circular],
+              "memoizedProps": null,
+              "memoizedState": Object {
+                "element": <WrapperComponent
+                  Component={[Function]}
+                  context={null}
+                  props={
+                    Object {
+                      "hasActiveShift": true,
+                      "store": Object {
+                        "clearActions": [Function],
+                        "dispatch": [Function],
+                        "getActions": [Function],
+                        "getState": [Function],
+                        "replaceReducer": [Function],
+                        "subscribe": [Function],
+                      },
+                    }
+                  }
+                />,
+              },
+              "mode": 0,
+              "nextEffect": null,
+              "pendingProps": null,
+              "ref": null,
+              "return": null,
+              "selfBaseDuration": 0,
+              "sibling": null,
+              "stateNode": Object {
+                "containerInfo": <div>
+                  <li
+                    class="__card column-one-third"
+                    id="calendarPanel"
+                  >
+                    <a
+                      class="card__body"
+                      href="#"
+                      id="calendarPageLink"
+                    >
+                      <span
+                        class="bold-large"
+                      >
+                        calendar
+                      </span>
+                    </a>
+                    <div
+                      class="card__footer"
+                    >
+                      <span
+                        class="font-small"
+                      >
+                        Operational calendar
+                      </span>
+                    </div>
+                  </li>
+                </div>,
+                "context": Object {},
+                "current": [Circular],
+                "didError": false,
+                "earliestPendingTime": 0,
+                "earliestSuspendedTime": 0,
+                "expirationTime": 0,
+                "finishedWork": null,
+                "firstBatch": null,
+                "hydrate": false,
+                "interactionThreadID": 12,
+                "latestPendingTime": 0,
+                "latestPingedTime": 0,
+                "latestSuspendedTime": 0,
+                "memoizedInteractions": Set {},
+                "nextExpirationTimeToWorkOn": 0,
+                "nextScheduledRoot": null,
+                "pendingChildren": null,
+                "pendingCommitExpirationTime": 0,
+                "pendingContext": null,
+                "pendingInteractionMap": Map {},
+                "timeoutHandle": -1,
+              },
+              "tag": 3,
+              "treeBaseDuration": 0,
+              "type": null,
+              "updateQueue": Object {
+                "baseState": Object {
+                  "element": <WrapperComponent
+                    Component={[Function]}
+                    context={null}
+                    props={
+                      Object {
+                        "hasActiveShift": true,
+                        "store": Object {
+                          "clearActions": [Function],
+                          "dispatch": [Function],
+                          "getActions": [Function],
+                          "getState": [Function],
+                          "replaceReducer": [Function],
+                          "subscribe": [Function],
+                        },
+                      }
+                    }
+                  />,
+                },
+                "firstCapturedEffect": null,
+                "firstCapturedUpdate": null,
+                "firstEffect": null,
+                "firstUpdate": null,
+                "lastCapturedEffect": null,
+                "lastCapturedUpdate": null,
+                "lastEffect": null,
+                "lastUpdate": null,
+              },
+            },
+            "pendingProps": Object {
+              "Component": [Function],
+              "context": null,
+              "props": Object {
+                "hasActiveShift": true,
+                "store": Object {
+                  "clearActions": [Function],
+                  "dispatch": [Function],
+                  "getActions": [Function],
+                  "getState": [Function],
+                  "replaceReducer": [Function],
+                  "subscribe": [Function],
+                },
+              },
+            },
+            "ref": null,
+            "return": FiberNode {
+              "_debugID": 47,
+              "_debugIsCurrentlyTiming": false,
+              "_debugOwner": null,
+              "_debugSource": null,
+              "actualDuration": 0,
+              "actualStartTime": -1,
+              "alternate": FiberNode {
+                "_debugID": 47,
+                "_debugIsCurrentlyTiming": false,
+                "_debugOwner": null,
+                "_debugSource": null,
+                "actualDuration": 0,
+                "actualStartTime": -1,
+                "alternate": [Circular],
+                "child": null,
+                "childExpirationTime": 0,
+                "effectTag": 0,
+                "elementType": null,
+                "expirationTime": 1073741823,
+                "firstContextDependency": null,
+                "firstEffect": null,
+                "index": 0,
+                "key": null,
+                "lastEffect": null,
+                "memoizedProps": null,
+                "memoizedState": null,
+                "mode": 0,
+                "nextEffect": null,
+                "pendingProps": null,
+                "ref": null,
+                "return": null,
+                "selfBaseDuration": 0,
+                "sibling": null,
+                "stateNode": Object {
+                  "containerInfo": <div>
+                    <li
+                      class="__card column-one-third"
+                      id="calendarPanel"
+                    >
+                      <a
+                        class="card__body"
+                        href="#"
+                        id="calendarPageLink"
+                      >
+                        <span
+                          class="bold-large"
+                        >
+                          calendar
+                        </span>
+                      </a>
+                      <div
+                        class="card__footer"
+                      >
+                        <span
+                          class="font-small"
+                        >
+                          Operational calendar
+                        </span>
+                      </div>
+                    </li>
+                  </div>,
+                  "context": Object {},
+                  "current": [Circular],
+                  "didError": false,
+                  "earliestPendingTime": 0,
+                  "earliestSuspendedTime": 0,
+                  "expirationTime": 0,
+                  "finishedWork": null,
+                  "firstBatch": null,
+                  "hydrate": false,
+                  "interactionThreadID": 12,
+                  "latestPendingTime": 0,
+                  "latestPingedTime": 0,
+                  "latestSuspendedTime": 0,
+                  "memoizedInteractions": Set {},
+                  "nextExpirationTimeToWorkOn": 0,
+                  "nextScheduledRoot": null,
+                  "pendingChildren": null,
+                  "pendingCommitExpirationTime": 0,
+                  "pendingContext": null,
+                  "pendingInteractionMap": Map {},
+                  "timeoutHandle": -1,
+                },
+                "tag": 3,
+                "treeBaseDuration": 0,
+                "type": null,
+                "updateQueue": Object {
+                  "baseState": null,
+                  "firstCapturedEffect": null,
+                  "firstCapturedUpdate": null,
+                  "firstEffect": null,
+                  "firstUpdate": Object {
+                    "callback": null,
+                    "expirationTime": 1073741823,
+                    "next": null,
+                    "nextEffect": null,
+                    "payload": Object {
+                      "element": <WrapperComponent
+                        Component={[Function]}
+                        context={null}
+                        props={
+                          Object {
+                            "hasActiveShift": true,
+                            "store": Object {
+                              "clearActions": [Function],
+                              "dispatch": [Function],
+                              "getActions": [Function],
+                              "getState": [Function],
+                              "replaceReducer": [Function],
+                              "subscribe": [Function],
+                            },
+                          }
+                        }
+                      />,
+                    },
+                    "tag": 0,
+                  },
+                  "lastCapturedEffect": null,
+                  "lastCapturedUpdate": null,
+                  "lastEffect": null,
+                  "lastUpdate": Object {
+                    "callback": null,
+                    "expirationTime": 1073741823,
+                    "next": null,
+                    "nextEffect": null,
+                    "payload": Object {
+                      "element": <WrapperComponent
+                        Component={[Function]}
+                        context={null}
+                        props={
+                          Object {
+                            "hasActiveShift": true,
+                            "store": Object {
+                              "clearActions": [Function],
+                              "dispatch": [Function],
+                              "getActions": [Function],
+                              "getState": [Function],
+                              "replaceReducer": [Function],
+                              "subscribe": [Function],
+                            },
+                          }
+                        }
+                      />,
+                    },
+                    "tag": 0,
+                  },
+                },
+              },
+              "child": [Circular],
+              "childExpirationTime": 0,
+              "effectTag": 32,
+              "elementType": null,
+              "expirationTime": 0,
+              "firstContextDependency": null,
+              "firstEffect": [Circular],
+              "index": 0,
+              "key": null,
+              "lastEffect": [Circular],
+              "memoizedProps": null,
+              "memoizedState": Object {
+                "element": <WrapperComponent
+                  Component={[Function]}
+                  context={null}
+                  props={
+                    Object {
+                      "hasActiveShift": true,
+                      "store": Object {
+                        "clearActions": [Function],
+                        "dispatch": [Function],
+                        "getActions": [Function],
+                        "getState": [Function],
+                        "replaceReducer": [Function],
+                        "subscribe": [Function],
+                      },
+                    }
+                  }
+                />,
+              },
+              "mode": 0,
+              "nextEffect": null,
+              "pendingProps": null,
+              "ref": null,
+              "return": null,
+              "selfBaseDuration": 0,
+              "sibling": null,
+              "stateNode": Object {
+                "containerInfo": <div>
+                  <li
+                    class="__card column-one-third"
+                    id="calendarPanel"
+                  >
+                    <a
+                      class="card__body"
+                      href="#"
+                      id="calendarPageLink"
+                    >
+                      <span
+                        class="bold-large"
+                      >
+                        calendar
+                      </span>
+                    </a>
+                    <div
+                      class="card__footer"
+                    >
+                      <span
+                        class="font-small"
+                      >
+                        Operational calendar
+                      </span>
+                    </div>
+                  </li>
+                </div>,
+                "context": Object {},
+                "current": [Circular],
+                "didError": false,
+                "earliestPendingTime": 0,
+                "earliestSuspendedTime": 0,
+                "expirationTime": 0,
+                "finishedWork": null,
+                "firstBatch": null,
+                "hydrate": false,
+                "interactionThreadID": 12,
+                "latestPendingTime": 0,
+                "latestPingedTime": 0,
+                "latestSuspendedTime": 0,
+                "memoizedInteractions": Set {},
+                "nextExpirationTimeToWorkOn": 0,
+                "nextScheduledRoot": null,
+                "pendingChildren": null,
+                "pendingCommitExpirationTime": 0,
+                "pendingContext": null,
+                "pendingInteractionMap": Map {},
+                "timeoutHandle": -1,
+              },
+              "tag": 3,
+              "treeBaseDuration": 0,
+              "type": null,
+              "updateQueue": Object {
+                "baseState": Object {
+                  "element": <WrapperComponent
+                    Component={[Function]}
+                    context={null}
+                    props={
+                      Object {
+                        "hasActiveShift": true,
+                        "store": Object {
+                          "clearActions": [Function],
+                          "dispatch": [Function],
+                          "getActions": [Function],
+                          "getState": [Function],
+                          "replaceReducer": [Function],
+                          "subscribe": [Function],
+                        },
+                      }
+                    }
+                  />,
+                },
+                "firstCapturedEffect": null,
+                "firstCapturedUpdate": null,
+                "firstEffect": null,
+                "firstUpdate": null,
+                "lastCapturedEffect": null,
+                "lastCapturedUpdate": null,
+                "lastEffect": null,
+                "lastUpdate": null,
+              },
+            },
+            "selfBaseDuration": 0,
+            "sibling": null,
+            "stateNode": WrapperComponent {
+              "_reactInternalFiber": [Circular],
+              "_reactInternalInstance": Object {},
+              "context": Object {},
+              "props": Object {
+                "Component": [Function],
+                "context": null,
+                "props": Object {
+                  "hasActiveShift": true,
+                  "store": Object {
+                    "clearActions": [Function],
+                    "dispatch": [Function],
+                    "getActions": [Function],
+                    "getState": [Function],
+                    "replaceReducer": [Function],
+                    "subscribe": [Function],
+                  },
+                },
+              },
+              "refs": Object {},
+              "state": Object {
+                "context": null,
+                "mount": true,
+                "props": Object {
+                  "hasActiveShift": true,
+                  "store": Object {
+                    "clearActions": [Function],
+                    "dispatch": [Function],
+                    "getActions": [Function],
+                    "getState": [Function],
+                    "replaceReducer": [Function],
+                    "subscribe": [Function],
+                  },
+                },
+              },
+              "updater": Object {
+                "enqueueForceUpdate": [Function],
+                "enqueueReplaceState": [Function],
+                "enqueueSetState": [Function],
+                "isMounted": [Function],
+              },
+            },
+            "tag": 1,
+            "treeBaseDuration": 0,
+            "type": [Function],
+            "updateQueue": null,
+          },
+          "_debugSource": null,
+          "actualDuration": 0,
+          "actualStartTime": -1,
+          "alternate": null,
+          "child": FiberNode {
+            "_debugID": 51,
+            "_debugIsCurrentlyTiming": false,
+            "_debugOwner": [Circular],
+            "_debugSource": null,
+            "actualDuration": 0,
+            "actualStartTime": -1,
+            "alternate": null,
+            "child": FiberNode {
+              "_debugID": 52,
+              "_debugIsCurrentlyTiming": false,
+              "_debugOwner": [Circular],
+              "_debugSource": null,
+              "actualDuration": 0,
+              "actualStartTime": -1,
+              "alternate": null,
+              "child": FiberNode {
+                "_debugID": 54,
+                "_debugIsCurrentlyTiming": false,
+                "_debugOwner": [Circular],
+                "_debugSource": null,
+                "actualDuration": 0,
+                "actualStartTime": -1,
+                "alternate": null,
+                "child": null,
+                "childExpirationTime": 0,
+                "effectTag": 0,
+                "elementType": "span",
+                "expirationTime": 0,
+                "firstContextDependency": null,
+                "firstEffect": null,
+                "index": 0,
+                "key": null,
+                "lastEffect": null,
+                "memoizedProps": Object {
+                  "children": "calendar",
+                  "className": "bold-large",
+                },
+                "memoizedState": null,
+                "mode": 0,
+                "nextEffect": null,
+                "pendingProps": Object {
+                  "children": "calendar",
+                  "className": "bold-large",
+                },
+                "ref": null,
+                "return": [Circular],
+                "selfBaseDuration": 0,
+                "sibling": null,
+                "stateNode": <span
+                  class="bold-large"
+                >
+                  calendar
+                </span>,
+                "tag": 5,
+                "treeBaseDuration": 0,
+                "type": "span",
+                "updateQueue": null,
+              },
+              "childExpirationTime": 0,
+              "effectTag": 0,
+              "elementType": "a",
+              "expirationTime": 0,
+              "firstContextDependency": null,
+              "firstEffect": null,
+              "index": 0,
+              "key": null,
+              "lastEffect": null,
+              "memoizedProps": Object {
+                "children": <span
+                  className="bold-large"
+                >
+                  calendar
+                </span>,
+                "className": "card__body",
+                "href": "#",
+                "id": "calendarPageLink",
+                "onClick": [Function],
+              },
+              "memoizedState": null,
+              "mode": 0,
+              "nextEffect": null,
+              "pendingProps": Object {
+                "children": <span
+                  className="bold-large"
+                >
+                  calendar
+                </span>,
+                "className": "card__body",
+                "href": "#",
+                "id": "calendarPageLink",
+                "onClick": [Function],
+              },
+              "ref": null,
+              "return": [Circular],
+              "selfBaseDuration": 0,
+              "sibling": FiberNode {
+                "_debugID": 53,
+                "_debugIsCurrentlyTiming": false,
+                "_debugOwner": [Circular],
+                "_debugSource": null,
+                "actualDuration": 0,
+                "actualStartTime": -1,
+                "alternate": null,
+                "child": FiberNode {
+                  "_debugID": 55,
+                  "_debugIsCurrentlyTiming": false,
+                  "_debugOwner": [Circular],
+                  "_debugSource": null,
+                  "actualDuration": 0,
+                  "actualStartTime": -1,
+                  "alternate": null,
+                  "child": null,
+                  "childExpirationTime": 0,
+                  "effectTag": 0,
+                  "elementType": "span",
+                  "expirationTime": 0,
+                  "firstContextDependency": null,
+                  "firstEffect": null,
+                  "index": 0,
+                  "key": null,
+                  "lastEffect": null,
+                  "memoizedProps": Object {
+                    "children": "Operational calendar",
+                    "className": "font-small",
+                  },
+                  "memoizedState": null,
+                  "mode": 0,
+                  "nextEffect": null,
+                  "pendingProps": Object {
+                    "children": "Operational calendar",
+                    "className": "font-small",
+                  },
+                  "ref": null,
+                  "return": [Circular],
+                  "selfBaseDuration": 0,
+                  "sibling": null,
+                  "stateNode": <span
+                    class="font-small"
+                  >
+                    Operational calendar
+                  </span>,
+                  "tag": 5,
+                  "treeBaseDuration": 0,
+                  "type": "span",
+                  "updateQueue": null,
+                },
+                "childExpirationTime": 0,
+                "effectTag": 0,
+                "elementType": "div",
+                "expirationTime": 0,
+                "firstContextDependency": null,
+                "firstEffect": null,
+                "index": 1,
+                "key": null,
+                "lastEffect": null,
+                "memoizedProps": Object {
+                  "children": <span
+                    className="font-small"
+                  >
+                    Operational calendar
+                  </span>,
+                  "className": "card__footer",
+                },
+                "memoizedState": null,
+                "mode": 0,
+                "nextEffect": null,
+                "pendingProps": Object {
+                  "children": <span
+                    className="font-small"
+                  >
+                    Operational calendar
+                  </span>,
+                  "className": "card__footer",
+                },
+                "ref": null,
+                "return": [Circular],
+                "selfBaseDuration": 0,
+                "sibling": null,
+                "stateNode": <div
+                  class="card__footer"
+                >
+                  <span
+                    class="font-small"
+                  >
+                    Operational calendar
+                  </span>
+                </div>,
+                "tag": 5,
+                "treeBaseDuration": 0,
+                "type": "div",
+                "updateQueue": null,
+              },
+              "stateNode": <a
+                class="card__body"
+                href="#"
+                id="calendarPageLink"
+              >
+                <span
+                  class="bold-large"
+                >
+                  calendar
+                </span>
+              </a>,
+              "tag": 5,
+              "treeBaseDuration": 0,
+              "type": "a",
+              "updateQueue": null,
+            },
+            "childExpirationTime": 0,
+            "effectTag": 0,
+            "elementType": "li",
+            "expirationTime": 0,
+            "firstContextDependency": null,
+            "firstEffect": null,
+            "index": 0,
+            "key": null,
+            "lastEffect": null,
+            "memoizedProps": Object {
+              "children": Array [
+                <a
+                  className="card__body"
+                  href="#"
+                  id="calendarPageLink"
+                  onClick={[Function]}
+                >
+                  <span
+                    className="bold-large"
+                  >
+                    calendar
+                  </span>
+                </a>,
+                <div
+                  className="card__footer"
+                >
+                  <span
+                    className="font-small"
+                  >
+                    Operational calendar
+                  </span>
+                </div>,
+              ],
+              "className": "__card column-one-third",
+              "id": "calendarPanel",
+            },
+            "memoizedState": null,
+            "mode": 0,
+            "nextEffect": null,
+            "pendingProps": Object {
+              "children": Array [
+                <a
+                  className="card__body"
+                  href="#"
+                  id="calendarPageLink"
+                  onClick={[Function]}
+                >
+                  <span
+                    className="bold-large"
+                  >
+                    calendar
+                  </span>
+                </a>,
+                <div
+                  className="card__footer"
+                >
+                  <span
+                    className="font-small"
+                  >
+                    Operational calendar
+                  </span>
+                </div>,
+              ],
+              "className": "__card column-one-third",
+              "id": "calendarPanel",
+            },
+            "ref": null,
+            "return": [Circular],
+            "selfBaseDuration": 0,
+            "sibling": null,
+            "stateNode": <li
+              class="__card column-one-third"
+              id="calendarPanel"
+            >
+              <a
+                class="card__body"
+                href="#"
+                id="calendarPageLink"
+              >
+                <span
+                  class="bold-large"
+                >
+                  calendar
+                </span>
+              </a>
+              <div
+                class="card__footer"
+              >
+                <span
+                  class="font-small"
+                >
+                  Operational calendar
+                </span>
+              </div>
+            </li>,
+            "tag": 5,
+            "treeBaseDuration": 0,
+            "type": "li",
+            "updateQueue": null,
+          },
+          "childExpirationTime": 0,
+          "effectTag": 1,
+          "elementType": [Function],
+          "expirationTime": 0,
+          "firstContextDependency": null,
+          "firstEffect": null,
+          "index": 0,
+          "key": null,
+          "lastEffect": null,
+          "memoizedProps": Object {
+            "hasActiveShift": true,
+            "store": Object {
+              "clearActions": [Function],
+              "dispatch": [Function],
+              "getActions": [Function],
+              "getState": [Function],
+              "replaceReducer": [Function],
+              "subscribe": [Function],
+            },
+          },
+          "memoizedState": null,
+          "mode": 0,
+          "nextEffect": null,
+          "pendingProps": Object {
+            "hasActiveShift": true,
+            "store": Object {
+              "clearActions": [Function],
+              "dispatch": [Function],
+              "getActions": [Function],
+              "getState": [Function],
+              "replaceReducer": [Function],
+              "subscribe": [Function],
+            },
+          },
+          "ref": null,
+          "return": FiberNode {
+            "_debugID": 49,
+            "_debugIsCurrentlyTiming": false,
+            "_debugOwner": null,
+            "_debugSource": null,
+            "actualDuration": 0,
+            "actualStartTime": -1,
+            "alternate": null,
+            "child": [Circular],
+            "childExpirationTime": 0,
+            "effectTag": 1,
+            "elementType": [Function],
+            "expirationTime": 0,
+            "firstContextDependency": null,
+            "firstEffect": null,
+            "index": 0,
+            "key": null,
+            "lastEffect": null,
+            "memoizedProps": Object {
+              "Component": [Function],
+              "context": null,
+              "props": Object {
+                "hasActiveShift": true,
+                "store": Object {
+                  "clearActions": [Function],
+                  "dispatch": [Function],
+                  "getActions": [Function],
+                  "getState": [Function],
+                  "replaceReducer": [Function],
+                  "subscribe": [Function],
+                },
+              },
+            },
+            "memoizedState": Object {
+              "context": null,
+              "mount": true,
+              "props": Object {
+                "hasActiveShift": true,
+                "store": Object {
+                  "clearActions": [Function],
+                  "dispatch": [Function],
+                  "getActions": [Function],
+                  "getState": [Function],
+                  "replaceReducer": [Function],
+                  "subscribe": [Function],
+                },
+              },
+            },
+            "mode": 0,
+            "nextEffect": FiberNode {
+              "_debugID": 47,
+              "_debugIsCurrentlyTiming": false,
+              "_debugOwner": null,
+              "_debugSource": null,
+              "actualDuration": 0,
+              "actualStartTime": -1,
+              "alternate": FiberNode {
+                "_debugID": 47,
+                "_debugIsCurrentlyTiming": false,
+                "_debugOwner": null,
+                "_debugSource": null,
+                "actualDuration": 0,
+                "actualStartTime": -1,
+                "alternate": [Circular],
+                "child": null,
+                "childExpirationTime": 0,
+                "effectTag": 0,
+                "elementType": null,
+                "expirationTime": 1073741823,
+                "firstContextDependency": null,
+                "firstEffect": null,
+                "index": 0,
+                "key": null,
+                "lastEffect": null,
+                "memoizedProps": null,
+                "memoizedState": null,
+                "mode": 0,
+                "nextEffect": null,
+                "pendingProps": null,
+                "ref": null,
+                "return": null,
+                "selfBaseDuration": 0,
+                "sibling": null,
+                "stateNode": Object {
+                  "containerInfo": <div>
+                    <li
+                      class="__card column-one-third"
+                      id="calendarPanel"
+                    >
+                      <a
+                        class="card__body"
+                        href="#"
+                        id="calendarPageLink"
+                      >
+                        <span
+                          class="bold-large"
+                        >
+                          calendar
+                        </span>
+                      </a>
+                      <div
+                        class="card__footer"
+                      >
+                        <span
+                          class="font-small"
+                        >
+                          Operational calendar
+                        </span>
+                      </div>
+                    </li>
+                  </div>,
+                  "context": Object {},
+                  "current": [Circular],
+                  "didError": false,
+                  "earliestPendingTime": 0,
+                  "earliestSuspendedTime": 0,
+                  "expirationTime": 0,
+                  "finishedWork": null,
+                  "firstBatch": null,
+                  "hydrate": false,
+                  "interactionThreadID": 12,
+                  "latestPendingTime": 0,
+                  "latestPingedTime": 0,
+                  "latestSuspendedTime": 0,
+                  "memoizedInteractions": Set {},
+                  "nextExpirationTimeToWorkOn": 0,
+                  "nextScheduledRoot": null,
+                  "pendingChildren": null,
+                  "pendingCommitExpirationTime": 0,
+                  "pendingContext": null,
+                  "pendingInteractionMap": Map {},
+                  "timeoutHandle": -1,
+                },
+                "tag": 3,
+                "treeBaseDuration": 0,
+                "type": null,
+                "updateQueue": Object {
+                  "baseState": null,
+                  "firstCapturedEffect": null,
+                  "firstCapturedUpdate": null,
+                  "firstEffect": null,
+                  "firstUpdate": Object {
+                    "callback": null,
+                    "expirationTime": 1073741823,
+                    "next": null,
+                    "nextEffect": null,
+                    "payload": Object {
+                      "element": <WrapperComponent
+                        Component={[Function]}
+                        context={null}
+                        props={
+                          Object {
+                            "hasActiveShift": true,
+                            "store": Object {
+                              "clearActions": [Function],
+                              "dispatch": [Function],
+                              "getActions": [Function],
+                              "getState": [Function],
+                              "replaceReducer": [Function],
+                              "subscribe": [Function],
+                            },
+                          }
+                        }
+                      />,
+                    },
+                    "tag": 0,
+                  },
+                  "lastCapturedEffect": null,
+                  "lastCapturedUpdate": null,
+                  "lastEffect": null,
+                  "lastUpdate": Object {
+                    "callback": null,
+                    "expirationTime": 1073741823,
+                    "next": null,
+                    "nextEffect": null,
+                    "payload": Object {
+                      "element": <WrapperComponent
+                        Component={[Function]}
+                        context={null}
+                        props={
+                          Object {
+                            "hasActiveShift": true,
+                            "store": Object {
+                              "clearActions": [Function],
+                              "dispatch": [Function],
+                              "getActions": [Function],
+                              "getState": [Function],
+                              "replaceReducer": [Function],
+                              "subscribe": [Function],
+                            },
+                          }
+                        }
+                      />,
+                    },
+                    "tag": 0,
+                  },
+                },
+              },
+              "child": [Circular],
+              "childExpirationTime": 0,
+              "effectTag": 32,
+              "elementType": null,
+              "expirationTime": 0,
+              "firstContextDependency": null,
+              "firstEffect": [Circular],
+              "index": 0,
+              "key": null,
+              "lastEffect": [Circular],
+              "memoizedProps": null,
+              "memoizedState": Object {
+                "element": <WrapperComponent
+                  Component={[Function]}
+                  context={null}
+                  props={
+                    Object {
+                      "hasActiveShift": true,
+                      "store": Object {
+                        "clearActions": [Function],
+                        "dispatch": [Function],
+                        "getActions": [Function],
+                        "getState": [Function],
+                        "replaceReducer": [Function],
+                        "subscribe": [Function],
+                      },
+                    }
+                  }
+                />,
+              },
+              "mode": 0,
+              "nextEffect": null,
+              "pendingProps": null,
+              "ref": null,
+              "return": null,
+              "selfBaseDuration": 0,
+              "sibling": null,
+              "stateNode": Object {
+                "containerInfo": <div>
+                  <li
+                    class="__card column-one-third"
+                    id="calendarPanel"
+                  >
+                    <a
+                      class="card__body"
+                      href="#"
+                      id="calendarPageLink"
+                    >
+                      <span
+                        class="bold-large"
+                      >
+                        calendar
+                      </span>
+                    </a>
+                    <div
+                      class="card__footer"
+                    >
+                      <span
+                        class="font-small"
+                      >
+                        Operational calendar
+                      </span>
+                    </div>
+                  </li>
+                </div>,
+                "context": Object {},
+                "current": [Circular],
+                "didError": false,
+                "earliestPendingTime": 0,
+                "earliestSuspendedTime": 0,
+                "expirationTime": 0,
+                "finishedWork": null,
+                "firstBatch": null,
+                "hydrate": false,
+                "interactionThreadID": 12,
+                "latestPendingTime": 0,
+                "latestPingedTime": 0,
+                "latestSuspendedTime": 0,
+                "memoizedInteractions": Set {},
+                "nextExpirationTimeToWorkOn": 0,
+                "nextScheduledRoot": null,
+                "pendingChildren": null,
+                "pendingCommitExpirationTime": 0,
+                "pendingContext": null,
+                "pendingInteractionMap": Map {},
+                "timeoutHandle": -1,
+              },
+              "tag": 3,
+              "treeBaseDuration": 0,
+              "type": null,
+              "updateQueue": Object {
+                "baseState": Object {
+                  "element": <WrapperComponent
+                    Component={[Function]}
+                    context={null}
+                    props={
+                      Object {
+                        "hasActiveShift": true,
+                        "store": Object {
+                          "clearActions": [Function],
+                          "dispatch": [Function],
+                          "getActions": [Function],
+                          "getState": [Function],
+                          "replaceReducer": [Function],
+                          "subscribe": [Function],
+                        },
+                      }
+                    }
+                  />,
+                },
+                "firstCapturedEffect": null,
+                "firstCapturedUpdate": null,
+                "firstEffect": null,
+                "firstUpdate": null,
+                "lastCapturedEffect": null,
+                "lastCapturedUpdate": null,
+                "lastEffect": null,
+                "lastUpdate": null,
+              },
+            },
+            "pendingProps": Object {
+              "Component": [Function],
+              "context": null,
+              "props": Object {
+                "hasActiveShift": true,
+                "store": Object {
+                  "clearActions": [Function],
+                  "dispatch": [Function],
+                  "getActions": [Function],
+                  "getState": [Function],
+                  "replaceReducer": [Function],
+                  "subscribe": [Function],
+                },
+              },
+            },
+            "ref": null,
+            "return": FiberNode {
+              "_debugID": 47,
+              "_debugIsCurrentlyTiming": false,
+              "_debugOwner": null,
+              "_debugSource": null,
+              "actualDuration": 0,
+              "actualStartTime": -1,
+              "alternate": FiberNode {
+                "_debugID": 47,
+                "_debugIsCurrentlyTiming": false,
+                "_debugOwner": null,
+                "_debugSource": null,
+                "actualDuration": 0,
+                "actualStartTime": -1,
+                "alternate": [Circular],
+                "child": null,
+                "childExpirationTime": 0,
+                "effectTag": 0,
+                "elementType": null,
+                "expirationTime": 1073741823,
+                "firstContextDependency": null,
+                "firstEffect": null,
+                "index": 0,
+                "key": null,
+                "lastEffect": null,
+                "memoizedProps": null,
+                "memoizedState": null,
+                "mode": 0,
+                "nextEffect": null,
+                "pendingProps": null,
+                "ref": null,
+                "return": null,
+                "selfBaseDuration": 0,
+                "sibling": null,
+                "stateNode": Object {
+                  "containerInfo": <div>
+                    <li
+                      class="__card column-one-third"
+                      id="calendarPanel"
+                    >
+                      <a
+                        class="card__body"
+                        href="#"
+                        id="calendarPageLink"
+                      >
+                        <span
+                          class="bold-large"
+                        >
+                          calendar
+                        </span>
+                      </a>
+                      <div
+                        class="card__footer"
+                      >
+                        <span
+                          class="font-small"
+                        >
+                          Operational calendar
+                        </span>
+                      </div>
+                    </li>
+                  </div>,
+                  "context": Object {},
+                  "current": [Circular],
+                  "didError": false,
+                  "earliestPendingTime": 0,
+                  "earliestSuspendedTime": 0,
+                  "expirationTime": 0,
+                  "finishedWork": null,
+                  "firstBatch": null,
+                  "hydrate": false,
+                  "interactionThreadID": 12,
+                  "latestPendingTime": 0,
+                  "latestPingedTime": 0,
+                  "latestSuspendedTime": 0,
+                  "memoizedInteractions": Set {},
+                  "nextExpirationTimeToWorkOn": 0,
+                  "nextScheduledRoot": null,
+                  "pendingChildren": null,
+                  "pendingCommitExpirationTime": 0,
+                  "pendingContext": null,
+                  "pendingInteractionMap": Map {},
+                  "timeoutHandle": -1,
+                },
+                "tag": 3,
+                "treeBaseDuration": 0,
+                "type": null,
+                "updateQueue": Object {
+                  "baseState": null,
+                  "firstCapturedEffect": null,
+                  "firstCapturedUpdate": null,
+                  "firstEffect": null,
+                  "firstUpdate": Object {
+                    "callback": null,
+                    "expirationTime": 1073741823,
+                    "next": null,
+                    "nextEffect": null,
+                    "payload": Object {
+                      "element": <WrapperComponent
+                        Component={[Function]}
+                        context={null}
+                        props={
+                          Object {
+                            "hasActiveShift": true,
+                            "store": Object {
+                              "clearActions": [Function],
+                              "dispatch": [Function],
+                              "getActions": [Function],
+                              "getState": [Function],
+                              "replaceReducer": [Function],
+                              "subscribe": [Function],
+                            },
+                          }
+                        }
+                      />,
+                    },
+                    "tag": 0,
+                  },
+                  "lastCapturedEffect": null,
+                  "lastCapturedUpdate": null,
+                  "lastEffect": null,
+                  "lastUpdate": Object {
+                    "callback": null,
+                    "expirationTime": 1073741823,
+                    "next": null,
+                    "nextEffect": null,
+                    "payload": Object {
+                      "element": <WrapperComponent
+                        Component={[Function]}
+                        context={null}
+                        props={
+                          Object {
+                            "hasActiveShift": true,
+                            "store": Object {
+                              "clearActions": [Function],
+                              "dispatch": [Function],
+                              "getActions": [Function],
+                              "getState": [Function],
+                              "replaceReducer": [Function],
+                              "subscribe": [Function],
+                            },
+                          }
+                        }
+                      />,
+                    },
+                    "tag": 0,
+                  },
+                },
+              },
+              "child": [Circular],
+              "childExpirationTime": 0,
+              "effectTag": 32,
+              "elementType": null,
+              "expirationTime": 0,
+              "firstContextDependency": null,
+              "firstEffect": [Circular],
+              "index": 0,
+              "key": null,
+              "lastEffect": [Circular],
+              "memoizedProps": null,
+              "memoizedState": Object {
+                "element": <WrapperComponent
+                  Component={[Function]}
+                  context={null}
+                  props={
+                    Object {
+                      "hasActiveShift": true,
+                      "store": Object {
+                        "clearActions": [Function],
+                        "dispatch": [Function],
+                        "getActions": [Function],
+                        "getState": [Function],
+                        "replaceReducer": [Function],
+                        "subscribe": [Function],
+                      },
+                    }
+                  }
+                />,
+              },
+              "mode": 0,
+              "nextEffect": null,
+              "pendingProps": null,
+              "ref": null,
+              "return": null,
+              "selfBaseDuration": 0,
+              "sibling": null,
+              "stateNode": Object {
+                "containerInfo": <div>
+                  <li
+                    class="__card column-one-third"
+                    id="calendarPanel"
+                  >
+                    <a
+                      class="card__body"
+                      href="#"
+                      id="calendarPageLink"
+                    >
+                      <span
+                        class="bold-large"
+                      >
+                        calendar
+                      </span>
+                    </a>
+                    <div
+                      class="card__footer"
+                    >
+                      <span
+                        class="font-small"
+                      >
+                        Operational calendar
+                      </span>
+                    </div>
+                  </li>
+                </div>,
+                "context": Object {},
+                "current": [Circular],
+                "didError": false,
+                "earliestPendingTime": 0,
+                "earliestSuspendedTime": 0,
+                "expirationTime": 0,
+                "finishedWork": null,
+                "firstBatch": null,
+                "hydrate": false,
+                "interactionThreadID": 12,
+                "latestPendingTime": 0,
+                "latestPingedTime": 0,
+                "latestSuspendedTime": 0,
+                "memoizedInteractions": Set {},
+                "nextExpirationTimeToWorkOn": 0,
+                "nextScheduledRoot": null,
+                "pendingChildren": null,
+                "pendingCommitExpirationTime": 0,
+                "pendingContext": null,
+                "pendingInteractionMap": Map {},
+                "timeoutHandle": -1,
+              },
+              "tag": 3,
+              "treeBaseDuration": 0,
+              "type": null,
+              "updateQueue": Object {
+                "baseState": Object {
+                  "element": <WrapperComponent
+                    Component={[Function]}
+                    context={null}
+                    props={
+                      Object {
+                        "hasActiveShift": true,
+                        "store": Object {
+                          "clearActions": [Function],
+                          "dispatch": [Function],
+                          "getActions": [Function],
+                          "getState": [Function],
+                          "replaceReducer": [Function],
+                          "subscribe": [Function],
+                        },
+                      }
+                    }
+                  />,
+                },
+                "firstCapturedEffect": null,
+                "firstCapturedUpdate": null,
+                "firstEffect": null,
+                "firstUpdate": null,
+                "lastCapturedEffect": null,
+                "lastCapturedUpdate": null,
+                "lastEffect": null,
+                "lastUpdate": null,
+              },
+            },
+            "selfBaseDuration": 0,
+            "sibling": null,
+            "stateNode": WrapperComponent {
+              "_reactInternalFiber": [Circular],
+              "_reactInternalInstance": Object {},
+              "context": Object {},
+              "props": Object {
+                "Component": [Function],
+                "context": null,
+                "props": Object {
+                  "hasActiveShift": true,
+                  "store": Object {
+                    "clearActions": [Function],
+                    "dispatch": [Function],
+                    "getActions": [Function],
+                    "getState": [Function],
+                    "replaceReducer": [Function],
+                    "subscribe": [Function],
+                  },
+                },
+              },
+              "refs": Object {},
+              "state": Object {
+                "context": null,
+                "mount": true,
+                "props": Object {
+                  "hasActiveShift": true,
+                  "store": Object {
+                    "clearActions": [Function],
+                    "dispatch": [Function],
+                    "getActions": [Function],
+                    "getState": [Function],
+                    "replaceReducer": [Function],
+                    "subscribe": [Function],
+                  },
+                },
+              },
+              "updater": Object {
+                "enqueueForceUpdate": [Function],
+                "enqueueReplaceState": [Function],
+                "enqueueSetState": [Function],
+                "isMounted": [Function],
+              },
+            },
+            "tag": 1,
+            "treeBaseDuration": 0,
+            "type": [Function],
+            "updateQueue": null,
+          },
+          "selfBaseDuration": 0,
+          "sibling": null,
+          "stateNode": [Circular],
+          "tag": 1,
+          "treeBaseDuration": 0,
+          "type": [Function],
+          "updateQueue": null,
+        },
+        "_reactInternalInstance": Object {},
+        "context": Object {},
+        "props": Object {
+          "hasActiveShift": true,
+          "store": Object {
+            "clearActions": [Function],
+            "dispatch": [Function],
+            "getActions": [Function],
+            "getState": [Function],
+            "replaceReducer": [Function],
+            "subscribe": [Function],
+          },
+        },
+        "refs": Object {},
+        "state": null,
+        "updater": Object {
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+        },
+      },
+      "key": undefined,
+      "nodeType": "class",
+      "props": Object {
+        "hasActiveShift": true,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": <li
+          class="__card column-one-third"
+          id="calendarPanel"
+        >
+          <a
+            class="card__body"
+            href="#"
+            id="calendarPageLink"
+          >
+            <span
+              class="bold-large"
+            >
+              calendar
+            </span>
+          </a>
+          <div
+            class="card__footer"
+          >
+            <span
+              class="font-small"
+            >
+              Operational calendar
+            </span>
+          </div>
+        </li>,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <a
+              className="card__body"
+              href="#"
+              id="calendarPageLink"
+              onClick={[Function]}
+            >
+              <span
+                className="bold-large"
+              >
+                calendar
+              </span>
+            </a>,
+            <div
+              className="card__footer"
+            >
+              <span
+                className="font-small"
+              >
+                Operational calendar
+              </span>
+            </div>,
+          ],
+          "className": "__card column-one-third",
+          "id": "calendarPanel",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": <a
+              class="card__body"
+              href="#"
+              id="calendarPageLink"
+            >
+              <span
+                class="bold-large"
+              >
+                calendar
+              </span>
+            </a>,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": <span
+                className="bold-large"
+              >
+                calendar
+              </span>,
+              "className": "card__body",
+              "href": "#",
+              "id": "calendarPageLink",
+              "onClick": [Function],
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": <span
+                  class="bold-large"
+                >
+                  calendar
+                </span>,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "calendar",
+                  "className": "bold-large",
+                },
+                "ref": null,
+                "rendered": Array [
+                  "calendar",
+                ],
+                "type": "span",
+              },
+            ],
+            "type": "a",
+          },
+          Object {
+            "instance": <div
+              class="card__footer"
+            >
+              <span
+                class="font-small"
+              >
+                Operational calendar
+              </span>
+            </div>,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": <span
+                className="font-small"
+              >
+                Operational calendar
+              </span>,
+              "className": "card__footer",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": <span
+                  class="font-small"
+                >
+                  Operational calendar
+                </span>,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Operational calendar",
+                  "className": "font-small",
+                },
+                "ref": null,
+                "rendered": Array [
+                  "Operational calendar",
+                ],
+                "type": "span",
+              },
+            ],
+            "type": "div",
+          },
+        ],
+        "type": "li",
+      },
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getDerivedStateFromProps": true,
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+}
+`;

@@ -98,5 +98,4 @@ describe('TaskCountPanel', () => {
     expect(youTeamTasks.find('.bold-xlarge').text()).toEqual('10');
     expect(youTeamTasks.find('.bold-small').text()).toEqual('tasks allocated to your team');
   });
-
 });

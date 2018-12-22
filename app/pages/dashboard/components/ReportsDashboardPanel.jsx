@@ -2,7 +2,7 @@ import React from "react";
 import {withRouter} from "react-router";
 import AppConstants from "../../../common/AppConstants";
 
-class ReportsDashboardPanel extends React.Component {
+export class ReportsDashboardPanel extends React.Component {
 
 
     reports(e) {
@@ -15,7 +15,7 @@ class ReportsDashboardPanel extends React.Component {
 
     render() {
         return <li className="__card column-one-third" id="reportsPanel">
-            <a href="#" onClick={this.reports.bind(this)} className="card__body">
+            <a href="#" onClick={this.reports.bind(this)} className="card__body" id="reportsPageLink">
                 <span className="bold-large">reports</span>
             </a>
             <div className="card__footer">

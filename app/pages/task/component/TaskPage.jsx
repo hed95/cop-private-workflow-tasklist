@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import StandardTaskSummaryPage from "./StandardTaskSummaryPage";
+import TaskSummaryPage from "./TaskSummaryPage";
 import {candidateGroups, isFetchingTask, task, variables} from "../selectors";
 import * as actions from "../actions";
 import {bindActionCreators} from "redux";
@@ -40,7 +40,7 @@ class TaskPage extends React.Component {
             if (task.isEmpty()) {
                return <NotFound resource="Task" id={this.taskId}/>
             }
-            return task.get('assignee')? <TaskDetailsPage {...this.props} /> : <StandardTaskSummaryPage {...this.props}/>
+            return task.get('assignee')? <TaskDetailsPage {...this.props} /> : <TaskSummaryPage {...this.props}/>
         }
 
     }

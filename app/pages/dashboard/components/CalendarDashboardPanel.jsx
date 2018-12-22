@@ -2,7 +2,7 @@ import React from 'react';
 import {withRouter} from "react-router";
 import AppConstants from "../../../common/AppConstants";
 
-class CalendarDashboardPanel extends React.Component {
+export class CalendarDashboardPanel extends React.Component {
 
 
     calendar(e) {
@@ -14,7 +14,7 @@ class CalendarDashboardPanel extends React.Component {
     }
     render() {
         return <li className="__card column-one-third" id="calendarPanel">
-            <a href="#" onClick={this.calendar.bind(this)} className="card__body">
+            <a href="#" onClick={this.calendar.bind(this)} className="card__body" id="calendarPageLink">
                 <span className="bold-large">calendar</span>
             </a>
             <div className="card__footer">

@@ -1,7 +1,7 @@
 import React from 'react'
 import {bindActionCreators} from "redux";
 import {withRouter} from "react-router-dom";
-import connect from "react-redux/es/connect/connect";
+import {connect} from "react-redux";
 import AppConstants from "../../../common/AppConstants";
 
 class AdminPanel extends React.Component {

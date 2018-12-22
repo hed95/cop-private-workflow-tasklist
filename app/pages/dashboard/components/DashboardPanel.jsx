@@ -8,7 +8,7 @@ import {withRouter} from "react-router";
 import TaskCountPanel from "./TaskCountPanel";
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import connect from "react-redux/es/connect/connect";
+import {connect} from "react-redux";
 import PubSub from "pubsub-js";
 
 class DashboardPanel extends React.Component {

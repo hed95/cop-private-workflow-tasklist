@@ -1,1 +1,1 @@
-export const NAME = 'campaign-page';
+export const NAME = 'calendar-page';

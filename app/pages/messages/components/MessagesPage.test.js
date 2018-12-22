@@ -1,6 +1,6 @@
 import React from 'react';
 import Enzyme from 'enzyme';
-import { mount,shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
@@ -52,10 +52,10 @@ describe('MessagesPage', () => {
       acknowledgeNotification={acknowledgeNotification}
 
     />);
-    console.log(wrapper.html());
     const loadingWrapper = wrapper.find('#loadingMessages');
     expect(loadingWrapper.text()).toEqual('Loading messages...');
     expect(fetchNotifications).toBeCalled();
+
     wrapper.unmount();
     expect(clearNotifications).toBeCalled();
   });
@@ -90,13 +90,15 @@ describe('MessagesPage', () => {
       acknowledgeNotification={acknowledgeNotification}
 
     />);
-    console.log(wrapper.html());
+
     const messagesCountWrapper = wrapper.find('#numberOfMessages');
     expect(messagesCountWrapper.text()).toEqual('Operational messages 1 messages');
+
     const flashCardWrapper = wrapper.find('#messageName');
     expect(flashCardWrapper.text()).toEqual('Emergency: name');
     expect(wrapper.find('#messageCreated').text()).toEqual('a few seconds ago');
     expect(wrapper.find('input').props().value).toEqual('Acknowledge');
+
     wrapper.unmount();
     expect(clearNotifications).toBeCalled();
   });
