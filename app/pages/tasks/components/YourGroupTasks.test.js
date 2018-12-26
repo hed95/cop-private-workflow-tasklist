@@ -1,7 +1,5 @@
 import React from 'react';
-import Enzyme from 'enzyme';
 import { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import { YourGroupTasksContainer } from './YourGroupTasksContainer';
@@ -12,7 +10,6 @@ import { Router } from 'react-router-dom';
 
 const { Map } = Immutable;
 jest.useFakeTimers();
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('YourGroupTasksContainer Page', () => {
 

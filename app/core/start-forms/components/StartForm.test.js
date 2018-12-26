@@ -1,15 +1,11 @@
 import React from 'react';
-import Enzyme from 'enzyme';
 import { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import { StartForm } from './StartForm';
 
 const { Map } = Immutable;
 
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('StartForm Component', () => {
   const initialState = {

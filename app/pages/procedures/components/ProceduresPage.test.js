@@ -3,14 +3,11 @@ jest.mock('react-device-detect', () => ({
 }));
 
 import React from 'react';
-import Enzyme from 'enzyme';
 import { mount,shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import { ProceduresPage } from './ProceduresPage';
 const { Map,List} = Immutable;
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('ProceduresPage', () => {
   const initialState = {

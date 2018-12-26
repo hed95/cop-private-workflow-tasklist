@@ -3,14 +3,10 @@ import configureStore from 'redux-mock-store';
 import { mount } from 'enzyme';
 import ErrorHandlingComponent from './ErrorHandlingComponent';
 import React from 'react';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import Immutable from 'immutable';
 import { shallow } from 'enzyme';
 import { Redirect } from 'react-router';
 
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('Error Handling Component', () => {
 

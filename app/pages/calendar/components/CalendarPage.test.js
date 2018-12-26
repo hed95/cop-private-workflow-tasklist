@@ -1,10 +1,7 @@
 import React from 'react';
-import Enzyme from 'enzyme';
 import { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import CalendarPage from './CalendarPage';
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('Calendar Page', () => {
   const mockStore = configureStore();
@@ -30,6 +27,6 @@ describe('Calendar Page', () => {
     const viewContainer = document.querySelector('.fc-view-container');
     expect(viewContainer).toBeDefined();
 
-    
+
   });
 });

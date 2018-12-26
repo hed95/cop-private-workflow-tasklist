@@ -1,12 +1,9 @@
 import React from 'react';
-import Enzyme from 'enzyme';
 import { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import {ReportsDashboardPanel} from './ReportsDashboardPanel';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('Reports Dashboard Panel', () => {
   const mockStore = configureStore();

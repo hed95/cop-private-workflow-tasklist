@@ -12,6 +12,12 @@
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.production.js"
   },
   "jest": {
+    "setupFiles": [
+      "./test/jestsetup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
     "setupTestFrameworkScriptFile": "mock-local-storage",
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
@@ -33,6 +39,7 @@
     "css-loader": "^0.28.4",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.1",
+    "enzyme-to-json": "^3.3.5",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "15.0.1",
     "eslint-loader": "1.7.1",

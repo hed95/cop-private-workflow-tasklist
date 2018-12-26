@@ -1,11 +1,8 @@
 import React from 'react';
-import Enzyme from 'enzyme';
 import { mount, shallow} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import {DashboardPage} from './DashboardPage';
 
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('DashboardPage', () => {
   const mockStore = configureStore();

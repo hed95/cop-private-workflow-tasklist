@@ -2,8 +2,6 @@ import ProcessViewer from './ProcessViewer';
 import React from 'react';
 import Immutable from 'immutable';
 import { mount } from 'enzyme';
-import Enzyme from 'enzyme/build/index';
-import Adapter from 'enzyme-adapter-react-16/build/index';
 
 const xmlStr = `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1eji8v1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.1">
@@ -45,7 +43,6 @@ const xmlStr = `<?xml version="1.0" encoding="UTF-8"?>
 </bpmn:definitions>
 `;
 
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('Process viewer', () => {
   it('renders a process', async () => {

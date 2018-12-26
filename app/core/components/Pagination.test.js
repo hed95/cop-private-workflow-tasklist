@@ -1,10 +1,7 @@
 import React from 'react';
-import Enzyme from 'enzyme';
 import { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import Pagination from './Pagination';
 import Immutable from 'immutable';
-Enzyme.configure({ adapter: new Adapter() });
 describe('Pagination', () => {
   const buildItems = (number) => {
     const items = [];

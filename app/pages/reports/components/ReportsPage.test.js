@@ -1,7 +1,5 @@
 import React from 'react';
-import Enzyme from 'enzyme';
 import { mount,shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import { ReportsPage } from './ReportsPage';
@@ -9,7 +7,6 @@ import Spinner from 'react-spinkit';
 
 const { Map,List} = Immutable;
 
-Enzyme.configure({ adapter: new Adapter() });
 describe('Reports Page', () => {
   const initialState = {
     'reports-page': new Map({

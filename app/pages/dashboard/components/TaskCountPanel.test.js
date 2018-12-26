@@ -1,13 +1,10 @@
 import React from 'react';
-import Enzyme from 'enzyme';
 import { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import { TaskCountPanel } from './TaskCountPanel';
 import PubSub from 'pubsub-js';
 const { Map} = Immutable;
-Enzyme.configure({ adapter: new Adapter() });
 
 
 jest.mock('pubsub-js', ()=>({
