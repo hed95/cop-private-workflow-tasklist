@@ -42,7 +42,7 @@ export class YourTasksContainer extends React.Component {
     clearTimeout(this.timeoutId);
   }
 
-  debounceSearch (sortValue, filterValue)  {
+  debounceSearch(sortValue, filterValue) {
     if (filterValue.length <= 2 || filterValue.endsWith(' ')) {
       throttle(200, () => {
         this.props.fetchTasksAssignedToYou(sortValue, filterValue, true);
@@ -54,18 +54,15 @@ export class YourTasksContainer extends React.Component {
     }
   };
 
-  filterTasksByName (event) {
+  filterTasksByName(event) {
     event.persist();
     const { yourTasks } = this.props;
-    const yourTasksFilterValue = event.target.value;
-    const yourTasksSortValue = yourTasks.get('yourTasksSortValue');
-    this.debounceSearch(yourTasksSortValue, yourTasksFilterValue);
+    this.debounceSearch(yourTasks.get('yourTasksSortValue'), event.target.value);
   };
 
   sortYourTasks(event) {
-    const yourTasksSortValue = event.target.value;
-    const filterValue = this.props.yourTasks.get('yourTasksFilterValue');
-    this.props.fetchTasksAssignedToYou(yourTasksSortValue, filterValue, true);
+    this.props.fetchTasksAssignedToYou(event.target.value,
+      this.props.yourTasks.get('yourTasksFilterValue'), true);
   };
 
   render() {
@@ -74,10 +71,10 @@ export class YourTasksContainer extends React.Component {
       return <DataSpinner message="Fetching tasks assigned to you"/>;
     } else {
       return <YourTasks
-          filterTasksByName={this.filterTasksByName}
-          sortYourTasks={this.sortYourTasks}
-          goToTask={this.goToTask}
-          yourTasks={yourTasks}/>
+        filterTasksByName={this.filterTasksByName}
+        sortYourTasks={this.sortYourTasks}
+        goToTask={this.goToTask}
+        yourTasks={yourTasks}/>;
     }
   }
 }

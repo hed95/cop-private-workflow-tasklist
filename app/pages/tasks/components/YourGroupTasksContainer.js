@@ -46,7 +46,7 @@ export class YourGroupTasksContainer extends React.Component {
     clearTimeout(this.timeoutId);
   }
 
-  debounceSearch (sortValue, filterValue)  {
+  debounceSearch(sortValue, filterValue) {
     if (filterValue.length <= 2 || filterValue.endsWith(' ')) {
       throttle(200, () => {
         this.props.fetchYourGroupTasks(sortValue, filterValue, true);
@@ -58,18 +58,16 @@ export class YourGroupTasksContainer extends React.Component {
     }
   };
 
-  filterTasksByName (event) {
+  filterTasksByName(event) {
     event.persist();
     const { yourGroupTasks } = this.props;
-    const yourGroupTasksFilterValue = event.target.value;
-    const yourGroupTasksSortValue = yourGroupTasks.get('yourGroupTasksSortValue');
-    this.debounceSearch(yourGroupTasksSortValue, yourGroupTasksFilterValue);
+    this.debounceSearch(yourGroupTasks.get('yourGroupTasksSortValue'),
+      event.target.value);
   };
 
   sortYourGroupTasks(event) {
-    const yourGroupTasksSortValue = event.target.value;
-    const filterValue = this.props.yourGroupTasks.get('yourGroupTasksFilterValue');
-    this.props.fetchYourGroupTasks(yourGroupTasksSortValue, filterValue, true);
+    this.props.fetchYourGroupTasks(event.target.value,
+      this.props.yourGroupTasks.get('yourGroupTasksFilterValue'), true);
   };
 
   render() {

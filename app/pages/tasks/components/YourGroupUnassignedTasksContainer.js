@@ -64,15 +64,13 @@ export class YourGroupUnassignedTasksContainer extends React.Component {
   filterTasksByName(event) {
     event.persist();
     const { unassignedTasks } = this.props;
-    const yourGroupsUnassignedTasksFilterValue = event.target.value;
-    const yourGroupsUnassignedTasksSortValue = unassignedTasks.get('yourGroupsUnassignedTasksSortValue');
-    this.debounceSearch(yourGroupsUnassignedTasksSortValue, yourGroupsUnassignedTasksFilterValue);
+    this.debounceSearch(unassignedTasks.get('yourGroupsUnassignedTasksSortValue'),
+      event.target.value);
   };
 
   sortTasks(event) {
-    const yourGroupsUnassignedTasksFilterValue = event.target.value;
-    const filterValue = this.props.unassignedTasks.get('yourGroupsUnassignedTasksFilterValue');
-    this.props.fetchUnassignedTasks(yourGroupsUnassignedTasksFilterValue, filterValue, true);
+    this.props.fetchUnassignedTasks(event.target.value,
+      this.props.unassignedTasks.get('yourGroupsUnassignedTasksFilterValue'), true);
   };
 
 
