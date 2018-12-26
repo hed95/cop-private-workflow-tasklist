@@ -18,6 +18,6 @@ describe('Pagination', () => {
     const items = buildItems(50);
     const onChangePage = jest.fn();
     const wrapper = await mount(<Pagination items={items} onChangePage={onChangePage} />);
-    console.log(wrapper.html());
+    expect(wrapper).toMatchSnapshot();
   });
 });
