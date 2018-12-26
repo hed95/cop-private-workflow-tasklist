@@ -15,7 +15,7 @@ import { createStructuredSelector } from 'reselect';
 import Spinner from 'react-spinkit';
 import { unclaimSuccessful } from '../../../pages/task/selectors';
 import AppConstants from '../../../common/AppConstants';
-import { DataSpinner } from '../../components/DataSpinner';
+import DataSpinner from '../../components/DataSpinner';
 
 class TaskForm extends React.Component {
 

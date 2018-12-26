@@ -20,7 +20,7 @@ import { Form } from 'react-formio';
 import * as actions from '../../../core/shift/actions';
 import moment from 'moment';
 import Loader from 'react-loader-advanced';
-import { DataSpinner } from '../../../core/components/DataSpinner';
+import DataSpinner from '../../../core/components/DataSpinner';
 
 const uuidv4 = require('uuid/v4');
 

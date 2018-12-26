@@ -16,14 +16,15 @@ export const initialState = new Map({
     tasks: new List([]),
     original: new List([]),
     total: 0,
-    sortValue: 'sort=due,desc'
+    yourGroupTasksSortValue: 'sort=due,desc',
+    yourGroupTasksFilterValue: null
   }),
   unassignedTasks: new Map({
     isFetchingUnassignedTasks: false,
     tasks: new List([]),
     total: 0,
-    sortValue: 'sort=due,desc',
-    original: new List([])
+    yourGroupsUnassignedTasksSortValue: 'sort=due,desc',
+    yourGroupsUnassignedTasksFilterValue: null
   })
 });
 
@@ -45,21 +46,27 @@ function reducer(state = initialState, action) {
       return state
         .setIn(['yourTasks', 'isFetchingTasksAssignedToYou'], false);
 
+    //tasks for your group
     case actions.FETCH_YOUR_GROUP_TASKS:
-      return state.setIn(['yourGroupTasks', 'isFetchingYourGroupTasks'], true);
+      return state
+        .setIn(['yourGroupTasks', 'isFetchingTasksAssignedToYou'], !action.skipLoading)
+        .setIn(['yourGroupTasks', 'yourGroupTasksFilterValue'], action.filterValue)
+        .setIn(['yourGroupTasks', 'yourGroupTasksSortValue'], action.sortValue);
     case actions.FETCH_YOUR_GROUP_TASKS_SUCCESS:
       const groupTasks = action.payload.entity._embedded ? action.payload.entity._embedded.tasks : [];
       const groupTasksTotal = action.payload.entity.page.totalElements;
       return state.setIn(['yourGroupTasks', 'isFetchingYourGroupTasks'], false)
         .setIn(['yourGroupTasks', 'tasks'], Immutable.fromJS(groupTasks))
-        .setIn(['yourGroupTasks', 'total'], groupTasksTotal)
-        .setIn(['yourGroupTasks', 'original'], Immutable.fromJS(groupTasks));
+        .setIn(['yourGroupTasks', 'total'], groupTasksTotal);
     case actions.FETCH_YOUR_GROUP_TASKS_FAILURE:
       return state.setIn(['yourGroupTasks', 'isFetchingYourGroupTasks'], false);
 
-
+    //tasks unassigned
     case actions.FETCH_UNASSIGNED_TASKS:
-      return state.setIn(['unassignedTasks', 'isFetchingUnassignedTasks'], true);
+      return state
+        .setIn(['unassignedTasks', 'isFetchingUnassignedTasks'], !action.skipLoading)
+        .setIn(['unassignedTasks', 'yourGroupsUnassignedTasksFilterValue'], action.filterValue)
+        .setIn(['unassignedTasks', 'yourGroupsUnassignedTasksSortValue'], action.sortValue);
     case actions.FETCH_UNASSIGNED_TASKS_SUCCESS:
       const unassignedTasks = action.payload.entity._embedded ? action.payload.entity._embedded.tasks : [];
       const totalUnassigned = action.payload.entity.page.totalElements;
@@ -70,42 +77,6 @@ function reducer(state = initialState, action) {
 
     case actions.FETCH_UNASSIGNED_TASKS_FAILURE:
       return state.setIn(['unassignedTasks', 'isFetchingUnassignedTasks'], false);
-    case actions.SET_YOUR_GROUP_TASKS_SORT_VALUE:
-      return state.setIn(['yourGroupTasks', 'sortValue'], action.value);
-
-    case actions.SET_UNASSIGNED_TASKS_SORT_VALUE:
-      return state.setIn(['unassignedTasks', 'sortValue'], action.value);
-
-    case actions.FILTER_GROUP_YOUR_TASKS_BY_NAME:
-      const filterValue = action.value.toLowerCase();
-      if (filterValue) {
-        const originalGroupTasks = state.getIn(['yourGroupTasks', 'original']);
-        const updatedGroupTasks = originalGroupTasks.filter((task) => {
-          const taskName = task.getIn(['task', 'name']);
-          const assigneeName = task.getIn(['task', 'assignee']);
-          return taskName.toLowerCase()
-              .includes(filterValue) ||
-            (assigneeName ? assigneeName.includes(filterValue) : false);
-        });
-        return state.setIn(['yourGroupTasks', 'tasks'], updatedGroupTasks);
-      } else {
-        return state.setIn(['yourGroupTasks', 'tasks'],
-          state.getIn(['yourGroupTasks', 'original']));
-      }
-    case actions.FILTER_GROUP_UNASSIGNED_TASKS_BY_NAME:
-      const unassignedFilterValue = action.value.toLowerCase();
-      if (unassignedFilterValue) {
-        const originalGroupTasks = state.getIn(['unassignedTasks', 'original']);
-        const updatedGroupTasks = originalGroupTasks.filter((task) => {
-          const taskName = task.getIn(['task', 'name']);
-          return taskName.toLowerCase()
-            .includes(unassignedFilterValue);
-        });
-        return state.setIn(['unassignedTasks', 'tasks'], updatedGroupTasks);
-      } else {
-        return state.setIn(['unassignedTasks', 'tasks'],
-          state.getIn(['unassignedTasks', 'original']));
-      }
     default:
       return state;
   }

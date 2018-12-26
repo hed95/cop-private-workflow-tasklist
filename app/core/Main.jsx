@@ -11,9 +11,9 @@ import ProcessStartPage from "../pages/procedures/components/ProcedureStartPage"
 import TaskDetailsPage from "../pages/task/component/TaskPage";
 import ReportPage from "../pages/reports/components/ReportPage";
 import DashboardPage from "../pages/dashboard/components/DashboardPage";
-import YourTasks from "../pages/tasks/components/YourTasks";
-import YourGroupUnassignedTasks from "../pages/tasks/components/YourGroupUnassignedTasks";
-import YourGroupTasks from "../pages/tasks/components/YourGroupTasks";
+import YourTasksContainer from "../pages/tasks/components/YourTasksContainer";
+import YourGroupUnassignedTasksContainer from "../pages/tasks/components/YourGroupUnassignedTasksContainer";
+import YourGroupTasksContainer from "../pages/tasks/components/YourGroupTasksContainer";
 import AppConstants from "../common/AppConstants";
 import ProcessDiagramPage from '../pages/procedures/components/ProcessDiagramPage';
 
@@ -23,9 +23,9 @@ const Main = () => (
         <Switch>
             <Route name="Dashboard" exact path={AppConstants.DASHBOARD_PATH} component={DashboardPage}/>
             <Route name="Shift" exact path={AppConstants.SHIFT_PATH} component={ShiftPage}/>
-            <ShiftScopedRoute name="Your tasks" exact path={AppConstants.YOUR_TASKS_PATH} component={YourTasks}/>
-            <ShiftScopedRoute name="Your group unassigned tasks" exact path={AppConstants.YOUR_GROUP_UNASSIGNED_TASKS_PATH} component={YourGroupUnassignedTasks}/>
-            <ShiftScopedRoute name="Your group tasks" exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={YourGroupTasks}/>
+            <ShiftScopedRoute name="Your tasks" exact path={AppConstants.YOUR_TASKS_PATH} component={YourTasksContainer}/>
+            <ShiftScopedRoute name="Your group unassigned tasks" exact path={AppConstants.YOUR_GROUP_UNASSIGNED_TASKS_PATH} component={YourGroupUnassignedTasksContainer}/>
+            <ShiftScopedRoute name="Your group tasks" exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={YourGroupTasksContainer}/>
             <ShiftScopedRoute name="Procedures" exact path={AppConstants.PROCEDURES_PATH} component={ProceduresPage}/>
             <ShiftScopedRoute name="Reports" exact path={AppConstants.REPORTS_PATH} component={ReportsPage} />
             <ShiftScopedRoute exact path={AppConstants.REPORT_PATH} component={ReportPage}/>

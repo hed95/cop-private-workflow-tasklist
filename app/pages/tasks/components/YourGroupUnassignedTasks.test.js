@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
-import { YourTasksContainer } from './YourTasksContainer';
+import { YourGroupUnassignedTasksContainer } from './YourGroupUnassignedTasksContainer';
 import moment from 'moment';
 import AppConstants from '../../../common/AppConstants';
 const { Map } = Immutable;
@@ -14,13 +14,13 @@ Enzyme.configure({ adapter: new Adapter() });
 
 jest.useFakeTimers();
 
-describe('YourTasks Page', () => {
+describe('UnassignedTasks Page', () => {
   const mockStore = configureStore();
   let store;
   const date = moment();
-  const yourTasks = Immutable.fromJS({
-    isFetchingTasksAssignedToYou: false,
-    yourTasksSortValue: 'sort=due,desc',
+  const unassignedTasks = Immutable.fromJS({
+    isFetchingUnassignedTasks: false,
+    yourGroupsUnassignedTasksSortValue: 'sort=due,desc',
     total: 1,
     tasks: [{
       task: {
@@ -48,36 +48,36 @@ describe('YourTasks Page', () => {
   afterEach(() => {
     window.matchMedia = null;
   });
-  const fetchTasksAssignedToYou = jest.fn();
-  it('renders loading when getting your tasks', async()=> {
+  const fetchUnassignedTasks = jest.fn();
+  it('renders loading when getting unssigned tasks', async()=> {
     const props = {
-     yourTasks: Immutable.fromJS({
-       isFetchingTasksAssignedToYou: true
-     })
+      unassignedTasks: Immutable.fromJS({
+        isFetchingUnassignedTasks: true
+      })
     };
-    const wrapper = await mount(<YourTasksContainer
+    const wrapper = await mount(<YourGroupUnassignedTasksContainer
       store={store}
       {...props}
-      fetchTasksAssignedToYou={fetchTasksAssignedToYou}
+      fetchUnassignedTasks={fetchUnassignedTasks}
     />);
     expect(wrapper.find('.loader-content').exists()).toEqual(true);
-    expect(wrapper.find('.loader-message').text()).toEqual('Fetching tasks assigned to you');
+    expect(wrapper.find('.loader-message').text()).toEqual('Fetching your group unassigned tasks');
   });
 
   it('renders your tasks', async() => {
 
     const props = {
-      yourTasks: yourTasks
+      unassignedTasks: unassignedTasks
     };
-    const wrapper = await mount(<YourTasksContainer
+    const wrapper = await mount(<YourGroupUnassignedTasksContainer
       store={store}
       {...props}
-      fetchTasksAssignedToYou={fetchTasksAssignedToYou}
+      fetchUnassignedTasks={fetchUnassignedTasks}
     />);
 
-    expect(fetchTasksAssignedToYou).toBeCalled();
+    expect(fetchUnassignedTasks).toBeCalled();
     expect(wrapper.find('.loader-content').exists()).toEqual(false);
-    expect(wrapper.find('#yourTasksTotalCount').text()).toEqual('1 task assigned to you');
+    expect(wrapper.find('#unassignedTasksTotalCount').text()).toEqual('1 unassigned task');
     console.log(wrapper.html());
     const tableWrapper = wrapper.find('table');
     expect(tableWrapper.exists()).toEqual(true);
@@ -88,8 +88,8 @@ describe('YourTasks Page', () => {
     const headerColumns = rows.first().find('th').map(column => column.text());
     expect(headerColumns[0]).toEqual('Task name');
     expect(headerColumns[1]).toEqual('Priority');
-    expect(headerColumns[2]).toEqual('Due');
-    expect(headerColumns[3]).toEqual('Created');
+    expect(headerColumns[2]).toEqual('Created');
+    expect(headerColumns[3]).toEqual('Due');
 
     const firstRowColumns = rows.first().find('td').map(column => column.text());
     expect(firstRowColumns.length).toEqual(4);
@@ -102,55 +102,55 @@ describe('YourTasks Page', () => {
 
   it('renders your tasks on sort change', async() => {
     const props = {
-      yourTasks: yourTasks
+      unassignedTasks: unassignedTasks
     };
-    const wrapper = await mount(<YourTasksContainer
+    const wrapper = await mount(<YourGroupUnassignedTasksContainer
       store={store}
       {...props}
-      fetchTasksAssignedToYou={fetchTasksAssignedToYou}
+      fetchUnassignedTasks={fetchUnassignedTasks}
     />);
 
-    expect(fetchTasksAssignedToYou).toBeCalled();
+    expect(fetchUnassignedTasks).toBeCalled();
 
     const sortTaskInput = wrapper.find('#sortTask');
     sortTaskInput.simulate('change', {target: { value : 'sort=created,desc'}});
-    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=created,desc', undefined, true);
+    expect(fetchUnassignedTasks).toBeCalledWith('sort=created,desc', undefined, true);
 
     sortTaskInput.simulate('change', {target: { value : 'sort=test,desc'}});
-    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=test,desc', undefined, true);
+    expect(fetchUnassignedTasks).toBeCalledWith('sort=test,desc', undefined, true);
 
   });
 
   it('renders your tasks on filter value', async() => {
     const props = {
-      yourTasks: yourTasks
+      unassignedTasks: unassignedTasks
     };
-    const wrapper = await mount(<YourTasksContainer
+    const wrapper = await mount(<YourGroupUnassignedTasksContainer
       store={store}
       {...props}
-      fetchTasksAssignedToYou={fetchTasksAssignedToYou}
+      fetchUnassignedTasks={fetchUnassignedTasks}
     />);
 
 
-    expect(fetchTasksAssignedToYou).toBeCalled();
+    expect(fetchUnassignedTasks).toBeCalled();
     const yourTaskFilterInput = wrapper.find('#filterTaskName');
 
     yourTaskFilterInput.simulate('change', {target: { value : 'ABC'}});
     jest.advanceTimersByTime(600);
-    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,desc', 'ABC', true);
+    expect(fetchUnassignedTasks).toBeCalledWith('sort=due,desc', 'ABC', true);
 
     yourTaskFilterInput.simulate('change', {target: { value : 'APPLES'}});
     jest.advanceTimersByTime(600);
-    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,desc', 'APPLES', true);
+    expect(fetchUnassignedTasks).toBeCalledWith('sort=due,desc', 'APPLES', true);
 
   });
 
   it('executes timer', async() => {
     const props = {
-      yourTasks: Immutable.fromJS({
-        isFetchingTasksAssignedToYou: false,
-        yourTasksSortValue: 'sort=due,desc',
-        yourTasksFilterValue: 'TEST',
+      unassignedTasks: Immutable.fromJS({
+        isFetchingUnassignedTasks: false,
+        yourGroupsUnassignedTasksSortValue: 'sort=due,desc',
+        yourGroupsUnassignedTasksFilterValue: 'TEST',
         total: 1,
         tasks: [{
           task: {
@@ -165,16 +165,16 @@ describe('YourTasks Page', () => {
       })
     };
 
-    const wrapper = await mount(<YourTasksContainer
+    const wrapper = await mount(<YourGroupUnassignedTasksContainer
       store={store}
       {...props}
-      fetchTasksAssignedToYou={fetchTasksAssignedToYou}
+      fetchUnassignedTasks={fetchUnassignedTasks}
     />);
-    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,desc', null, false);
+    expect(fetchUnassignedTasks).toBeCalledWith('sort=due,desc', null, false);
 
     //kick off timer
     jest.advanceTimersByTime(AppConstants.THREE_MINUTES);
-    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,desc', 'TEST', true);
+    expect(fetchUnassignedTasks).toBeCalledWith('sort=due,desc', 'TEST', true);
 
     //
     wrapper.unmount();
@@ -185,10 +185,10 @@ describe('YourTasks Page', () => {
 
     const props = {
       history: history,
-      yourTasks: Immutable.fromJS({
-        isFetchingTasksAssignedToYou: false,
-        yourTasksSortValue: 'sort=due,desc',
-        yourTasksFilterValue: 'TEST',
+      unassignedTasks: Immutable.fromJS({
+        isFetchingUnassignedTasks: false,
+        yourGroupsUnassignedTasksSortValue: 'sort=due,desc',
+        yourGroupsUnassignedTasksFilterValue: 'TEST',
         total: 1,
         tasks: [{
           task: {
@@ -203,10 +203,10 @@ describe('YourTasks Page', () => {
       })
     };
 
-    const wrapper = await mount(<Router history={history}><YourTasksContainer
+    const wrapper = await mount(<Router history={history}><YourGroupUnassignedTasksContainer
       store={store}
       {...props}
-      fetchTasksAssignedToYou={fetchTasksAssignedToYou}
+      fetchUnassignedTasks={fetchUnassignedTasks}
     /></Router>);
 
     const idLink = wrapper.find('#link').first();

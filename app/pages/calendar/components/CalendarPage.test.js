@@ -20,7 +20,16 @@ describe('Calendar Page', () => {
     const wrapper = await mount(<CalendarPage
       store={store}
       {...props}
-    />);
-    expect(wrapper).toMatchSnapshot();
+    />, { attachTo: document.body });
+    const toolBar = document.querySelector('.fc-toolbar');
+    expect(toolBar).toBeDefined();
+
+    const dayWeekMonth = document.querySelector('.fc-center');
+    expect(dayWeekMonth).toBeDefined();
+
+    const viewContainer = document.querySelector('.fc-view-container');
+    expect(viewContainer).toBeDefined();
+
+    
   });
 });

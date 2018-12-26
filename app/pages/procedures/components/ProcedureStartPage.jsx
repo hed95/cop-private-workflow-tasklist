@@ -10,8 +10,7 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router";
 import queryString from 'query-string';
 import {submissionToWorkflowSuccessful, submittingToWorkflow} from "../../../core/start-forms/selectors";
-import Spinner from 'react-spinkit';
-import { DataSpinner } from '../../../core/components/DataSpinner';
+import DataSpinner from '../../../core/components/DataSpinner';
 
 class ProcessStartPage extends React.Component {
 

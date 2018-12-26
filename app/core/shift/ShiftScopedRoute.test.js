@@ -7,7 +7,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import ShiftScopedRoute from './ShiftScopedRoute';
-import { DataSpinner } from '../components/DataSpinner';
+import DataSpinner from '../components/DataSpinner';
 import ErrorHandlingComponent from '../error/component/ErrorHandlingComponent';
 
 const { Map } = Immutable;

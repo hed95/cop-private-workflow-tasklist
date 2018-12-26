@@ -8,7 +8,7 @@ import {createStructuredSelector} from "reselect";
 import {Redirect, Route, withRouter} from "react-router";
 import ErrorHandlingComponent from "../error/component/ErrorHandlingComponent";
 import * as errorActions from "../error/actions";
-import {DataSpinner} from "../components/DataSpinner";
+import DataSpinner from "../components/DataSpinner";
 
 const uuidv4 = require('uuid/v4');
 

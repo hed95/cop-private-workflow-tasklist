@@ -6,8 +6,7 @@ import {createStructuredSelector} from "reselect";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {loadingReports, reports} from "../selectors";
-import Spinner from 'react-spinkit';
-import { DataSpinner } from '../../../core/components/DataSpinner';
+import DataSpinner from '../../../core/components/DataSpinner';
 
 const uuidv4 = require('uuid/v4');
 

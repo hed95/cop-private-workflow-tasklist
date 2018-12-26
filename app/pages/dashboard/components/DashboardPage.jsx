@@ -11,7 +11,7 @@ import {
 } from "../../../core/shift/selectors";
 import {errors, hasError} from "../../../core/error/selectors";
 import ErrorPanel from "../../../core/error/component/ErrorPanel";
-import {DataSpinner} from "../../../core/components/DataSpinner";
+import DataSpinner from "../../../core/components/DataSpinner";
 import * as errorActions from "../../../core/error/actions";
 
 export class DashboardPage extends React.Component {

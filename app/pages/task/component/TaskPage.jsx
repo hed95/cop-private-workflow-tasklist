@@ -9,7 +9,7 @@ import {createStructuredSelector} from "reselect";
 import ImmutablePropTypes from "react-immutable-proptypes";
 import queryString from 'query-string';
 import {withRouter} from "react-router";
-import {DataSpinner} from "../../../core/components/DataSpinner";
+import DataSpinner from "../../../core/components/DataSpinner";
 import TaskDetailsPage from "./TaskDetailsPage";
 import NotFound from "../../../core/components/NotFound";
 
