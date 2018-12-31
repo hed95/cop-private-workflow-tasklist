@@ -3,7 +3,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const common = require('./webpack.common.js');
 const webpackMerge = require('webpack-merge');
 const SriPlugin = require('webpack-subresource-integrity');
-const CompressionPlugin = require('compression-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const ProgressPlugin = require('progress-webpack-plugin');
 const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin');
@@ -11,6 +10,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const path = require('path');
 const buildDirectory = path.join(__dirname, './dist');
+const BrotliPlugin = require('brotli-webpack-plugin');
 
 module.exports = webpackMerge(common, {
   mode: 'production',
@@ -43,11 +43,9 @@ module.exports = webpackMerge(common, {
     }),
     new ProgressPlugin(true),
     new ManifestPlugin(),
-    new CompressionPlugin({
-      cache: true,
-      filename: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: /\.js(\?.*)?$/i,
+    new BrotliPlugin({
+      asset: '[path].br[query]',
+      test: /\.(js|css)$/,
       threshold: 10240,
       minRatio: 0.8
     }),

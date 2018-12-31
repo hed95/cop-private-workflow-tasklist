@@ -60,11 +60,16 @@ app.get('/api/config', (req, res) => {
         "AUTH_ACCESS_ROLE" : process.env.AUTH_ACCESS_ROLE
     })
 });
-app.get('*.js', function (req, res, next) {
-  req.url = req.url + '.gz';
-  res.set('Content-Encoding', 'gzip');
+
+const appendBrToContentType = (req, res, next) => {
+  req.url = req.url + '.br';
+  res.set('Content-Encoding', 'br');
   next();
-});
+};
+
+app.get('*.js', appendBrToContentType);
+
+app.get('*.css', appendBrToContentType);
 
 app.all('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));

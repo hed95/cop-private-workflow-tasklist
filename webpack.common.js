@@ -8,7 +8,6 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-
 module.exports = {
   optimization: {
     splitChunks: {
@@ -63,8 +62,8 @@ module.exports = {
       Tooltip: 'exports-loader?Tooltip!bootstrap/js/dist/tooltip',
       Tether: 'tether',
       'window.Tether': 'tether',
-      React: "react",
-      ReactDOM: "react-dom"
+      React: 'react',
+      ReactDOM: 'react-dom'
     }),
   ],
   module: {
