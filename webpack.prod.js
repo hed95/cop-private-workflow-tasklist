@@ -9,6 +9,8 @@ const ProgressPlugin = require('progress-webpack-plugin');
 const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
+const path = require('path');
+const buildDirectory = path.join(__dirname, './dist');
 
 module.exports = webpackMerge(common, {
   mode: 'production',
@@ -20,7 +22,7 @@ module.exports = webpackMerge(common, {
   },
   plugins: [
     new CleanWebpackPlugin([
-      'dist'
+      buildDirectory
     ], {
       verbose: true,
       dry: false

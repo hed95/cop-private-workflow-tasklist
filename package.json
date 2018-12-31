@@ -9,13 +9,16 @@
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
     "dev": "webpack-dev-server --open --config webpack.dev.js --watch --colors",
-    "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js"
+    "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js",
+    "postinstall": "npm rebuild node-sass"
   },
   "jest": {
     "transform": {
       "^.+\\.(js|jsx)?$": "babel-jest"
     },
-    "transformIgnorePatterns": ["<rootDir>/node_modules/"],
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ],
     "modulePaths": [
       "<rootDir>/app",
       "<rootDir>/node_modules"
