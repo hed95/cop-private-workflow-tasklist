@@ -4,7 +4,7 @@ workspace:
 
 pipeline:
   test:
-    image: node:8
+    image: node:11
     commands:
     - npm install
     - npm run test:coverage
