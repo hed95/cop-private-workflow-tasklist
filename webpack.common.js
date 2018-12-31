@@ -13,7 +13,6 @@ module.exports = {
     runtimeChunk: 'single',
     splitChunks: {
       chunks: 'all',
-      name: true,
       cacheGroups: {
         vendors: {
           chunks: 'all',
@@ -30,7 +29,7 @@ module.exports = {
   output: {
     path: buildDirectory,
     filename: '[name].[contenthash].js',
-    chunkFilename: '[name].bundle.js',
+    chunkFilename: '[name].[contenthash].js',
     publicPath: '/',
     crossOriginLoading: 'anonymous',
   },

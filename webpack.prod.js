@@ -15,7 +15,7 @@ const BrotliPlugin = require('brotli-webpack-plugin');
 module.exports = webpackMerge(common, {
   mode: 'production',
   entry: {
-    app: './app/index'
+    main: './app/index'
   },
   optimization: {
     nodeEnv: 'production'
