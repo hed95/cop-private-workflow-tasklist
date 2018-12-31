@@ -10,6 +10,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   optimization: {
+    runtimeChunk: 'single',
     splitChunks: {
       chunks: 'all',
       name: true,
@@ -28,12 +29,13 @@ module.exports = {
   },
   output: {
     path: buildDirectory,
-    filename: '[name].bundle.js',
+    filename: '[name].[contenthash].js',
     chunkFilename: '[name].bundle.js',
     publicPath: '/',
     crossOriginLoading: 'anonymous',
   },
   plugins: [
+    new webpack.HashedModuleIdsPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[name].css'
@@ -52,6 +54,7 @@ module.exports = {
       localesToKeep: ['es-gb'],
     }),
     new HtmlWebpackPlugin({
+      title: 'Caching',
       template: './public/index.html',
       favicon: './public/favicon.ico'
     }),
