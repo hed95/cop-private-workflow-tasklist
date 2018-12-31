@@ -16,12 +16,12 @@ describe('DashboardPage', () => {
   const resetErrors = jest.fn();
   const fetchActiveShift = jest.fn();
 
-  it('renders data spinner checking for shift', async() => {
+  it('renders data spinner checking for shift', () => {
     const props = {
       isFetchingShift: true
     };
 
-    const wrapper = await mount(<DashboardPage
+    const wrapper = shallow(<DashboardPage
       store={store}
       {...props}
       fetchActiveShift={fetchActiveShift}
@@ -31,7 +31,7 @@ describe('DashboardPage', () => {
     expect(resetErrors).toBeCalled();
     expect(fetchActiveShift).toBeCalled();
 
-    expect(wrapper.find('#dataSpinner').exists()).toEqual(true);
+    expect(wrapper.find('DataSpinner').exists()).toEqual(true);
     expect(wrapper.find('#dashboardContent').exists()).toEqual(false);
   });
   it('renders panels if shift present', async() => {
