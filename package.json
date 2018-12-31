@@ -7,11 +7,16 @@
   "scripts": {
     "test": "jest --verbose",
     "test:watch": "jest --watchAll --verbose",
-    "test:coverage": "jest --clearCache && jest --coverage",
+    "test:coverage": "jest --coverage",
     "dev": "webpack-dev-server --open --config webpack.dev.js --watch --colors",
     "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js"
   },
   "jest": {
+    "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest"
+    },
+    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"],
     "setupFiles": [
       "./jestsetup.js"
     ],
