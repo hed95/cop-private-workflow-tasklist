@@ -1,32 +1,60 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const sourcePath = path.join(__dirname, './app');
 const buildDirectory = path.join(__dirname, './dist');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const cssnano = require('cssnano');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const devMode = process.env.NODE_ENV !== 'production';
+
 module.exports = {
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      name: true,
+      cacheGroups: {
+        vendors: {
+          chunks: 'all',
+          name: 'vendor',
+          test: /[\\/]node_modules[\\/]/,
+        }
+      }
+    }
+  },
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
     modules: [path.resolve(__dirname), 'node_modules', sourcePath],
   },
   output: {
     path: buildDirectory,
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js',
     publicPath: '/',
     crossOriginLoading: 'anonymous',
   },
-  mode: devMode ? 'development' : 'production',
   plugins: [
-    new webpack.NamedModulesPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[name].css'
+    }),
+    new OptimizeCSSAssetsPlugin({
+      cssProcessor: cssnano,
+      cssProcessorOptions: {
+        discardComments: {
+          removeAll: true,
+        },
+        safe: true
+      },
+      canPrint: false
+    }),
+    new MomentLocalesPlugin({
+      localesToKeep: ['es-gb'],
+    }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
       favicon: './public/favicon.ico'
-    }),
-    new MiniCssExtractPlugin({
-      filename: 'style.css'
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -51,7 +79,8 @@ module.exports = {
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
-          { loader: 'css-loader', options: { url: false, sourceMap: true } }
+          { loader: 'css-loader', options: { url: false, sourceMap: true, minimize: true } },
+          { loader: 'postcss-loader', options: {} },
         ]
       }, {
         test: /\.bpmn$/,

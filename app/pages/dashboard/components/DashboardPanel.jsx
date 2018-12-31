@@ -1,15 +1,19 @@
-import React from 'react';
-import ProceduresDashboardPanel from "./ProceduresDashboardPanel";
-import ReportsDashboardPanel from "./ReportsDashboardPanel";
-import CalendarDashboardPanel from "./CalendarDashboardPanel";
-import AdminPanel from "./AdminPanel";
-import MessagesPanel from "./MessagesPanel";
+import React, { Suspense } from 'react';
+
 import {withRouter} from "react-router";
-import TaskCountPanel from "./TaskCountPanel";
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import {connect} from "react-redux";
 import PubSub from "pubsub-js";
+import DataSpinner from '../../../core/components/DataSpinner';
+
+
+const ProceduresDashboardPanel = React.lazy(() => import('./ProceduresDashboardPanel'));
+const ReportsDashboardPanel = React.lazy(() => import('./ReportsDashboardPanel'));
+const CalendarDashboardPanel = React.lazy(() => import('./CalendarDashboardPanel'));
+const MessagesPanel  = React.lazy(() => import('./MessagesPanel'));
+const TaskCountPanel = React.lazy(() => import('./TaskCountPanel'));
+const AdminPanel = React.lazy(() => import('./AdminPanel'));
 
 class DashboardPanel extends React.Component {
 
@@ -110,10 +114,12 @@ class DashboardPanel extends React.Component {
             </ul>
             <hr/>
             <ul className="grid-row">
+              <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}><DataSpinner message="Loading panels..."/></div>}>
                 <ProceduresDashboardPanel hasActiveShift={this.props.hasActiveShift}/>
                 <ReportsDashboardPanel hasActiveShift={this.props.hasActiveShift}/>
                 <CalendarDashboardPanel hasActiveShift={this.props.hasActiveShift}/>
                 <AdminPanel hasActiveShift={this.props.hasActiveShift}/>
+              </Suspense>
             </ul>
         </div>
     }

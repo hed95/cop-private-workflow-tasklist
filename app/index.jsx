@@ -16,6 +16,7 @@ import Footer from './core/components/Footer';
 import UnauthorizedPage from './core/components/UnauthorizedPage';
 import AppConstants from './common/AppConstants';
 const store = configureStore();
+import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 let kc = null;
 
 
@@ -36,6 +37,7 @@ const renderApp = (App, authorizedRole) => {
           const hasPlatformRoleAccess = kc.realmAccess.roles.includes(authorizedRole);
           let rootDocument = document.getElementById('root');
           if (hasPlatformRoleAccess) {
+            OfflinePluginRuntime.install();
             history.pushState(null, null, location.href);
             window.onpopstate = () => {
               history.go(1);

@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const commonConfig = require('./webpack.common.js');
+const common = require('./webpack.common.js');
 const webpackMerge = require('webpack-merge');
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -19,8 +19,9 @@ console.log("formIOUrl " + formIOUrl);
 console.log("translationServiceUrl " + translationServiceUrl);
 
 
-module.exports = webpackMerge(commonConfig, {
-    devtool: 'eval',
+module.exports = webpackMerge(common, {
+    devtool: 'inline-source-map',
+    mode: 'development',
     entry: {
         app: [
             'react-hot-loader/patch',
@@ -48,7 +49,7 @@ module.exports = webpackMerge(commonConfig, {
         open: true,
         port: `${port}`,
         historyApiFallback: true,
-        publicPath: commonConfig.output.publicPath,
+        publicPath: common.output.publicPath,
         stats: {colors: true},
         proxy: {
             "/api/platform-data": {
