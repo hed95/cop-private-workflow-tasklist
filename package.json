@@ -5,34 +5,32 @@
   "author": "",
   "license": "",
   "scripts": {
-    "test": "jest --verbose",
-    "test:watch": "jest --watchAll --verbose",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
     "dev": "webpack-dev-server --open --config webpack.dev.js --watch --colors",
     "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js"
   },
   "jest": {
-    "testEnvironment": "jsdom",
-    "transform": {
-      "^.+\\.(js|jsx)$": "babel-jest"
-    },
-    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"],
+    "modulePaths": [
+      "<rootDir>/app",
+      "<rootDir>/node_modules"
+    ],
+    "verbose": true,
     "setupFiles": [
       "./jestsetup.js"
     ],
+    "globals": {
+      "NODE_ENV": "test"
+    },
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
     "setupTestFrameworkScriptFile": "mock-local-storage",
     "moduleNameMapper": {
-      "app/(.*)": "<rootDir>/src/$1",
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less|scss|sass)$": "identity-obj-proxy"
-    },
-    "moduleDirectories": [
-      "node_modules",
-      "app"
-    ]
+    }
   },
   "devDependencies": {
     "autoprefixer": "^9.4.3",
