@@ -1,3 +1,5 @@
+import 'babel-polyfill';
+
 import React, { Suspense, lazy }  from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom';
 import ShiftScopedRoute from './shift/ShiftScopedRoute';
@@ -24,7 +26,7 @@ const Main = () => (
     <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}><DataSpinner message="Loading routes"/></div>}>
       <Switch>
         <Route name="Dashboard" exact path={AppConstants.DASHBOARD_PATH} component={() => <DashboardPage />}/>
-        <Route name="Shift" exact path={AppConstants.SHIFT_PATH} component={() => ShiftPage}/>
+        <Route name="Shift" exact path={AppConstants.SHIFT_PATH} component={() => <ShiftPage/>}/>
         <ShiftScopedRoute name="Your tasks" exact path={AppConstants.YOUR_TASKS_PATH} component={() => <YourTasksContainer />}/>
         <ShiftScopedRoute name="Your group unassigned tasks" exact path={AppConstants.YOUR_GROUP_UNASSIGNED_TASKS_PATH} component={() => <YourGroupUnassignedTasksContainer />}/>
         <ShiftScopedRoute name="Your group tasks" exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={() => <YourGroupTasksContainer/>}/>

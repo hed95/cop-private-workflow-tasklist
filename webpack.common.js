@@ -62,7 +62,9 @@ module.exports = {
       'window.jQuery': 'jquery',
       Tooltip: 'exports-loader?Tooltip!bootstrap/js/dist/tooltip',
       Tether: 'tether',
-      'window.Tether': 'tether'
+      'window.Tether': 'tether',
+      React: "react",
+      ReactDOM: "react-dom"
     }),
   ],
   module: {
