@@ -61,6 +61,8 @@ module.exports = webpackMerge(common, {
       { from: 'server.js', to: '' }
     ]),
     new OfflinePlugin({
+      updateStrategy: 'changed',
+      autoUpdate: 1000 * 60 * 2,
       ServiceWorker: {
         events: true
       }

@@ -37,7 +37,10 @@ const renderApp = (App, authorizedRole) => {
           const hasPlatformRoleAccess = kc.realmAccess.roles.includes(authorizedRole);
           let rootDocument = document.getElementById('root');
           if (hasPlatformRoleAccess) {
-            OfflinePluginRuntime.install();
+            OfflinePluginRuntime.install({
+              onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
+              onUpdated: () => window.swUpdate = true,
+            });
             history.pushState(null, null, location.href);
             window.onpopstate = () => {
               history.go(1);
