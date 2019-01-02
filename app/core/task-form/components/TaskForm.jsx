@@ -12,7 +12,6 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Form } from 'react-formio';
 import { createStructuredSelector } from 'reselect';
-import Spinner from 'react-spinkit';
 import { unclaimSuccessful } from '../../../pages/task/selectors';
 import AppConstants from '../../../common/AppConstants';
 import DataSpinner from '../../components/DataSpinner';
