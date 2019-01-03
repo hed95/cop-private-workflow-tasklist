@@ -7,6 +7,7 @@ const buildDirectory = path.join(__dirname, './dist');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const WebpackMd5Hash = require('webpack-md5-hash');
 
 const hashing = process.env.NODE_ENV === 'production' ? 'contenthash' : 'hash';
 console.log('content hashing: '+ hashing);
@@ -37,10 +38,10 @@ module.exports = {
     crossOriginLoading: 'anonymous',
   },
   plugins: [
-    new webpack.HashedModuleIdsPlugin(),
+    new WebpackMd5Hash(),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[name].css'
+      filename: `[name].[${hashing}].css`,
+      chunkFilename: `[name].[${hashing}].css`
     }),
     new OptimizeCSSAssetsPlugin({
       cssProcessor: cssnano,
