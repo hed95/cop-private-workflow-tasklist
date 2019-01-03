@@ -8,6 +8,9 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const hashing = process.env.NODE_ENV === 'production' ? 'contenthash' : 'hash';
+console.log('content hashing: '+ hashing);
+
 module.exports = {
   optimization: {
     runtimeChunk: 'single',
@@ -28,8 +31,8 @@ module.exports = {
   },
   output: {
     path: buildDirectory,
-    filename: '[name].[contenthash].js',
-    chunkFilename: '[name].[contenthash].js',
+    filename: `[name].[${hashing}].js`,
+    chunkFilename: `[name].[${hashing}].js`,
     publicPath: '/',
     crossOriginLoading: 'anonymous',
   },

@@ -64,7 +64,7 @@ class ShiftPage extends React.Component {
   };
 
   resetCancelButton = () => {
-    if (this.cancelButtonAdded = true) {
+    if (this.cancelButtonAdded === true) {
       this.cancelButtonAdded = false;
     }
   };
