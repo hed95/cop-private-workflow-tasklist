@@ -115,10 +115,7 @@ class ShiftPage extends React.Component {
               startdatetime: moment.utc(shift.get('startdatetime')),
               teamid: shift.get('teamid'),
               locationid: shift.get('locationid'),
-              commandid: shift.get('commandid'),
-              subcommandid: shift.get('subcommandid'),
-              phone: shift.get('phone'),
-              currentlocationid: shift.get('currentlocationid')
+              phone: shift.get('phone')
             }
           };
           options.i18n.en.submit = 'Amend shift';
@@ -144,12 +141,9 @@ class ShiftPage extends React.Component {
                 shiftminutes: 0,
                 shifthours: 8,
                 startdatetime: moment.utc(moment()),
-                teamid: staffDetails.get('defaultteamid'),
+                teamid: staffDetails.get('teamid'),
                 locationid: staffDetails.get('defaultlocationid'),
-                commandid: staffDetails.get('defaultcommandid'),
-                subcommandid: staffDetails.get('defaultsubcommandid'),
-                phone: staffDetails.get('phone'),
-                currentlocationid: null
+                phone: staffDetails.get('phone')
               }
             };
             return <Form form={shiftForm} submission={shiftSubmission} options={options}
