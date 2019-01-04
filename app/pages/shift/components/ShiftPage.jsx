@@ -141,7 +141,7 @@ class ShiftPage extends React.Component {
                 shiftminutes: 0,
                 shifthours: 8,
                 startdatetime: moment.utc(moment()),
-                teamid: staffDetails.get('teamid'),
+                teamid: staffDetails.get('defaultlocationid'),
                 locationid: staffDetails.get('defaultlocationid'),
                 phone: staffDetails.get('phone')
               }
