@@ -121,11 +121,18 @@ module.exports = webpackMerge(common, {
       { from: 'server.js', to: '' }
     ]),
     new OfflinePlugin({
-      updateStrategy: 'changed',
       autoUpdate: 1000 * 60 * 2,
       ServiceWorker: {
         events: true
-      }
+      },
+      relativePaths: false,
+      publicPath: '/',
+      appShell: '/',
+      caches: {
+        main: [':rest:'],
+        additional: ['*.chunk.js']
+      },
+      safeToUseOptionalCaches: true
     }),
     new CompressionPlugin({
       algorithm: 'gzip',
@@ -134,10 +141,10 @@ module.exports = webpackMerge(common, {
       minRatio: 0.8,
     }),
     new WebpackPwaManifest({
-      name: 'Central Operational Platform Private UI',
+      name: 'COP UI',
       short_name: 'cop-private-ui',
       description: 'Central Operational Platform Private UI',
-      background_color: '#00FFFFFF',
+      background_color: '#fff',
       theme_color: '#1d8feb',
       inject: true,
       ios: true

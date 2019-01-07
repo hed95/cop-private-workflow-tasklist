@@ -33,7 +33,7 @@ module.exports = {
   output: {
     path: buildDirectory,
     filename: `[name].[${hashing}].js`,
-    chunkFilename: `[name].[${hashing}].js`,
+    chunkFilename: `[name].[${hashing}].chunk.js`,
     publicPath: '/',
     crossOriginLoading: 'anonymous',
   },
@@ -45,7 +45,7 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: `[name].[${hashing}].css`,
-      chunkFilename: `[name].[${hashing}].css`
+      chunkFilename: `[name].[${hashing}].chunk.css`
     }),
     new OptimizeCSSAssetsPlugin({
       cssProcessor: cssnano,
