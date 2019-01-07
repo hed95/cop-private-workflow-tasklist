@@ -12,6 +12,8 @@ const buildDirectory = path.join(__dirname, './dist');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const cssnano = require('cssnano');
 
 const CompressionPlugin = require('compression-webpack-plugin');
 
@@ -75,6 +77,16 @@ module.exports = webpackMerge(common, {
     ], {
       verbose: true,
       dry: false
+    }),
+    new OptimizeCSSAssetsPlugin({
+      cssProcessor: cssnano,
+      cssProcessorOptions: {
+        discardComments: {
+          removeAll: true,
+        },
+        safe: true
+      },
+      canPrint: false
     }),
     new HtmlWebpackPlugin({
       title: 'Caching',

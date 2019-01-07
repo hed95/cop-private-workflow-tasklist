@@ -4,8 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const sourcePath = path.join(__dirname, './app');
 const buildDirectory = path.join(__dirname, './dist');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const cssnano = require('cssnano');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { HashedModuleIdsPlugin } = require('webpack');
 
@@ -13,19 +11,6 @@ const hashing = process.env.NODE_ENV === 'production' ? 'chunkhash' : 'hash';
 console.log('content hashing: '+ hashing);
 
 module.exports = {
-  optimization: {
-    runtimeChunk: 'single',
-    splitChunks: {
-      chunks: 'all',
-      cacheGroups: {
-        vendors: {
-          chunks: 'all',
-          name: 'vendor',
-          test: /[\\/]node_modules[\\/]/,
-        }
-      }
-    }
-  },
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
     modules: [path.resolve(__dirname), 'node_modules', sourcePath],
@@ -46,16 +31,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: `[name].[${hashing}].css`,
       chunkFilename: `[name].[${hashing}].chunk.css`
-    }),
-    new OptimizeCSSAssetsPlugin({
-      cssProcessor: cssnano,
-      cssProcessorOptions: {
-        discardComments: {
-          removeAll: true,
-        },
-        safe: true
-      },
-      canPrint: false
     }),
     new MomentLocalesPlugin({
       localesToKeep: ['es-gb'],

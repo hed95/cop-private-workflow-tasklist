@@ -23,7 +23,7 @@ const TaskPage =  lazy(() => import('../pages/task/component/TaskPage'));
 
 const Main = () => (
   <main>
-    <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}><DataSpinner message="Loading routes"/></div>}>
+    <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}><DataSpinner message="Loading routes"/></div>}>
       <Switch>
         <Route name="Dashboard" exact path={AppConstants.DASHBOARD_PATH} component={() => <DashboardPage />}/>
         <Route name="Shift" exact path={AppConstants.SHIFT_PATH} component={() => <ShiftPage/>}/>
