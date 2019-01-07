@@ -15,5 +15,5 @@ USER 1000
 
 EXPOSE 8080
 
-ENTRYPOINT exec node dist/server.js
+ENTRYPOINT exec node dist/server/index.js
 

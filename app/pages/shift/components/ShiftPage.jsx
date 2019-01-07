@@ -136,12 +136,13 @@ class ShiftPage extends React.Component {
         } else {
           options.i18n.en.submit = 'Start shift';
           if (staffDetails) {
+            alert(JSON.stringify(staffDetails));
             const shiftSubmission = {
               data: {
                 shiftminutes: 0,
                 shifthours: 8,
                 startdatetime: moment.utc(moment()),
-                teamid: staffDetails.get('defaultlocationid'),
+                teamid: staffDetails.get('defaultteamid'),
                 locationid: staffDetails.get('defaultlocationid'),
                 phone: staffDetails.get('phone')
               }

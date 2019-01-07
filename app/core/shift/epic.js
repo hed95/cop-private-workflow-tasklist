@@ -42,10 +42,14 @@ const fetchStaffDetails = (action$, store, {client}) =>
     action$.ofType(types.FETCH_STAFF_DETAILS)
         .mergeMap(action =>
             client({
-                method: 'GET',
-                path: `/api/platform-data/staff?email=eq.${encodeURIComponent(store.getState().keycloak.tokenParsed.email)}`,
+                method: 'POST',
+                path: `/api/platform-data/rpc/staffdetails`,
+                entity: {
+                  "argstaffemail": `${store.getState().keycloak.tokenParsed.email}`
+                },
                 headers: {
                     "Accept": "application/json",
+                    "Content-Type": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
             }).retryWhen(retry)

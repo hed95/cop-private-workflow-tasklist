@@ -3,7 +3,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const common = require('./webpack.common.js');
 const webpackMerge = require('webpack-merge');
 const SriPlugin = require('webpack-subresource-integrity');
-const ManifestPlugin = require('webpack-manifest-plugin');
 const ProgressPlugin = require('progress-webpack-plugin');
 const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -11,14 +10,63 @@ const OfflinePlugin = require('offline-plugin');
 const path = require('path');
 const buildDirectory = path.join(__dirname, './dist');
 const BrotliPlugin = require('brotli-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
+
 
 module.exports = webpackMerge(common, {
   mode: 'production',
-  entry: {
-    main: './app/index'
-  },
+  entry: [
+    require.resolve('react-app-polyfill/ie11'),
+    path.join(process.cwd(), './app/index.js')
+  ],
   optimization: {
-    nodeEnv: 'production'
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          warnings: false,
+          compress: {
+            comparisons: false,
+          },
+          parse: {},
+          mangle: true,
+          output: {
+            comments: false,
+            ascii_only: true,
+          },
+        },
+        parallel: true,
+        cache: true,
+        sourceMap: true,
+      }),
+    ],
+    nodeEnv: 'production',
+    sideEffects: true,
+    concatenateModules: true,
+    splitChunks: {
+      chunks: 'all',
+      minSize: 30000,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      name: true,
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
+        },
+        main: {
+          chunks: 'all',
+          minChunks: 2,
+          reuseExistingChunk: true,
+          enforce: true,
+        },
+      },
+    },
+    runtimeChunk: true,
   },
   plugins: [
     new CleanWebpackPlugin([
@@ -26,6 +74,24 @@ module.exports = webpackMerge(common, {
     ], {
       verbose: true,
       dry: false
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Caching',
+      template: './public/index.html',
+      favicon: './public/favicon.ico',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
+      inject: true,
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
@@ -42,7 +108,7 @@ module.exports = webpackMerge(common, {
       exclude: [/\.min\.js$/gi]
     }),
     new ProgressPlugin(true),
-    new ManifestPlugin(),
+
     new BrotliPlugin({
       asset: '[path].br[query]',
       test: /\.(js|css)$/,
@@ -57,8 +123,7 @@ module.exports = webpackMerge(common, {
       debug: false
     }),
     new CopyWebpackPlugin([
-      { from: 'public/img', to: 'img' },
-      { from: 'server.js', to: '' }
+      { from: 'server/**', to: '' }
     ]),
     new OfflinePlugin({
       updateStrategy: 'changed',
@@ -66,7 +131,21 @@ module.exports = webpackMerge(common, {
       ServiceWorker: {
         events: true
       }
+    }),
+    new WebpackPwaManifest({
+      name: 'Central Operational Platform Private UI',
+      short_name: 'cop-private-ui',
+      description: 'Central Operational Platform Private UI',
+      background_color: '#00FFFFFF',
+      theme_color: '#1d8feb',
+      inject: true,
+      ios: true
     })
   ],
+
+  performance: {
+    assetFilter: assetFilename =>
+      !/(\.map$)|(^(main\.|favicon\.))/.test(assetFilename),
+  },
 
 });

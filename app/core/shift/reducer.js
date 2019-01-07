@@ -53,6 +53,7 @@ function reducer(state = initialState, action) {
         case actions.FETCH_STAFF_DETAILS:
             return state.set('isFetchingStaffDetails', true);
         case actions.FETCH_STAFF_DETAILS_SUCCESS:
+            alert(JSON.stringify(action.payload.entity));
             const staffResponse = action.payload.entity;
             const hasStaffDetails = staffResponse && staffResponse.length !== 0;
             const staff = hasStaffDetails ? Immutable.fromJS(staffResponse[0]) : null;
