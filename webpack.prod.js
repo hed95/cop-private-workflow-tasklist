@@ -9,10 +9,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const path = require('path');
 const buildDirectory = path.join(__dirname, './dist');
-const BrotliPlugin = require('brotli-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
+
+const CompressionPlugin = require('compression-webpack-plugin');
 
 
 module.exports = webpackMerge(common, {
@@ -109,12 +110,6 @@ module.exports = webpackMerge(common, {
     }),
     new ProgressPlugin(true),
 
-    new BrotliPlugin({
-      asset: '[path].br[query]',
-      test: /\.(js|css)$/,
-      threshold: 10240,
-      minRatio: 0.8
-    }),
     new SriPlugin({
       hashFuncNames: ['sha384'],
     }),
@@ -131,6 +126,12 @@ module.exports = webpackMerge(common, {
       ServiceWorker: {
         events: true
       }
+    }),
+    new CompressionPlugin({
+      algorithm: 'gzip',
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+      minRatio: 0.8,
     }),
     new WebpackPwaManifest({
       name: 'Central Operational Platform Private UI',

@@ -136,7 +136,6 @@ class ShiftPage extends React.Component {
         } else {
           options.i18n.en.submit = 'Start shift';
           if (staffDetails) {
-            alert(JSON.stringify(staffDetails));
             const shiftSubmission = {
               data: {
                 shiftminutes: 0,

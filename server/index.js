@@ -10,7 +10,6 @@ const app = express();
 const path = require('path');
 const cors = require('cors');
 const fs = require('fs');
-const compression = require('compression');
 
 if (process.env.NODE_ENV === 'production') {
     console.log('Setting ca bundle');
@@ -34,7 +33,6 @@ const respond = (req, res) => {
 process.title = 'cop-private-ui';
 
 app.set('port', port);
-app.use(compression());
 
 app.use(express.static(__dirname + "/"));
 
@@ -62,8 +60,8 @@ app.get('/api/config', (req, res) => {
 });
 
 const appendBrToContentType = (req, res, next) => {
-  req.url = req.url + '.br';
-  res.set('Content-Encoding', 'br');
+  req.url = req.url + '.gz'; // eslint-disable-line
+  res.set('Content-Encoding', 'gzip');
   next();
 };
 
@@ -72,7 +70,7 @@ app.get('*.js', appendBrToContentType);
 app.get('*.css', appendBrToContentType);
 
 app.all('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, '../index.html'));
 });
 
 const server = http.createServer(app).listen(app.get('port'), function () {
