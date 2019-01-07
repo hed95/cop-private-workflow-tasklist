@@ -59,18 +59,22 @@ app.get('/api/config', (req, res) => {
     })
 });
 
-const appendBrToContentType = (req, res, next) => {
-  req.url = req.url + '.gz'; // eslint-disable-line
+app.get('*.js', function(req, res, next) {
+  req.url = req.url + '.gz';
   res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', 'text/javascript');
   next();
-};
+});
 
-app.get('*.js', appendBrToContentType);
-
-app.get('*.css', appendBrToContentType);
+app.get('*.css', function(req, res, next) {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', 'text/css');
+  next();
+});
 
 app.all('*', function (req, res) {
-    res.sendFile(path.join(__dirname, '../index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 const server = http.createServer(app).listen(app.get('port'), function () {

@@ -118,7 +118,7 @@ module.exports = webpackMerge(common, {
       debug: false
     }),
     new CopyWebpackPlugin([
-      { from: 'server/**', to: '' }
+      { from: 'server.js', to: '' }
     ]),
     new OfflinePlugin({
       updateStrategy: 'changed',
