@@ -138,8 +138,7 @@ module.exports = webpackMerge(common, {
         events: true
       },
       relativePaths: false,
-      publicPath: '/',
-      appShell: '/',
+      publicPath: '/dashboard',
       caches: {
         main: [':rest:'],
         additional: ['*.chunk.js']
