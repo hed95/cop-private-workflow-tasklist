@@ -145,6 +145,7 @@ module.exports = webpackMerge(common, {
       },
       relativePaths: false,
       publicPath: '/',
+      excludes: ['/server.js'],
       caches: {
         main: [':rest:'],
         additional: ['*.chunk.js']
