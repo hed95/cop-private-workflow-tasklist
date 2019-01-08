@@ -14,8 +14,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
+const CompressionPlugin = require('compression-webpack-plugin');
 
-const BrotliPlugin = require('brotli-webpack-plugin');
 
 
 module.exports = webpackMerge(common, {
@@ -121,12 +121,7 @@ module.exports = webpackMerge(common, {
       exclude: [/\.min\.js$/gi]
     }),
     new ProgressPlugin(true),
-    new BrotliPlugin({
-      asset: '[path].br[query]',
-      test: /\.(js|css)$/,
-      threshold: 10240,
-      minRatio: 0.8
-    }),
+
     new SriPlugin({
       hashFuncNames: ['sha384'],
     }),
@@ -137,13 +132,19 @@ module.exports = webpackMerge(common, {
     new CopyWebpackPlugin([
       { from: 'server.js', to: '' }
     ]),
+    new CompressionPlugin({
+      algorithm: 'gzip',
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+      minRatio: 0.8,
+    }),
     new OfflinePlugin({
       autoUpdate: 1000 * 60 * 2,
       ServiceWorker: {
         events: true
       },
       relativePaths: false,
-      publicPath: '/dashboard',
+      publicPath: '/',
       caches: {
         main: [':rest:'],
         additional: ['*.chunk.js']
