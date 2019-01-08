@@ -61,14 +61,14 @@ app.get('/api/config', (req, res) => {
 
 app.get('*.js', function(req, res, next) {
   req.url = req.url + '.gz';
-  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Encoding', 'br');
   res.set('Content-Type', 'text/javascript');
   next();
 });
 
 app.get('*.css', function(req, res, next) {
   req.url = req.url + '.gz';
-  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Encoding', 'br');
   res.set('Content-Type', 'text/css');
   next();
 });
