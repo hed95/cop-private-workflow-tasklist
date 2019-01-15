@@ -24,8 +24,7 @@ export class DashboardPage extends React.Component {
     render() {
         const {hasActiveShift, isFetchingShift} = this.props;
 
-        const headerToDisplay = !isFetchingShift && !hasActiveShift ?
-            <div style={{display: 'flex', justifyContent: 'center', paddingTop: '15px'}}>
+        const missingShiftWarning =  (this.props.location && this.props.location.pathname !=='/noop-dashboard') ? <div style={{display: 'flex', justifyContent: 'center', paddingTop: '15px'}}>
                 <div className="notice">
                     <i className="icon icon-important">
                         <span className="visually-hidden">Warning</span>
@@ -34,7 +33,10 @@ export class DashboardPage extends React.Component {
                         Please start your shift before proceeding
                     </strong>
                 </div>
-            </div> : (isFetchingShift ? <div style={{paddingTop: '15px'}}>
+            </div> : null ;
+
+        const headerToDisplay = !isFetchingShift && !hasActiveShift ?
+          missingShiftWarning : (isFetchingShift ? <div style={{paddingTop: '15px'}}>
                 <div>
                     <strong className="bold loading">
                         Checking if you have an active shift

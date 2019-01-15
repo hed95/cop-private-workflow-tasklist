@@ -58,7 +58,10 @@ describe('DashboardPage', () => {
   it('renders panels and warning if shift not present', async() => {
     const props = {
       isFetchingShift: false,
-      hasActiveShift: false
+      hasActiveShift: false,
+      location: {
+        pathname: "/dashboard"
+      }
     };
 
     const wrapper = shallow(<DashboardPage

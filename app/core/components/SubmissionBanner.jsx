@@ -24,26 +24,47 @@ class SubmissionBanner extends React.Component {
   handleSubmission(mgs, data) {
     this.setState({
       submission: data.submission,
-      message: data.message
+      message: data.message,
+      type: data.type ? data.type : 'success',
+      autoDismiss: data.autoDismiss ? data.autoDismiss : true
     });
-    setTimeout(() => {
-      this.setState({
-        submission: false, message: null
-      });
-    }, 5000);
+
+    if (data.autoDismiss) {
+      setTimeout(() => {
+        this.setState({
+          submission: false, message: null, type: null, autoDismiss: true
+        });
+      }, 5000);
+    }
   }
 
   render() {
-    const { submission, message } = this.state;
-
-    return submission ? <div className="container" id="successfulSubmission">
-      <div className="govuk-box-highlight confirm-page new">
-        <span className="hod-checkmark"/>
-        <h2 className="heading-small">
-          {message}
-        </h2>
-      </div>
-    </div> : <div/>;
+    const { submission, message, type } = this.state;
+    if (submission) {
+       if (type === 'warning') {
+         return <div style={{display: 'flex', justifyContent: 'center', paddingTop: '15px'}}>
+           <div className="notice">
+             <i className="icon icon-important">
+               <span className="visually-hidden">Warning</span>
+             </i>
+             <strong className="bold-medium">
+               {message}
+             </strong>
+           </div>
+         </div>
+       } else {
+         return <div className="container" id="successfulSubmission">
+           <div className="govuk-box-highlight confirm-page new">
+             <span className="hod-checkmark"/>
+             <h2 className="heading-small">
+               {message}
+             </h2>
+           </div>
+         </div>
+       }
+    } else {
+      return null;
+    }
   }
 }
 

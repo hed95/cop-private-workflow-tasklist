@@ -28,7 +28,6 @@ export const rootEpic = combineEpics(
     dashboard.epic
 );
 
-
 export const rootReducer = combineReducers({
     loadingBar: loadingBarReducer,
     routing: routerReducer,

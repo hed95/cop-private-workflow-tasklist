@@ -2,43 +2,60 @@ import 'babel-polyfill';
 
 import React, { Suspense, lazy }  from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom';
-import ShiftScopedRoute from './shift/ShiftScopedRoute';
 import AppConstants from '../common/AppConstants';
 import DataSpinner from './components/DataSpinner';
+import withOnboardingCheck from './shift/withOnboardingCheck';
+import withShiftCheck from './shift/withShiftCheck';
 
-const DashboardPage = lazy(() => import('../pages/dashboard/components/DashboardPage'));
-const ShiftPage = lazy(() => import ('../pages/shift/components/ShiftPage'));
-const YourTasksContainer = lazy(() => import ('../pages/tasks/components/YourTasksContainer'));
-const ProceduresPage = lazy(() => import ('../pages/procedures/components/ProceduresPage'));
-const ReportsPage = lazy(() => import('../pages/reports/components/ReportsPage'));
-const YourGroupUnassignedTasksContainer = lazy(() => import('../pages/tasks/components/YourGroupUnassignedTasksContainer'));
-const YourGroupTasksContainer = lazy(() => import('../pages/tasks/components/YourGroupTasksContainer'));
-const ReportPage = lazy(() => import('../pages/reports/components/ReportPage'));
-const MessagesPage = lazy(() => import('../pages/messages/components/MessagesPage'));
-const CalendarPage = lazy(() => import('../pages/calendar/components/CalendarPage'));
-const ProcessStartPage = lazy(() => import('../pages/procedures/components/ProcedureStartPage'));
-const ProcessDiagramPage = lazy(() => import('../pages/procedures/components/ProcessDiagramPage'));
-const AdminPage = lazy(() => import('../pages/admin/components/AdminPage'));
-const TaskPage =  lazy(() => import('../pages/task/component/TaskPage'));
+//onboarding check only
+const Dashboard = lazy(() => import('../pages/dashboard/components/DashboardPage'));
+const DashboardPage = withOnboardingCheck(Dashboard);
+const ShiftPage = withOnboardingCheck(lazy(() => import ('../pages/shift/components/ShiftPage')));
+
+//onboarding and shift check
+const YourTasksContainer = withOnboardingCheck(withShiftCheck(lazy(() => import ('../pages/tasks/components/YourTasksContainer'))));
+const ProceduresPage = withOnboardingCheck(withShiftCheck(lazy(() => import ('../pages/procedures/components/ProceduresPage'))));
+const ReportsPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/reports/components/ReportsPage'))));
+const YourGroupUnassignedTasksContainer = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/tasks/components/YourGroupUnassignedTasksContainer'))));
+const YourGroupTasksContainer = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/tasks/components/YourGroupTasksContainer'))));
+const ReportPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/reports/components/ReportPage'))));
+const MessagesPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/messages/components/MessagesPage'))));
+const CalendarPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/calendar/components/CalendarPage'))));
+
+const StartProcedurePage = lazy(() => import('../pages/procedures/components/ProcedureStartPage'));
+const ProcessStartPage = withOnboardingCheck(withShiftCheck(StartProcedurePage));
+const ProcessDiagramPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/procedures/components/ProcessDiagramPage'))));
+const AdminPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/admin/components/AdminPage'))));
+const TaskPage =  withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/task/component/TaskPage'))));
+
+
+//no checks required
+const UnauthorizedPage = lazy(() => import('../core/components/UnauthorizedPage'));
+
 
 const Main = () => (
   <main>
-    <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}><DataSpinner message="Loading routes"/></div>}>
+    <Suspense fallback={<div style={{ justifyContent: 'center'}}><DataSpinner message="Loading routes"/></div>}>
       <Switch>
         <Route name="Dashboard" exact path={AppConstants.DASHBOARD_PATH} component={() => <DashboardPage />}/>
         <Route name="Shift" exact path={AppConstants.SHIFT_PATH} component={() => <ShiftPage/>}/>
-        <ShiftScopedRoute name="Your tasks" exact path={AppConstants.YOUR_TASKS_PATH} component={() => <YourTasksContainer />}/>
-        <ShiftScopedRoute name="Your group unassigned tasks" exact path={AppConstants.YOUR_GROUP_UNASSIGNED_TASKS_PATH} component={() => <YourGroupUnassignedTasksContainer />}/>
-        <ShiftScopedRoute name="Your group tasks" exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={() => <YourGroupTasksContainer/>}/>
-        <ShiftScopedRoute name="Procedures" exact path={AppConstants.PROCEDURES_PATH} component={() =><ProceduresPage/>}/>
-        <ShiftScopedRoute name="Reports" exact path={AppConstants.REPORTS_PATH} component={() =><ReportsPage/>} />
-        <ShiftScopedRoute exact path={AppConstants.REPORT_PATH} component={() => <ReportPage/>}/>
-        <ShiftScopedRoute name="Messages" exact path={AppConstants.MESSAGES_PATH} component={() => <MessagesPage/>}/>
-        <ShiftScopedRoute name="Calendar" exact path={AppConstants.CALENDAR_PATH} component={() => <CalendarPage/>}/>
-        <ShiftScopedRoute name="Procedure Start Page" exact path={AppConstants.PROCEDURE_START_PATH} component={() =><ProcessStartPage/>}/>
-        <ShiftScopedRoute name="Process Diagram Page" exact path={AppConstants.PROCESS_DIAGRAM_PATH} component={() =><ProcessDiagramPage/>}/>
-        <ShiftScopedRoute name="Task Details Page" exact path={AppConstants.TASK_PATH} component={() =><TaskPage/>}/>
-        <ShiftScopedRoute name="Admin" exact path={AppConstants.ADMIN_PATH} component={() =><AdminPage/>}/>
+        <Route name="Your tasks" exact path={AppConstants.YOUR_TASKS_PATH} component={() => <YourTasksContainer />}/>
+        <Route name="Your group unassigned tasks" exact path={AppConstants.YOUR_GROUP_UNASSIGNED_TASKS_PATH} component={() => <YourGroupUnassignedTasksContainer />}/>
+        <Route name="Your group tasks" exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={() => <YourGroupTasksContainer/>}/>
+        <Route name="Procedures" exact path={AppConstants.PROCEDURES_PATH} component={() =><ProceduresPage/>}/>
+        <Route name="Reports" exact path={AppConstants.REPORTS_PATH} component={() =><ReportsPage/>} />
+        <Route exact path={AppConstants.REPORT_PATH} component={() => <ReportPage/>}/>
+        <Route name="Messages" exact path={AppConstants.MESSAGES_PATH} component={() => <MessagesPage/>}/>
+        <Route name="Calendar" exact path={AppConstants.CALENDAR_PATH} component={() => <CalendarPage/>}/>
+        <Route name="Procedure Start Page" exact path={AppConstants.PROCEDURE_START_PATH} component={() =><ProcessStartPage/>}/>
+        <Route name="Process Diagram Page" exact path={AppConstants.PROCESS_DIAGRAM_PATH} component={() =><ProcessDiagramPage/>}/>
+        <Route name="Task Details Page" exact path={AppConstants.TASK_PATH} component={() =><TaskPage/>}/>
+        <Route name="Admin" exact path={AppConstants.ADMIN_PATH} component={() =><AdminPage/>}/>
+        <Route name="Unauthorized path" exact path={"/unauthorized"} component={() => <UnauthorizedPage/> }/>
+        <Route name="On board User" exact path={AppConstants.ONBOARD_USER_PATH} component={() => <StartProcedurePage processKey="onboard-user" noBackLink={true}/>} />
+        <Route name="Mandatory declaration" exact path={AppConstants.MANDATORY_DECLARATION_PATH} component={() => <StartProcedurePage processKey="mandatory-declarations" noBackLink={true}/>} />
+        <Route name="No-Op Dashboard" exact path={"/noop-dashboard"} component={() => <Dashboard/>} />
+
         <Redirect to={AppConstants.DASHBOARD_PATH}/>
       </Switch>
     </Suspense>
