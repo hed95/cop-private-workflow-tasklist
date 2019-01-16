@@ -6,6 +6,7 @@ import AppConstants from '../common/AppConstants';
 import DataSpinner from './components/DataSpinner';
 import withOnboardingCheck from './shift/withOnboardingCheck';
 import withShiftCheck from './shift/withShiftCheck';
+import ErrorHandlingComponent from './error/component/ErrorHandlingComponent';
 
 //onboarding check only
 const Dashboard = lazy(() => import('../pages/dashboard/components/DashboardPage'));
@@ -52,8 +53,8 @@ const Main = () => (
         <Route name="Task Details Page" exact path={AppConstants.TASK_PATH} component={() =><TaskPage/>}/>
         <Route name="Admin" exact path={AppConstants.ADMIN_PATH} component={() =><AdminPage/>}/>
         <Route name="Unauthorized path" exact path={"/unauthorized"} component={() => <UnauthorizedPage/> }/>
-        <Route name="On board User" exact path={AppConstants.ONBOARD_USER_PATH} component={() => <StartProcedurePage processKey="onboard-user" noBackLink={true}/>} />
-        <Route name="Mandatory declaration" exact path={AppConstants.MANDATORY_DECLARATION_PATH} component={() => <StartProcedurePage processKey="mandatory-declarations" noBackLink={true}/>} />
+        <Route name="On board User" exact path={AppConstants.ONBOARD_USER_PATH} component={() => <ErrorHandlingComponent><StartProcedurePage processKey="onboard-user" noBackLink={true}/></ErrorHandlingComponent>} />
+        <Route name="Mandatory declaration" exact path={AppConstants.MANDATORY_DECLARATION_PATH} component={() => <ErrorHandlingComponent><StartProcedurePage processKey="mandatory-declarations" noBackLink={true}/></ErrorHandlingComponent>} />
         <Route name="No-Op Dashboard" exact path={"/noop-dashboard"} component={() => <Dashboard/>} />
 
         <Redirect to={AppConstants.DASHBOARD_PATH}/>
