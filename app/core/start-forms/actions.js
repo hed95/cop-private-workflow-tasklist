@@ -27,13 +27,14 @@ const resetForm = () => ({
 });
 
 
-const submit = (formId,  processKey, variableName, submissionData, processName)=> ({
+const submit = (formId,  processKey, variableName, submissionData, processName, nonShiftApiCall)=> ({
     type: types.SUBMIT,
     formId,
     processKey,
     variableName,
     submissionData,
-    processName
+    processName,
+    nonShiftApiCall
 });
 
 const submitSuccess = (payload) => ({

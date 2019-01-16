@@ -59,7 +59,7 @@ class OnboardingProcessInflight {
   }
 
   performCheck(staffDetails) {
-    if (staffDetails.onboardingprocessinstanceid) {
+    if (staffDetails.get('onboardprocessinstanceid')) {
       return {
         redirectPath: '/noop-dashboard',
         data: {
@@ -84,7 +84,7 @@ class StaffLeft {
   }
 
   performCheck(staffDetails) {
-    if (staffDetails.dateofleaving) {
+    if (staffDetails.get('dateofleaving')) {
       return {
         redirectPath: '/unauthorized'
       };

@@ -25,7 +25,6 @@ class ProcessStartPage extends React.Component {
       const params = queryString.parse(this.props.location.search);
       this.props.fetchProcessDefinition(params.processKey);
     }
-
   }
 
   componentWillUnmount() {
@@ -36,25 +35,27 @@ class ProcessStartPage extends React.Component {
   render() {
     const { isFetchingProcessDefinition, processDefinition, submittingToWorkflow } = this.props;
     const pointerStyle = { cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline' };
-    return <div>
-      {!this.props.noBackLink ? <div style={pointerStyle}
-                                     onClick={(event) => this.props.history.replace('/procedures')}>Back
-        to
-        procedures
-      </div> : null}
 
-      <Loader show={submittingToWorkflow}
-              message={<div style={{ justifyContent: 'center' }}><DataSpinner
-                message="Starting procedure..."/></div>}
-              hideContentOnLoad={submittingToWorkflow}
-              foregroundStyle={{ color: 'black' }}
-              backgroundStyle={{ backgroundColor: 'white' }}>
-        <div className="grid-row">
-          <div className="column-full">
-            <fieldset>
-              {isFetchingProcessDefinition ? <div>Loading form...</div> : <div>
+    if (isFetchingProcessDefinition) {
+      return <DataSpinner message="Loading procedure..."/>
+    } else {
+      return <div>
+        {!this.props.noBackLink ? <div style={pointerStyle}
+                                       onClick={(event) => this.props.history.replace('/procedures')}>Back
+          to
+          procedures
+        </div> : null}
+
+        <Loader show={submittingToWorkflow}
+                message={<div style={{ justifyContent: 'center' }}><DataSpinner
+                  message="Starting procedure..."/></div>}
+                hideContentOnLoad={submittingToWorkflow}
+                foregroundStyle={{ color: 'black' }}
+                backgroundStyle={{ backgroundColor: 'white' }}>
+          <div className="grid-row">
+            <div className="column-full">
+              <fieldset>
                 {processDefinition ? <div>
-
                   <h2 className="heading-large">
                     <span
                       className="heading-secondary">Operational procedure</span> {processDefinition.getIn(['process-definition', 'name'])}
@@ -62,23 +63,22 @@ class ProcessStartPage extends React.Component {
 
 
                   <StartForm formName={processDefinition.get('formKey')}
+                             redirectPath={this.props.redirectPath}
                              processKey={processDefinition.getIn(['process-definition', 'key'])}
                              processName={processDefinition.getIn(['process-definition', 'name'])}
+                             nonShiftApiCall={this.props.nonShiftApiCall}
                              {...this.props}/>
-                </div> : <div>
-                  No process definition found
-                </div>}
-
-              </div>
-              }
-
-            </fieldset>
+                </div> : <div>No process definition found</div>
+                }
+              </fieldset>
+            </div>
           </div>
-        </div>
-      </Loader>
+        </Loader>
 
 
-    </div>;
+      </div>;
+    }
+
   };
 
 }

@@ -32,7 +32,7 @@ function reducer(state = initialState, action) {
     case actions.SUBMIT_FAILURE:
       return state.set('submittingToFormIO', false)
         .set('submissionToFormIOSuccessful', false);
-    case actions.SUBMIT_TO_WORKFLOW:
+    case actions.SUBMIT_TO_WORKFLOW || actions.SUBMIT_TO_WORKFLOW_NON_SHIFT:
       console.log('IFrame: Submitting to workflow');
       return state.set('submittingToWorkflow', true)
         .set('submissionToFormIOSuccessful', true)

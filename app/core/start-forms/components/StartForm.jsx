@@ -36,7 +36,11 @@ export class StartForm extends React.Component {
     if (this.form && this.form.formio) {
       if (!nextProps.submittingToWorkflow && nextProps.submissionToWorkflowSuccessful) {
         this.form.formio.emit('submitDone');
-        this.props.history.replace(AppConstants.DASHBOARD_PATH);
+        if (this.props.redirectPath) {
+          this.props.history.replace(this.props.redirectPath);
+        } else {
+          this.props.history.replace(AppConstants.DASHBOARD_PATH);
+        }
       } else {
         if ((!nextProps.submittingToFormIO && !nextProps.submissionToFormIOSuccessful)
           || (!nextProps.submittingToWorkflow && !nextProps.submissionToWorkflowSuccessful)) {
@@ -112,7 +116,7 @@ export class StartForm extends React.Component {
           form={form} ref={(form) => this.form = form} options={options}
           onCustomEvent={(event) => onCustomEvent(event)}
           onSubmit={(submission) => {
-            this.props.submit(form._id, processKey, variableName, submission.data, process);
+            this.props.submit(form._id, processKey, variableName, submission.data, process, this.props.nonShiftApiCall);
           }}/>;
       } else {
         return <NotFound resource="Form" id={this.props.formName}/>;
