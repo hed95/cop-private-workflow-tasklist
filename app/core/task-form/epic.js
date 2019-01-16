@@ -72,6 +72,7 @@ const completeTaskForm = (action$, store, {client}) =>
             }).retryWhen(retry).map(payload => {
                 PubSub.publish("submission", {
                     submission: true,
+                    autoDismiss: true,
                     message: `Task successfully completed`
                 });
                 return actions.completeTaskSuccess(payload)

@@ -109,6 +109,7 @@ const submitToWorkflow = (action$, store, { client }) =>
           console.log(JSON.stringify(action));
           PubSub.publish('submission', {
             submission: true,
+            autoDismiss: true,
             message: `${action.processName} successfully started`
           });
           return actions.submitToWorkflowSuccess(payload);
@@ -156,6 +157,7 @@ const submitToWorkflowUsingNonShiftApi = (action$, store, { client }) =>
           console.log(JSON.stringify(action));
           PubSub.publish('submission', {
             submission: true,
+            autoDismiss: true,
             message: `${action.processName} successfully started`
           });
           return actions.submitToWorkflowSuccess(payload);
