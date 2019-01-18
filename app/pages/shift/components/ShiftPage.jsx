@@ -21,6 +21,7 @@ import * as actions from '../../../core/shift/actions';
 import moment from 'moment';
 import Loader from 'react-loader-advanced';
 import DataSpinner from '../../../core/components/DataSpinner';
+import ErrorPanel from '../../../core/error/component/ErrorPanel';
 
 const uuidv4 = require('uuid/v4');
 
@@ -71,8 +72,6 @@ class ShiftPage extends React.Component {
 
 
   renderForm() {
-
-
     const { shiftForm, shift, loadingShiftForm, isFetchingShift, isFetchingStaffDetails, staffDetails } = this.props;
     this.resetCancelButton();
     const onRender = () => {
@@ -182,39 +181,17 @@ class ShiftPage extends React.Component {
       isFetchingShift,
       submittingActiveShift,
       hasError,
-      errors,
       unauthorised,
       activeShiftSuccess
 
     } = this.props;
-    let items = errors.map((err) => {
-      return <li key={uuidv4()}>{err.get('url')} - [{err.get('status')} {err.get('error')}]
-        - {err.get('message')}</li>;
-    });
-
     const failedToCreate = (activeShiftSuccess !== null && activeShiftSuccess === false) && unauthorised;
-    if (failedToCreate) {
-      items = [<li key={uuidv4()}>Failed to create an active shift</li>, items];
-    }
 
     const spinner = <DataSpinner message="Submitting your shift details..."/>;
     const formToRender = this.renderForm();
 
-    const renderError = (items) => {
-      return <div className="error-summary" role="alert"
-                  aria-labelledby="error-summary-heading-example-1"
-                  tabIndex="-1">
-        <h2 className="heading-medium error-summary-heading" id="error-summary-heading-example-1">
-          We are experiencing technical problems
-        </h2>
-        <ul className="error-summary-list">
-          {items}
-        </ul>
-      </div>;
-    };
-
     return <div style={{ paddingTop: '20px' }}>
-      {hasError || failedToCreate ? renderError(items) : <div/>}
+      {hasError || failedToCreate ? <ErrorPanel {...this.props}/> : <div/>}
 
       <Loader show={!isFetchingShift && submittingActiveShift} message={spinner}
               hideContentOnLoad={submittingActiveShift}
@@ -222,15 +199,28 @@ class ShiftPage extends React.Component {
               backgroundStyle={{ backgroundColor: 'white' }}>
         <div className="grid-row">
           <div className="column-full" id="shiftWizardForm">
+            <div style={{display: 'flex', justifyContent: 'center', paddingTop: '15px'}}>
+              <div className="notice">
+                <i className="icon icon-important">
+                  <span className="visually-hidden">Warning</span>
+                </i>
+                <strong className="bold-medium">
+                  Please start your shift before proceeding
+                </strong>
+              </div>
+            </div>
             {formToRender}
           </div>
-
         </div>
       </Loader>
     </div>;
 
   }
+
 }
+
+
+
 
 
 ShiftPage.propTypes = {

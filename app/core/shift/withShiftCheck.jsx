@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { hasActiveShift, isFetchingShift } from './selectors';
+import { hasActiveShift, isFetchingShift ,shift} from './selectors';
 import * as actions from './actions';
 import { createStructuredSelector } from 'reselect';
 import { Redirect, withRouter } from 'react-router';
@@ -28,7 +28,7 @@ export default function (ComposedComponent) {
     }
 
     render() {
-      const { hasActiveShift, isFetchingShift } = this.props;
+      const { hasActiveShift, isFetchingShift} = this.props;
 
       if (isFetchingShift) {
         return <DataSpinner message={`Checking if you have an active shift`}/>;
@@ -37,7 +37,7 @@ export default function (ComposedComponent) {
           return <ErrorHandlingComponent><BackButton {...this.props}><ComposedComponent {...this.props}
                                                                                         key={uuidv4()}/></BackButton></ErrorHandlingComponent>;
         } else {
-          return <Redirect to="/dashboard"/>;
+          return <Redirect to="/shift"/>;
         }
       }
     }
@@ -66,7 +66,8 @@ export default function (ComposedComponent) {
 
   const mapStateToProps = createStructuredSelector({
     hasActiveShift: hasActiveShift,
-    isFetchingShift: isFetchingShift
+    isFetchingShift: isFetchingShift,
+    shift: shift
   });
 
   const mapDispatchToProps = dispatch => bindActionCreators(Object.assign({}, actions, errorActions), dispatch);

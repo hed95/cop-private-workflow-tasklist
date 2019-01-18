@@ -9,10 +9,10 @@ import withShiftCheck from './shift/withShiftCheck';
 import ErrorHandlingComponent from './error/component/ErrorHandlingComponent';
 
 //onboarding check only
-const DashboardPage = withOnboardingCheck(lazy(() => import('../pages/dashboard/components/DashboardPage')));
 const ShiftPage = withOnboardingCheck(lazy(() => import ('../pages/shift/components/ShiftPage')));
 
 //onboarding and shift check
+const DashboardPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/dashboard/components/DashboardPage'))));
 const YourTasksContainer = withOnboardingCheck(withShiftCheck(lazy(() => import ('../pages/tasks/components/YourTasksContainer'))));
 const ProceduresPage = withOnboardingCheck(withShiftCheck(lazy(() => import ('../pages/procedures/components/ProceduresPage'))));
 const ReportsPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/reports/components/ReportsPage'))));

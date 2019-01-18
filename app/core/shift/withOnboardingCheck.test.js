@@ -4,9 +4,6 @@ import DataSpinner from '../components/DataSpinner';
 import React from 'react';
 import WithOnboardingCheck from './withOnboardingCheck';
 import Immutable from 'immutable';
-import { Router } from 'react-router';
-import SubmissionBanner from '../components/SubmissionBanner';
-import { createMemoryHistory } from 'history';
 
 const { Map } = Immutable;
 

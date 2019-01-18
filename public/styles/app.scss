@@ -612,7 +612,9 @@ table.narrowtable tr th {
 }
 
 
-table.narrowtable tr:nth-child(5) { border-bottom: solid #aaa; }
+table.narrowtable tr:nth-child(5) {
+  border-bottom: solid #aaa;
+}
 
 table.widetable {
   width: 100%;
@@ -624,9 +626,13 @@ table.narrowtable-yourtasks tr th {
 }
 
 
-table.narrowtable-yourtasks tr:nth-child(4) { border-bottom: solid #aaa; }
+table.narrowtable-yourtasks tr:nth-child(4) {
+  border-bottom: solid black;
+}
 
-table.narrowtable-your-group-unassignedtasks tr:nth-child(5) { border-bottom: solid #aaa; }
+table.narrowtable-your-group-unassignedtasks tr:nth-child(5) {
+  border-bottom: solid black;
+}
 
 
 table.narrowtable-your-group-unassignedtasks tr td,
@@ -639,5 +645,5 @@ table.narrowtable-process tr th {
   font-size: 14px;
 }
 table.narrowtable-process tr:nth-child(2) {
-  border-bottom: solid #aaa;
+  border-bottom: solid black;
 }
