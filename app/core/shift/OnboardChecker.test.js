@@ -40,7 +40,18 @@ describe("OnboardChecker", () => {
 
   it('expired man dec', () => {
     const staffDetails = Immutable.fromJS({
-      mandeclastupdate: moment().year(2)
+      "staffid": "XXXXX",
+      "identityid": "XXXX",
+      "email": "email",
+      "gradetypeid": "XXXX",
+      "phone": "+44 XXXXXXXXXX",
+      "defaultteamid": "XXXXXXXXXX",
+      "adelphi": 111111,
+      "dateofleaving": null,
+      "mandeclastupdate": null,
+      "defaultlocationid": 1,
+      "onboardprocessinstanceid": null,
+      "mandatorydeclarationnprocessinstanceid": null
     });
     const response = onboardChecker.onBoardCheck(staffDetails);
     expect(response.redirectPath).toEqual("/mandatory-declarations");

@@ -12,12 +12,12 @@ import ErrorPanel from './ErrorPanel';
 class ErrorHandlingComponent extends React.Component {
 
   render() {
-    const { hasError, unauthorised } = this.props;
+    const { hasError, unauthorised, skipAuthError} = this.props;
     if (!unauthorised && !hasError) {
       return <div>{this.props.children}</div>;
     }
 
-    if (unauthorised) {
+    if (unauthorised && !skipAuthError) {
       return <Redirect push to="/dashboard"/>;
     } else {
       return <div>
