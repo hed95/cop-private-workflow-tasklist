@@ -9,7 +9,7 @@
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
     "dev": "webpack-dev-server --open --config webpack.dev.js --watch --colors",
-    "prebuild": "rebuild-node-sass",
+    "prebuild": "npm-audit-check && rebuild-node-sass",
     "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js"
   },
   "jest": {
@@ -82,6 +82,7 @@
     "nock": "^10.0.4",
     "node-sass": "^4.11.0",
     "npm": "^6.4.1",
+    "npm-audit-check": "^1.1.0",
     "offline-plugin": "^5.0.6",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "path": "^0.12.7",
