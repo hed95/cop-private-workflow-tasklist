@@ -9,10 +9,12 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import {
   activeShiftSuccess,
   hasActiveShift,
-  isFetchingShift, isFetchingStaffDetails,
+  isFetchingShift,
+  isFetchingStaffDetails,
   loadingShiftForm,
   shift,
-  shiftForm, staffDetails,
+  shiftForm,
+  staffDetails,
   submittingActiveShift
 } from '../../../core/shift/selectors';
 import { errors, hasError, unauthorised } from '../../../core/error/selectors';
@@ -22,8 +24,6 @@ import moment from 'moment';
 import Loader from 'react-loader-advanced';
 import DataSpinner from '../../../core/components/DataSpinner';
 import ErrorPanel from '../../../core/error/component/ErrorPanel';
-
-const uuidv4 = require('uuid/v4');
 
 class ShiftPage extends React.Component {
 
@@ -218,7 +218,6 @@ class ShiftPage extends React.Component {
   }
 
 }
-
 
 
 

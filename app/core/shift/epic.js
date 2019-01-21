@@ -180,6 +180,7 @@ const fetchActiveShiftAfterCreation = (action$, store, { client }) =>
             console.log(`Shift details located...`);
             PubSub.publish('submission', {
               submission: true,
+              autoDismiss: true,
               message: `Shift successfully started`
             });
             return ([actions.createActiveShiftSuccess(),
