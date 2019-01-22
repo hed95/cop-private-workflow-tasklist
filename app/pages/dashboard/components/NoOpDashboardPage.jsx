@@ -28,6 +28,8 @@ export class NoOpDashboardPage extends React.Component {
         </div>
       </div>
       <h2 className="heading-medium">Access to the platform will be granted once your onboarding or mandatory declaration has been processed</h2>
+
+      <h4>Please click <a onClick={(e) => {this.props.history.replace("/dashboard")}}>here</a>once you have received notification of approval.</h4>
     </div>;
   }
 }

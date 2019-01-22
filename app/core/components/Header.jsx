@@ -9,7 +9,6 @@ import {bindActionCreators} from "redux";
 class Header extends React.Component {
 
     componentWillMount() {
-        this.logout = this.logout.bind(this);
         this.dashboard = this.dashboard.bind(this);
     }
 
@@ -19,15 +18,8 @@ class Header extends React.Component {
     }
 
 
-    logout(event) {
-        event.preventDefault();
-        this.props.kc.logout();
-    }
-
     render() {
-        const pointerStyle = {cursor: 'pointer', alignContent: 'right'};
         return <div>
-
             <header role="banner" id="global-header" className="with-proposition">
                 <div className="header-wrapper">
                     <div className="header-global">
@@ -40,14 +32,9 @@ class Header extends React.Component {
                     <div className="header-proposition">
                         <div className="content">
                             <div className="grid-row" style={{paddingTop: '10px'}}>
-                                <div className="column-two-thirds">
+                                <div className="column-full">
                                     <a href="#" onClick={(event) => this.dashboard(event)} id="proposition-name">Operational
                                         Activities</a>
-                                </div>
-                                <div className="column-one-quarter">
-                                    <ul id="proposition-links">
-                                        <li style={pointerStyle}><a id="logout" onClick={this.logout}>Logout</a></li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
