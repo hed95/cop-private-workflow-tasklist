@@ -23,7 +23,7 @@ export class YourGroupUnassignedTasksContainer extends React.Component {
       const { unassignedTasks } = that.props;
       this.loadUnassignedTasks(true, unassignedTasks.get('yourGroupsUnassignedTasksSortValue'),
         unassignedTasks.get('yourGroupsUnassignedTasksFilterValue'));
-    }, AppConstants.THREE_MINUTES);
+    }, AppConstants.ONE_MINUTE);
   }
 
   componentWillMount() {
@@ -87,7 +87,7 @@ export class YourGroupUnassignedTasksContainer extends React.Component {
         sortTasks={this.sortTasks}
         filterTasksByName={this.filterTasksByName}
         unassignedTasks={unassignedTasks}
-        goToTask={this.goToTask}/>;
+        goToTask={this.goToTask} startAProcedure={() => this.props.history.replace("/procedures")}/>;
     }
   }
 }

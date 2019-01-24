@@ -5,8 +5,9 @@ import moment from 'moment';
 import SortTasks from './SortTasks';
 import FilterTaskName from './FilterTaskName';
 
-const YourTasks = ({ yourTasks, sortYourTasks, filterTasksByName, goToTask}) => {
+const YourTasks = ({ yourTasks, sortYourTasks, filterTasksByName, goToTask, startAProcedure }) => {
   const pointerStyle = { cursor: 'pointer' };
+  const underlinedStyle = { cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline' };
 
   const data = yourTasks ? yourTasks.get('tasks')
     .map((taskData) => {
@@ -20,10 +21,13 @@ const YourTasks = ({ yourTasks, sortYourTasks, filterTasksByName, goToTask}) => 
         id: taskId,
         name: linkElem(task.get('name')),
         priority: linkElem(priority(task.get('priority'))),
-        due: linkElem(moment().to(moment(task.get('due')))),
-        createdOn: linkElem(moment().to(moment(task.get('created'))))
+        due: linkElem(moment()
+          .to(moment(task.get('due')))),
+        createdOn: linkElem(moment()
+          .to(moment(task.get('created'))))
       };
-    }).toArray() : [];
+    })
+    .toArray() : [];
 
   const headers = {
     name: 'Task name',
@@ -32,28 +36,31 @@ const YourTasks = ({ yourTasks, sortYourTasks, filterTasksByName, goToTask}) => 
     createdOn: 'Created'
   };
 
-  return <div style={{ paddingTop: '20px' }}>
-    <div className="data" id="yourTasksTotalCount">
+  return <div>
+    <div style={underlinedStyle} onClick={startAProcedure}>Start a procedure</div>
+    <div style={{ paddingTop: '20px' }}>
+      <div className="data" id="yourTasksTotalCount">
           <span
             className="data-item bold-medium">{yourTasks.get('total')} {yourTasks.get('total') === 1 ? 'task' : 'tasks'} assigned to you</span>
-    </div>
-    <div className="grid-row">
-      <div className="column-one-half">
-        <SortTasks tasks={yourTasks} sortTasks={sortYourTasks}/>
+      </div>
+      <div className="grid-row">
+        <div className="column-one-half">
+          <SortTasks tasks={yourTasks} sortTasks={sortYourTasks}/>
+        </div>
+
+        <div className="column-one-half">
+          <FilterTaskName tasks={yourTasks} filterTasksByName={filterTasksByName}/>
+        </div>
       </div>
 
-      <div className="column-one-half">
-       <FilterTaskName tasks={yourTasks} filterTasksByName={filterTasksByName}/>
-      </div>
+      <ReactHyperResponsiveTable
+        headers={headers}
+        rows={data}
+        keyGetter={row => row.id}
+        breakpoint={578}
+        tableStyling={({ narrow }) => (narrow ? 'narrowtable-yourtasks' : 'widetable')}
+      />
     </div>
-
-    <ReactHyperResponsiveTable
-      headers={headers}
-      rows={data}
-      keyGetter={row => row.id}
-      breakpoint={578}
-      tableStyling={({ narrow }) => (narrow ? 'narrowtable-yourtasks' : 'widetable')}
-    />
   </div>;
 };
 

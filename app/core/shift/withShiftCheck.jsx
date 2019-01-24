@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { hasActiveShift, isFetchingShift ,shift} from './selectors';
+import { hasActiveShift, isFetchingShift, shift } from './selectors';
 import * as actions from './actions';
 import { createStructuredSelector } from 'reselect';
 import { Redirect, withRouter } from 'react-router';
@@ -28,7 +28,7 @@ export default function (ComposedComponent) {
     }
 
     render() {
-      const { hasActiveShift, isFetchingShift} = this.props;
+      const { hasActiveShift, isFetchingShift } = this.props;
 
       if (isFetchingShift) {
         return <DataSpinner message={`Checking if you have an active shift`}/>;
@@ -46,13 +46,16 @@ export default function (ComposedComponent) {
 
   class BackButton extends React.Component {
     render() {
-      const pointerStyle = { cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline' };
-      return <div>
-        <div style={pointerStyle} onClick={() => this.props.history.replace('/dashboard')}>Back to
-          dashboard
-        </div>
-        {this.props.children}
-      </div>;
+      if (this.props.location.pathname !== '/dashboard') {
+        const pointerStyle = { cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline' };
+        return <div>
+          <div style={pointerStyle} onClick={() => this.props.history.replace('/dashboard')}>Back to
+            dashboard
+          </div>
+          {this.props.children}
+        </div>;
+      }
+      return <div>{this.props.children}</div>;
     }
   }
 

@@ -20,7 +20,7 @@ export class YourTasksContainer extends React.Component {
     this.timeoutId = setInterval(() => {
       const { yourTasks } = that.props;
       this.loadYourTasks(true, yourTasks.get('yourTasksSortValue'), yourTasks.get('yourTasksFilterValue'));
-    }, AppConstants.THREE_MINUTES);
+    }, AppConstants.ONE_MINUTE);
   }
 
   componentWillMount() {
@@ -74,7 +74,7 @@ export class YourTasksContainer extends React.Component {
         filterTasksByName={this.filterTasksByName}
         sortYourTasks={this.sortYourTasks}
         goToTask={this.goToTask}
-        yourTasks={yourTasks}/>;
+        yourTasks={yourTasks} startAProcedure={() => this.props.history.replace("/procedures")}/>;
     }
   }
 }

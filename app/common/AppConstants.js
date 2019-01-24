@@ -16,6 +16,6 @@ export default class AppConstants {
     static PROCESS_DIAGRAM_PATH = "/process-diagram";
     static ONBOARD_USER_PATH="/onboard-user";
     static MANDATORY_DECLARATION_PATH="/mandatory-declarations";
-    static  THREE_MINUTES = 3 * 60000;
+    static  ONE_MINUTE = 60000;
 
 }

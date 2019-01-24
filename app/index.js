@@ -53,7 +53,7 @@ const renderApp = (App, authorizedRole) => {
               }).error(function () {
                 kc.logout();
               })
-            }, AppConstants.THREE_MINUTES);
+            }, 3 * 60000);
             ReactDOM.render(
               <Provider store={store}>
                 <div>

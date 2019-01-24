@@ -20,7 +20,7 @@ export class YourGroupTasksContainer extends React.Component {
     this.timeoutId = setInterval(() => {
       const { yourGroupTasks } = that.props;
       this.loadYourGroupTasks(true, yourGroupTasks.get('yourGroupTasksSortValue'), yourGroupTasks.get('yourGroupTasksFilterValue'));
-    }, AppConstants.THREE_MINUTES);
+    }, AppConstants.ONE_MINUTE);
   }
 
   componentWillMount() {
@@ -79,7 +79,7 @@ export class YourGroupTasksContainer extends React.Component {
     return <YourGroupTasks filterTasksByName={this.filterTasksByName}
                            yourGroupTasks={yourGroupTasks}
                            sortYourGroupTasks={this.sortYourGroupTasks}
-                           goToTask={this.goToTask}/>;
+                           goToTask={this.goToTask} startAProcedure={() => this.props.history.replace("/procedures")}/>;
   }
 }
 

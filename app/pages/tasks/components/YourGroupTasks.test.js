@@ -154,7 +154,7 @@ describe('YourGroupTasksContainer Page', () => {
     expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', null, false);
 
     //kick off timer
-    jest.advanceTimersByTime(AppConstants.THREE_MINUTES);
+    jest.advanceTimersByTime(AppConstants.ONE_MINUTE);
     expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', 'TEST', true);
 
     //

@@ -170,7 +170,7 @@ describe('YourTasks Page', () => {
     expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,desc', null, false);
 
     //kick off timer
-    jest.advanceTimersByTime(AppConstants.THREE_MINUTES);
+    jest.advanceTimersByTime(AppConstants.ONE_MINUTE);
     expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,desc', 'TEST', true);
 
     //
