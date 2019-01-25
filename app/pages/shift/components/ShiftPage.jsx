@@ -200,7 +200,7 @@ class ShiftPage extends React.Component {
               backgroundStyle={{ backgroundColor: 'white' }}>
         <div className="grid-row">
           <div className="column-full" id="shiftWizardForm">
-            {!hasActiveShift ?
+            {!isFetchingShift && !hasActiveShift ?
               <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '15px' }}>
                 <div className="notice">
                   <i className="icon icon-important">
