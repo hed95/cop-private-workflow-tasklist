@@ -39,7 +39,7 @@ export class StartForm extends React.Component {
         if (this.props.redirectPath) {
           this.props.history.replace(this.props.redirectPath);
         } else {
-          this.props.history.replace(AppConstants.YOUR_GROUP_TASKS_PATH);
+          this.props.history.replace(AppConstants.YOUR_TASKS_PATH);
         }
       } else {
         if ((!nextProps.submittingToFormIO && !nextProps.submissionToFormIOSuccessful)
