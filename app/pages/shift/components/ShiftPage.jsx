@@ -200,16 +200,17 @@ class ShiftPage extends React.Component {
               backgroundStyle={{ backgroundColor: 'white' }}>
         <div className="grid-row">
           <div className="column-full" id="shiftWizardForm">
-            <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '15px' }}>
-              <div className="notice">
-                <i className="icon icon-important">
-                  <span className="visually-hidden">Warning</span>
-                </i>
-                {!hasActiveShift ? <strong className="bold-medium">
-                  Please start your shift before proceeding
-                </strong> : null}
-              </div>
-            </div>
+            {!hasActiveShift ?
+              <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '15px' }}>
+                <div className="notice">
+                  <i className="icon icon-important">
+                    <span className="visually-hidden">Warning</span>
+                  </i>
+                  <strong className="bold-medium">
+                    Please start your shift before proceeding
+                  </strong>
+                </div>
+              </div> : null}
             {formToRender}
           </div>
         </div>
