@@ -33,7 +33,6 @@ describe('DashboardPage', () => {
 
     expect(resetErrors).toBeCalled();
 
-    expect(wrapper.find('ErrorPanel')).toBeDefined();
     expect(wrapper.find('DashboardTitle')).toBeDefined();
     expect(wrapper.find('DashboardPanel')).toBeDefined();
   });

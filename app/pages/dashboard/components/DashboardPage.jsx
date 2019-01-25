@@ -5,11 +5,8 @@ import DashboardPanel from './DashboardPanel';
 import { bindActionCreators } from 'redux';
 import * as actions from '../../../core/shift/actions';
 import { connect } from 'react-redux';
-import ErrorPanel from '../../../core/error/component/ErrorPanel';
 import * as errorActions from '../../../core/error/actions';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { hasError, errors} from '../../../core/error/selectors';
-import PropTypes from 'prop-types';
 
 export class DashboardPage extends React.Component {
 
@@ -19,7 +16,6 @@ export class DashboardPage extends React.Component {
 
     render() {
         return <div id="dashboardContent">
-            <ErrorPanel {...this.props} />
             <DashboardTitle {...this.props} />
             <DashboardPanel {...this.props}/>
         </div>
@@ -28,10 +24,7 @@ export class DashboardPage extends React.Component {
 }
 
 DashboardPage.propTypes = {
-    shift: ImmutablePropTypes.map,
-    hasError: PropTypes.bool,
-    errors: ImmutablePropTypes.list
-
+    shift: ImmutablePropTypes.map
 };
 
 
@@ -39,7 +32,5 @@ const mapDispatchToProps = dispatch => bindActionCreators(Object.assign({}, acti
 
 export default withRouter(connect((state) => {
     return {
-        hasError: hasError(state),
-        errors: errors(state)
     }
 }, mapDispatchToProps)(DashboardPage))

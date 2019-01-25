@@ -68,7 +68,7 @@ class TaskForm extends React.Component {
           this.props.unclaimTask(task.get('id'));
         }
         if (event.type === 'cancel') {
-          this.props.history.replace(AppConstants.YOUR_GROUP_TASKS_PATH);
+          this.props.history.replace(AppConstants.YOUR_TASKS_PATH);
         }
       };
 
