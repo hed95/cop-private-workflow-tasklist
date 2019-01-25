@@ -182,7 +182,8 @@ class ShiftPage extends React.Component {
       submittingActiveShift,
       hasError,
       unauthorised,
-      activeShiftSuccess
+      activeShiftSuccess,
+      hasActiveShift
 
     } = this.props;
     const failedToCreate = (activeShiftSuccess !== null && activeShiftSuccess === false) && unauthorised;
@@ -199,14 +200,14 @@ class ShiftPage extends React.Component {
               backgroundStyle={{ backgroundColor: 'white' }}>
         <div className="grid-row">
           <div className="column-full" id="shiftWizardForm">
-            <div style={{display: 'flex', justifyContent: 'center', paddingTop: '15px'}}>
+            <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '15px' }}>
               <div className="notice">
                 <i className="icon icon-important">
                   <span className="visually-hidden">Warning</span>
                 </i>
-                <strong className="bold-medium">
+                {!hasActiveShift ? <strong className="bold-medium">
                   Please start your shift before proceeding
-                </strong>
+                </strong> : null}
               </div>
             </div>
             {formToRender}
@@ -218,8 +219,6 @@ class ShiftPage extends React.Component {
   }
 
 }
-
-
 
 
 ShiftPage.propTypes = {
