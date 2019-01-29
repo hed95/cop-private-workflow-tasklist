@@ -1,33 +1,106 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { createStructuredSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { yourTasks } from '../selectors';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { withRouter } from 'react-router';
 import DataSpinner from '../../../core/components/DataSpinner';
-import AppConstants from '../../../common/AppConstants';
 import { debounce, throttle } from 'throttle-debounce';
 import YourTasks from './YourTasks';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
 
 export class YourTasksContainer extends React.Component {
 
-  componentDidMount() {
-    this.loadYourTasks(false, 'sort=due,desc');
-    const that = this;
-    this.timeoutId = setInterval(() => {
-      const { yourTasks } = that.props;
-      this.loadYourTasks(true, yourTasks.get('yourTasksSortValue'), yourTasks.get('yourTasksFilterValue'));
-    }, AppConstants.ONE_MINUTE);
-  }
 
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+    this.websocketSubscriptions = [];
+    this.retryCount = 0;
+    this.connect = this.connect.bind(this);
+    this.disconnect = this.disconnect.bind(this);
     this.goToTask = this.goToTask.bind(this);
     this.sortYourTasks = this.sortYourTasks.bind(this);
     this.filterTasksByName = this.filterTasksByName.bind(this);
     this.debounceSearch = this.debounceSearch.bind(this);
+  }
+
+  connect = () => {
+    this.socket = new SockJS('/ws/workflow/tasks');
+    this.stompClient = Stomp.over(this.socket);
+    const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
+    if (uiEnv !== 'development' && uiEnv !== 'local') {
+      this.stompClient.debug = () => {
+      };
+    }
+    const heartBeat = 5000;
+    this.stompClient.heartbeat.outgoing = heartBeat;
+    this.stompClient.heartbeat.incoming = heartBeat;
+
+    this.stompClient.connect({
+      'Authorization': `Bearer ${this.props.kc.token}`
+    }, () => {
+      this.connected = true;
+      console.log(`Connected to websocket server`);
+      const userSub = this.stompClient.subscribe(`/user/queue/task`, (msg) => {
+        this.loadYourTasks(true, this.props.yourTasks.get('yourTasksSortValue'),
+          this.props.yourTasks.get('yourTasksFilterValue'));
+      });
+      this.websocketSubscriptions.push(userSub);
+      console.log('Number of subscriptions ' + this.websocketSubscriptions.length);
+
+    }, (error) => {
+      this.retryCount++;
+      if (error) {
+        this.websocketSubscriptions = [];
+        console.log(`Failed to connect ${error}...will retry to connect in ${this.retryCount === 1 ? 6 : 60} seconds`);
+      }
+      if (this.connected) {
+        this.connected = false;
+      }
+      let timeout = this.retryCount === 1 ? 6000 : 60000;
+      if (this._timeoutId) {
+        clearTimeout(this._timeoutId);
+        this._timeoutId = null;
+      }
+      this._timeoutId =
+        setTimeout(() => this.connect(), timeout);
+
+    });
+  };
+
+  disconnect = () => {
+    if (this._timeoutId) {
+      clearTimeout(this._timeoutId);
+      this._timeoutId = null;
+    }
+    this.retryCount = 0;
+    console.log('Disconnecting websocket');
+    if (this.connected) {
+      if (this.websocketSubscriptions) {
+        this.websocketSubscriptions.forEach((sub) => {
+          console.log('Disconnecting sub' + sub.id);
+          sub.unsubscribe();
+        });
+        this.websocketSubscriptions = [];
+      }
+      this.connected = null;
+      this.stompClient.disconnect();
+    }
+  };
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.yourTasks.get('isFetchingTasksAssignedToYou')
+      !== this.props.yourTasks.get('isFetchingTasksAssignedToYou')) {
+      this.connect();
+    }
+  }
+
+  componentDidMount() {
+    this.loadYourTasks(false, 'sort=due,desc');
+    this.connect();
   }
 
   loadYourTasks(skipLoading, yourTasksSortValue, yourTasksFilterValue = null) {
@@ -39,7 +112,8 @@ export class YourTasksContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timeoutId);
+    this.retryCount = 0;
+    this.disconnect();
   }
 
   debounceSearch(sortValue, filterValue) {
@@ -74,7 +148,7 @@ export class YourTasksContainer extends React.Component {
         filterTasksByName={this.filterTasksByName}
         sortYourTasks={this.sortYourTasks}
         goToTask={this.goToTask}
-        yourTasks={yourTasks} startAProcedure={() => this.props.history.replace("/procedures")}/>;
+        yourTasks={yourTasks} startAProcedure={() => this.props.history.replace('/procedures')}/>;
     }
   }
 }
@@ -84,10 +158,13 @@ YourTasksContainer.propTypes = {
   yourTasks: ImmutablePropTypes.map
 };
 
-const mapStateToProps = createStructuredSelector({
-  yourTasks: yourTasks,
-});
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(YourTasksContainer));
+export default connect((state) => {
+  return {
+    yourTasks: yourTasks(state),
+    appConfig: state.appConfig,
+    kc: state.keycloak
+  };
+}, mapDispatchToProps)(withRouter(YourTasksContainer));

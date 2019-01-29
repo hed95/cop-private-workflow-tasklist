@@ -14,7 +14,6 @@ export const initialState = new Map({
   yourGroupTasks: new Map({
     isFetchingYourGroupTasks: false,
     tasks: new List([]),
-    original: new List([]),
     total: 0,
     yourGroupTasksSortValue: 'sort=due,desc',
     yourGroupTasksFilterValue: null
@@ -72,8 +71,7 @@ function reducer(state = initialState, action) {
       const totalUnassigned = action.payload.entity.page.totalElements;
       return state.setIn(['unassignedTasks', 'isFetchingUnassignedTasks'], false)
         .setIn(['unassignedTasks', 'tasks'], Immutable.fromJS(unassignedTasks))
-        .setIn(['unassignedTasks', 'total'], totalUnassigned)
-        .setIn(['unassignedTasks', 'original'], Immutable.fromJS(unassignedTasks));
+        .setIn(['unassignedTasks', 'total'], totalUnassigned);
 
     case actions.FETCH_UNASSIGNED_TASKS_FAILURE:
       return state.setIn(['unassignedTasks', 'isFetchingUnassignedTasks'], false);

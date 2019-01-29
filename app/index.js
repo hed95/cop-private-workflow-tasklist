@@ -14,7 +14,6 @@ import ScrollToTop from "./core/components/ScrollToTop";
 import Header from './core/components/Header';
 import Footer from './core/components/Footer';
 import UnauthorizedPage from './core/components/UnauthorizedPage';
-import AppConstants from './common/AppConstants';
 const store = configureStore();
 import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 let kc = null;

@@ -4,7 +4,6 @@ import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import { YourTasksContainer } from './YourTasksContainer';
 import moment from 'moment';
-import AppConstants from '../../../common/AppConstants';
 const { Map } = Immutable;
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
@@ -18,6 +17,12 @@ describe('YourTasks Page', () => {
   const yourTasks = Immutable.fromJS({
     isFetchingTasksAssignedToYou: false,
     yourTasksSortValue: 'sort=due,desc',
+    appConfig: {
+      uiEnvironment: 'local'
+    },
+    kc: {
+      token: 'token'
+    },
     total: 1,
     tasks: [{
       task: {
@@ -48,6 +53,12 @@ describe('YourTasks Page', () => {
   const fetchTasksAssignedToYou = jest.fn();
   it('renders loading when getting your tasks', async()=> {
     const props = {
+      appConfig: {
+        uiEnvironment: 'local'
+      },
+      kc: {
+        token: 'token'
+      },
      yourTasks: Immutable.fromJS({
        isFetchingTasksAssignedToYou: true
      })
@@ -64,6 +75,12 @@ describe('YourTasks Page', () => {
   it('renders your tasks', async() => {
 
     const props = {
+      appConfig: {
+        uiEnvironment: 'local'
+      },
+      kc: {
+        token: 'token'
+      },
       yourTasks: yourTasks
     };
     const wrapper = await mount(<YourTasksContainer
@@ -99,6 +116,12 @@ describe('YourTasks Page', () => {
 
   it('renders your tasks on sort change', async() => {
     const props = {
+      appConfig: {
+        uiEnvironment: 'local'
+      },
+      kc: {
+        token: 'token'
+      },
       yourTasks: yourTasks
     };
     const wrapper = await mount(<YourTasksContainer
@@ -120,6 +143,12 @@ describe('YourTasks Page', () => {
 
   it('renders your tasks on filter value', async() => {
     const props = {
+      appConfig: {
+        uiEnvironment: 'local'
+      },
+      kc: {
+        token: 'token'
+      },
       yourTasks: yourTasks
     };
     const wrapper = await mount(<YourTasksContainer
@@ -142,45 +171,16 @@ describe('YourTasks Page', () => {
 
   });
 
-  it('executes timer', async() => {
-    const props = {
-      yourTasks: Immutable.fromJS({
-        isFetchingTasksAssignedToYou: false,
-        yourTasksSortValue: 'sort=due,desc',
-        yourTasksFilterValue: 'TEST',
-        total: 1,
-        tasks: [{
-          task: {
-            id: 'id',
-            name: 'test',
-            priority: 1000,
-            due: date,
-            created: date,
-          }
-
-        }]
-      })
-    };
-
-    const wrapper = await mount(<YourTasksContainer
-      store={store}
-      {...props}
-      fetchTasksAssignedToYou={fetchTasksAssignedToYou}
-    />);
-    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,desc', null, false);
-
-    //kick off timer
-    jest.advanceTimersByTime(AppConstants.ONE_MINUTE);
-    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,desc', 'TEST', true);
-
-    //
-    wrapper.unmount();
-    expect(clearTimeout).toBeCalled();
-  });
   it ('navigates to task', async() => {
     const history = createMemoryHistory("/task");
 
     const props = {
+      appConfig: {
+        uiEnvironment: 'local'
+      },
+      kc: {
+        token: 'token'
+      },
       history: history,
       yourTasks: Immutable.fromJS({
         isFetchingTasksAssignedToYou: false,
