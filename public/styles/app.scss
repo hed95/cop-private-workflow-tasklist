@@ -613,7 +613,7 @@ table.narrowtable tr th {
 
 
 table.narrowtable tr:nth-child(5) {
-  border-bottom: solid #aaa;
+  border-bottom: solid black 4px;
 }
 
 table.widetable {
@@ -627,7 +627,7 @@ table.narrowtable-yourtasks tr th {
 
 
 table.narrowtable-yourtasks tr:nth-child(4) {
-  border-bottom: solid black;
+  border-bottom: solid black 4px;
 }
 
 table.narrowtable-your-group-unassignedtasks tr:nth-child(5) {
@@ -645,5 +645,5 @@ table.narrowtable-process tr th {
   font-size: 14px;
 }
 table.narrowtable-process tr:nth-child(2) {
-  border-bottom: solid black;
+  border-bottom: solid black 4px;
 }
