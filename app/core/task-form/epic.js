@@ -39,8 +39,9 @@ const customEvent = (action$, store, { client }) =>
         }
       }).retryWhen(retry)
         .map(payload => {
-          const message = action.event.properties && action.event.properties['success-message']
-            ? action.event.properties['success-message'] : `${action.event.component.label} successfully actioned`;
+          const properties = action.event.component.properties;
+          const message = properties && properties['success-message']
+            ? properties['success-message'] : `${action.event.component.label} successfully actioned`;
           PubSub.publish('submission', {
             submission: true,
             autoDismiss: true,
