@@ -16,6 +16,7 @@ const taskForm = {
   "components": [
     {
       "autofocus": false,
+      "id": "id",
       "input": true,
       "tableView": true,
       "inputType": "text",
@@ -195,7 +196,7 @@ describe('TaskForm Component', () => {
                 customEvent={customEvent}
       />
     );
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.html()).toEqual('<div><div class="null null formio-form"><div class="loader-wrapper"><div class="loader text-center"></div></div><div hidden="true" style="visibility: hidden; position: absolute;"><div id="id" class="form-group has-feedback formio-component formio-component-textfield formio-component-text  formio-disabled-input" style=""><label class="control-label" style="">Text</label><input name="data[text]" type="text" class="form-control" lang="en" spellcheck="true" disabled="disabled"></div><div id="cancelOpButton" class="form-group has-feedback formio-component formio-component-button formio-component-canceloperation  form-group formio-disabled-input" style=""><button name="data[canceloperation]" type="button" class="btn btn-primary btn-md" lang="en" disabled="disabled">Cancel operation</button></div></div></div></div>')
   });
 
 });
