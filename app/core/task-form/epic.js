@@ -32,7 +32,7 @@ const customEvent = (action$, store, { client }) =>
         path: `/rest/camunda/message`,
         entity:  {
           'messageName': action.event.type,
-          'processInstanceId': action.task.processInstanceId,
+          'processInstanceId': action.task.get('processInstanceId'),
           'processVariables': createProcessVariables(
             action, store.getState().keycloak.tokenParsed.email
           )
