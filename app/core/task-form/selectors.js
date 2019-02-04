@@ -6,3 +6,5 @@ export const submittingTaskFormForCompletion = state => state[NAME].get('submitt
 export const taskFormCompleteSuccessful = state => state[NAME].get('taskFormCompleteSuccessful');
 export const submittingToFormIO = state => state[NAME].get('submittingToFormIO');
 export const submissionToFormIOSuccessful = state => state[NAME].get('submissionToFormIOSuccessful');
+export const customEventSuccessfullyExecuted = state => state[NAME].get('customEventSuccessfullyExecuted');
+export const submittingCustomEvent = state => state[NAME].get('submittingCustomEvent');
