@@ -1,11 +1,12 @@
-import React, {PropTypes} from "react";
+import React  from "react";
+import PropTypes from 'prop-types';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import * as actions from "../actions";
 import {completeSuccessful} from "../selectors";
 
-class Complete extends React.Component {
+export class Complete extends React.Component {
 
     componentDidMount() {
         this.complete = this.complete.bind(this);

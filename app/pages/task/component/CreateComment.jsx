@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { createStructuredSelector } from 'reselect';
 import { form, isFetchingCreateCommentForm } from '../selectors';
 import { Form } from 'react-formio';
-import AppConstants from '../../../common/AppConstants';
 
 class CreateComment extends React.Component {
 

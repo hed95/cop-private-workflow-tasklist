@@ -3,7 +3,7 @@ import 'moment/locale/en-gb';
 import $ from 'jquery';
 import 'fullcalendar/dist/fullcalendar.css';
 import 'fullcalendar/dist/fullcalendar.js';
-import 'fullcalendar/dist/locale-all';
+import 'fullcalendar/dist/locale/en-gb';
 
 
 class CalendarPage extends React.Component {

@@ -9,7 +9,8 @@ const fetchTasksAssignedYou = (action$, store, {client}) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `${action.url}`,
+                path: `/api/workflow/tasks?assignedToMeOnly=true&${action.sortValue 
+                  ? action.sortValue: 'sort=due,desc' }${action.filterValue?'&name=' + action.filterValue: ''}`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
@@ -26,7 +27,8 @@ const fetchYourGroupTasks = (action$, store, {client}) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `${action.url}`,
+                path: `/api/workflow/tasks?teamOnly=true&${action.sortValue
+                ? action.sortValue: 'sort=due,desc' }${action.filterValue?'&name=' + action.filterValue: ''}`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
@@ -43,8 +45,9 @@ const fetchUnassignedTasks = (action$, store, {client}) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `${action.url}`,
-                headers: {
+              path: `/api/workflow/tasks?unassignedOnly=true&${action.sortValue
+                ? action.sortValue: 'sort=due,desc' }${action.filterValue?'&name=' + action.filterValue: ''}`,
+              headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
                 }
@@ -55,4 +58,6 @@ const fetchUnassignedTasks = (action$, store, {client}) =>
                 ));
 
 
-export default combineEpics(fetchTasksAssignedYou, fetchYourGroupTasks, fetchUnassignedTasks);
+export default combineEpics(fetchTasksAssignedYou,
+  fetchYourGroupTasks,
+  fetchUnassignedTasks);

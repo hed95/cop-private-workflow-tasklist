@@ -34,7 +34,6 @@ $path: "../../node_modules/govuk_frontend_toolkit/images/";
 @import "../../node_modules/govuk-elements-sass/public/sass/elements/components"; // GOV.UK prefixed styles - blue highlighted box
 @import "../../node_modules/govuk-elements-sass/public/sass/elements/shame"; // Hacks and workarounds that will go away eventually
 @import "../../node_modules/govuk_template_ejs/assets/stylesheets/govuk-template.css";
-@import "../../node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.css";
 
 @import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../../node_modules/formiojs/dist/formio.full.css";
@@ -246,9 +245,26 @@ body {
 
 .govuk-box-highlight.incomplete {
   background-color: #005ea5;
-  text-align: left;
+  text-align: center;
   padding: 15px;
   margin-bottom: 30px;
+}
+
+.govuk-box-highlight.incomplete .hod-warning  {
+  font-size: 50px;
+  display: block;
+  margin: 5px auto;
+  position: relative;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.govuk-box-highlight.incomplete .hod-warning::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .govuk-box-highlight.incomplete .heading-medium, .govuk-box-highlight.incomplete .timeline ul li h2, .timeline ul li .govuk-box-highlight.incomplete h2 {
@@ -281,13 +297,6 @@ body {
   margin-top: 0;
 }
 
-.react-tabs__tab--selected {
-  background: #fff;
-  border-color: #aaa;
-  color: black;
-  font-weight: bold;
-  border-radius: 5px 5px 0 0;
-}
 
 .gov-pagination .pagination > li > a {
   border: none;
@@ -603,7 +612,9 @@ table.narrowtable tr th {
 }
 
 
-table.narrowtable tr:nth-child(5) { border-bottom: solid #aaa; }
+table.narrowtable tr:nth-child(5) {
+  border-bottom: solid black 4px;
+}
 
 table.widetable {
   width: 100%;
@@ -615,9 +626,13 @@ table.narrowtable-yourtasks tr th {
 }
 
 
-table.narrowtable-yourtasks tr:nth-child(4) { border-bottom: solid #aaa; }
+table.narrowtable-yourtasks tr:nth-child(4) {
+  border-bottom: solid black 4px;
+}
 
-table.narrowtable-your-group-unassignedtasks tr:nth-child(5) { border-bottom: solid #aaa; }
+table.narrowtable-your-group-unassignedtasks tr:nth-child(5) {
+  border-bottom: solid black;
+}
 
 
 table.narrowtable-your-group-unassignedtasks tr td,
@@ -630,5 +645,5 @@ table.narrowtable-process tr th {
   font-size: 14px;
 }
 table.narrowtable-process tr:nth-child(2) {
-  border-bottom: solid #aaa;
+  border-bottom: solid black 4px;
 }

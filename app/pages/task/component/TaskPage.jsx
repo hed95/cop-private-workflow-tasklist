@@ -1,5 +1,6 @@
-import React, {PropTypes} from "react";
-import StandardTaskSummaryPage from "./StandardTaskSummaryPage";
+import React from "react";
+import PropTypes from 'prop-types';
+import TaskSummaryPage from "./TaskSummaryPage";
 import {candidateGroups, isFetchingTask, task, variables} from "../selectors";
 import * as actions from "../actions";
 import {bindActionCreators} from "redux";
@@ -8,7 +9,7 @@ import {createStructuredSelector} from "reselect";
 import ImmutablePropTypes from "react-immutable-proptypes";
 import queryString from 'query-string';
 import {withRouter} from "react-router";
-import {DataSpinner} from "../../../core/components/DataSpinner";
+import DataSpinner from "../../../core/components/DataSpinner";
 import TaskDetailsPage from "./TaskDetailsPage";
 import NotFound from "../../../core/components/NotFound";
 
@@ -39,7 +40,7 @@ class TaskPage extends React.Component {
             if (task.isEmpty()) {
                return <NotFound resource="Task" id={this.taskId}/>
             }
-            return task.get('assignee')? <TaskDetailsPage {...this.props} /> : <StandardTaskSummaryPage {...this.props}/>
+            return task.get('assignee')? <TaskDetailsPage {...this.props} /> : <TaskSummaryPage {...this.props}/>
         }
 
     }

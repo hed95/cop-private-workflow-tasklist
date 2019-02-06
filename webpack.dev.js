@@ -1,6 +1,8 @@
 const webpack = require('webpack');
-const commonConfig = require('./webpack.common.js');
+const common = require('./webpack.common.js');
 const webpackMerge = require('webpack-merge');
+
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const port = process.env.PORT || 8080;
 
@@ -17,8 +19,9 @@ console.log("formIOUrl " + formIOUrl);
 console.log("translationServiceUrl " + translationServiceUrl);
 
 
-module.exports = webpackMerge(commonConfig, {
-    devtool: 'eval',
+module.exports = webpackMerge(common, {
+    devtool: 'inline-source-map',
+    mode: 'development',
     entry: {
         app: [
             'react-hot-loader/patch',
@@ -28,7 +31,17 @@ module.exports = webpackMerge(commonConfig, {
         ],
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
+      new webpack.DefinePlugin({
+        'process.env': {
+          'REALM': JSON.stringify(process.env.AUTH_REALM),
+          'AUTH_URL': JSON.stringify(process.env.AUTH_URL),
+          'CLIENT_ID': JSON.stringify(process.env.AUTH_CLIENT_ID),
+          'AUTH_ACCESS_ROLE': JSON.stringify(process.env.AUTH_ACCESS_ROLE),
+          'UI_ENVIRONMENT': JSON.stringify(process.env.UI_ENVIRONMENT)
+        }
+      }),
+      new BundleAnalyzerPlugin(),
+      new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
         contentBase: 'public/',
@@ -36,7 +49,7 @@ module.exports = webpackMerge(commonConfig, {
         open: true,
         port: `${port}`,
         historyApiFallback: true,
-        publicPath: commonConfig.output.publicPath,
+        publicPath: common.output.publicPath,
         stats: {colors: true},
         proxy: {
             "/api/platform-data": {

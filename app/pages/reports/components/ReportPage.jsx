@@ -4,7 +4,7 @@ import Iframe from "react-iframe";
 import queryString from 'query-string';
 import {withRouter} from "react-router";
 
-class ReportPage extends React.Component {
+export class ReportPage extends React.Component {
 
     render() {
 
@@ -13,7 +13,7 @@ class ReportPage extends React.Component {
         const pointerStyle = {cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline', paddingBottom: '10px'};
 
         return <div>
-            <div style={pointerStyle} onClick={() => this.props.history.replace('/reports')}>Back to reports</div>
+            <div id="backToReports" style={pointerStyle} onClick={() => this.props.history.replace('/reports')}>Back to reports</div>
 
             <div style={{
                 display: 'flex',

@@ -64,13 +64,23 @@ const submit = (action$, store, { client }) =>
       })
         .retryWhen(retry)
         .map(payload => {
-          return {
-            type: types.SUBMIT_TO_WORKFLOW,
-            processKey: action.processKey,
-            variableName: action.variableName,
-            data: payload.entity.data,
-            processName: action.processName
-          };
+          if (action.nonShiftApiCall) {
+            return {
+              type: types.SUBMIT_TO_WORKFLOW_NON_SHIFT,
+              processKey: action.processKey,
+              variableName: action.variableName,
+              data: payload.entity.data,
+              processName: action.processName
+            };
+          } else {
+            return {
+              type: types.SUBMIT_TO_WORKFLOW,
+              processKey: action.processKey,
+              variableName: action.variableName,
+              data: payload.entity.data,
+              processName: action.processName
+            };
+          }
         })
         .catch(error => {
             return errorObservable(actions.submitFailure(), error);
@@ -99,6 +109,55 @@ const submitToWorkflow = (action$, store, { client }) =>
           console.log(JSON.stringify(action));
           PubSub.publish('submission', {
             submission: true,
+            autoDismiss: true,
+            message: `${action.processName} successfully started`
+          });
+          return actions.submitToWorkflowSuccess(payload);
+        })
+        .catch(error => {
+          return errorObservable(actions.submitToWorkflowFailure(), error);
+        })
+    );
+
+const createVariable = (action, email) => {
+  const variableName = action.variableName;
+  const variables = {};
+  variables[variableName] = {
+    value: JSON.stringify(action.data),
+    type: 'json'
+  };
+  variables['initiatedBy'] = {
+    value: email,
+    type: "String"
+  };
+
+  variables['type'] = {
+    value: 'non-notifications',
+    type: 'String'
+  };
+  return {
+    "variables" : variables
+  };
+};
+
+const submitToWorkflowUsingNonShiftApi = (action$, store, { client }) =>
+  action$.ofType(types.SUBMIT_TO_WORKFLOW_NON_SHIFT)
+    .mergeMap(action =>
+      client({
+        method: 'POST',
+        path: `/rest/camunda/process-definition/key/${action.processKey}/start`,
+        entity: createVariable(action, store.getState().keycloak.tokenParsed.email),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${store.getState().keycloak.token}`,
+          'Content-Type': 'application/json'
+        }
+      }).retryWhen(retry)
+        .map(payload => {
+          console.log(JSON.stringify(action));
+          PubSub.publish('submission', {
+            submission: true,
+            autoDismiss: true,
             message: `${action.processName} successfully started`
           });
           return actions.submitToWorkflowSuccess(payload);
@@ -109,4 +168,4 @@ const submitToWorkflow = (action$, store, { client }) =>
     );
 
 
-export default combineEpics(fetchForm, fetchFormWithContext, submit, submitToWorkflow);
+export default combineEpics(fetchForm, fetchFormWithContext, submit, submitToWorkflow, submitToWorkflowUsingNonShiftApi);

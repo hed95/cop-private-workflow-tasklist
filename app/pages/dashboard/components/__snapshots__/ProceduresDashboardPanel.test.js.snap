@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Procedures Dashboard Panel renders procedures dashboard panel 1`] = `
+<ProceduresDashboardPanel
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <li
+    className="__card column-one-third"
+    id="proceduresPanel"
+  >
+    <a
+      className="card__body"
+      href="#"
+      id="proceduresPageLink"
+      onClick={[Function]}
+    >
+      <span
+        className="bold-large"
+      >
+        procedures
+      </span>
+    </a>
+    <div
+      className="card__footer"
+    >
+      <span
+        className="font-small"
+      >
+        Operational procedures
+      </span>
+    </div>
+  </li>
+</ProceduresDashboardPanel>
+`;

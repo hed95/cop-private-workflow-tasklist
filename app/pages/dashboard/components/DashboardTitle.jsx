@@ -1,7 +1,8 @@
-import React, {PropTypes} from 'react';
+import React  from 'react';
+import PropTypes from 'prop-types';
 import {bindActionCreators} from "redux";
 import {withRouter} from "react-router-dom";
-import connect from "react-redux/es/connect/connect";
+import {connect} from "react-redux";
 import * as actions from "../../../core/shift/actions";
 import {endingShift, hasActiveShift} from "../../../core/shift/selectors";
 
@@ -20,6 +21,7 @@ class DashboardTitle extends React.Component {
     endShift(e) {
         e.preventDefault();
         this.props.endShift();
+        this.props.kc.logout();
     }
 
 

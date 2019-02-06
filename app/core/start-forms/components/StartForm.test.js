@@ -1,15 +1,11 @@
 import React from 'react';
-import Enzyme from 'enzyme';
 import { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import { StartForm } from './StartForm';
 
 const { Map } = Immutable;
 
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('StartForm Component', () => {
   const initialState = {
@@ -30,7 +26,8 @@ describe('StartForm Component', () => {
   it('renders loading text', async() => {
     const props = {
       formName: 'testForm',
-      loadingForm : true
+      loadingForm : true,
+      processName: 'test'
     };
     const fetchForm = jest.fn();
     const resetForm = jest.fn();
@@ -45,7 +42,7 @@ describe('StartForm Component', () => {
     console.log(wrapper.debug());
     expect(fetchForm).toBeCalled();
     expect(wrapper.name()).toEqual('StartForm');
-    expect(wrapper.html()).toEqual('<div><!-- react-text: 2 -->Loading form for <!-- /react-text --><!-- react-text: 3 --> <!-- /react-text --></div>');
+    expect(wrapper.html()).toEqual('<div>Loading form for test</div>');
     wrapper.unmount();
     expect(resetForm).toBeCalled();
   });
@@ -138,7 +135,7 @@ describe('StartForm Component', () => {
     );
     console.log(wrapper.debug());
     expect(fetchForm).toBeCalled();
-    expect(wrapper.html()).toEqual('<div><!-- react-text: 2 -->Form<!-- /react-text --><!-- react-text: 3 --> with identifier <!-- /react-text --><!-- react-text: 4 -->testForm<!-- /react-text --><!-- react-text: 5 --> was not found<!-- /react-text --></div>');
+    expect(wrapper.html()).toEqual('<div>Form with identifier testForm was not found</div>');
     wrapper.unmount();
     expect(resetForm).toBeCalled();
   })

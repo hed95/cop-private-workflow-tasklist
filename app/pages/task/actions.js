@@ -28,6 +28,24 @@ const createComment = ({taskId, comment}) => {
     }
 };
 
+const updateDueDate = ({taskId, dueDate}) => {
+    return {
+        type: types.UPDATE_DUE_DATE,
+        taskId: taskId,
+        dueDate: dueDate
+    }
+};
+
+const updateDueDateSuccess = ()=> {
+    return {
+        type: types.UPDATE_DUE_DATE_SUCCESS
+    }
+};
+const updateDueDateFailure = ()=> {
+  return {
+    type: types.UPDATE_DUE_DATE_FAILURE
+  }
+};
 const createCommentSuccess = (payload) => {
     return {
         type: types.CREATE_COMMENT_SUCCESS,
@@ -147,7 +165,7 @@ const clearTask = () => {
     return {
         type: types.CLEAR_TASK
     }
-}
+};
 
 export {
     fetchComments,
@@ -171,5 +189,8 @@ export {
     completeTask,
     completeTaskSuccess,
     completeTaskFailure,
-    clearTask
+    clearTask,
+    updateDueDate,
+    updateDueDateSuccess,
+    updateDueDateFailure
 }

@@ -3,7 +3,7 @@ import * as actions from './actionTypes';
 
 const {Map, List, Set} = Immutable;
 
-const initialState = new Map({
+export const initialState = new Map({
     isFetching: false,
     notifications: List([]),
     total: 0,
@@ -41,7 +41,6 @@ function reducer(state = initialState, action) {
 
         case actions.FETCH_NOTIFICATIONS_FAILURE:
             return state.set('isFetching', false);
-
 
         case actions.FETCH_NOTIFICATIONS_NEXT_PAGE:
             return state.set('isFetching', true);

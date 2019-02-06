@@ -1,16 +1,17 @@
-import React, {PropTypes} from 'react';
+import React  from 'react';
+import PropTypes from 'prop-types';
 import {withRouter} from "react-router-dom";
 import * as actions from "../actions";
 import {createStructuredSelector} from "reselect";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {loadingReports, reports} from "../selectors";
-import Spinner from 'react-spinkit';
+import DataSpinner from '../../../core/components/DataSpinner';
 
 const uuidv4 = require('uuid/v4');
 
 
-class ReportsPage extends React.Component {
+export class ReportsPage extends React.Component {
 
     componentDidMount() {
         this.props.fetchReportsList();
@@ -23,7 +24,7 @@ class ReportsPage extends React.Component {
         const items = [];
         if (reports) {
             reports.forEach((report) => {
-                items.push(<tr key={uuidv4()} style={pointerStyle} onClick={() => {
+                items.push(<tr key={uuidv4()} id="report" style={pointerStyle} onClick={() => {
                     this.props.history.push(`/report?reportName=${report.get('htmlName')}`)
                 }}>
                     <td>{report.get('name')}</td>
@@ -42,8 +43,8 @@ class ReportsPage extends React.Component {
                 </div>
 
             </div>
-            {loadingReports ? <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><Spinner
-                name="line-spin-fade-loader" color="black"/></div> : <div>
+            {loadingReports ? <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><DataSpinner
+                message="Loading reports"/></div> : <div>
                 <table>
                     <tbody>
                     {items}

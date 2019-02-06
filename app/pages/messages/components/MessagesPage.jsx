@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {bindActionCreators} from 'redux';
 import ImmutablePropTypes from "react-immutable-proptypes";
@@ -11,7 +12,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import moment from 'moment';
 
 
-class MessagesPage extends React.Component {
+export class MessagesPage extends React.Component {
 
     componentDidMount() {
         this.props.fetchNotifications();
@@ -33,9 +34,9 @@ class MessagesPage extends React.Component {
         return <div>
 
             {this.props.isFetching ?
-                <div className="data-item bold-small">Loading messages...</div> : <div/>
+                <div id="loadingMessages" className="data-item bold-small">Loading messages...</div> : <div/>
             }
-            <div className="grid-row" style={{width: '100%', height: '150px'}}>
+            <div className="grid-row" style={{width: '100%', height: '150px'}} id='numberOfMessages'>
                 <div className="column-one-half">
                     <h2 className="heading-large">
                     <span
@@ -44,7 +45,7 @@ class MessagesPage extends React.Component {
                 </div>
             </div>
 
-            <div className="grid-row">
+            <div className="grid-row" id="messages">
                 <InfiniteScroll
                     pageStart={0}
                     loadMore={() => this.props.fetchNotificationsNextPage(this.props.nextPage)}
@@ -100,8 +101,8 @@ const NotificationTask = ({task, action}) => {
     return <div className="column-one-third">
         <div className="flash-card" style={{'backgroundColor': determineColour(task)}}>
             <header>
-                <h2 className="heading-small">{determineTitle(task)}: {taskName}</h2>
-                <h5 className="heading-xsmall">{created(task)}</h5>
+                <h2 className="heading-small" id='messageName'>{determineTitle(task)}: {taskName}</h2>
+                <h5 className="heading-xsmall" id='messageCreated'>{created(task)}</h5>
             </header>
             <div className="grid-row">
                 <div className="column-full">

@@ -1,9 +1,8 @@
 import React from "react";
 import {withRouter} from "react-router";
-import App from "../../../core/App";
 import AppConstants from "../../../common/AppConstants";
 
-class ProceduresDashboardPanel extends React.Component {
+export class ProceduresDashboardPanel extends React.Component {
 
 
     procedures(e) {
@@ -17,7 +16,7 @@ class ProceduresDashboardPanel extends React.Component {
 
     render() {
         return <li className="__card column-one-third" id="proceduresPanel">
-            <a href="#" onClick={this.procedures.bind(this)} className="card__body">
+            <a href="#" onClick={this.procedures.bind(this)} className="card__body" id="proceduresPageLink">
                 <span className="bold-large">procedures</span>
             </a>
             <div className="card__footer">

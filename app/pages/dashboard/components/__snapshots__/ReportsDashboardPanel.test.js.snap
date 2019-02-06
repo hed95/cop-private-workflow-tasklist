@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reports Dashboard Panel renders reports dashboard panel 1`] = `
+<ReportsDashboardPanel
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <li
+    className="__card column-one-third"
+    id="reportsPanel"
+  >
+    <a
+      className="card__body"
+      href="#"
+      id="reportsPageLink"
+      onClick={[Function]}
+    >
+      <span
+        className="bold-large"
+      >
+        reports
+      </span>
+    </a>
+    <div
+      className="card__footer"
+    >
+      <span
+        className="font-small"
+      >
+        Operational reports
+      </span>
+    </div>
+  </li>
+</ReportsDashboardPanel>
+`;

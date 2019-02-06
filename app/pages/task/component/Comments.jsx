@@ -1,4 +1,5 @@
-import React, {PropTypes} from "react";
+import React  from "react";
+import PropTypes from 'prop-types';
 import CreateComment from "./CreateComment";
 import ImmutablePropTypes from "react-immutable-proptypes";
 import {comments, isFetchingComments} from "../selectors";
@@ -13,7 +14,7 @@ import ShowMore from 'react-show-more';
 const uuidv4 = require('uuid/v4');
 import Collapsible from 'react-collapsible';
 
-class Comments extends React.Component {
+export class Comments extends React.Component {
 
     constructor() {
         super();
@@ -80,7 +81,7 @@ class Comments extends React.Component {
                 <span
                     className="data-item bold-medium">{comments.size} {comments.size === 1 ? 'comment' : 'comments'}</span>
             </div>
-            <CreateComment taskId={this.props.taskId}/>
+            <CreateComment taskId={this.props.taskId} {...this.props}/>
             {!isFetchingComments && comments.size !== 0 ? commentsView : <div/>}
 
         </div>

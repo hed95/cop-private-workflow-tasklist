@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { errors, hasError, unauthorised } from '../selectors';
 import * as actions from '../actions';
 import { bindActionCreators } from 'redux';
@@ -8,16 +9,15 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Redirect } from 'react-router';
 import ErrorPanel from './ErrorPanel';
 
-
 class ErrorHandlingComponent extends React.Component {
 
   render() {
-    const { hasError, unauthorised } = this.props;
+    const { hasError, unauthorised, skipAuthError} = this.props;
     if (!unauthorised && !hasError) {
       return <div>{this.props.children}</div>;
     }
 
-    if (unauthorised) {
+    if (unauthorised && !skipAuthError) {
       return <Redirect push to="/dashboard"/>;
     } else {
       return <div>

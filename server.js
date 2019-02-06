@@ -10,7 +10,6 @@ const app = express();
 const path = require('path');
 const cors = require('cors');
 const fs = require('fs');
-const compression = require('compression');
 
 if (process.env.NODE_ENV === 'production') {
     console.log('Setting ca bundle');
@@ -31,10 +30,9 @@ const respond = (req, res) => {
     res.send('OK');
 };
 
-process.title = 'borders-workflow-tasklist';
+process.title = 'cop-private-ui';
 
 app.set('port', port);
-app.use(compression());
 
 app.use(express.static(__dirname + "/"));
 
@@ -49,7 +47,6 @@ const bpmnModelerName = process.env.WORKFLOW_MODELER;
 const bpmnModelerUrl = `https://${bpmnModelerName}.${domain}`;
 console.log("bpmnModeler " + bpmnModelerUrl);
 
-
 app.get('/api/config', (req, res) => {
     res.send({
         'REALM': process.env.AUTH_REALM,
@@ -62,14 +59,44 @@ app.get('/api/config', (req, res) => {
     })
 });
 
+app.get('*.js', function(req, res, next) {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', 'text/javascript');
+  next();
+});
+
+app.get('*.css', function(req, res, next) {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', 'text/css');
+  next();
+});
+
 app.all('*', function (req, res) {
-    console.log("Request to tasklist");
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 const server = http.createServer(app).listen(app.get('port'), function () {
     console.log('TaskList Prod server listening on port ' + app.get('port'));
 });
+
+
+const shutDown = () => {
+  console.log('Received kill signal, shutting down gracefully');
+  server.close(() => {
+    console.log('Closed out remaining connections');
+    process.exit(0);
+  });
+
+  setTimeout(() => {
+    console.error('Could not close connections in time, forcefully shutting down');
+    process.exit(1);
+  }, 10000);
+
+  connections.forEach(curr => curr.end());
+  setTimeout(() => connections.forEach(curr => curr.destroy()), 5000);
+};
 
 process.on('SIGTERM', shutDown);
 process.on('SIGINT', shutDown);
@@ -81,21 +108,5 @@ server.on('connection', connection => {
     connections.push(connection);
     connection.on('close', () => connections = connections.filter(curr => curr !== connection));
 });
-
-function shutDown() {
-    console.log('Received kill signal, shutting down gracefully');
-    server.close(() => {
-        console.log('Closed out remaining connections');
-        process.exit(0);
-    });
-
-    setTimeout(() => {
-        console.error('Could not close connections in time, forcefully shutting down');
-        process.exit(1);
-    }, 10000);
-
-    connections.forEach(curr => curr.end());
-    setTimeout(() => connections.forEach(curr => curr.destroy()), 5000);
-}
 
 

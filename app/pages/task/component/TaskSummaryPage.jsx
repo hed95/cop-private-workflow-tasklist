@@ -1,14 +1,10 @@
 import React from "react";
 import Actions from './Actions';
-import moment from "moment/moment";
-import {priority} from "../../../core/util/priority";
 import TaskTitle from "./TaskTitle";
-import {DataSpinner} from "../../../core/components/DataSpinner";
-import TaskForm from "../../../core/task-form/components/TaskForm";
 import Comments from "./Comments";
 
 
-class StandardTaskSummaryPage extends React.Component {
+class TaskSummaryPage extends React.Component {
 
     render() {
         const {task, variables} = this.props;
@@ -29,4 +25,4 @@ class StandardTaskSummaryPage extends React.Component {
     }
 }
 
-export default StandardTaskSummaryPage;
+export default TaskSummaryPage;

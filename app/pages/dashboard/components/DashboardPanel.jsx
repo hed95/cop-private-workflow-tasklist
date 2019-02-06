@@ -1,17 +1,21 @@
-import React from 'react';
-import ProceduresDashboardPanel from "./ProceduresDashboardPanel";
-import ReportsDashboardPanel from "./ReportsDashboardPanel";
-import CalendarDashboardPanel from "./CalendarDashboardPanel";
-import AdminPanel from "./AdminPanel";
-import MessagesPanel from "./MessagesPanel";
+import React, { Suspense } from 'react';
+
 import {withRouter} from "react-router";
-import TaskCountPanel from "./TaskCountPanel";
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import connect from "react-redux/es/connect/connect";
+import {connect} from "react-redux";
 import PubSub from "pubsub-js";
+import DataSpinner from '../../../core/components/DataSpinner';
 
-class DashboardPanel extends React.Component {
+
+const ProceduresDashboardPanel = React.lazy(() => import('./ProceduresDashboardPanel'));
+const ReportsDashboardPanel = React.lazy(() => import('./ReportsDashboardPanel'));
+const CalendarDashboardPanel = React.lazy(() => import('./CalendarDashboardPanel'));
+const MessagesPanel  = React.lazy(() => import('./MessagesPanel'));
+const TaskCountPanel = React.lazy(() => import('./TaskCountPanel'));
+const AdminPanel = React.lazy(() => import('./AdminPanel'));
+
+export class DashboardPanel extends React.Component {
 
     constructor(props) {
         super(props);
@@ -92,7 +96,7 @@ class DashboardPanel extends React.Component {
 
 
     componentDidMount() {
-        if (this.props.hasActiveShift) {
+        if (this.props.shift) {
             this.connect();
         }
     }
@@ -105,15 +109,17 @@ class DashboardPanel extends React.Component {
     render() {
         return <div>
             <ul className="grid-row">
-                <TaskCountPanel hasActiveShift={this.props.hasActiveShift}/>
-                <MessagesPanel hasActiveShift={this.props.hasActiveShift}/>
+                <TaskCountPanel {...this.props}/>
+                <MessagesPanel {...this.props} />
             </ul>
             <hr/>
             <ul className="grid-row">
-                <ProceduresDashboardPanel hasActiveShift={this.props.hasActiveShift}/>
-                <ReportsDashboardPanel hasActiveShift={this.props.hasActiveShift}/>
-                <CalendarDashboardPanel hasActiveShift={this.props.hasActiveShift}/>
-                <AdminPanel hasActiveShift={this.props.hasActiveShift}/>
+              <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}><DataSpinner message="Loading panels..."/></div>}>
+                <ProceduresDashboardPanel {...this.props}/>
+                <ReportsDashboardPanel {...this.props}/>
+                <CalendarDashboardPanel {...this.props}/>
+                <AdminPanel {...this.props}/>
+              </Suspense>
             </ul>
         </div>
     }

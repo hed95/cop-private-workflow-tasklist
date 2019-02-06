@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React  from 'react';
+import PropTypes from 'prop-types';
 import ProcessViewer from '../../../core/process-viewer/ProcessViewer';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
@@ -34,10 +35,10 @@ class ProcessDiagramPage extends React.Component {
         </div>
         <div className="heading-medium">Process diagram not viewable on mobile screen</div>
       </div>
-    };
+    }
 
     return <div>
-      <div style={pointerStyle} onClick={(event) => this.props.history.replace('/procedures')}>Back to
+      <div id="backToProcedures" style={pointerStyle} onClick={(event) => this.props.history.replace('/procedures')}>Back to
         procedures
       </div>
       {isFetchingProcessDefinition && isFetchingProcessDefinitionXml ?  <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20%'}}><Spinner

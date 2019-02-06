@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react'
+import React  from 'react'
+import PropTypes from 'prop-types';
 import {withRouter} from "react-router";
 import {isFetchingTaskCounts, taskCounts} from "../selectors";
 import {createStructuredSelector} from "reselect";
@@ -9,7 +10,7 @@ import ImmutablePropTypes from "react-immutable-proptypes";
 import AppConstants from "../../../common/AppConstants";
 import PubSub from "pubsub-js";
 
-class TaskCountPanel extends React.Component {
+export class TaskCountPanel extends React.Component {
 
     constructor(props) {
         super(props);
@@ -71,8 +72,8 @@ class TaskCountPanel extends React.Component {
     render() {
         const {taskCounts, isFetchingTaskCounts} = this.props;
         return <div>
-            <li className="__card column-one-third" id="myTasksPanel">
-                <a href="#" onClick={this.yourTasks} className="card__body">
+            <li className="__card column-one-third" id="yourTasksPanel">
+                <a href="#" onClick={this.yourTasks} className="card__body" id="yourTasksPageLink">
                     <span
                         className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('tasksAssignedToUser')}</span>
                     <span className="bold-small">tasks assigned to you</span>
@@ -82,7 +83,7 @@ class TaskCountPanel extends React.Component {
                 </div>
             </li>
             <li className="__card column-one-third" id="unassignedTasksPanel">
-                <a href="#" onClick={this.yourTeamUnassignedTasks} className="card__body">
+                <a href="#" onClick={this.yourTeamUnassignedTasks} className="card__body" id="yourTeamUnassignedTasksPageLink">
                     <span className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('tasksUnassigned')}</span>
                     <span className="bold-small">unassigned tasks</span>
                 </a>
@@ -90,8 +91,8 @@ class TaskCountPanel extends React.Component {
                     <span className="font-small">Your team unassigned tasks</span>
                 </div>
             </li>
-            <li className="__card column-one-third" id="myTeamTasks">
-                <a href="#" onClick={this.yourTeamTotalTasks} className="card__body">
+            <li className="__card column-one-third" id="youTeamTasks">
+                <a href="#" onClick={this.yourTeamTotalTasks} className="card__body" id="yourTeamTasksPageLink">
                     <span
                         className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('totalTasksAllocatedToTeam')}</span>
                     <span className="bold-small">tasks allocated to your team</span>

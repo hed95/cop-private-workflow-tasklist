@@ -10,6 +10,8 @@ const initialState = new Map({
   submissionToFormIOSuccessful: false,
   submittingTaskFormForCompletion: false,
   taskFormCompleteSuccessful: null,
+  customEventSuccessfullyExecuted: false,
+  submittingCustomEvent: false
 });
 
 function reducer(state = initialState, action) {
@@ -42,6 +44,15 @@ function reducer(state = initialState, action) {
     case actions.COMPLETE_TASK_FORM_FAILURE:
       return state.set('submittingTaskFormForCompletion', false)
         .set('taskFormCompleteSuccessful', false);
+
+    case actions.TASK_CUSTOM_EVENT:
+      return state.set('submittingCustomEvent', true);
+    case actions.TASK_CUSTOM_EVENT_SUCCESS:
+      return state.set('submittingCustomEvent', false)
+        .set('customEventSuccessfullyExecuted', true);
+    case actions.TASK_CUSTOM_EVENT_FAILURE:
+      return state.set('submittingCustomEvent', false)
+        .set('customEventSuccessfullyExecuted', false);
      default:
       return state;
   }

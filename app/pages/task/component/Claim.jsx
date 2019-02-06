@@ -1,11 +1,12 @@
-import React, {PropTypes} from "react";
+import React from "react";
+import PropTypes from 'prop-types';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import * as actions from "../actions";
 import {claimSuccessful} from "../selectors";
 
-class Claim extends React.Component {
+export class Claim extends React.Component {
 
 
     componentWillReceiveProps(nextProps) {
