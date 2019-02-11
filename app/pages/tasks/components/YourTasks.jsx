@@ -24,7 +24,8 @@ const YourTasks = ({ yourTasks, sortYourTasks, filterTasksByName, goToTask, star
       _.map(sortedKeys, key => [key, object[key]])
     )
   };
-  console.log(JSON.stringify(sortByKeys(groupedTasks)));
+  const sortedData = sortByKeys(groupedTasks);
+
   const headers = types.isMobile ? {
     name: null,
     action: null
@@ -34,7 +35,7 @@ const YourTasks = ({ yourTasks, sortYourTasks, filterTasksByName, goToTask, star
     action: null
   };
 
-  const dataToDisplay = _.map(groupedTasks, (value, key) => {
+  const dataToDisplay = _.map(sortedData, (value, key) => {
     const data = _.map(value, (val) => {
       const task = val.task;
       const actionButton = <input id="actionButton" className="btn btn-primary" onClick={() => goToTask(task.taskId)} type="submit"
@@ -44,7 +45,7 @@ const YourTasks = ({ yourTasks, sortYourTasks, filterTasksByName, goToTask, star
       return types.isMobile ? {
         id: taskId,
         name: name,
-        action: actionButtonl
+        action: actionButton
       } : {
         id: taskId,
         name: name,
