@@ -31,9 +31,62 @@ describe('YourTasks Page', () => {
         priority: 1000,
         due: date,
         created: date,
+      },
+      'process-definition': {
+        category: 'Category A'
       }
 
-    }]
+    },
+      {
+        task: {
+          id: 'idApples',
+          name: 'test',
+          priority: 1000,
+          due: date,
+          created: date,
+        },
+        'process-definition': {
+          category: 'Apples A'
+        }
+
+      },
+      {
+        task: {
+          id: 'idZoo',
+          name: 'test',
+          priority: 1000,
+          due: date,
+          created: date,
+        },
+        'process-definition': {
+          category: 'Zoo'
+        }
+
+      },
+      {
+        task: {
+          id: 'idAC',
+          name: 'test',
+          priority: 1000,
+          due: date,
+          created: date,
+        },
+        'process-definition': {
+          category: 'Other OPS'
+        }
+
+      },
+      {
+        task: {
+          id: 'idA',
+          name: 'test',
+          priority: 1000,
+          due: date,
+          created: date,
+        },
+        'process-definition': null
+
+      }]
   });
   beforeEach(() => {
     store = mockStore({
@@ -97,20 +150,12 @@ describe('YourTasks Page', () => {
     expect(tableWrapper.exists()).toEqual(true);
 
     const rows = wrapper.find('.widetable');
-    expect(rows.length).toEqual(1);
-
-    const headerColumns = rows.first().find('th').map(column => column.text());
-    expect(headerColumns[0]).toEqual('Task name');
-    expect(headerColumns[1]).toEqual('Priority');
-    expect(headerColumns[2]).toEqual('Due');
-    expect(headerColumns[3]).toEqual('Created');
+    expect(rows.length).toEqual(5);
 
     const firstRowColumns = rows.first().find('td').map(column => column.text());
-    expect(firstRowColumns.length).toEqual(4);
+    expect(firstRowColumns.length).toEqual(3);
     expect(firstRowColumns[0]).toEqual('test');
-    expect(firstRowColumns[1]).toEqual('High');
-    expect(firstRowColumns[2]).toEqual('a few seconds ago');
-    expect(firstRowColumns[3]).toEqual('a few seconds ago');
+    expect(firstRowColumns[1]).toEqual('due a few seconds ago');
 
   });
 
@@ -206,11 +251,10 @@ describe('YourTasks Page', () => {
       fetchTasksAssignedToYou={fetchTasksAssignedToYou}
     /></Router>);
 
-    const idLink = wrapper.find('#link').first();
+    const idLink = wrapper.find('#actionButton').first();
     expect(idLink.exists()).toEqual(true);
 
     idLink.simulate('click');
     expect(props.history.location.pathname).toEqual('/task');
-    expect(props.history.location.search).toEqual('?taskId=id');
   });
 });
