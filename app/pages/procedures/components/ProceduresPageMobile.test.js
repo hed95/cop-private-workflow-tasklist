@@ -65,8 +65,10 @@ describe('ProceduresPage', () => {
 
     const firstRowColumns = rows.first().find('td').map(column => column.text());
     expect(firstRowColumns.length).toEqual(4);
-    expect(firstRowColumns[0]).toEqual('processA');
-    expect(firstRowColumns[1]).toEqual('processADescription');
+    expect(firstRowColumns[0]).toEqual('processADescription');
+
+    const map = rows.first().find('td').map(column => column);
+    expect(map[1].find('input').prop("value")).toEqual("processA")
 
   });
 });

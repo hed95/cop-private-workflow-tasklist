@@ -628,6 +628,22 @@ table.widetable tr td:nth-child(2) {
   width: 400px;
 }
 
+
+table.widetable-process {
+  width: 100%;
+}
+
+table.narrowtable-process tr td,
+table.narrowtable-process tr th {
+  border: none;
+  padding: 15px 0 0;
+}
+
+
+table.widetable-process tr td:nth-child(3) {
+  text-align: right;
+}
+
 table.narrowtable-yourtasks tr td,
 table.narrowtable-yourtasks tr th {
   border: none;
@@ -645,13 +661,6 @@ table.narrowtable-your-group-unassignedtasks tr th {
   font-size: 14px;
 }
 
-table.narrowtable-process tr td,
-table.narrowtable-process tr th {
-  font-size: 14px;
-}
-table.narrowtable-process tr:nth-child(2) {
-  border-bottom: solid black 4px;
-}
 
 .tasksGrouping {
   margin-bottom: 2em;

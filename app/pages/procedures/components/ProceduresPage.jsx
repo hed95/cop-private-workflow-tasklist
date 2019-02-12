@@ -31,24 +31,28 @@ export class ProceduresPage extends React.Component {
 
   render() {
     const { isFetchingProcessDefinitions, processDefinitions } = this.props;
-    const pointerStyle = { cursor: 'pointer' };
 
     const data = processDefinitions ? processDefinitions.map((p) => {
-        return {
+      const name = p.getIn(['process-definition', 'name']);
+      const description = p.getIn(['process-definition', 'description']);
+      return {
           key: p.getIn(['process-definition', 'key']),
-          name: <div style={pointerStyle} onClick={() => this.process(p)}>{p.getIn(['process-definition', 'name'])}</div>,
-          description: <div style={pointerStyle} onClick={() => this.process(p)}>{p.getIn(['process-definition', 'description'])}</div>,
-          diagram: <div style={pointerStyle} onClick={() => this.viewProcessDiagram(p)}>View procedure</div>
+          name: description,
+          description: p.getIn(['process-definition', 'description']),
+          action: <input id="actionButton" className="btn btn-primary" onClick={() => this.process(p)} type="submit"
+                         value={name}/>,
+          diagram: <input id="actionButton" className="btn btn-default" onClick={() =>  this.viewProcessDiagram(p)} type="submit"
+                          value="View procedure"/>,
         }
     }).toArray() : [];
 
     const headers = !types.isMobile ? {
-      name: 'Name',
       description: 'Description',
-      diagram : ''
+      diagram: null,
+      action: null,
     } : {
-      name: 'Name',
-      description: 'Description'
+      name: null,
+      action: null
     };
 
     return <div>
@@ -67,7 +71,7 @@ export class ProceduresPage extends React.Component {
           rows={data}
           keyGetter={row => row.key}
           breakpoint={578}
-          tableStyling={({ narrow }) => (narrow ? 'narrowtable-process' : 'widetable')}
+          tableStyling={({ narrow }) => (narrow ? 'narrowtable-process' : 'widetable-process')}
         />
       }
 
