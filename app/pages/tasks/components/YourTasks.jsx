@@ -38,7 +38,7 @@ const YourTasks = ({ yourTasks, sortYourTasks, filterTasksByName, goToTask, star
   const dataToDisplay = _.map(sortedData, (value, key) => {
     const data = _.map(value, (val) => {
       const task = val.task;
-      const actionButton = <input id="actionButton" className="btn btn-primary" onClick={() => goToTask(task.taskId)} type="submit"
+      const actionButton = <input id="actionButton" className="btn btn-primary" onClick={() => goToTask(task.id)} type="submit"
                             value="Action"/>;
       const name = task.name;
       const taskId = task.id;
@@ -53,9 +53,10 @@ const YourTasks = ({ yourTasks, sortYourTasks, filterTasksByName, goToTask, star
         action: actionButton
       }
     });
-    return <div id={`category::${key}`} className="tasksGrouping">
-        <div className="data-item bold-small" id={key}>{key} ({value.length} {value.length === 1 ? 'task' : 'tasks'})</div>
+    return <div key={`category::${key}`} className="tasksGrouping">
+        <div className="data-item bold-small" key={key}>{key} ({value.length} {value.length === 1 ? 'task' : 'tasks'})</div>
         <ReactHyperResponsiveTable
+          key={`category::${key}`}
         headers={headers}
         rows={data}
         keyGetter={row => row.id}
