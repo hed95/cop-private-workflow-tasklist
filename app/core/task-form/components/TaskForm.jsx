@@ -72,7 +72,6 @@ export class TaskForm extends React.Component {
       }
 
       const onCustomEvent = (event, variableName) => {
-        console.log('hello');
         if (event.type === 'unclaim') {
           this.props.unclaimTask(task.get('id'));
         } else if (event.type === 'cancel') {
