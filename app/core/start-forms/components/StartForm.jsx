@@ -104,7 +104,6 @@ export class StartForm extends React.Component {
         const variableInput = form.components.find(c => c.key === 'submitVariableName');
         const variableName = variableInput ? variableInput.defaultValue : formName;
         const process = processName ? processName : processKey;
-        console.log(JSON.stringify(form));
         return <Form
           onNextPage={() => {
             this.resetCancelButton();

@@ -620,15 +620,36 @@ table.widetable {
   width: 100%;
 }
 
+table.widetable tr td:nth-child(1) {
+  width: 700px;
+}
+
+table.widetable tr td:nth-child(2) {
+  width: 400px;
+}
+
+
+table.widetable-process {
+  width: 100%;
+}
+
+table.narrowtable-process tr td,
+table.narrowtable-process tr th {
+  border: none;
+  padding: 15px 0 0;
+}
+
+
+table.widetable-process tr td:nth-child(3) {
+  text-align: right;
+}
+
 table.narrowtable-yourtasks tr td,
 table.narrowtable-yourtasks tr th {
-  font-size: 14px;
+  border: none;
+  padding: 10px 0 0;
 }
 
-
-table.narrowtable-yourtasks tr:nth-child(4) {
-  border-bottom: solid black 4px;
-}
 
 table.narrowtable-your-group-unassignedtasks tr:nth-child(5) {
   border-bottom: solid black;
@@ -640,10 +661,7 @@ table.narrowtable-your-group-unassignedtasks tr th {
   font-size: 14px;
 }
 
-table.narrowtable-process tr td,
-table.narrowtable-process tr th {
-  font-size: 14px;
-}
-table.narrowtable-process tr:nth-child(2) {
-  border-bottom: solid black 4px;
+
+.tasksGrouping {
+  margin-bottom: 2em;
 }

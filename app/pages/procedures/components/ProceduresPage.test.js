@@ -7,6 +7,7 @@ import { mount,shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import { ProceduresPage } from './ProceduresPage';
+
 const { Map,List} = Immutable;
 
 describe('ProceduresPage', () => {
@@ -78,14 +79,20 @@ describe('ProceduresPage', () => {
     const tableWrapper = wrapper.find('table');
     expect(tableWrapper.exists()).toEqual(true);
 
-    const rows = wrapper.find('.widetable');
+    const rows = wrapper.find('.widetable-process');
     expect(rows.length).toEqual(1);
 
     const firstRowColumns = rows.first().find('td').map(column => column.text());
     expect(firstRowColumns.length).toEqual(6);
-    expect(firstRowColumns[0]).toEqual('processA');
-    expect(firstRowColumns[1]).toEqual('processADescription');
-    expect(firstRowColumns[2]).toEqual('View procedure');
+    expect(firstRowColumns[0]).toEqual('processADescription');
+
+    const map = rows.first().find('td').map(column => column);
+    const viewProcessColumn = map[1];
+    const actionButton = map[2];
+
+    expect(viewProcessColumn.find('input').prop("value")).toEqual("View procedure");
+    expect(actionButton.find('input').prop("value")).toEqual("processA");
+
     window.matchMedia = null;
   });
 });

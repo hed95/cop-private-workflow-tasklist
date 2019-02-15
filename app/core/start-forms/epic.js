@@ -106,7 +106,6 @@ const submitToWorkflow = (action$, store, { client }) =>
       })
         .retryWhen(retry)
         .map(payload => {
-          console.log(JSON.stringify(action));
           PubSub.publish('submission', {
             submission: true,
             autoDismiss: true,
