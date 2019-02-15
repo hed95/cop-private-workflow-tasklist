@@ -21,7 +21,6 @@ class DashboardTitle extends React.Component {
     endShift(e) {
         e.preventDefault();
         this.props.endShift();
-        this.props.kc.logout();
     }
 
 

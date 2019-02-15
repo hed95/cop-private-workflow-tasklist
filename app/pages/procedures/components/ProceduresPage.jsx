@@ -31,6 +31,7 @@ export class ProceduresPage extends React.Component {
 
   render() {
     const { isFetchingProcessDefinitions, processDefinitions } = this.props;
+    const pointerStyle = { cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline' };
 
     const data = processDefinitions ? processDefinitions.map((p) => {
       const name = p.getIn(['process-definition', 'name']);
@@ -41,8 +42,7 @@ export class ProceduresPage extends React.Component {
           description: p.getIn(['process-definition', 'description']),
           action: <input id="actionButton" className="btn btn-primary" onClick={() => this.process(p)} type="submit"
                          value={name}/>,
-          diagram: <input id="actionButton" className="btn btn-default" onClick={() =>  this.viewProcessDiagram(p)} type="submit"
-                          value="View procedure"/>,
+        diagram:  <div style={pointerStyle} onClick={() => this.viewProcessDiagram(p)}>View procedure</div>
         }
     }).toArray() : [];
 
