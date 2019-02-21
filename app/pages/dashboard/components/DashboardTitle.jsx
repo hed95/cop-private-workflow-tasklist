@@ -37,7 +37,7 @@ class DashboardTitle extends React.Component {
             <div className="column-one-half">
                 <h2 className="heading-large">
                     <span
-                        className="heading-secondary">Operational dashboard</span>{this.props.kc.tokenParsed.given_name} {this.props.kc.tokenParsed.family_name}
+                        className="heading-secondary">{this.props.kc.tokenParsed.given_name} {this.props.kc.tokenParsed.family_name}</span>Operational dashboard
                 </h2>
             </div>
 
