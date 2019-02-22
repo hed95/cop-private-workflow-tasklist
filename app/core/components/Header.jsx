@@ -40,7 +40,7 @@ class Header extends React.Component {
                         <div className="content">
                             <div className="grid-row" style={{paddingTop: '10px'}}>
                                 <div className="column-two-thirds">
-                                    <a href="#" onClick={(event) => this.dashboard(event)} id="proposition-name">Central Operational Platform</a>
+                                    <a href="#" onClick={(event) => this.dashboard(event)} id="proposition-name">Central Operations Platform</a>
                                 </div>
                                 <div className="column-one-quarter">
                                     <ul id="proposition-links">
