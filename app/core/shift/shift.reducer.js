@@ -32,10 +32,12 @@ function shiftReducer(state = shiftInitialState, action) {
       const shiftInfo = hasShiftInfo? Immutable.fromJS(data[0]) : null;
       return state.set('isFetchingShift', false)
         .set('hasActiveShift', hasShiftInfo)
+        .set('activeShiftSuccess' , false)
         .set('shift', shiftInfo);
     case actions.FETCH_ACTIVE_SHIFT_FAILURE:
       return state.set('isFetchingShift', false)
         .set('shift', null)
+        .set('activeShiftSuccess' , false)
         .set('hasActiveShift', false);
     case actions.CREATE_ACTIVE_SHIFT:
       return state.set('submittingActiveShift', true);
