@@ -88,7 +88,8 @@ ProcessStartPage.propTypes = {
   processDefinition: ImmutablePropTypes.map,
   isFetchingProcessDefinition: PropTypes.bool,
   submittingToWorkflow: PropTypes.bool,
-  submissionToWorkflowSuccessful: PropTypes.bool
+  submissionToWorkflowSuccessful: PropTypes.bool,
+  checkIfRunningInstanceExists: PropTypes.bool
 };
 
 const mapStateToProps = createStructuredSelector({

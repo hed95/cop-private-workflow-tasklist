@@ -45,6 +45,10 @@ class ShiftPage extends React.Component {
   }
 
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return !this.form;
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.form && this.form.formio) {
       if (!nextProps.submittingActiveShift) {

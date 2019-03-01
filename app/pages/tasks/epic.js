@@ -40,24 +40,5 @@ const fetchYourGroupTasks = (action$, store, {client}) =>
                 ));
 
 
-const fetchUnassignedTasks = (action$, store, {client}) =>
-    action$.ofType(types.FETCH_UNASSIGNED_TASKS)
-        .mergeMap(action =>
-            client({
-                method: 'GET',
-              path: `/api/workflow/tasks?unassignedOnly=true&${action.sortValue
-                ? action.sortValue: 'sort=due,desc' }${action.filterValue?'&name=' + action.filterValue: ''}`,
-              headers: {
-                    "Accept": "application/json",
-                    "Authorization": `Bearer ${store.getState().keycloak.token}`
-                }
-            }).retryWhen(retry).map(payload => actions.fetchUnassignedTasksSuccess(payload))
-                .catch(error => {
-                        return errorObservable(actions.fetchUnassignedTasksFailure(), error);
-                    }
-                ));
-
-
 export default combineEpics(fetchTasksAssignedYou,
-  fetchYourGroupTasks,
-  fetchUnassignedTasks);
+  fetchYourGroupTasks);

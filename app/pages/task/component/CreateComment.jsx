@@ -13,9 +13,10 @@ class CreateComment extends React.Component {
     this.props.fetchCreateCommentForm();
   }
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps, nextState) {
     return !this.form;
   }
+
 
   renderForm() {
     const { isFetchingCreateCommentForm, form} = this.props;

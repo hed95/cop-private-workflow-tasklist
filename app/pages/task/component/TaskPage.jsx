@@ -29,6 +29,7 @@ class TaskPage extends React.Component {
     }
 
     componentWillUnmount() {
+        this.taskId = null;
         this.props.clearTask();
     }
 
@@ -40,7 +41,7 @@ class TaskPage extends React.Component {
             if (task.isEmpty()) {
                return <NotFound resource="Task" id={this.taskId}/>
             }
-            return task.get('assignee')? <TaskDetailsPage {...this.props} /> : <TaskSummaryPage {...this.props}/>
+            return task.get('assignee') && task.get('assignee') === this.props.kc.tokenParsed.email ? <TaskDetailsPage {...this.props} /> : <TaskSummaryPage {...this.props}/>
         }
 
     }
@@ -58,7 +59,8 @@ const mapStateToProps = createStructuredSelector({
     isFetchingTask: isFetchingTask,
     task: task,
     candidateGroups: candidateGroups,
-    variables: variables
+    variables: variables,
+    kc: (state) => state.keycloak
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

@@ -49,11 +49,6 @@ describe('TaskCountPanel', () => {
     expect(yourTasksPanel.find('.bold-small').text()).toEqual('tasks assigned to you');
 
 
-    const unassignedTasksPanel = wrapper.find('#unassignedTasksPanel');
-    expect(unassignedTasksPanel.exists()).toEqual(true);
-    expect(unassignedTasksPanel.find('.bold-xlarge').text()).toEqual('0');
-    expect(unassignedTasksPanel.find('.bold-small').text()).toEqual('unassigned tasks');
-
     const youTeamTasks = wrapper.find('#youTeamTasks');
     expect(youTeamTasks.exists()).toEqual(true);
     expect(youTeamTasks.find('.bold-xlarge').text()).toEqual('0');
@@ -83,12 +78,6 @@ describe('TaskCountPanel', () => {
     expect(yourTasksPanel.exists()).toEqual(true);
     expect(yourTasksPanel.find('.bold-xlarge').text()).toEqual('10');
     expect(yourTasksPanel.find('.bold-small').text()).toEqual('tasks assigned to you');
-
-
-    const unassignedTasksPanel = wrapper.find('#unassignedTasksPanel');
-    expect(unassignedTasksPanel.exists()).toEqual(true);
-    expect(unassignedTasksPanel.find('.bold-xlarge').text()).toEqual('1');
-    expect(unassignedTasksPanel.find('.bold-small').text()).toEqual('unassigned tasks');
 
     const youTeamTasks = wrapper.find('#youTeamTasks');
     expect(youTeamTasks.exists()).toEqual(true);

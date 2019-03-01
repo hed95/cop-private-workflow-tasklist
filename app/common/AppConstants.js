@@ -2,7 +2,6 @@
 export default class AppConstants {
     static DASHBOARD_PATH = "/dashboard";
     static YOUR_TASKS_PATH = "/your-tasks";
-    static YOUR_GROUP_UNASSIGNED_TASKS_PATH = '/your-group-unassigned-tasks';
     static YOUR_GROUP_TASKS_PATH = '/your-group-tasks';
     static PROCEDURES_PATH = '/procedures';
     static REPORTS_PATH = '/reports';

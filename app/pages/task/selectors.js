@@ -8,6 +8,7 @@ export const isCreatingComment = state => state[NAME].get('isCreatingComment');
 export const isFetchingCreateCommentForm = state => state[NAME].get('isFetchingCreateCommentForm');
 export const form = state => state[NAME].get('form');
 export const reloadCommentForm = state => state[NAME].get('reloadCommentForm');
+export const submittingUnclaim = state => state[NAME].get('submittingUnclaim');
 export const unclaimSuccessful = state => state[NAME].get('unclaimSuccessful');
 export const claimSuccessful = state => state[NAME].get('claimSuccessful');
 export const completeSuccessful = state => state[NAME].get('completeSuccessful');

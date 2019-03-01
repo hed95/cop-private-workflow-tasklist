@@ -19,9 +19,8 @@ export class Claim extends React.Component {
         const {task, kc} = this.props;
         const userId = kc.tokenParsed.email;
         const taskAssignee = task.get('assignee');
-        const displayButton = !taskAssignee || (taskAssignee !== userId);
-
-        return displayButton ? <input className="btn btn-primary btn-md" type="submit"
+        const displayButton = taskAssignee === null || (taskAssignee !== userId);
+        return displayButton ? <input id="claimTask" className="btn btn-primary btn-md" type="submit"
                       onClick={() =>
                           this.props.claimTask(this.props.task.get('id'))}  value="Claim"/> : <div/>
     }

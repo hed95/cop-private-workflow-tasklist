@@ -17,13 +17,6 @@ export const initialState = new Map({
     total: 0,
     yourGroupTasksSortValue: 'sort=due,desc',
     yourGroupTasksFilterValue: null
-  }),
-  unassignedTasks: new Map({
-    isFetchingUnassignedTasks: false,
-    tasks: new List([]),
-    total: 0,
-    yourGroupsUnassignedTasksSortValue: 'sort=due,desc',
-    yourGroupsUnassignedTasksFilterValue: null
   })
 });
 
@@ -60,21 +53,18 @@ function reducer(state = initialState, action) {
     case actions.FETCH_YOUR_GROUP_TASKS_FAILURE:
       return state.setIn(['yourGroupTasks', 'isFetchingYourGroupTasks'], false);
 
-    //tasks unassigned
-    case actions.FETCH_UNASSIGNED_TASKS:
-      return state
-        .setIn(['unassignedTasks', 'isFetchingUnassignedTasks'], !action.skipLoading)
-        .setIn(['unassignedTasks', 'yourGroupsUnassignedTasksFilterValue'], action.filterValue)
-        .setIn(['unassignedTasks', 'yourGroupsUnassignedTasksSortValue'], action.sortValue);
-    case actions.FETCH_UNASSIGNED_TASKS_SUCCESS:
-      const unassignedTasks = action.payload.entity._embedded ? action.payload.entity._embedded.tasks : [];
-      const totalUnassigned = action.payload.entity.page.totalElements;
-      return state.setIn(['unassignedTasks', 'isFetchingUnassignedTasks'], false)
-        .setIn(['unassignedTasks', 'tasks'], Immutable.fromJS(unassignedTasks))
-        .setIn(['unassignedTasks', 'total'], totalUnassigned);
+    case actions.HANDLE_UNCLAIM:
+      let yourGroupTasks = state.getIn(['yourGroupTasks', 'tasks']);
+      const taskId = action.taskId;
+      const findIndex = yourGroupTasks.findIndex((item) => {
+        return item.get('task').get('id') === taskId;
+      });
+      yourGroupTasks = yourGroupTasks.update(
+        findIndex, (item) => {
+          return item.setIn(['task', 'assignee'], null);
+        });
 
-    case actions.FETCH_UNASSIGNED_TASKS_FAILURE:
-      return state.setIn(['unassignedTasks', 'isFetchingUnassignedTasks'], false);
+      return  state.setIn(['yourGroupTasks', 'tasks'], yourGroupTasks);
     default:
       return state;
   }
