@@ -21,7 +21,7 @@ import Loader from 'react-loader-advanced';
 import StartForm from './StartForm';
 import NotFound from '../../../../core/components/NotFound';
 
-class ProcessStartPage extends React.Component {
+export class ProcessStartPage extends React.Component {
   componentDidMount() {
     if (this.props.processKey) {
       this.props.fetchProcessDefinition(this.props.processKey);
