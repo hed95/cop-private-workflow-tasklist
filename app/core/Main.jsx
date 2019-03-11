@@ -32,6 +32,9 @@ const TaskPage =  withOnboardingCheck(withShiftCheck(lazy(() => import('../pages
 const UnauthorizedPage = lazy(() => import('../core/components/UnauthorizedPage'));
 const NoOpDashboardPage = lazy(() => import ('../pages/dashboard/components/NoOpDashboardPage'));
 
+const OnboardingPage = withOnboardingCheck(() => {
+  return <StartProcedurePage processKey="onboard-user" noBackLink={true} nonShiftApiCall={true} redirectPath={"/noop-dashboard"}/>
+});
 
 const Main = () => (
   <main>
@@ -51,8 +54,7 @@ const Main = () => (
         <Route name="Task Details Page" exact path={AppConstants.TASK_PATH} component={() =><TaskPage/>}/>
         <Route name="Admin" exact path={AppConstants.ADMIN_PATH} component={() =><AdminPage/>}/>
         <Route name="Unauthorized path" exact path={"/unauthorized"} component={() => <UnauthorizedPage/> }/>
-        <Route name="On board User" exact path={AppConstants.ONBOARD_USER_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><StartProcedurePage processKey="onboard-user" noBackLink={true} nonShiftApiCall={true} redirectPath={"/noop-dashboard"}/></ErrorHandlingComponent>} />
-        <Route name="Mandatory declaration" exact path={AppConstants.MANDATORY_DECLARATION_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><StartProcedurePage processKey="mandatory-declarations" noBackLink={true}  nonShiftApiCall={true} redirectPath={"/noop-dashboard"}/></ErrorHandlingComponent>} />
+        <Route name="On board User" exact path={AppConstants.ONBOARD_USER_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><OnboardingPage/></ErrorHandlingComponent>} />
         <Route name="No-Op Dashboard" exact path={"/noop-dashboard"} component={() => <NoOpDashboardPage/>} />
 
         <Redirect to={AppConstants.DASHBOARD_PATH}/>
