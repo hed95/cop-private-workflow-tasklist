@@ -17,7 +17,7 @@ const initialState = new Map({
 function reducer(state = initialState, action) {
   switch (action.type) {
     case actions.FETCH_PROCESS_DEFINITION:
-      return state;
+      return state.set('loadingForm', true).set('isFetchingProcessDefinition', true);
     case actions.FETCH_PROCESS_DEFINITION_SUCCESS:
       const processDefinition = action.payload.entity ? action.payload.entity : {};
       return state.set('isFetchingProcessDefinition', false)
@@ -27,7 +27,7 @@ function reducer(state = initialState, action) {
     case actions.RESET_PROCEDURE:
       return initialState;
     case actions.FETCH_FORM:
-      return state;
+      return state.set('loadingForm', true);
     case actions.FETCH_FORM_SUCCESS:
       const data = action.payload.entity;
       return state.set('loadingForm', false)

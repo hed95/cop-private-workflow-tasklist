@@ -5,7 +5,8 @@ import {
   loadingForm,
   processDefinition,
   submissionToWorkflowSuccessful,
-  submittingToWorkflow
+  submittingToWorkflow,
+  isFetchingProcessDefinition
 } from '../selectors';
 import { bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -31,7 +32,7 @@ class ProcessStartPage extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.processDefinition !== prevProps.processDefinition) {
+    if (this.props.isFetchingProcessDefinition !== prevProps.isFetchingProcessDefinition && !this.props.isFetchingProcessDefinition) {
       this.props.fetchForm(this.props.processDefinition.get('formKey'));
     }
 
@@ -143,6 +144,7 @@ class ProcessStartPage extends React.Component {
 }
 
 ProcessStartPage.propTypes = {
+  fetchForm: PropTypes.func,
   fetchProcessDefinition: PropTypes.func.isRequired,
   clearProcessDefinition: PropTypes.func.isRequired,
   submit: PropTypes.func,
@@ -157,7 +159,8 @@ const mapStateToProps = createStructuredSelector({
   submittingToWorkflow: submittingToWorkflow,
   submissionToWorkflowSuccessful: submissionToWorkflowSuccessful,
   form: form,
-  loadingForm: loadingForm
+  loadingForm: loadingForm,
+  isFetchingProcessDefinition: isFetchingProcessDefinition
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
