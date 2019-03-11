@@ -39,7 +39,7 @@ function shiftReducer(state = shiftInitialState, action) {
         .set('shift', null)
         .set('activeShiftSuccess' , false)
         .set('hasActiveShift', false);
-    case actions.CREATE_ACTIVE_SHIFT:
+    case actions.SUBMIT_VALIDATION:
       return state.set('submittingActiveShift', true);
     case actions.CREATE_ACTIVE_SHIFT_SUCCESS:
       return state.set('submittingActiveShift', false)

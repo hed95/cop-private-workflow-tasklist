@@ -10,30 +10,30 @@ const { Map } = Immutable;
 
 describe('Start form selector', () => {
   it('should return form', () => {
-    const state = {form: new Map({
+    const state = {"procedure-page": new Map({
         form : {
             name: 'test'
         }
     })};
     const result = form(state);
-    expect(result).toEqual(state.form.get('form'));
+    expect(result).toEqual(state['procedure-page'].get('form'));
   });
   it('should return loadingForm', () => {
-    const state = {form: new Map({
+    const state = {"procedure-page": new Map({
         loadingForm: true
       })};
     const result = loadingForm(state);
     expect(result).toEqual(true);
   });
   it('should return submittingToWorkflow', () => {
-    const state = {form: new Map({
+    const state = {"procedure-page": new Map({
         submittingToWorkflow: true
       })};
     const result = submittingToWorkflow(state);
     expect(result).toEqual(true);
   });
   it('should return submissionToWorkflowSuccessful', () => {
-    const state = {form: new Map({
+    const state = {"procedure-page": new Map({
         submissionToWorkflowSuccessful: true
       })};
     const result = submissionToWorkflowSuccessful(state);
@@ -41,14 +41,14 @@ describe('Start form selector', () => {
   });
 
   it('should return submittingToFormIO', () => {
-    const state = {form: new Map({
+    const state = {"procedure-page": new Map({
         submittingToFormIO: true
       })};
     const result = submittingToFormIO(state);
     expect(result).toEqual(true);
   });
   it('should return submissionToFormIOSuccessful', () => {
-    const state = {form: new Map({
+    const state = {"procedure-page": new Map({
         submissionToFormIOSuccessful: true
       })};
     const result = submissionToFormIOSuccessful(state);

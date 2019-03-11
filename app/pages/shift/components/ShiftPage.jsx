@@ -198,7 +198,7 @@ class ShiftPage extends React.Component {
     return <div style={{ paddingTop: '20px' }}>
       {hasError || failedToCreate ? <ErrorPanel {...this.props}/> : <div/>}
 
-      <Loader show={!isFetchingShift && submittingActiveShift} message={spinner}
+      <Loader show={submittingActiveShift} message={spinner}
               hideContentOnLoad={submittingActiveShift}
               foregroundStyle={{ color: 'black' }}
               backgroundStyle={{ backgroundColor: 'white' }}>

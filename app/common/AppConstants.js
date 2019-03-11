@@ -8,11 +8,11 @@ export default class AppConstants {
     static REPORT_PATH = "/report";
     static MESSAGES_PATH = "/messages";
     static CALENDAR_PATH = "/calendar";
-    static PROCEDURE_START_PATH = "/procedure-start";
+    static START_A_PROCEDURE = "/start-a-procedure";
     static TASK_PATH="/task";
     static ADMIN_PATH="/admin";
     static SHIFT_PATH = "/shift";
-    static PROCESS_DIAGRAM_PATH = "/process-diagram";
+    static PROCEDURE_DIAGRAM_PATH = "/procedure-diagram";
     static ONBOARD_USER_PATH="/onboard-user";
     static MANDATORY_DECLARATION_PATH="/mandatory-declarations";
     static  ONE_MINUTE = 60000;

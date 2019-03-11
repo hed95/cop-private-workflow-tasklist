@@ -3,14 +3,15 @@ import {loadingBarReducer} from 'react-redux-loading-bar';
 import keycloakReducer from './../common/security/keycloakReducer'
 import notificationPage from '../pages/messages';
 import shift from '../core/shift/index';
-import processDefinitions from '../pages/procedures/index';
+import procedures from '../pages/procedures/list/index';
+import procedureDiagram from '../pages/procedures/diagram/index';
+import procedureStart from '../pages/procedures/start/index';
 import error from '../core/error/index';
 import task from '../pages/task/index'
 import tasks from '../pages/tasks/index';
 import taskForm from '../core/task-form/index';
 import reports from '../pages/reports/index';
 
-import form from './start-forms/index';
 import {routerReducer} from 'react-router-redux'
 import {combineEpics} from 'redux-observable';
 import dashboard from "../pages/dashboard";
@@ -19,8 +20,9 @@ import appConfigReducer from "../common/appConfigReducer";
 export const rootEpic = combineEpics(
     notificationPage.epic,
     shift.epic,
-    form.epic,
-    processDefinitions.epic,
+    procedures.epic,
+    procedureDiagram.epic,
+    procedureStart.epic,
     task.epic,
     tasks.epic,
     taskForm.epic,
@@ -35,8 +37,9 @@ export const rootReducer = combineReducers({
     appConfig: appConfigReducer,
     [notificationPage.constants.NAME]: notificationPage.reducer,
     [shift.constants.NAME]: shift.reducer,
-    [form.constants.NAME]: form.reducer,
-    [processDefinitions.constants.NAME]: processDefinitions.reducer,
+    [procedures.constants.NAME]: procedures.reducer,
+    [procedureDiagram.constants.NAME]: procedureDiagram.reducer,
+    [procedureStart.constants.NAME]: procedureStart.reducer,
     [error.constants.NAME]: error.reducer,
     [task.constants.NAME]: task.reducer,
     [tasks.constants.NAME]: tasks.reducer,

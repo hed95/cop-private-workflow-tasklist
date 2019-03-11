@@ -121,10 +121,6 @@ module.exports = webpackMerge(common, {
       exclude: [/\.min\.js$/gi]
     }),
     new ProgressPlugin(true),
-
-    new SriPlugin({
-      hashFuncNames: ['sha384'],
-    }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false

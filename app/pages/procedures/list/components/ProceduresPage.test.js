@@ -12,7 +12,7 @@ const { Map,List} = Immutable;
 
 describe('ProceduresPage', () => {
   const initialState = {
-    'process-definitions-page': new Map({
+    'procedures-list-page': new Map({
       isFetchingProcessDefinitions: true,
       processDefinitions: List([])
     })

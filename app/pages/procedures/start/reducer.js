@@ -3,8 +3,10 @@ import * as actions from './actionTypes';
 
 const { Map } = Immutable;
 
-export const initialState = new Map({
-  loadingForm: false,
+const initialState = new Map({
+  isFetchingProcessDefinition: true,
+  processDefinition: Map({}),
+  loadingForm: true,
   form: null,
   submittingToFormIO: false,
   submissionToFormIOSuccessful: false,
@@ -14,13 +16,18 @@ export const initialState = new Map({
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case actions.RESET_FORM:
+    case actions.FETCH_PROCESS_DEFINITION:
+      return state;
+    case actions.FETCH_PROCESS_DEFINITION_SUCCESS:
+      const processDefinition = action.payload.entity ? action.payload.entity : {};
+      return state.set('isFetchingProcessDefinition', false)
+        .set('processDefinition', Immutable.fromJS(processDefinition));
+    case actions.FETCH_PROCESS_DEFINITION_FAILURE:
+      return state.set('isFetchingProcessDefinition', false);
+    case actions.RESET_PROCEDURE:
       return initialState;
     case actions.FETCH_FORM:
-      return state.set('loadingForm', true)
-        .set('form', null)
-        .set('submittingToWorkflow', false)
-        .set('submissionToWorkflowSuccessful', false);
+      return state;
     case actions.FETCH_FORM_SUCCESS:
       const data = action.payload.entity;
       return state.set('loadingForm', false)
@@ -44,10 +51,10 @@ function reducer(state = initialState, action) {
     case actions.SUBMIT_TO_WORKFLOW_FAILURE:
       return state.set('submittingToWorkflow', false)
         .set('submissionToWorkflowSuccessful', false);
-
     default:
       return state;
   }
 }
+
 
 export default reducer;

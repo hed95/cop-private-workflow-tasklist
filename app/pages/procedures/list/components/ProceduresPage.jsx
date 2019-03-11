@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import {
   isFetchingProcessDefinitions,
   processDefinitions
-} from '../selectors';
+} from '../../list/selectors';
 import { createStructuredSelector } from 'reselect';
-import * as actions from '../actions';
+import * as actions from '../../list/actions';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -22,11 +22,11 @@ export class ProceduresPage extends React.Component {
   }
 
   process = (process) => {
-    this.props.history.replace('/procedure-start?processKey=' + process.getIn(['process-definition', 'key']));
+    this.props.history.replace('/start-a-procedure/' + process.getIn(['process-definition', 'key']));
   };
 
   viewProcessDiagram = (process) => {
-    this.props.history.replace('/process-diagram?processKey=' + process.getIn(['process-definition', 'key']));
+    this.props.history.replace('/procedure-diagram/'+ process.getIn(['process-definition', 'key']));
   };
 
   render() {

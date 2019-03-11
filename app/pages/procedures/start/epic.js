@@ -1,10 +1,26 @@
-import { combineEpics } from 'redux-observable';
-import * as actions from './actions';
-import * as types from './actionTypes';
-import { errorObservable } from '../error/epicUtil';
+import * as types from "./actionTypes";
+import * as actions from "./actions";
+import {combineEpics} from "redux-observable";
+import {errorObservable} from "../../../core/error/epicUtil";
+import {retry} from "../../../core/util/retry";
 import PubSub from 'pubsub-js';
-import { retry } from '../util/retry';
 
+
+const fetchProcessDefinition = (action$, store,  {client}) =>
+    action$.ofType(types.FETCH_PROCESS_DEFINITION)
+        .mergeMap(action =>
+            client({
+                method: 'GET',
+                path: `/api/workflow/process-definitions/${action.processKey}`,
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${store.getState().keycloak.token}`
+                }
+            }).retryWhen(retry).map(payload => actions.fetchProcessDefinitionSuccess(payload))
+                .catch(error => {
+                        return errorObservable(actions.fetchProcessDefinitionFailure(), error);
+                    }
+                ));
 
 const fetchForm = (action$, store, { client }) =>
   action$.ofType(types.FETCH_FORM)
@@ -167,4 +183,4 @@ const submitToWorkflowUsingNonShiftApi = (action$, store, { client }) =>
     );
 
 
-export default combineEpics(fetchForm, fetchFormWithContext, submit, submitToWorkflow, submitToWorkflowUsingNonShiftApi);
+export default combineEpics(fetchProcessDefinition, fetchForm, fetchFormWithContext, submit, submitToWorkflow, submitToWorkflowUsingNonShiftApi);

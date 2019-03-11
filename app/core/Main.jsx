@@ -14,16 +14,16 @@ const ShiftPage = withOnboardingCheck(lazy(() => import ('../pages/shift/compone
 //onboarding and shift check
 const DashboardPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/dashboard/components/DashboardPage'))));
 const YourTasksContainer = withOnboardingCheck(withShiftCheck(lazy(() => import ('../pages/tasks/components/YourTasksContainer'))));
-const ProceduresPage = withOnboardingCheck(withShiftCheck(lazy(() => import ('../pages/procedures/components/ProceduresPage'))));
+const ProceduresPage = withOnboardingCheck(withShiftCheck(lazy(() => import ('../pages/procedures/list/components/ProceduresPage'))));
 const ReportsPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/reports/components/ReportsPage'))));
 const YourGroupTasksContainer = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/tasks/components/YourGroupTasksContainer'))));
 const ReportPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/reports/components/ReportPage'))));
 const MessagesPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/messages/components/MessagesPage'))));
 const CalendarPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/calendar/components/CalendarPage'))));
 
-const StartProcedurePage = lazy(() => import('../pages/procedures/components/ProcedureStartPage'));
+const StartProcedurePage = lazy(() => import('../pages/procedures/start/components/ProcedureStartPage'));
 const ProcessStartPage = withOnboardingCheck(withShiftCheck(StartProcedurePage));
-const ProcessDiagramPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/procedures/components/ProcessDiagramPage'))));
+const ProcessDiagramPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/procedures/diagram/components/ProcessDiagramPage'))));
 const AdminPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/admin/components/AdminPage'))));
 const TaskPage =  withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/task/component/TaskPage'))));
 
@@ -46,8 +46,8 @@ const Main = () => (
         <Route exact path={AppConstants.REPORT_PATH} component={() => <ReportPage/>}/>
         <Route name="Messages" exact path={AppConstants.MESSAGES_PATH} component={() => <MessagesPage/>}/>
         <Route name="Calendar" exact path={AppConstants.CALENDAR_PATH} component={() => <CalendarPage/>}/>
-        <Route name="Procedure Start Page" exact path={AppConstants.PROCEDURE_START_PATH} component={() =><ProcessStartPage/>}/>
-        <Route name="Process Diagram Page" exact path={AppConstants.PROCESS_DIAGRAM_PATH} component={() =><ProcessDiagramPage/>}/>
+        <Route name="Procedure Start Page" exact path={AppConstants.START_A_PROCEDURE + "/:processKey"} component={() =><ProcessStartPage/>}/>
+        <Route name="Procedure Diagram Page" exact path={AppConstants.PROCEDURE_DIAGRAM_PATH + "/:processKey"} component={() =><ProcessDiagramPage/>}/>
         <Route name="Task Details Page" exact path={AppConstants.TASK_PATH} component={() =><TaskPage/>}/>
         <Route name="Admin" exact path={AppConstants.ADMIN_PATH} component={() =><AdminPage/>}/>
         <Route name="Unauthorized path" exact path={"/unauthorized"} component={() => <UnauthorizedPage/> }/>

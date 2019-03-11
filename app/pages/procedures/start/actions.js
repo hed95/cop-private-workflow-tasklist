@@ -1,8 +1,28 @@
 import * as types from './actionTypes';
 
+
+const fetchProcessDefinition = processKey => ({
+    type: types.FETCH_PROCESS_DEFINITION,
+    processKey
+});
+
+const fetchProcessDefinitionSuccess = payload => ({
+    type: types.FETCH_PROCESS_DEFINITION_SUCCESS,
+    payload
+});
+
+
+const fetchProcessDefinitionFailure =  () => ({
+    type: types.FETCH_PROCESS_DEFINITION_FAILURE
+});
+
+const clearProcessDefinition = () => ({
+    type: types.RESET_PROCEDURE
+});
+
 const fetchForm = (formName) => ({
-   type : types.FETCH_FORM,
-   formName
+    type : types.FETCH_FORM,
+    formName
 });
 
 const fetchFormWithContext = (formName, dataContext) => ({
@@ -14,8 +34,8 @@ const fetchFormWithContext = (formName, dataContext) => ({
 
 
 const fetchFormSuccess = payload => ({
-   type: types.FETCH_FORM_SUCCESS,
-   payload
+    type: types.FETCH_FORM_SUCCESS,
+    payload
 });
 
 const fetchFormFailure = () => ({
@@ -63,8 +83,11 @@ const submitToWorkflowFailure = () => ({
     type: types.SUBMIT_TO_WORKFLOW_FAILURE
 });
 
-
-export {
+export  {
+    fetchProcessDefinition,
+    fetchProcessDefinitionSuccess,
+    fetchProcessDefinitionFailure,
+    clearProcessDefinition,
     fetchForm,
     fetchFormWithContext,
     fetchFormSuccess,
@@ -74,6 +97,6 @@ export {
     submitFailure,
     submitToWorkflow,
     submitToWorkflowSuccess,
-    submitToWorkflowFailure,
-    resetForm
+    submitToWorkflowFailure
+
 }

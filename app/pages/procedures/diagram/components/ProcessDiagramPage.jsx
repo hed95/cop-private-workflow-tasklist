@@ -1,28 +1,30 @@
-import React  from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import ProcessViewer from '../../../core/process-viewer/ProcessViewer';
+import ProcessViewer from '../../../../core/process-viewer/ProcessViewer';
 import { withRouter } from 'react-router';
-import queryString from 'query-string';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import { createStructuredSelector } from 'reselect';
-import { isFetchingProcessDefinition, processDefinition, isFetchingProcessDefinitionXml, processDefinitionXml} from '../selectors';
+import { isFetchingProcessDefinition, processDefinition } from '../../start/selectors';
 import { bindActionCreators } from 'redux';
-import * as actions from '../actions';import {connect} from "react-redux";
+import * as actions from '../../diagram/actions';
+import * as procedureActions from '../../start/actions';
+
+import { connect } from 'react-redux';
 import Spinner from 'react-spinkit';
-import { isMobile }   from "react-device-detect";
+import { isMobile } from 'react-device-detect';
+import { isFetchingProcessDefinitionXml, processDefinitionXml } from '../selectors';
+
 class ProcessDiagramPage extends React.Component {
 
   componentDidMount() {
-    const params = queryString.parse(this.props.location.search);
+    const { match: { params } } = this.props;
     this.props.fetchProcessDefinition(params.processKey);
     this.props.fetchProcessDefinitionXml(params.processKey);
-
   }
 
   componentWillUnmount() {
-    this.props.reset();
+    this.props.clearProcessDefinitionXml();
+    this.props.clearProcessDefinition();
   }
-
 
   render() {
     const {isFetchingProcessDefinition, processDefinition, processDefinitionXml, isFetchingProcessDefinitionXml} = this.props;
@@ -50,14 +52,12 @@ class ProcessDiagramPage extends React.Component {
   }
 }
 ProcessDiagramPage.propTypes = {
-  fetchProcessDefinition: PropTypes.func.isRequired,
-  fetchProcessDefinitionXml: PropTypes.func.isRequired,
-  processDefinition: ImmutablePropTypes.map,
+  fetchProcessDefinitionXml: PropTypes.func,
+  clearProcessDefinitionXml: PropTypes.func,
+  fetchProcessDefinition: PropTypes.func,
+  clearProcessDefinition: PropTypes.func,
   processDefinitionXml: PropTypes.string,
-  isFetchingProcessDefinition: PropTypes.bool,
-  isFetchingProcessDefinitionXml: PropTypes.bool,
-
-
+  isFetchingProcessDefinitionXml: PropTypes.bool
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -65,10 +65,9 @@ const mapStateToProps = createStructuredSelector({
   isFetchingProcessDefinition: isFetchingProcessDefinition,
   processDefinitionXml: processDefinitionXml,
   isFetchingProcessDefinitionXml: isFetchingProcessDefinitionXml
-
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(Object.assign(actions, procedureActions), dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProcessDiagramPage));
 
