@@ -3,6 +3,52 @@ import {ProcessStartPage} from './ProcedureStartPage';
 import React from 'react';
 import Immutable from 'immutable';
 
+const form = {
+  "display": "form",
+  "components": [
+    {
+      "id": 'firstNameId',
+      "label": "First name",
+      "allowMultipleMasks": false,
+      "showWordCount": false,
+      "showCharCount": false,
+      "tableView": true,
+      "alwaysEnabled": false,
+      "type": "textfield",
+      "input": true,
+      "key": "firstName",
+      "widget": {
+        "type": ""
+      }
+    },
+    {
+      "id" : "surnameId",
+      "label": "Surname",
+      "allowMultipleMasks": false,
+      "showWordCount": false,
+      "showCharCount": false,
+      "tableView": true,
+      "alwaysEnabled": false,
+      "type": "textfield",
+      "input": true,
+      "key": "surname",
+      "widget": {
+        "type": ""
+      }
+    },
+    {
+      "id" : "submitId",
+      "type": "button",
+      "label": "Submit",
+      "key": "submit",
+      "disableOnInvalid": true,
+      "theme": "primary",
+      "input": true,
+      "tableView": true
+    }
+  ],
+};
+
 describe('Start a procedure page', () => {
 
   it('renders loading bar if form is loading', async() => {
@@ -99,51 +145,7 @@ describe('Start a procedure page', () => {
       submittingToWorkflow: false,
       submissionToWorkflowSuccessful: false,
       isFetchingProcessDefinition: false,
-      form : {
-        "display": "form",
-        "components": [
-          {
-            "id": 'firstNameId',
-            "label": "First name",
-            "allowMultipleMasks": false,
-            "showWordCount": false,
-            "showCharCount": false,
-            "tableView": true,
-            "alwaysEnabled": false,
-            "type": "textfield",
-            "input": true,
-            "key": "firstName",
-            "widget": {
-              "type": ""
-            }
-          },
-          {
-            "id" : "surnameId",
-            "label": "Surname",
-            "allowMultipleMasks": false,
-            "showWordCount": false,
-            "showCharCount": false,
-            "tableView": true,
-            "alwaysEnabled": false,
-            "type": "textfield",
-            "input": true,
-            "key": "surname",
-            "widget": {
-              "type": ""
-            }
-          },
-          {
-            "id" : "submitId",
-            "type": "button",
-            "label": "Submit",
-            "key": "submit",
-            "disableOnInvalid": true,
-            "theme": "primary",
-            "input": true,
-            "tableView": true
-          }
-        ],
-      },
+      form : form,
       processDefinition: Immutable.fromJS({
         "formKey" : "formKey",
         "process-definition" : {
@@ -170,56 +172,13 @@ describe('Start a procedure page', () => {
   });
 
   it('renders Loader if submitted form', async() => {
+
     const props = {
       loadingForm: false,
       submittingToWorkflow: false,
       submissionToWorkflowSuccessful: false,
       isFetchingProcessDefinition: false,
-      form : {
-        "display": "form",
-        "components": [
-          {
-            "id": 'firstNameId',
-            "label": "First name",
-            "allowMultipleMasks": false,
-            "showWordCount": false,
-            "showCharCount": false,
-            "tableView": true,
-            "alwaysEnabled": false,
-            "type": "textfield",
-            "input": true,
-            "key": "firstName",
-            "widget": {
-              "type": ""
-            }
-          },
-          {
-            "id" : "surnameId",
-            "label": "Surname",
-            "allowMultipleMasks": false,
-            "showWordCount": false,
-            "showCharCount": false,
-            "tableView": true,
-            "alwaysEnabled": false,
-            "type": "textfield",
-            "input": true,
-            "key": "surname",
-            "widget": {
-              "type": ""
-            }
-          },
-          {
-            "id" : "submitId",
-            "type": "button",
-            "label": "Submit",
-            "key": "submit",
-            "disableOnInvalid": true,
-            "theme": "primary",
-            "input": true,
-            "tableView": true
-          }
-        ],
-      },
+      form : form,
       processDefinition: Immutable.fromJS({
         "formKey" : "formKey"
       }),
@@ -237,12 +196,108 @@ describe('Start a procedure page', () => {
       clearProcessDefinition={clearProcessDefinition}
       fetchProcessDefinition={fetchProcessDefinition}
     />);
-
     wrapper.setProps({submittingToWorkflow: true});
-    console.log(wrapper.html());
     const loaderContent = wrapper.find('.Loader__content');
     expect(loaderContent.exists()).toEqual(true);
     expect(loaderContent.prop('style')).toEqual({opacity: 0});
+  });
+
+  it('redirects to tasks after submission', async() => {
+    const props = {
+      loadingForm: false,
+      submittingToWorkflow: true,
+      submissionToWorkflowSuccessful: false,
+      isFetchingProcessDefinition: false,
+      submissionToFormIOSuccessful: true,
+      submittingToFormIO: false,
+      form : form,
+      processDefinition: Immutable.fromJS({
+        "formKey" : "formKey"
+      }),
+      match : {
+        params: {
+          "processKey": "processKey"
+        }
+      },
+      history: {
+        replace: jest.fn()
+      }
+    };
+    const fetchProcessDefinition = jest.fn();
+    const clearProcessDefinition = jest.fn();
+
+    const wrapper = await mount(<ProcessStartPage
+      {...props}
+      clearProcessDefinition={clearProcessDefinition}
+      fetchProcessDefinition={fetchProcessDefinition}
+    />);
+
+    const emit = jest.fn(args => console.log("Event " + args));
+    wrapper.instance().form.formio = {
+      emit: emit
+    };
+    wrapper.setProps({
+      submittingToWorkflow: false,
+      submissionToWorkflowSuccessful: true,
+      submissionToFormIOSuccessful: true,
+      submittingToFormIO: false});
+
+    expect(emit).toHaveBeenCalled();
+    expect(props.history.replace).toHaveBeenCalled();
+    });
+
+  it('does not redirect if there was an error', async() => {
+    const props = {
+      loadingForm: false,
+      submittingToWorkflow: false,
+      submissionToWorkflowSuccessful: false,
+      isFetchingProcessDefinition: false,
+      submissionToFormIOSuccessful: false,
+      submittingToFormIO: true,
+      form : form,
+      processDefinition: Immutable.fromJS({
+        "formKey" : "formKey"
+      }),
+      match : {
+        params: {
+          "processKey": "processKey"
+        }
+      },
+      history: {
+        replace: jest.fn()
+      }
+    };
+    const fetchProcessDefinition = jest.fn();
+    const clearProcessDefinition = jest.fn();
+
+    const wrapper = await mount(<ProcessStartPage
+      {...props}
+      clearProcessDefinition={clearProcessDefinition}
+      fetchProcessDefinition={fetchProcessDefinition}
+    />);
+
+    const emit = jest.fn(args => console.log("Event " + args));
+    const submission = {
+      data: {
+        "firstNameId" : "firstname",
+        "surnameId" : "surname"
+      }
+    };
+    wrapper.instance().form.formio = {
+      emit: emit,
+      submission: submission
+    };
+    wrapper.setProps({
+      submittingToWorkflow: false,
+      submissionToWorkflowSuccessful: false,
+      submissionToFormIOSuccessful: false,
+      submittingToFormIO: false});
+
+    expect(emit).toBeCalledWith("error");
+    expect(emit).toBeCalledWith("change", submission);
+
+    expect(props.history.replace).not.toHaveBeenCalled();
+
   });
 
 });

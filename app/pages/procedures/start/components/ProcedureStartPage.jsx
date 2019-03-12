@@ -123,6 +123,10 @@ export class ProcessStartPage extends React.Component {
                              processDefinition={processDefinition.get('process-definition')}
                              history={this.props.history} formReference={(form) => this.form = form}
                              handleSubmit={(submission) => {
+                               if (this.form && this.form.formio) {
+                                 this.form.formio.submitted = true;
+                                 this.form.formio.submitting = true;
+                               }
                                this.props.submit(form._id, procedureKey,
                                  variableName,
                                  submission.data, process,
@@ -134,8 +138,6 @@ export class ProcessStartPage extends React.Component {
             </div>
           </div>
         </Loader>
-
-
       </div>;
     }
 
