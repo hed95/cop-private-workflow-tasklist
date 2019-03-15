@@ -26,6 +26,7 @@ const StartForm = ({form, processDefinition, handleSubmit, history, formReferenc
     },
     i18n: {
       en: {
+        submit : 'Submit',
         cancel: 'Cancel',
         previous: 'Back',
         next: 'Next'
