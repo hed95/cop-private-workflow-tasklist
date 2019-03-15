@@ -41,7 +41,7 @@ export class YourTasksContainer extends React.Component {
 
     this.stompClient.connect({
       'Authorization': `Bearer ${this.props.kc.token}`
-    }, () => {
+    }, (frame) => {
       this.connected = true;
       console.log(`Connected to websocket server`);
       const userSub = this.stompClient.subscribe(`/user/queue/task`, (msg) => {
@@ -90,13 +90,6 @@ export class YourTasksContainer extends React.Component {
       this.stompClient.disconnect();
     }
   };
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.yourTasks.get('isFetchingTasksAssignedToYou')
-      !== this.props.yourTasks.get('isFetchingTasksAssignedToYou')) {
-      this.connect();
-    }
-  }
 
   componentDidMount() {
     this.loadYourTasks(false, 'sort=due,desc');
