@@ -65,8 +65,10 @@ export class TaskCountPanel extends React.Component {
         return <div>
             <li className="__card column-one-third" id="yourTasksPanel">
                 <a href="#" onClick={this.yourTasks} className="card__body" id="yourTasksPageLink">
-                    <span
-                        className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('tasksAssignedToUser')}</span>
+                    {isFetchingTaskCounts ? <span
+                      className="bold-small">Loading</span> :<span
+                      className="bold-xlarge">{taskCounts.get('tasksAssignedToUser')}</span>
+                    }
                     <span className="bold-small">tasks assigned to you</span>
                 </a>
                 <div className="card__footer">
@@ -75,9 +77,13 @@ export class TaskCountPanel extends React.Component {
             </li>
             <li className="__card column-one-third" id="youTeamTasks">
                 <a href="#" onClick={this.yourTeamTotalTasks} className="card__body" id="yourTeamTasksPageLink">
-                    <span
-                        className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('totalTasksAllocatedToTeam')}</span>
-                    <span className="bold-small">tasks allocated to your team</span>
+
+                    {
+                        isFetchingTaskCounts ? <span
+                          className="bold-small">Loading</span>: <span
+                          className="bold-xlarge">{taskCounts.get('totalTasksAllocatedToTeam')}</span>
+                    }
+                       <span className="bold-small">tasks allocated to your team</span>
                 </a>
                 <div className="card__footer">
                     <span className="font-small">Overall tasks assigned to your team</span>
