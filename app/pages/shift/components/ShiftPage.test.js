@@ -73,4 +73,88 @@ describe('Shift page', () => {
     expect(loaderContent.exists()).toEqual(true);
     expect(loaderContent.prop('style')).toEqual({opacity: 0});
   });
+
+  it('redirects to dashboard after shift created', async() => {
+    const form = {
+      'display': 'form',
+      'components': [
+        {
+          'id': 'shiftminutes',
+          'label': 'Shift minutes',
+          'allowMultipleMasks': false,
+          'showWordCount': false,
+          'showCharCount': false,
+          'tableView': true,
+          'alwaysEnabled': false,
+          'type': 'textfield',
+          'input': true,
+          'key': 'firstName',
+          'widget': {
+            'type': ''
+          }
+        },
+        {
+          'id': 'shifthours',
+          'label': 'Shift hours',
+          'allowMultipleMasks': false,
+          'showWordCount': false,
+          'showCharCount': false,
+          'tableView': true,
+          'alwaysEnabled': false,
+          'type': 'textfield',
+          'input': true,
+          'key': 'firstName',
+          'widget': {
+            'type': ''
+          }
+        },
+        {
+          'id': 'submitId',
+          'type': 'button',
+          'label': 'Submit',
+          'key': 'submit',
+          'disableOnInvalid': true,
+          'theme': 'primary',
+          'input': true,
+          'tableView': true
+        }
+      ],
+    };
+    const props = {
+      isFetchingShift: false,
+      isFetchingStaffDetails: false,
+      loadingShiftForm: false,
+      failedToCreateShift: false,
+      submittingActiveShift: true,
+      activeShiftSuccess: null,
+      history: {
+        replace: jest.fn()
+      },
+      shiftForm : form,
+    };
+
+    const wrapper = await mount(<ShiftPage
+      {...props}
+      fetchActiveShift={fetchActiveShift}
+      fetchShiftForm={fetchShiftForm}
+      fetchStaffDetails={fetchStaffDetails}
+    />);
+
+    const emit = jest.fn(args => console.log("Event " + args));
+
+    const submission = {
+      data: {
+        "shiftminutes" : 10,
+        "shifthours" : 10
+      }
+    };
+    wrapper.instance().form.formio = {
+      emit: emit,
+      submission: submission
+    };
+    wrapper.setProps({activeShiftSuccess: true, submittingActiveShift: false});
+    expect(emit).toHaveBeenCalled();
+    expect(props.history.replace).toHaveBeenCalled();
+
+  });
 });
