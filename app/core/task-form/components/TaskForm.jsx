@@ -26,9 +26,6 @@ export class TaskForm extends React.Component {
     this.props.fetchTaskForm(this.props.task);
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return !this.form;
-  }
 
   componentWillReceiveProps(nextProps) {
     if (this.form && this.form.formio) {

@@ -7,10 +7,15 @@ export default class ErrorPanel extends React.Component {
     render() {
         const {hasError, errors} = this.props;
         const items = [];
-
+        const buildMessageFrom = (err) => {
+           if (!err.get('url')) {
+               return <li key={uuidv4()}>{err.get('message')}</li>
+           }
+           return <li key={uuidv4()}>{err.get('url')} - [{err.get('status')} {err.get('error')}]
+                - {err.get('message')}</li>
+        };
         errors.forEach((err) => {
-            items.push(<li key={uuidv4()}>{err.get('url')} - [{err.get('status')} {err.get('error')}]
-                - {err.get('message')}</li>);
+            items.push(buildMessageFrom(err));
         });
         if (hasError) {
             return <div className="error-summary" role="alert" aria-labelledby="error-summary-heading-example-1"

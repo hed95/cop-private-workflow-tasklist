@@ -11,6 +11,7 @@ export const shiftInitialState = new Map({
   activeShiftSuccess: null,
   loadingShiftForm: true,
   shiftForm: null,
+  failedToCreateShift: false
 });
 
 function shiftReducer(state = shiftInitialState, action) {
@@ -40,15 +41,15 @@ function shiftReducer(state = shiftInitialState, action) {
         .set('activeShiftSuccess' , false)
         .set('hasActiveShift', false);
     case actions.SUBMIT_VALIDATION:
-      return state.set('submittingActiveShift', true);
+      return state.set('submittingActiveShift', true).set('failedToCreateShift', false);
     case actions.CREATE_ACTIVE_SHIFT_SUCCESS:
-      return state.set('submittingActiveShift', false)
+      return state
         .set('activeShiftSuccess', true)
         .set('hasActiveShift', true);
     case actions.CREATE_ACTIVE_SHIFT_FAILURE:
       return state
-        .set("submittingActiveShift", false)
-        .set('activeShiftSuccess', false);
+        .set('activeShiftSuccess', false).set('submittingActiveShift', false)
+        .set('failedToCreateShift', true);
     case actions.END_SHIFT:
       return state.set('endingShift', true);
     case actions.END_SHIFT_SUCCESS:
