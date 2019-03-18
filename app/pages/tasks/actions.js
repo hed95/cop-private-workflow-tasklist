@@ -45,27 +45,11 @@ const fetchYourGroupTasksFailure = () => {
   };
 };
 
-
-const fetchUnassignedTasks = (sortValue, filterValue, skipLoading) => {
+const handleUnclaim = (taskId) => {
   return {
-    type: types.FETCH_UNASSIGNED_TASKS,
-    sortValue,
-    filterValue,
-    skipLoading
-  };
-};
-
-const fetchUnassignedTasksSuccess = (payload) => {
-  return {
-    type: types.FETCH_UNASSIGNED_TASKS_SUCCESS,
-    payload
-  };
-};
-
-const fetchUnassignedTasksFailure = () => {
-  return {
-    type: types.FETCH_UNASSIGNED_TASKS_FAILURE
-  };
+    type: types.HANDLE_UNCLAIM,
+    taskId
+  }
 };
 
 export {
@@ -75,7 +59,5 @@ export {
   fetchYourGroupTasks,
   fetchYourGroupTasksSuccess,
   fetchYourGroupTasksFailure,
-  fetchUnassignedTasks,
-  fetchUnassignedTasksSuccess,
-  fetchUnassignedTasksFailure
+  handleUnclaim
 };

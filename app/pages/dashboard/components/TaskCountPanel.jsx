@@ -16,7 +16,6 @@ export class TaskCountPanel extends React.Component {
         super(props);
         this.yourTeamTotalTasks = this.yourTeamTotalTasks.bind(this);
         this.yourTasks = this.yourTasks.bind(this);
-        this.yourTeamUnassignedTasks = this.yourTeamUnassignedTasks.bind(this);
     }
 
     componentDidMount() {
@@ -53,14 +52,6 @@ export class TaskCountPanel extends React.Component {
         })
     }
 
-    yourTeamUnassignedTasks(e) {
-        e.preventDefault();
-        this.props.history.replace({
-            pathname: AppConstants.YOUR_GROUP_UNASSIGNED_TASKS_PATH,
-            state: {shiftPresent: this.props.hasActiveShift}
-        })
-    }
-
     yourTeamTotalTasks(e) {
         e.preventDefault();
         this.props.history.replace({
@@ -74,28 +65,25 @@ export class TaskCountPanel extends React.Component {
         return <div>
             <li className="__card column-one-third" id="yourTasksPanel">
                 <a href="#" onClick={this.yourTasks} className="card__body" id="yourTasksPageLink">
-                    <span
-                        className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('tasksAssignedToUser')}</span>
+                    {isFetchingTaskCounts ? <span
+                      className="bold-small">Loading</span> :<span
+                      className="bold-xlarge">{taskCounts.get('tasksAssignedToUser')}</span>
+                    }
                     <span className="bold-small">tasks assigned to you</span>
                 </a>
                 <div className="card__footer">
                     <span className="font-small">Tasks assigned to you</span>
                 </div>
             </li>
-            <li className="__card column-one-third" id="unassignedTasksPanel">
-                <a href="#" onClick={this.yourTeamUnassignedTasks} className="card__body" id="yourTeamUnassignedTasksPageLink">
-                    <span className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('tasksUnassigned')}</span>
-                    <span className="bold-small">unassigned tasks</span>
-                </a>
-                <div className="card__footer">
-                    <span className="font-small">Your team unassigned tasks</span>
-                </div>
-            </li>
             <li className="__card column-one-third" id="youTeamTasks">
                 <a href="#" onClick={this.yourTeamTotalTasks} className="card__body" id="yourTeamTasksPageLink">
-                    <span
-                        className="bold-xlarge">{isFetchingTaskCounts ? 0 : taskCounts.get('totalTasksAllocatedToTeam')}</span>
-                    <span className="bold-small">tasks allocated to your team</span>
+
+                    {
+                        isFetchingTaskCounts ? <span
+                          className="bold-small">Loading</span>: <span
+                          className="bold-xlarge">{taskCounts.get('totalTasksAllocatedToTeam')}</span>
+                    }
+                       <span className="bold-small">tasks allocated to your team</span>
                 </a>
                 <div className="card__footer">
                     <span className="font-small">Overall tasks assigned to your team</span>

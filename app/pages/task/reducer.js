@@ -12,6 +12,7 @@ const initialState = new Map({
     form: null,
     isFetchingCreateCommentForm: false,
     unclaimSuccessful: false,
+    submittingUnclaim: false,
     claimSuccessful: false,
     completeSuccessful: false,
     variables: null,
@@ -70,11 +71,16 @@ function reducer(state = initialState, action) {
         case actions.FETCH_CREATE_COMMENT_FORM_FAILURE:
             return state.set('isFetchingCreateCommentForm', false);
 
+        case actions.UNCLAIM_TASK:
+            return state.set('submittingUnclaim', true)
+              .set("unclaimSuccessful", false);
         case actions.UNCLAIM_TASK_SUCCESS:
-            return state.set('unclaimSuccessful', true);
+            return state.set('unclaimSuccessful', true)
+              .set('submittingUnclaim', false);
 
         case actions.UNCLAIM_TASK_FAILURE:
-            return state.set('unclaimSuccessful', false);
+            return state.set('unclaimSuccessful', false)
+              .set('submittingUnclaim', false);
 
         case actions.CLAIM_TASK_SUCCESS:
             return state.set('claimSuccessful', true);

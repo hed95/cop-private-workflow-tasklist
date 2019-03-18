@@ -650,17 +650,16 @@ table.narrowtable-yourtasks tr th {
   padding: 10px 0 0;
 }
 
-
-table.narrowtable-your-group-unassignedtasks tr:nth-child(5) {
-  border-bottom: solid black;
+table.narrowtable-yourgrouptasks tr td,
+table.narrowtable-yourgrouptasks tr th {
+  border: none;
+  padding: 10px 0 0;
 }
 
 
-table.narrowtable-your-group-unassignedtasks tr td,
-table.narrowtable-your-group-unassignedtasks tr th {
-  font-size: 14px;
+table.widetable-yourgrouptasks tr td:nth-child(4) {
+  text-align: right;
 }
-
 
 .tasksGrouping {
   margin-bottom: 2em;

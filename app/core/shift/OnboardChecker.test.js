@@ -28,35 +28,6 @@ describe("OnboardChecker", () => {
     expect(response.redirectPath).toEqual("/unauthorized");
   });
 
-  it('expired man dec and inflight process', () => {
-    const staffDetails = Immutable.fromJS({
-      mandatorydeclarationnprocessinstanceid: 'id',
-      mandeclastupdate: moment().year(2)
-    });
-    const response = onboardChecker.onBoardCheck(staffDetails);
-    expect(response.redirectPath).toEqual("/noop-dashboard");
-    expect(response.data.message).toEqual('Waiting for your manager to approve your mandatory declarations');
-  });
-
-  it('expired man dec', () => {
-    const staffDetails = Immutable.fromJS({
-      "staffid": "XXXXX",
-      "identityid": "XXXX",
-      "email": "email",
-      "gradetypeid": "XXXX",
-      "phone": "+44 XXXXXXXXXX",
-      "defaultteamid": "XXXXXXXXXX",
-      "adelphi": 111111,
-      "dateofleaving": null,
-      "mandeclastupdate": null,
-      "defaultlocationid": 1,
-      "onboardprocessinstanceid": null,
-      "mandatorydeclarationnprocessinstanceid": null
-    });
-    const response = onboardChecker.onBoardCheck(staffDetails);
-    expect(response.redirectPath).toEqual("/mandatory-declarations");
-    expect(response.data.message).toEqual('You will need to complete a mandatory declaration before proceeding');
-  });
 
   it('all checks passed', () => {
     const staffDetails = Immutable.fromJS({

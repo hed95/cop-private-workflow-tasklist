@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import * as actions from '../actions';
+import * as taskActions from '../../task/actions';
 import { yourGroupTasks } from '../selectors';
 import { withRouter } from 'react-router';
 import DataSpinner from '../../../core/components/DataSpinner';
 import YourGroupTasks from './YourGroupTasks';
 import { debounce, throttle } from 'throttle-debounce';
 import AppConstants from '../../../common/AppConstants';
+import { claimSuccessful, unclaimSuccessful } from '../../task/selectors';
 
 export class YourGroupTasksContainer extends React.Component {
 
@@ -30,10 +31,6 @@ export class YourGroupTasksContainer extends React.Component {
     this.debounceSearch = this.debounceSearch.bind(this);
   }
 
-  goToTask(taskId) {
-    this.props.history.replace(`/task?taskId=${taskId}`);
-  }
-
   loadYourGroupTasks(skipLoading, yourGroupTasksSortValue, yourGroupTasksFilterValue = null) {
     this.props.fetchYourGroupTasks(yourGroupTasksSortValue, yourGroupTasksFilterValue, skipLoading);
   }
@@ -43,7 +40,18 @@ export class YourGroupTasksContainer extends React.Component {
   }
 
   componentWillUnmount() {
+    this.selectedTask = null;
     clearTimeout(this.timeoutId);
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if ((this.props.unclaimSuccessful !== nextProps.unclaimSuccessful
+      && nextProps.unclaimSuccessful) && this.selectedTask) {
+      this.props.handleUnclaim(this.selectedTask);
+    }
+    if (nextProps.claimSuccessful && this.selectedTask) {
+      this.goToTask(this.selectedTask);
+    }
   }
 
   debounceSearch(sortValue, filterValue) {
@@ -79,19 +87,41 @@ export class YourGroupTasksContainer extends React.Component {
     return <YourGroupTasks filterTasksByName={this.filterTasksByName}
                            yourGroupTasks={yourGroupTasks}
                            sortYourGroupTasks={this.sortYourGroupTasks}
-                           goToTask={this.goToTask} startAProcedure={() => this.props.history.replace("/procedures")}/>;
+                           userId={this.props.kc.tokenParsed.email}
+                           goToTask={this.goToTask}
+                           claimTask={(taskId) => {
+                             if (this.selectedTask) {
+                               this.selectedTask = null;
+                             }
+                             this.selectedTask = taskId;
+                             this.props.claimTask(taskId);
+                            }
+                           }
+                           handleUnclaim={(taskId) => {
+                             if (this.selectedTask) {
+                               this.selectedTask = null;
+                             }
+                             this.selectedTask = taskId;
+                             this.props.unclaimTask(taskId);
+                           }}
+                           startAProcedure={() => this.props.history.replace("/procedures")}/>;
   }
 }
 
 YourGroupTasksContainer.propTypes = {
+  handleUnclaim: PropTypes.func,
+  unclaimTask: PropTypes.func,
   fetchYourGroupTasks: PropTypes.func.isRequired,
   yourGroupTasks: ImmutablePropTypes.map
 };
 
-const mapStateToProps = createStructuredSelector({
-  yourGroupTasks,
-});
+const mapDispatchToProps = dispatch => bindActionCreators(Object.assign(taskActions, actions), dispatch);
 
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(YourGroupTasksContainer));
+export default connect((state) => {
+  return {
+    yourGroupTasks: yourGroupTasks(state),
+    unclaimSuccessful: unclaimSuccessful(state),
+    claimSuccessful: claimSuccessful(state),
+    kc: state.keycloak
+  };
+}, mapDispatchToProps)(withRouter(YourGroupTasksContainer));

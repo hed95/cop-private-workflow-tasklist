@@ -49,9 +49,6 @@ export class TaskForm extends React.Component {
     }
   }
 
-  shouldComponentUpdate() {
-    return !this.form;
-  }
 
   componentWillUnmount() {
     this.form = null;

@@ -4,37 +4,42 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import * as actions from "../actions";
-import {unclaimSuccessful} from "../selectors";
+import { submittingUnclaim, unclaimSuccessful } from '../selectors';
 
-export class Unclaim extends React.Component {
+class Unclaim extends React.Component {
 
-    componentDidMount() {
-        this.unclaim = this.unclaim.bind(this);
-    }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.unclaimSuccessful) {
-            this.props.history.push("/tasks");
+            this.props.history.replace("/your-group-tasks");
         }
     }
 
-    unclaim() {
-        this.props.unclaimTask(this.props.task.get('id'));
-    }
 
     render() {
-        const {task, kc} = this.props;
+        const {task, kc, submittingUnclaim} = this.props;
+        const taskId = task.get('id');
         const userId = kc.tokenParsed.email;
         const taskAssignee = task.get('assignee');
         const displayButton = taskAssignee && taskAssignee === userId;
-        return displayButton ? <input className="btn btn-primary" onClick={() => this.unclaim()} type="submit" value="Unclaim"/> : <div/>;
+
+        return displayButton ?
+          <input id={'claimTask'+ taskId}
+                 className="btn btn-primary"
+                 disabled={submittingUnclaim}
+                 onClick={() => {
+                     this.props.unclaimTask(this.props.task.get('id'));
+                 }} type="submit"
+                 value={"Unclaim"}/> : <div/>;
     }
 
 }
 
 Unclaim.propTypes = {
     unclaimTask: PropTypes.func.isRequired,
-    unclaimSuccessful: PropTypes.bool
+    handleSuccessfulUnclaim: PropTypes.func,
+    unclaimSuccessful: PropTypes.bool,
+    submittingUnclaim: PropTypes.bool
 };
 
 
@@ -43,6 +48,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 export default withRouter(connect((state) => {
     return {
         kc: state.keycloak,
-        unclaimSuccessful: unclaimSuccessful(state)
+        unclaimSuccessful: unclaimSuccessful(state),
+        submittingUnclaim: submittingUnclaim(state)
     }
 }, mapDispatchToProps)(Unclaim))

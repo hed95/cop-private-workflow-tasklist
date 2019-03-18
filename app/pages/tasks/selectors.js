@@ -4,6 +4,4 @@ export const yourTasks = state => state[NAME].get('yourTasks');
 
 export const yourGroupTasks = state => state[NAME].get('yourGroupTasks');
 
-export const unassignedTasks = state => state[NAME].get('unassignedTasks');
-
 

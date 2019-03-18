@@ -7,6 +7,7 @@ import moment from 'moment';
 import AppConstants from '../../../common/AppConstants';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 const { Map } = Immutable;
 jest.useFakeTimers();
@@ -33,7 +34,13 @@ describe('YourGroupTasksContainer Page', () => {
   });
   beforeEach(() => {
     store = mockStore({
-      'tasks-page': new Map({})
+      'tasks-page': new Map({}),
+      'task-page': new Map({}),
+      keycloak: {
+        tokenParsed: {
+          email: "test@test.com"
+        }
+      }
     });
     window.matchMedia = window.matchMedia || function () {
       return {
@@ -53,7 +60,12 @@ describe('YourGroupTasksContainer Page', () => {
     const props = {
       yourGroupTasks: Immutable.fromJS({
         isFetchingYourGroupTasks: true
-      })
+      }),
+      kc : {
+        tokenParsed: {
+          email: "email"
+        }
+      }
     };
     const wrapper = await mount(<YourGroupTasksContainer
       store={store}
@@ -64,16 +76,23 @@ describe('YourGroupTasksContainer Page', () => {
     expect(wrapper.find('.loader-content').exists()).toEqual(true);
     expect(wrapper.find('.loader-message').text()).toEqual('Fetching your group tasks');
   });
-  it('renders your tasks', async() => {
+  it('renders your group tasks', async() => {
+    const history = createMemoryHistory("/your-tasks");
 
     const props = {
-      yourGroupTasks: yourGroupTasks
+      history: history,
+      yourGroupTasks: yourGroupTasks,
+      kc : {
+        tokenParsed: {
+          email: "test@test.com"
+        }
+      }
     };
-    const wrapper = await mount(<YourGroupTasksContainer
+    const wrapper = await mount(<Provider store={store}><Router history={history}><YourGroupTasksContainer
       store={store}
       {...props}
       fetchYourGroupTasks={fetchYourGroupTasks}
-    />);
+    /></Router></Provider>);
 
     expect(fetchYourGroupTasks).toBeCalled();
     expect(wrapper.find('.loader-content').exists()).toEqual(false);
@@ -82,34 +101,35 @@ describe('YourGroupTasksContainer Page', () => {
     const tableWrapper = wrapper.find('table');
     expect(tableWrapper.exists()).toEqual(true);
 
-    const rows = wrapper.find('.widetable');
+    const rows = wrapper.find('.widetable-yourgrouptasks');
     expect(rows.length).toEqual(1);
 
-    const headerColumns = rows.first().find('th').map(column => column.text());
-    expect(headerColumns[0]).toEqual('Task name');
-    expect(headerColumns[1]).toEqual('Priority');
-    expect(headerColumns[2]).toEqual('Created');
-    expect(headerColumns[3]).toEqual('Due');
-    expect(headerColumns[4]).toEqual('Assignee');
 
     const firstRowColumns = rows.first().find('td').map(column => column.text());
-    expect(firstRowColumns.length).toEqual(5);
+    expect(firstRowColumns.length).toEqual(4);
     expect(firstRowColumns[0]).toEqual('test');
-    expect(firstRowColumns[1]).toEqual('High');
-    expect(firstRowColumns[2]).toEqual('a few seconds ago');
-    expect(firstRowColumns[3]).toEqual('a few seconds ago');
-    expect(firstRowColumns[4]).toEqual('test@test.com');
+    expect(firstRowColumns[1]).toEqual('due a few seconds ago');
+    expect(firstRowColumns[2]).toEqual('Assigned to you');
 
   });
   it('renders your group tasks on filter value', async() => {
+    const history = createMemoryHistory("/your-tasks");
+
     const props = {
-      yourGroupTasks: yourGroupTasks
+      history: history,
+      yourGroupTasks: yourGroupTasks,
+      kc : {
+        tokenParsed: {
+          email: "test@test.com"
+        }
+      }
     };
-    const wrapper = await mount(<YourGroupTasksContainer
+    const wrapper = await mount(<Provider store={store}><Router history={history}><YourGroupTasksContainer
       store={store}
       {...props}
       fetchYourGroupTasks={fetchYourGroupTasks}
-    />);
+    /></Router></Provider>);
+
 
 
     expect(fetchYourGroupTasks).toBeCalled();
@@ -126,7 +146,15 @@ describe('YourGroupTasksContainer Page', () => {
   });
 
   it('executes timer', async() => {
+    const history = createMemoryHistory("/your-tasks");
+
     const props = {
+      history: history,
+      kc : {
+        tokenParsed: {
+          email: "email"
+        }
+      },
       yourGroupTasks: Immutable.fromJS({
         isFetchingTasksAssignedToYou: false,
         yourGroupTasksSortValue: 'sort=due,desc',
@@ -145,11 +173,12 @@ describe('YourGroupTasksContainer Page', () => {
       })
     };
 
-    const wrapper = await mount(<YourGroupTasksContainer
+    const wrapper = await mount(<Provider store={store}><Router history={history}><YourGroupTasksContainer
       store={store}
       {...props}
       fetchYourGroupTasks={fetchYourGroupTasks}
-    />);
+    /></Router></Provider>);
+
 
     expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', null, false);
 
@@ -161,11 +190,17 @@ describe('YourGroupTasksContainer Page', () => {
     wrapper.unmount();
     expect(clearTimeout).toBeCalled();
   });
-  it ('navigates to task', async() => {
-    const history = createMemoryHistory("/task");
+  it ('displays claim button if assignee not user', async() => {
+    const history = createMemoryHistory("/your-tasks");
 
     const props = {
+      kc : {
+        tokenParsed: {
+          email: "email"
+        }
+      },
       history: history,
+      claimSuccessful: true,
       yourGroupTasks: Immutable.fromJS({
         isFetchingTasksAssignedToYou: false,
         yourGroupTasksSortValue: 'sort=due,desc',
@@ -184,17 +219,16 @@ describe('YourGroupTasksContainer Page', () => {
       })
     };
 
-    const wrapper = await mount(<Router history={history}><YourGroupTasksContainer
+    const wrapper = await mount(<Provider store={store}><Router history={history}><YourGroupTasksContainer
       store={store}
       {...props}
       fetchYourGroupTasks={fetchYourGroupTasks}
-    /></Router>);
+    /></Router></Provider>);
 
-    const idLink = wrapper.find('#link').first();
-    expect(idLink.exists()).toEqual(true);
+    console.log(wrapper.html());
 
-    idLink.simulate('click');
-    expect(props.history.location.pathname).toEqual('/task');
-    expect(props.history.location.search).toEqual('?taskId=id');
+    const unclaimButton = wrapper.find('input').first();
+    expect(unclaimButton.exists()).toEqual(true);
+
   });
 });

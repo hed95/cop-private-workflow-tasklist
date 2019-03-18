@@ -11,3 +11,4 @@ export const staffDetails = state => state[NAME].get('staffDetails');
 export const isFetchingStaffDetails = state => state[NAME].get('isFetchingStaffDetails');
 export const endingShift = state => state[NAME].get('endingShift');
 export const isCheckingOnBoarding = state => state[NAME].get('isCheckingOnBoarding');
+export const failedToCreateShift = state => state[NAME].get('failedToCreateShift');
