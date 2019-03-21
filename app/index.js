@@ -16,9 +16,11 @@ import Footer from './core/components/Footer';
 import UnauthorizedPage from './core/components/UnauthorizedPage';
 const store = configureStore();
 import * as OfflinePluginRuntime from 'offline-plugin/runtime';
+import {Formio} from 'react-formio';
+import url from './common/formio/url';
 let kc = null;
 
-
+Formio.providers.storage['url'] = url;
 
 const renderApp = (App, authorizedRole) => {
     kc.onTokenExpired = () => {
