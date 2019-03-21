@@ -784,6 +784,7 @@ exports[`Start a procedure page renders the form and process definition 1`] = `
                             "addResource": [Function],
                             "addResourceBundle": [Function],
                             "addResources": [Function],
+                            "default": [Circular],
                             "format": [Function],
                             "getDataByLanguage": [Function],
                             "getResource": [Function],
@@ -5689,6 +5690,8 @@ exports[`Start a procedure page renders the form and process definition 1`] = `
                           "icons": "",
                           "language": "en",
                           "noAlerts": true,
+                          "saveDraft": false,
+                          "saveDraftThrottle": 5000,
                           "submitOnEnter": false,
                         }
                       }
