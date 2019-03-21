@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProcessViewer from '../../../../core/process-viewer/ProcessViewer';
+import ProcessViewer from './ProcessViewer';
 import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
 import { isFetchingProcessDefinition, processDefinition } from '../../start/selectors';

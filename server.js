@@ -42,17 +42,11 @@ app.get('/healthz', respond);
 app.get('/readiness', respond);
 
 
-const domain = process.env.DOMAIN;
-const bpmnModelerName = process.env.WORKFLOW_MODELER;
-const bpmnModelerUrl = `https://${bpmnModelerName}.${domain}`;
-console.log("bpmnModeler " + bpmnModelerUrl);
-
 app.get('/api/config', (req, res) => {
     res.send({
         'REALM': process.env.AUTH_REALM,
         'AUTH_URL': process.env.AUTH_URL,
         'CLIENT_ID': process.env.AUTH_CLIENT_ID,
-        'MODELER_URL': bpmnModelerUrl,
         "UI_VERSION": process.env.UI_VERSION,
         "UI_ENVIRONMENT" : process.env.UI_ENVIRONMENT,
         "AUTH_ACCESS_ROLE" : process.env.AUTH_ACCESS_ROLE
