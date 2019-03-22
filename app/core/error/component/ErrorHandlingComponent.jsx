@@ -23,12 +23,17 @@ export class ErrorHandlingComponent extends React.Component {
 
       const user = this.props.kc.tokenParsed.email;
 
-      this.props.logError({
-        level: 'error',
-        user: user,
-        path: path,
-        errors: errors
-      })
+      const errorsToLog = errors.map((err) => {
+        return {
+          path: path,
+          level: 'error',
+          message: err.message,
+          user: user,
+          status: err.status,
+          url: err.url
+        }
+      });
+      this.props.logError(errorsToLog)
     }
   }
 
