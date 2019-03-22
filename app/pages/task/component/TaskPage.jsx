@@ -7,7 +7,6 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {createStructuredSelector} from "reselect";
 import ImmutablePropTypes from "react-immutable-proptypes";
-import queryString from 'query-string';
 import {withRouter} from "react-router";
 import DataSpinner from "../../../core/components/DataSpinner";
 import TaskDetailsPage from "./TaskDetailsPage";
@@ -17,14 +16,14 @@ import NotFound from "../../../core/components/NotFound";
 class TaskPage extends React.Component {
 
     componentDidMount() {
-        const params = queryString.parse(this.props.location.search);
+        const { match: { params } } = this.props;
         this.taskId = params.taskId;
         this.props.fetchTask(this.taskId);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.taskId !== this.props.taskId) {
-            this.props.fetchTask(nextProps.taskId);
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.taskId !== this.props.taskId) {
+            this.props.fetchTask(this.props.taskId);
         }
     }
 

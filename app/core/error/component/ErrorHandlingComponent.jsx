@@ -40,13 +40,13 @@ export class ErrorHandlingComponent extends React.Component {
   componentDidCatch(error, errorInfo) {
     const path = this.props.history.location.pathname;
     const user = this.props.kc.tokenParsed.email;
-    this.props.logError({
+    this.props.logError([{
       level: 'error',
       user: user,
       path: path,
       error,
       errorInfo
-    })
+    }]);
   }
 
   render() {

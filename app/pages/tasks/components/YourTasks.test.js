@@ -255,6 +255,6 @@ describe('YourTasks Page', () => {
     expect(idLink.exists()).toEqual(true);
 
     idLink.simulate('click');
-    expect(props.history.location.pathname).toEqual('/task');
+    expect(props.history.location.pathname).toEqual('/task/id');
   });
 });
