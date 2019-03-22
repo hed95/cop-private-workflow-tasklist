@@ -72,6 +72,7 @@ const keycloak = new Keycloak({}, kcConfig);
 app.use(keycloak.middleware());
 
 app.post('/log', [keycloak.protect(),(req, res) => {
+  logger.info(`Log statement`);
   logger.log(
     req.body
   );

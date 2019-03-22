@@ -24,6 +24,7 @@ export class ErrorHandlingComponent extends React.Component {
       const user = this.props.kc.tokenParsed.email;
 
       this.props.logError({
+        level: 'error',
         user: user,
         path: path,
         errors: errors
@@ -35,6 +36,7 @@ export class ErrorHandlingComponent extends React.Component {
     const path = this.props.history.location.pathname;
     const user = this.props.kc.tokenParsed.email;
     this.props.logError({
+      level: 'error',
       user: user,
       path: path,
       error,
