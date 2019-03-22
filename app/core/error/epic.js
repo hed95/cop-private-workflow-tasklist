@@ -13,6 +13,7 @@ const logError = (action$, store, { client }) =>
         path: `/log`,
         entity: action.payload,
         headers: {
+          'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': `Bearer ${store.getState().keycloak.token}`
         }
