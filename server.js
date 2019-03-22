@@ -1,4 +1,8 @@
 'use strict';
+const Keycloak =  require ('keycloak-connect');
+const winston = require('winston');
+const {createLogger, format, transports} = winston;
+const { combine, timestamp, json, splat} = format;
 
 const port = process.env.PORT || 8080;
 
@@ -11,8 +15,22 @@ const path = require('path');
 const cors = require('cors');
 const fs = require('fs');
 
+const logger = createLogger({
+  format: combine(
+    timestamp(),
+    splat(),
+    json()
+  ),
+  transports: [
+    new transports.Console(),
+  ],
+  exitOnError: false,
+});
+
+
+
 if (process.env.NODE_ENV === 'production') {
-    console.log('Setting ca bundle');
+    logger.info('Setting ca bundle');
     const trustedCa = [
         '/etc/ssl/certs/ca-bundle.crt'
     ];
@@ -23,7 +41,7 @@ if (process.env.NODE_ENV === 'production') {
         https.globalAgent.options.ca.push(fs.readFileSync(ca));
         http.globalAgent.options.ca.push(fs.readFileSync(ca));
     }
-    console.log('ca bundle set...');
+    logger.info('ca bundle set...');
 }
 
 const respond = (req, res) => {
@@ -37,10 +55,28 @@ app.set('port', port);
 app.use(express.static(__dirname + "/"));
 
 app.use(cors());
+app.use(express.json());
 
 app.get('/healthz', respond);
 app.get('/readiness', respond);
 
+const kcConfig = {
+  clientId: process.env.AUTH_CLIENT_ID,
+  serverUrl: process.env.AUTH_URL,
+  realm: process.env.AUTH_REALM,
+  bearerOnly: true
+};
+
+
+const keycloak = new Keycloak({}, kcConfig);
+app.use(keycloak.middleware());
+
+app.post('/log', [keycloak.protect(),(req, res) => {
+  logger.log(
+    req.body
+  );
+  res.sendStatus(200);
+}]);
 
 app.get('/api/config', (req, res) => {
     res.send({
@@ -72,19 +108,19 @@ app.all('*', function (req, res) {
 });
 
 const server = http.createServer(app).listen(app.get('port'), function () {
-    console.log('TaskList Prod server listening on port ' + app.get('port'));
+    logger.info('TaskList Prod server listening on port ' + app.get('port'));
 });
 
 
 const shutDown = () => {
-  console.log('Received kill signal, shutting down gracefully');
+  logger.info('Received kill signal, shutting down gracefully');
   server.close(() => {
-    console.log('Closed out remaining connections');
+    logger.info('Closed out remaining connections');
     process.exit(0);
   });
 
   setTimeout(() => {
-    console.error('Could not close connections in time, forcefully shutting down');
+    logger.error('Could not close connections in time, forcefully shutting down');
     process.exit(1);
   }, 10000);
 

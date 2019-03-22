@@ -10,10 +10,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 
 export class DashboardPage extends React.Component {
 
-    componentDidMount() {
-        this.props.resetErrors();
-    }
-
     render() {
         return <div id="dashboardContent">
             <DashboardTitle {...this.props} />

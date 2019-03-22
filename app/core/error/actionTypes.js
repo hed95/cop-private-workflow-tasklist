@@ -3,3 +3,9 @@ export const HANDLE_ERROR = "HANDLE_ERROR";
 export const RESET_ERROR = "RESET_ERROR";
 
 export const HANDLE_UNAUTHORISED= "HANDLE_UNAUTHORISED";
+
+export const LOG_ERROR = "LOG_ERROR";
+
+export const LOG_ERROR_SUCCESS = "LOG_ERROR_SUCCESS";
+
+export const LOG_ERROR_FAILURE = "LOG_ERROR_FAILURE";

@@ -1,5 +1,6 @@
 import Promise from 'native-promise-only';
 
+
 const url = (formio) => {
   const xhrRequest = (url, name, query, data, options, onprogress) => {
     return new Promise((resolve, reject) => {

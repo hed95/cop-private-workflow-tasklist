@@ -67,11 +67,6 @@ export class ShiftPage extends React.Component {
 
     const spinner = <DataSpinner message="Submitting your shift details..."/>;
     return <div style={{ paddingTop: '20px' }}>
-      {failedToCreateShift ? <ErrorPanel hasError={failedToCreateShift} errors={
-        Immutable.fromJS([{
-          message: 'Unfortunately we failed to create your shift. Please contact support'
-        }])
-      }/> : <div/>}
 
       <Loader show={submittingActiveShift} message={spinner}
               hideContentOnLoad={submittingActiveShift}

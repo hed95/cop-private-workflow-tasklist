@@ -37,7 +37,7 @@ const Main = () => (
     <Suspense fallback={<div style={{ justifyContent: 'center'}}><DataSpinner message="Loading routes"/></div>}>
       <Switch>
         <Route name="Dashboard" exact path={AppConstants.DASHBOARD_PATH} component={() => <DashboardPage />}/>
-        <Route name="Shift" exact path={AppConstants.SHIFT_PATH} component={() => <ShiftPage/>}/>
+        <Route name="Shift" exact path={AppConstants.SHIFT_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><ShiftPage/></ErrorHandlingComponent>}/>
         <Route name="Your tasks" exact path={AppConstants.YOUR_TASKS_PATH} component={() => <YourTasksContainer />}/>
         <Route name="Your group tasks" exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={() => <YourGroupTasksContainer/>}/>
         <Route name="Procedures" exact path={AppConstants.PROCEDURES_PATH} component={() =><ProceduresPage/>}/>

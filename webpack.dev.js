@@ -1,3 +1,5 @@
+const express = require('express');
+
 const webpack = require('webpack');
 const common = require('./webpack.common.js');
 const webpackMerge = require('webpack-merge');
@@ -44,6 +46,13 @@ module.exports = webpackMerge(common, {
       new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
+        setup(app) {
+            app.use(express.json());
+            app.post('/log', (req, res) => {
+                console.log("logging" + JSON.stringify(req.body));
+                res.sendStatus(200);
+            });
+        },
         contentBase: 'public/',
         hot: true,
         open: true,
