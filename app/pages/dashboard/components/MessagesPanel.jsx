@@ -41,13 +41,13 @@ export class MessagesPanel extends React.Component {
     if (!this.props.isFetchingMessageCounts) {
       const path = this.props.history.location.pathname;
       const user = this.props.kc.tokenParsed.email;
-      const taskCounts = this.props.messageCounts.toJSON();
+
       const logStatements = [{
         level: 'info',
         user: user,
         path: path,
         message: 'message count loaded',
-        taskCounts
+        messageCount: this.props.messageCounts
       }];
       this.props.log(logStatements);
     }

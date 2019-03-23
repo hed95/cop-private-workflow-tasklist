@@ -76,7 +76,15 @@ describe('MessagesPanel', () => {
       history: history,
       hasActiveShift: true,
       isFetchingMessageCounts: false,
-      messageCounts: 10
+      messageCounts: 10,
+      log: (logs) => {
+          console.log('JSON' + JSON.stringify(logs));
+      },
+      kc: {
+        tokenParsed: {
+          email: "email"
+        }
+      }
     };
     const wrapper = await mount(<Router history={history}><MessagesPanel
       store={store}
