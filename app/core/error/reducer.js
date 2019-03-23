@@ -30,8 +30,17 @@ function reducer(state = initialState, action) {
         errorToReturn.message = 'Failed to execute action';
       }
       errorToReturn.raw = error;
-      const errors = state.get('errors')
-        .push(Immutable.fromJS(errorToReturn));
+
+
+      const errors = state.get('errors');
+
+      const filter = errors.filter((error) => {
+        return error.message === errorToReturn.message
+      });
+
+      if (!filter) {
+        errors.push(Immutable.fromJS(errorToReturn))
+      }
       return state.set('hasError', true)
         .set('errors', errors);
     case actions.RESET_ERROR:
