@@ -47,7 +47,9 @@ module.exports = webpackMerge(common, {
     ],
     devServer: {
         setup(app) {
-            app.use(express.json());
+            const bodyParser = require('body-parser');
+            app.use(bodyParser.json());
+
             app.post('/log', (req, res) => {
                 console.log("logging" + JSON.stringify(req.body));
                 res.sendStatus(200);

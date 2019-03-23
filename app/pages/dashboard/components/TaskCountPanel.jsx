@@ -6,6 +6,7 @@ import {createStructuredSelector} from "reselect";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import * as actions from "../actions";
+import * as logActions from '../../../core/error/actions'
 import ImmutablePropTypes from "react-immutable-proptypes";
 import AppConstants from "../../../common/AppConstants";
 import PubSub from "pubsub-js";
@@ -36,13 +37,21 @@ export class TaskCountPanel extends React.Component {
         }
     }
 
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.hasActiveShift !== nextProps.hasActiveShift && nextProps.hasActiveShift) {
-            this.props.fetchTaskCounts();
-        }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+       if (!this.props.fetchTaskCounts && this.props.taskCounts !== prevProps.taskCounts) {
+           const path = this.props.history.location.pathname;
+           const user = this.props.kc.tokenParsed.email;
+           const taskCounts = this.props.taskCounts.toJSON();
+           const logStatements = [{
+               level: 'info',
+               user: user,
+               path: path,
+               message: 'task count loaded',
+               taskCounts
+           }];
+           this.props.log(logStatements);
+       }
     }
-
 
     yourTasks(e) {
         e.preventDefault();
@@ -94,16 +103,19 @@ export class TaskCountPanel extends React.Component {
 }
 
 TaskCountPanel.propTypes = {
+    log: PropTypes.func,
     fetchTaskCounts: PropTypes.func.isRequired,
     setDefaultCounts: PropTypes.func.isRequired,
     taskCounts: ImmutablePropTypes.map
 };
 
-const mapStateToProps = createStructuredSelector({
-    taskCounts: taskCounts,
-    isFetchingTaskCounts: isFetchingTaskCounts
-});
 
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(Object.assign(actions, logActions), dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TaskCountPanel));
+export default connect((state) => {
+    return {
+        taskCounts: taskCounts(state),
+        isFetchingTaskCounts: isFetchingTaskCounts(state),
+        kc: state.keycloak
+    }
+}, mapDispatchToProps)(withRouter(TaskCountPanel));

@@ -30,11 +30,6 @@ export class MessagesPanel extends React.Component {
         }
 
     }
-    componentWillReceiveProps(nextProps) {
-        if (this.props.hasActiveShift !== nextProps.hasActiveShift && nextProps.hasActiveShift) {
-            this.props.fetchMessageCounts();
-        }
-    }
 
     componentWillUnmount() {
         if (this.token) {

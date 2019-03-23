@@ -13,34 +13,25 @@ export class ErrorHandlingComponent extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.hasError) {
       const path = this.props.history.location.pathname;
-      const errors = this.props.errors? this.props.errors.map((error) => {
+      const user = this.props.kc.tokenParsed.email;
+      const errors = this.props.errors ? this.props.errors.map((error) => {
           return {
+            path: path,
+            level: 'error',
             status: error.get('status'),
             message: error.get('message'),
-            url: error.get('url')
+            url: error.get('url'),
+            user: user,
           }
         }) : [];
-
-      const user = this.props.kc.tokenParsed.email;
-
-      const errorsToLog = errors.map((err) => {
-        return {
-          path: path,
-          level: 'error',
-          message: err.message,
-          user: user,
-          status: err.status,
-          url: err.url
-        }
-      });
-      this.props.logError(errorsToLog)
+      this.props.log(errors);
     }
   }
 
   componentDidCatch(error, errorInfo) {
     const path = this.props.history.location.pathname;
     const user = this.props.kc.tokenParsed.email;
-    this.props.logError([{
+    this.props.log([{
       level: 'error',
       user: user,
       path: path,
@@ -67,7 +58,7 @@ export class ErrorHandlingComponent extends React.Component {
 }
 
 ErrorHandlingComponent.propTypes = {
-  logError: PropTypes.func,
+  log: PropTypes.func,
   hasError: PropTypes.bool,
   errors: ImmutablePropTypes.list,
   unauthorised: PropTypes.bool

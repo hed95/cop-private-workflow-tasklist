@@ -5,8 +5,8 @@ import { retry } from '../util/retry';
 import * as Rx from 'rxjs';
 
 
-const logError = (action$, store, { client }) =>
-  action$.ofType(types.LOG_ERROR)
+const log = (action$, store, { client }) =>
+  action$.ofType(types.LOG)
     .mergeMap(action =>
       client({
         method: 'POST',
@@ -19,11 +19,11 @@ const logError = (action$, store, { client }) =>
         }
       })
         .retryWhen(retry)
-        .map(payload => actions.logErrorSuccess())
+        .map(payload => actions.logSuccess())
         .catch(error => {
-            return Rx.Observable.of(actions.logErrorFailure())
+            return Rx.Observable.of(actions.logFailure())
         }));
 
 
 
-export default combineEpics(logError);
+export default combineEpics(log);

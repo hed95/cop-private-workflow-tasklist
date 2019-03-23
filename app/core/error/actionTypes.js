@@ -4,8 +4,8 @@ export const RESET_ERROR = "RESET_ERROR";
 
 export const HANDLE_UNAUTHORISED= "HANDLE_UNAUTHORISED";
 
-export const LOG_ERROR = "LOG_ERROR";
+export const LOG = "LOG";
 
-export const LOG_ERROR_SUCCESS = "LOG_ERROR_SUCCESS";
+export const LOG_SUCCESS = "LOG_SUCCESS";
 
-export const LOG_ERROR_FAILURE = "LOG_ERROR_FAILURE";
+export const LOG_FAILURE = "LOG_FAILURE";

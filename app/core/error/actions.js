@@ -12,23 +12,23 @@ const handleUnauthorised = () => ({
 const resetErrors = () => ({
   type: types.RESET_ERROR
 });
-const logError = (payload) => ({
-  type: types.LOG_ERROR,
+const log = (payload) => ({
+  type: types.LOG,
   payload
 });
 
 
-const logErrorSuccess =() => ({
-  type: types.LOG_ERROR_SUCCESS
+const logSuccess =() => ({
+  type: types.LOG_SUCCESS
 });
-const logErrorFailure =() => ({
-  type: types.LOG_ERROR_FAILURE
+const logFailure =() => ({
+  type: types.LOG_FAILURE
 });
 export {
   handleError,
   handleUnauthorised,
   resetErrors,
-  logError,
-  logErrorFailure,
-  logErrorSuccess
+  log,
+  logSuccess,
+  logFailure
 };
