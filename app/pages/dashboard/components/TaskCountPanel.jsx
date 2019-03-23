@@ -2,7 +2,6 @@ import React  from 'react'
 import PropTypes from 'prop-types';
 import {withRouter} from "react-router";
 import {isFetchingTaskCounts, taskCounts} from "../selectors";
-import {createStructuredSelector} from "reselect";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import * as actions from "../actions";
@@ -38,7 +37,7 @@ export class TaskCountPanel extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-       if (!this.props.fetchTaskCounts && this.props.taskCounts !== prevProps.taskCounts) {
+       if (!this.props.isFetchingTaskCounts) {
            const path = this.props.history.location.pathname;
            const user = this.props.kc.tokenParsed.email;
            const taskCounts = this.props.taskCounts.toJSON();
