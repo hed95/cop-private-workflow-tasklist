@@ -32,17 +32,13 @@ function reducer(state = initialState, action) {
       errorToReturn.raw = error;
 
 
-      const errors = state.get('errors');
+      const errors = state.get('errors')
+        .push(Immutable.fromJS(errorToReturn));
+      const updated = errors.groupBy(x => x.get('message')).map(x => x.first()).toList();
 
-      const filter = errors.filter((error) => {
-        return error.message === errorToReturn.message
-      });
-
-      if (!filter) {
-        errors.push(Immutable.fromJS(errorToReturn))
-      }
       return state.set('hasError', true)
-        .set('errors', errors);
+        .set('errors', updated);
+
     case actions.RESET_ERROR:
       return state.set('hasError', false)
         .set('unauthorised', false)

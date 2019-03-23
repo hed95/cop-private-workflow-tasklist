@@ -4,7 +4,11 @@ import Immutable, { List } from 'immutable';
 
 
 describe('error reducer', () => {
-  const initialState = reducer.initialState;
+  let initialState;
+
+  beforeEach(() => {
+    initialState = reducer.initialState;
+  });
   it('handles unauthorized', () => {
     const state = reducer(initialState, actions.handleUnauthorised());
     expect(state.get('unauthorised')).toEqual(true);
@@ -47,9 +51,6 @@ describe('error reducer', () => {
         message: 'Failed'
       }
     };
-
-
-
 
     const action = actions.handleError(error);
     const updatedState = reducer(Immutable.fromJS({
