@@ -21,7 +21,15 @@ export class TaskCountPanel extends React.Component {
     componentDidMount() {
         if (this.props.hasActiveShift) {
             this.subToken = PubSub.subscribe('refreshCount', (msg, data) => {
-                console.log("Refreshing task count...");
+                const path = this.props.history.location.pathname;
+                const user = this.props.kc.tokenParsed.email;
+                this.props.log([{
+                    level: 'info',
+                    user: user,
+                    path: path,
+                    message: 'refreshing task count',
+                    data
+                }]);
                 this.props.fetchTaskCounts();
             });
             this.props.fetchTaskCounts();
@@ -41,14 +49,13 @@ export class TaskCountPanel extends React.Component {
            const path = this.props.history.location.pathname;
            const user = this.props.kc.tokenParsed.email;
            const taskCounts = this.props.taskCounts.toJSON();
-           const logStatements = [{
+           this.props.log([{
                level: 'info',
                user: user,
                path: path,
                message: 'task count loaded',
                taskCounts
-           }];
-           this.props.log(logStatements);
+           }]);
        }
     }
 
