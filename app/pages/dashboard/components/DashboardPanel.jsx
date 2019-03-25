@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 import PubSub from "pubsub-js";
 import DataSpinner from '../../../core/components/DataSpinner';
 import { bindActionCreators } from 'redux';
-import * as logActions from '../../../core/error/actions';
+import withLog from '../../../core/error/component/withLog';
 
 
 const ProceduresDashboardPanel = React.lazy(() => import('./ProceduresDashboardPanel'));
@@ -61,7 +61,7 @@ export class DashboardPanel extends React.Component {
             this.websocketSubscriptions.push(userSub);
 
             this.props.log([{
-                message: 'Number of subscriptions' + this.websocketSubscriptions.length,
+                message: 'Number of subscriptions ' + this.websocketSubscriptions.length,
                 user: user,
                 level: 'info',
                 path: this.props.location.pathname
@@ -155,11 +155,11 @@ export class DashboardPanel extends React.Component {
 
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(logActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
 export default withRouter(connect((state) => {
     return {
         kc: state.keycloak,
         appConfig: state.appConfig
     }
-}, mapDispatchToProps )(DashboardPanel))
+}, mapDispatchToProps )(withLog(DashboardPanel)));

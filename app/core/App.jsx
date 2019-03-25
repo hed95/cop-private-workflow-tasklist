@@ -4,11 +4,11 @@ import Header from './components/Header';
 import DataSpinner from '../core/components/DataSpinner';
 import Main from './Main';
 import { withRouter } from 'react-router';
-import * as actions from '../core/error/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { ErrorHandlingComponent } from './error/component/ErrorHandlingComponent';
+import withLog from './error/component/withLog';
 
 
 const SubmissionBanner = lazy(() => import('../core/components/SubmissionBanner'));
@@ -59,10 +59,10 @@ ErrorHandlingComponent.propTypes = {
   location: PropTypes.object
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
 export default withRouter(connect((state) => {
   return {
     kc: state.keycloak
   };
-}, mapDispatchToProps)(App));
+}, mapDispatchToProps)(withLog(App)));

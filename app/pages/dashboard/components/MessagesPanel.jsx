@@ -4,10 +4,10 @@ import { withRouter } from 'react-router';
 import { isFetchingMessageCounts, messageCounts } from '../selectors';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions';
-import * as logActions from '../../../core/error/actions';
 import { connect } from 'react-redux';
 import AppConstants from '../../../common/AppConstants';
 import PubSub from 'pubsub-js';
+import withLog from '../../../core/error/component/withLog';
 
 export class MessagesPanel extends React.Component {
 
@@ -88,12 +88,12 @@ export class MessagesPanel extends React.Component {
 
 MessagesPanel.propTypes = {
   log: PropTypes.func,
-    fetchMessageCounts: PropTypes.func.isRequired,
-    messageCounts: PropTypes.number,
-    isFetchingMessageCounts: PropTypes.bool
+  fetchMessageCounts: PropTypes.func.isRequired,
+  messageCounts: PropTypes.number,
+  isFetchingMessageCounts: PropTypes.bool
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators(Object.assign(actions, logActions), dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect((state) => {
   return {
@@ -101,4 +101,4 @@ export default connect((state) => {
     isFetchingMessageCounts: isFetchingMessageCounts(state),
     kc: state.keycloak
   }
-}, mapDispatchToProps)(withRouter(MessagesPanel));
+}, mapDispatchToProps)(withRouter(withLog(MessagesPanel)));

@@ -1,14 +1,14 @@
-import React  from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from "react-router";
-import {isFetchingTaskCounts, taskCounts} from "../selectors";
-import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
-import * as actions from "../actions";
-import * as logActions from '../../../core/error/actions'
-import ImmutablePropTypes from "react-immutable-proptypes";
-import AppConstants from "../../../common/AppConstants";
-import PubSub from "pubsub-js";
+import { withRouter } from 'react-router';
+import { isFetchingTaskCounts, taskCounts } from '../selectors';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import AppConstants from '../../../common/AppConstants';
+import PubSub from 'pubsub-js';
+import withLog from '../../../core/error/component/withLog';
 
 export class TaskCountPanel extends React.Component {
 
@@ -116,7 +116,7 @@ TaskCountPanel.propTypes = {
 };
 
 
-const mapDispatchToProps = dispatch => bindActionCreators(Object.assign(actions, logActions), dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect((state) => {
     return {
@@ -124,4 +124,4 @@ export default connect((state) => {
         isFetchingTaskCounts: isFetchingTaskCounts(state),
         kc: state.keycloak
     }
-}, mapDispatchToProps)(withRouter(TaskCountPanel));
+}, mapDispatchToProps)(withRouter(withLog(TaskCountPanel)));
