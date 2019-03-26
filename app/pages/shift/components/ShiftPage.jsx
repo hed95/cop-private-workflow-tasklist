@@ -33,13 +33,13 @@ export class ShiftPage extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.submittingActiveShift !== prevProps.submittingActiveShift && !this.props.submittingActiveShift) {
-      if (this.form && this.form.formio) {
+      if (this.form) {
         if (this.props.activeShiftSuccess) {
-          this.form.formio.emit('submitDone');
+          this.form.emit('submitDone');
           this.props.history.replace('/dashboard');
         } else {
-          this.form.formio.emit('error');
-          this.form.formio.emit('change', this.form.formio.submission);
+          this.form.emit('error');
+          this.form.emit('change', this.form.formio.submission);
         }
       }
 
@@ -102,7 +102,7 @@ const ShiftForm = ({props, formReference, submit}) => {
       cancelButtonAdded = false;
     }
   };
-  const { shiftForm, shift, loadingShiftForm, isFetchingShift, isFetchingStaffDetails, staffDetails } = props;
+  const { shiftForm, shift, submittingActiveShift,loadingShiftForm, isFetchingShift, isFetchingStaffDetails, staffDetails } = props;
   const onRender = () => {
     const hasCancelButton = $('.list-inline ul li:contains("Cancel")').length;
     if (hasCancelButton === 0 && cancelButtonAdded !== true) {
@@ -120,6 +120,9 @@ const ShiftForm = ({props, formReference, submit}) => {
   if (isFetchingShift && loadingShiftForm && isFetchingStaffDetails) {
     return <DataSpinner message="Loading shift details..."/>;
   } else {
+    if (submittingActiveShift) {
+      return <div/>
+    }
     const options = {
       noAlerts: true,
       language: 'en',

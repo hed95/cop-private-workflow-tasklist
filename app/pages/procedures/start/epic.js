@@ -66,7 +66,7 @@ const fetchFormWithContext = (action$, store, { client }) =>
 const submit = (action$, store, { client }) =>
   action$.ofType(types.SUBMIT)
     .mergeMap(action => {
-      const submissionData = Object.assign({}, action.submissionData);
+      const submissionData = action.submissionData;
       return  client({
         method: 'POST',
         path: `/api/form/${action.formId}/submission`,
