@@ -7,7 +7,6 @@ export default class ShiftForm extends React.Component {
   constructor(props) {
     super(props);
     this.cancelButtonAdded = false;
-    this.counter = 0;
   }
 
   resetCancelButton = () => {
@@ -35,7 +34,6 @@ export default class ShiftForm extends React.Component {
   }
 
   render() {
-    console.log('counter ' +  this.counter++);
     const { shiftForm, shift, staffDetails, formReference, submit} = this.props;
     const options = {
       noAlerts: true,
