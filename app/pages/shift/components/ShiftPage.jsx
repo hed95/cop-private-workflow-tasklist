@@ -22,9 +22,13 @@ import * as actions from '../../../core/shift/actions';
 import moment from 'moment';
 import Loader from 'react-loader-advanced';
 import DataSpinner from '../../../core/components/DataSpinner';
+import ShiftForm from './ShiftForm';
 
 export class ShiftPage extends React.Component {
-
+  constructor(props) {
+    super(props);
+    this.counter = 0;
+  }
   componentDidMount() {
     this.props.fetchActiveShift();
     this.props.fetchShiftForm();
@@ -47,7 +51,6 @@ export class ShiftPage extends React.Component {
 
   }
 
-
   render() {
     const {
       isFetchingShift,
@@ -55,14 +58,17 @@ export class ShiftPage extends React.Component {
       failedToCreateShift,
       hasActiveShift,
       isFetchingStaffDetails,
-      loadingShiftForm
-
+      loadingShiftForm,
+      shiftForm
     } = this.props;
 
-    if (loadingShiftForm || isFetchingStaffDetails || isFetchingShift) {
+    if (loadingShiftForm && isFetchingStaffDetails && isFetchingShift) {
       return  <DataSpinner message="Loading your shift details"/>;
     }
 
+    if (!shiftForm) {
+      return <DataSpinner message="Getting shift form"/>;
+    }
     const spinner = <DataSpinner message="Submitting your shift details..."/>;
     return <div style={{ paddingTop: '20px' }}>
 
@@ -83,7 +89,8 @@ export class ShiftPage extends React.Component {
                   </strong>
                 </div>
               </div> : null}
-            <ShiftForm props={this.props} formReference={(form) => this.form = form } submit={(shiftForm, submission) => {
+
+            <ShiftForm {...this.props} formReference={(form) => this.form = form } submit={(shiftForm, submission) => {
               this.props.submit(shiftForm._id, submission.data);
             }}/>
           </div>
@@ -95,142 +102,23 @@ export class ShiftPage extends React.Component {
 
 }
 
-const ShiftForm = ({props, formReference, submit}) => {
-  let cancelButtonAdded;
-  const resetCancelButton = () => {
-    if (cancelButtonAdded === true) {
-      cancelButtonAdded = false;
-    }
-  };
-  const { shiftForm, shift,loadingShiftForm, isFetchingShift, isFetchingStaffDetails, staffDetails } = props;
-  const onRender = () => {
-    const hasCancelButton = $('.list-inline ul li:contains("Cancel")').length;
-    if (hasCancelButton === 0 && cancelButtonAdded !== true) {
-      $('.list-inline li:eq(0)')
-        .before('<li class="list-inline-item"><button id="cancelButton" class="btn btn-default btn-secondary btn-wizard-nav-cancel">Cancel</button></li>');
-      $('#cancelButton')
-        .bind('click', (e) => {
-          e.preventDefault();
-          props.history.replace('/dashboard');
-        });
-      cancelButtonAdded = true;
-    }
-  };
-
-  if (isFetchingShift && loadingShiftForm && isFetchingStaffDetails) {
-    return <DataSpinner message="Loading shift details..."/>;
-  } else {
-
-    const options = {
-      noAlerts: true,
-      language: 'en',
-      buttonSettings: {
-        showCancel: false
-      },
-      i18n: {
-        en: {
-          cancel: 'Cancel',
-          previous: 'Back',
-          next: 'Next'
-        }
-      },
+    ShiftPage.propTypes = {
+      fetchShiftForm: PropTypes.func.isRequired,
+      fetchActiveShift: PropTypes.func.isRequired,
+      fetchStaffDetails: PropTypes.func.isRequired,
+      isFetchingShift: PropTypes.bool,
+      hasActiveShift: PropTypes.bool,
+      isFetchingStaffDetails: PropTypes.bool,
+      shift: ImmutablePropTypes.map,
+      staffDetails: ImmutablePropTypes.map,
+      unauthorised: PropTypes.bool
     };
-    if (shiftForm) {
-      if (shift) {
-        const shiftSubmission = {
-          data: {
-            shiftminutes: shift.get('shiftminutes'),
-            shifthours: shift.get('shifthours'),
-            startdatetime: moment.utc(shift.get('startdatetime')),
-            teamid: shift.get('teamid'),
-            locationid: shift.get('locationid'),
-            phone: shift.get('phone')
-          }
-        };
-        options.i18n.en.submit = 'Amend shift';
-
-        return <Form form={shiftForm} submission={shiftSubmission} options={options}
-                     ref={(form) => {
-                       formReference(form)
-                     }}
-                     onNextPage={() => {
-                       resetCancelButton();
-                     }}
-                     onPrevPage={() => {
-                       resetCancelButton();
-                     }}
-                     onRender={() => onRender()}
-                     onSubmit={(submission) => {
-                       submit(shiftForm, submission)
-                     }}
-        />;
-      } else {
-        options.i18n.en.submit = 'Start shift';
-        if (staffDetails) {
-          const shiftSubmission = {
-            data: {
-              shiftminutes: 0,
-              shifthours: 8,
-              startdatetime: moment.utc(moment()),
-              teamid: staffDetails.get('defaultteamid'),
-              locationid: staffDetails.get('defaultlocationid'),
-              phone: staffDetails.get('phone')
-            }
-          };
-          return <Form form={shiftForm} submission={shiftSubmission} options={options}
-                       ref={(form) => {
-                         formReference(form)
-                       }}
-                       onNextPage={() => {
-                         resetCancelButton();
-                       }}
-                       onPrevPage={() => {
-                         resetCancelButton();
-                       }}
-                       onRender={() => onRender()}
-                       onSubmit={(submission) => {
-                         submit(shiftForm, submission)
-                       }} />
-        }
-        return <Form form={shiftForm}
-                     ref={(form) => formReference(form)}
-                     onRender={() => onRender()}
-                     onNextPage={() => {
-                       resetCancelButton();
-                     }}
-                     onPrevPage={() => {
-                       resetCancelButton();
-                     }}
-                     options={options}
-                     onSubmit={(submission) =>  {
-                       submit(shiftForm, submission)
-                     }} />
-      }
-    } else {
-      return <div/>;
-    }
-  }
-
-};
 
 
-ShiftPage.propTypes = {
-  fetchShiftForm: PropTypes.func.isRequired,
-  fetchActiveShift: PropTypes.func.isRequired,
-  fetchStaffDetails: PropTypes.func.isRequired,
-  isFetchingShift: PropTypes.bool,
-  hasActiveShift: PropTypes.bool,
-  isFetchingStaffDetails: PropTypes.bool,
-  shift: ImmutablePropTypes.map,
-  staffDetails: ImmutablePropTypes.map,
-  unauthorised: PropTypes.bool
-};
+  const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
-
-export default withRouter(connect((state) => {
-  return {
+  export default withRouter(connect((state) => {
+    return {
     hasActiveShift: hasActiveShift(state),
     isFetchingShift: isFetchingShift(state),
     submittingActiveShift: submittingActiveShift(state),

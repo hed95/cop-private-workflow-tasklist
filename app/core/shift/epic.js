@@ -114,7 +114,7 @@ const fetchActiveShift = (action$, store, { client }) =>
 const submit = (action$, store, { client }) =>
   action$.ofType(types.SUBMIT_VALIDATION)
     .mergeMap(action => {
-      const shiftData = Object.assign({}, action.submissionData);
+      const shiftData = action.submissionData;
       return client({
         method: 'POST',
         path: `/api/form/${action.formId}/submission`,
