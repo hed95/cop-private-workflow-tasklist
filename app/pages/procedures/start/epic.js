@@ -65,12 +65,13 @@ const fetchFormWithContext = (action$, store, { client }) =>
 
 const submit = (action$, store, { client }) =>
   action$.ofType(types.SUBMIT)
-    .mergeMap(action =>
-      client({
+    .mergeMap(action => {
+      const submissionData = Object.assign({}, action.submissionData);
+      return  client({
         method: 'POST',
         path: `/api/form/${action.formId}/submission`,
         entity: {
-          'data': action.submissionData
+          'data':submissionData
         },
         headers: {
           'Accept': 'application/json',
@@ -85,7 +86,7 @@ const submit = (action$, store, { client }) =>
               type: types.SUBMIT_TO_WORKFLOW_NON_SHIFT,
               processKey: action.processKey,
               variableName: action.variableName,
-              data: payload.entity.data,
+              data: submissionData,
               processName: action.processName
             };
           } else {
@@ -101,7 +102,9 @@ const submit = (action$, store, { client }) =>
         .catch(error => {
             return errorObservable(actions.submitFailure(), error);
           }
-        ));
+        )
+    });
+
 
 const submitToWorkflow = (action$, store, { client }) =>
   action$.ofType(types.SUBMIT_TO_WORKFLOW)

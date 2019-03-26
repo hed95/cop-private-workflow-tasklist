@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
-import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import {
   activeShiftSuccess,
@@ -23,7 +22,6 @@ import * as actions from '../../../core/shift/actions';
 import moment from 'moment';
 import Loader from 'react-loader-advanced';
 import DataSpinner from '../../../core/components/DataSpinner';
-import ErrorPanel from '../../../core/error/component/ErrorPanel';
 
 export class ShiftPage extends React.Component {
 
@@ -161,7 +159,9 @@ const ShiftForm = ({props, formReference, submit}) => {
                        resetCancelButton();
                      }}
                      onRender={() => onRender()}
-                     onSubmit={(submission) => submit(shiftForm, submission)}
+                     onSubmit={(submission) => {
+                       submit(shiftForm, submission)
+                     }}
         />;
       } else {
         options.i18n.en.submit = 'Start shift';
@@ -187,7 +187,9 @@ const ShiftForm = ({props, formReference, submit}) => {
                          resetCancelButton();
                        }}
                        onRender={() => onRender()}
-                       onSubmit={(submission) => submit(shiftForm, submission)} />
+                       onSubmit={(submission) => {
+                         submit(shiftForm, submission)
+                       }} />
         }
         return <Form form={shiftForm}
                      ref={(form) => formReference(form)}
@@ -199,7 +201,9 @@ const ShiftForm = ({props, formReference, submit}) => {
                        resetCancelButton();
                      }}
                      options={options}
-                     onSubmit={(submission) => submit(shiftForm, submission)} />
+                     onSubmit={(submission) =>  {
+                       submit(shiftForm, submission)
+                     }} />
       }
     } else {
       return <div/>;
