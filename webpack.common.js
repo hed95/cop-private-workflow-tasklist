@@ -11,6 +11,7 @@ const hashing = process.env.NODE_ENV === 'production' ? 'chunkhash' : 'hash';
 console.log('content hashing: '+ hashing);
 
 module.exports = {
+
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
     modules: [path.resolve(__dirname), 'node_modules', sourcePath],
