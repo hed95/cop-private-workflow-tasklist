@@ -40,6 +40,12 @@ module.exports = {
       template: './public/index.html',
       favicon: './public/favicon.ico'
     }),
+
+    new webpack.DefinePlugin({
+      'process.env': {
+        STORAGE_KEY: JSON.stringify(process.env.STORAGE_KEY)
+      }
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',

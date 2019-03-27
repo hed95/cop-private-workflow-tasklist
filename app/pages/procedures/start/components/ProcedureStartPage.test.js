@@ -1,7 +1,16 @@
+
+
 import { mount } from 'enzyme/build';
 import {ProcessStartPage} from './ProcedureStartPage';
 import React from 'react';
 import Immutable from 'immutable';
+import secureLocalStorage from '../../../../common/security/SecureLocalStorage'
+
+jest.mock('../../../../common/security/SecureLocalStorage', ()=> ({
+  get: jest.fn(),
+  set: jest.fn(),
+  removeAll: jest.fn()
+}));
 
 const form = {
   "display": "form",
@@ -112,6 +121,16 @@ describe('Start a procedure page', () => {
       submittingToWorkflow: false,
       submissionToWorkflowSuccessful: false,
       isFetchingProcessDefinition: true,
+      history: {
+        location: {
+          pathname: "/path"
+        }
+      },
+      kc: {
+        tokenParsed: {
+          email: 'email'
+        }
+      },
       form: null,
       processDefinition: Immutable.fromJS({
         "formKey" : "formKey"
@@ -141,6 +160,16 @@ describe('Start a procedure page', () => {
 
   it ('renders the form and process definition', async() => {
     const props = {
+      history: {
+        location: {
+          pathname: "/path"
+        }
+      },
+      kc: {
+        tokenParsed: {
+          email: 'email'
+        }
+      },
       loadingForm: false,
       submittingToWorkflow: false,
       submissionToWorkflowSuccessful: false,
@@ -174,13 +203,26 @@ describe('Start a procedure page', () => {
   it('renders Loader if submitted form', async() => {
 
     const props = {
+      history: {
+        location: {
+          pathname: "/path"
+        }
+      },
+      kc: {
+        tokenParsed: {
+          email: 'email'
+        }
+      },
       loadingForm: false,
       submittingToWorkflow: false,
       submissionToWorkflowSuccessful: false,
       isFetchingProcessDefinition: false,
       form : form,
       processDefinition: Immutable.fromJS({
-        "formKey" : "formKey"
+        'process-definition' : {
+          "formKey" : "formKey",
+          "id" : "id"
+        }
       }),
       match : {
         params: {
@@ -197,13 +239,28 @@ describe('Start a procedure page', () => {
       fetchProcessDefinition={fetchProcessDefinition}
     />);
     wrapper.setProps({submittingToWorkflow: true});
+
     const loaderContent = wrapper.find('.Loader__content');
+
+    expect(secureLocalStorage.get).toHaveBeenCalled();
+
     expect(loaderContent.exists()).toEqual(true);
     expect(loaderContent.prop('style')).toEqual({opacity: 0});
   });
 
   it('redirects to tasks after submission', async() => {
     const props = {
+      history: {
+        replace: jest.fn(),
+        location: {
+          pathname: "/path"
+        }
+      },
+      kc: {
+        tokenParsed: {
+          email: 'email'
+        }
+      },
       loadingForm: false,
       submittingToWorkflow: true,
       submissionToWorkflowSuccessful: false,
@@ -211,17 +268,19 @@ describe('Start a procedure page', () => {
       submissionToFormIOSuccessful: true,
       submittingToFormIO: false,
       form : form,
+      log: jest.fn(),
       processDefinition: Immutable.fromJS({
-        "formKey" : "formKey"
+        'process-definition' : {
+          "formKey" : "formKey",
+          "id" : "id"
+        }
       }),
       match : {
         params: {
           "processKey": "processKey"
         }
       },
-      history: {
-        replace: jest.fn()
-      }
+
     };
     const fetchProcessDefinition = jest.fn();
     const clearProcessDefinition = jest.fn();
@@ -243,8 +302,9 @@ describe('Start a procedure page', () => {
       submittingToFormIO: false});
 
     expect(emit).toHaveBeenCalled();
+    expect(secureLocalStorage.removeAll).toHaveBeenCalled();
     expect(props.history.replace).toHaveBeenCalled();
-    });
+  });
 
   it('does not redirect if there was an error', async() => {
     const props = {
@@ -255,8 +315,12 @@ describe('Start a procedure page', () => {
       submissionToFormIOSuccessful: false,
       submittingToFormIO: true,
       form : form,
+      log: jest.fn(),
       processDefinition: Immutable.fromJS({
-        "formKey" : "formKey"
+        'process-definition' : {
+          "formKey" : "formKey",
+          "id" : "id"
+        }
       }),
       match : {
         params: {
@@ -264,7 +328,15 @@ describe('Start a procedure page', () => {
         }
       },
       history: {
-        replace: jest.fn()
+        replace: jest.fn(),
+        location: {
+          pathname: "/path"
+        }
+      },
+      kc: {
+        tokenParsed: {
+          email: 'email'
+        }
       }
     };
     const fetchProcessDefinition = jest.fn();
@@ -295,9 +367,10 @@ describe('Start a procedure page', () => {
 
     expect(emit).toBeCalledWith("error");
     expect(emit).toBeCalledWith("change", submission);
-
+    expect(props.log).toHaveBeenCalled();
     expect(props.history.replace).not.toHaveBeenCalled();
 
   });
+
 
 });

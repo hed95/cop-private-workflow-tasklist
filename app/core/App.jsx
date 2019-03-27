@@ -9,11 +9,17 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { ErrorHandlingComponent } from './error/component/ErrorHandlingComponent';
 import withLog from './error/component/withLog';
+import secureLocalStorage from '../common/security/SecureLocalStorage';
 
 
 const SubmissionBanner = lazy(() => import('../core/components/SubmissionBanner'));
 
-class App extends React.Component {
+export class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.secureLocalStorage = secureLocalStorage;
+  }
 
   componentDidMount() {
     const user = this.props.kc.tokenParsed.email;
@@ -29,12 +35,19 @@ class App extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     const user = this.props.kc.tokenParsed.email;
     if (this.props.location !== prevProps.location) {
+      this.secureLocalStorage.removeAll();
       this.props.log([{
-        level: 'info',
+        level: 'debug',
         user: user,
         path: this.props.location.pathname,
-        message: `Route changed from ${prevProps.location.pathname} to ${this.props.location.pathname}`
-      }]);
+        message: 'cleared secure local storage'
+      },
+        {
+          level: 'info',
+          user: user,
+          path: this.props.location.pathname,
+          message: `Route changed from ${prevProps.location.pathname} to ${this.props.location.pathname}`
+        }]);
     }
   }
 

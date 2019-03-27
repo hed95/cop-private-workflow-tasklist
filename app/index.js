@@ -18,12 +18,13 @@ const store = configureStore();
 import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 import {Formio} from 'react-formio';
 import url from './common/formio/url';
+import secureLocalStorage  from './common/security/SecureLocalStorage';
 let kc = null;
 
 Formio.providers.storage['url'] = url;
-
 const renderApp = (App, authorizedRole) => {
     kc.onTokenExpired = () => {
+        secureLocalStorage.removeAll();
         kc.updateToken().success((refreshed) => {
             if (refreshed) {
                 store.getState().keycloak = kc;

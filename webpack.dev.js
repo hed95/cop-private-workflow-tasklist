@@ -46,15 +46,7 @@ module.exports = webpackMerge(common, {
       new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
-        setup(app) {
-            const bodyParser = require('body-parser');
-            app.use(bodyParser.json());
 
-            app.post('/log', (req, res) => {
-                console.log("logging" + JSON.stringify(req.body));
-                res.sendStatus(200);
-            });
-        },
         contentBase: 'public/',
         hot: true,
         open: true,
@@ -109,8 +101,25 @@ module.exports = webpackMerge(common, {
             "/api/translation": {
                 target: translationServiceUrl,
                 changeOrigin: true
-            },
+            }
 
+        },
+        before(app) {
+            app.post('/log', (req, res, next) => {
+                const body = [];
+                req.on("data", (chunk) => {
+                    console.log(chunk);
+                    body.push(chunk);
+                });
+                req.on("end", () => {
+                    const parsedBody = Buffer.concat(body).toString();
+                    const message = parsedBody.split('=')[1];
+                    console.log(parsedBody);
+                    console.log(message);
+                });
+                console.log(body);
+                res.sendStatus(200);
+            });
         }
     }
 });

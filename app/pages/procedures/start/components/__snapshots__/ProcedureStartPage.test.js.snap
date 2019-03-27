@@ -210,7 +210,21 @@ exports[`Start a procedure page renders the form and process definition 1`] = `
       "display": "form",
     }
   }
+  history={
+    Object {
+      "location": Object {
+        "pathname": "/path",
+      },
+    }
+  }
   isFetchingProcessDefinition={false}
+  kc={
+    Object {
+      "tokenParsed": Object {
+        "email": "email",
+      },
+    }
+  }
   loadingForm={false}
   match={
     Object {
@@ -259,7 +273,14 @@ exports[`Start a procedure page renders the form and process definition 1`] = `
         <div
           style={
             Object {
+              "borderRadius": 0,
               "justifyContent": "center",
+              "left": 0,
+              "margin": "auto",
+              "position": "absolute",
+              "right": 0,
+              "top": "-20px",
+              "zIndex": 100,
             }
           }
         >
@@ -307,6 +328,23 @@ exports[`Start a procedure page renders the form and process definition 1`] = `
                     procedure
                   </h2>
                   <StartForm
+                    clearProcessDefinition={[MockFunction]}
+                    dataChange={[Function]}
+                    fetchProcessDefinition={
+                      [MockFunction] {
+                        "calls": Array [
+                          Array [
+                            "processKey",
+                          ],
+                        ],
+                        "results": Array [
+                          Object {
+                            "isThrow": false,
+                            "value": undefined,
+                          },
+                        ],
+                      }
+                    }
                     form={
                       Object {
                         "components": Array [
@@ -501,11 +539,232 @@ exports[`Start a procedure page renders the form and process definition 1`] = `
                     }
                     formReference={[Function]}
                     handleSubmit={[Function]}
-                    processDefinition={
-                      Immutable.Map {
-                        "name": "procedure",
+                    history={
+                      Object {
+                        "location": Object {
+                          "pathname": "/path",
+                        },
                       }
                     }
+                    isFetchingProcessDefinition={false}
+                    kc={
+                      Object {
+                        "tokenParsed": Object {
+                          "email": "email",
+                        },
+                      }
+                    }
+                    loadingForm={false}
+                    match={
+                      Object {
+                        "params": Object {
+                          "processKey": "processKey",
+                        },
+                      }
+                    }
+                    onCustomEvent={[Function]}
+                    processDefinition={
+                      Immutable.Map {
+                        "formKey": "formKey",
+                        "process-definition": Immutable.Map {
+                          "name": "procedure",
+                        },
+                      }
+                    }
+                    startForm={
+                      Object {
+                        "components": Array [
+                          Object {
+                            "allowCalculateOverride": false,
+                            "allowMultipleMasks": false,
+                            "alwaysEnabled": false,
+                            "autofocus": false,
+                            "calculateValue": "",
+                            "clearOnHide": true,
+                            "clearOnRefresh": false,
+                            "conditional": Object {
+                              "eq": "",
+                              "show": null,
+                              "when": null,
+                            },
+                            "customClass": "",
+                            "customDefaultValue": "",
+                            "dataGridLabel": false,
+                            "dbIndex": false,
+                            "defaultValue": null,
+                            "description": "",
+                            "disabled": false,
+                            "errorLabel": "",
+                            "hidden": false,
+                            "hideLabel": false,
+                            "id": "firstNameId",
+                            "input": true,
+                            "inputMask": "",
+                            "inputType": "text",
+                            "key": "firstName",
+                            "label": "First name",
+                            "labelMargin": 3,
+                            "labelPosition": "top",
+                            "labelWidth": 30,
+                            "mask": false,
+                            "multiple": false,
+                            "persistent": true,
+                            "placeholder": "",
+                            "prefix": "",
+                            "protected": false,
+                            "refreshOn": "",
+                            "showCharCount": false,
+                            "showWordCount": false,
+                            "suffix": "",
+                            "tabindex": "",
+                            "tableView": true,
+                            "tooltip": "",
+                            "type": "textfield",
+                            "unique": false,
+                            "validate": Object {
+                              "custom": "",
+                              "customPrivate": false,
+                              "maxLength": "",
+                              "maxWords": "",
+                              "minLength": "",
+                              "minWords": "",
+                              "pattern": "",
+                              "required": false,
+                            },
+                            "validateOn": "change",
+                            "widget": Object {
+                              "dateFormat": "yyyy-MM-dd hh:mm a",
+                              "format": "yyyy-MM-dd hh:mm a",
+                              "saveAs": "text",
+                              "type": "",
+                            },
+                          },
+                          Object {
+                            "allowCalculateOverride": false,
+                            "allowMultipleMasks": false,
+                            "alwaysEnabled": false,
+                            "autofocus": false,
+                            "calculateValue": "",
+                            "clearOnHide": true,
+                            "clearOnRefresh": false,
+                            "conditional": Object {
+                              "eq": "",
+                              "show": null,
+                              "when": null,
+                            },
+                            "customClass": "",
+                            "customDefaultValue": "",
+                            "dataGridLabel": false,
+                            "dbIndex": false,
+                            "defaultValue": null,
+                            "description": "",
+                            "disabled": false,
+                            "errorLabel": "",
+                            "hidden": false,
+                            "hideLabel": false,
+                            "id": "surnameId",
+                            "input": true,
+                            "inputMask": "",
+                            "inputType": "text",
+                            "key": "surname",
+                            "label": "Surname",
+                            "labelMargin": 3,
+                            "labelPosition": "top",
+                            "labelWidth": 30,
+                            "mask": false,
+                            "multiple": false,
+                            "persistent": true,
+                            "placeholder": "",
+                            "prefix": "",
+                            "protected": false,
+                            "refreshOn": "",
+                            "showCharCount": false,
+                            "showWordCount": false,
+                            "suffix": "",
+                            "tabindex": "",
+                            "tableView": true,
+                            "tooltip": "",
+                            "type": "textfield",
+                            "unique": false,
+                            "validate": Object {
+                              "custom": "",
+                              "customPrivate": false,
+                              "maxLength": "",
+                              "maxWords": "",
+                              "minLength": "",
+                              "minWords": "",
+                              "pattern": "",
+                              "required": false,
+                            },
+                            "validateOn": "change",
+                            "widget": Object {
+                              "dateFormat": "yyyy-MM-dd hh:mm a",
+                              "format": "yyyy-MM-dd hh:mm a",
+                              "saveAs": "text",
+                              "type": "",
+                            },
+                          },
+                          Object {
+                            "action": "submit",
+                            "allowCalculateOverride": false,
+                            "autofocus": false,
+                            "block": false,
+                            "calculateValue": "",
+                            "clearOnHide": true,
+                            "clearOnRefresh": false,
+                            "conditional": Object {
+                              "eq": "",
+                              "show": null,
+                              "when": null,
+                            },
+                            "customClass": "",
+                            "customDefaultValue": "",
+                            "dataGridLabel": true,
+                            "dbIndex": false,
+                            "defaultValue": null,
+                            "description": "",
+                            "disableOnInvalid": true,
+                            "disabled": false,
+                            "errorLabel": "",
+                            "hidden": false,
+                            "hideLabel": false,
+                            "id": "submitId",
+                            "input": true,
+                            "key": "submit",
+                            "label": "Submit",
+                            "labelMargin": 3,
+                            "labelPosition": "top",
+                            "labelWidth": 30,
+                            "leftIcon": "",
+                            "multiple": false,
+                            "persistent": false,
+                            "placeholder": "",
+                            "prefix": "",
+                            "protected": false,
+                            "refreshOn": "",
+                            "rightIcon": "",
+                            "size": "md",
+                            "suffix": "",
+                            "tabindex": "",
+                            "tableView": true,
+                            "theme": "primary",
+                            "tooltip": "",
+                            "type": "button",
+                            "unique": false,
+                            "validate": Object {
+                              "custom": "",
+                              "customPrivate": false,
+                              "required": false,
+                            },
+                            "validateOn": "change",
+                            "widget": null,
+                          },
+                        ],
+                        "display": "form",
+                      }
+                    }
+                    submissionToWorkflowSuccessful={false}
+                    submittingToWorkflow={false}
                   >
                     <Form
                       form={
@@ -700,6 +959,7 @@ exports[`Start a procedure page renders the form and process definition 1`] = `
                           "display": "form",
                         }
                       }
+                      onChange={[Function]}
                       onCustomEvent={[Function]}
                       onNextPage={[Function]}
                       onPrevPage={[Function]}
