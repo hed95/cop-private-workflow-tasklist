@@ -57,6 +57,7 @@ pipeline:
       - DEV_FILE_UPLOAD_SERVER_NAME
       - DEV_UI_ENVIRONMENT
       - DEV_UI_VERSION
+      - DEV_WHITELIST
     commands:
       - export NAME=$${DEV_NAME}
       - export KUBE_NAMESPACE=$${DEV_KUBE_NAMESPACE}
@@ -80,6 +81,7 @@ pipeline:
       - export FILE_UPLOAD_SERVER_NAME=$${DEV_FILE_UPLOAD_SERVER_NAME}
       - export UI_ENVIRONMENT=$${DEV_UI_ENVIRONMENT}
       - export UI_VERSION=$${DEV_UI_VERSION}
+      - export WHITELIST=$${DEV_WHITELIST}
       - export IMAGE_TAG=${DRONE_BUILD_NUMBER}
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/nginx-configmap.yml
