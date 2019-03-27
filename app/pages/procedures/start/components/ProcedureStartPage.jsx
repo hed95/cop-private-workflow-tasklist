@@ -37,9 +37,6 @@ export class ProcessStartPage extends React.Component {
       const { match: { params } } = this.props;
       this.props.fetchProcessDefinition(params.processKey);
     }
-    window.addEventListener('componentError',(error) => {
-      alert(JSON.stringify(error));
-    });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
