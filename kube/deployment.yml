@@ -103,7 +103,7 @@ spec:
         - name: proxyconfigmap
           mountPath: /mnt/configmap
       - name: {{.NAME}}
-        image: "quay.io/ukhomeofficedigital/cop-private-workflow-tasklist:{{.IMAGE_TAG}}
+        image: "quay.io/ukhomeofficedigital/cop-private-workflow-tasklist:{{.IMAGE_TAG}}"
         imagePullPolicy: Always
         env:
         - name: INT_DOMAIN
