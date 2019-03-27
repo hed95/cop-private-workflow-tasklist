@@ -1,5 +1,7 @@
 FROM quay.io/ukhomeofficedigital/docker-node:master
 
+ARG STORAGE_KEY
+
 WORKDIR /app
 
 RUN mkdir -p /app && \
