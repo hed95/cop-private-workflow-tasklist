@@ -4,9 +4,8 @@ import {
   form,
   isFetchingProcessDefinition,
   loadingForm,
-  processDefinition,
-  submissionToWorkflowSuccessful,
-  submittingToWorkflow
+  processDefinition, submissionStatus,
+
 } from '../selectors';
 import { bindActionCreators } from 'redux';
 import * as actions from '../actions';
@@ -21,6 +20,7 @@ import StartForm from './StartForm';
 import NotFound from '../../../../core/components/NotFound';
 import secureLocalStorage from '../../../../common/security/SecureLocalStorage';
 import withLog from '../../../../core/error/component/withLog';
+import { FAILED, SUBMISSION_SUCCESSFUL, SUBMITTING } from '../constants';
 
 
 export class ProcessStartPage extends React.Component {
@@ -45,79 +45,78 @@ export class ProcessStartPage extends React.Component {
       this.props.fetchForm(this.props.processDefinition.get('formKey'));
     }
 
-    if (this.form && this.form.formio) {
+    const { submissionStatus } = this.props;
+    if (submissionStatus !== prevProps.submissionStatus && (this.form && this.form.formio)) {
       const path = this.props.history.location.pathname;
       const user = this.props.kc.tokenParsed.email;
-
-      const { submittingToWorkflow, submissionToWorkflowSuccessful, submittingToFormIO, submissionToFormIOSuccessful }
-        = this.submissionInfo(prevProps);
-      if (!submittingToWorkflow && submissionToWorkflowSuccessful) {
-        this.form.formio.emit('submitDone');
-        this.secureLocalStorage.removeAll();
-        this.props.log([{
-          user: user,
-          path: path,
-          level: 'info',
-          message: `Procedure ${this.props.processDefinition.get('key')} successfully started`
-        }]);
-        if (this.props.redirectPath) {
-          this.props.history.replace(this.props.redirectPath);
-        } else {
-          this.props.history.replace(AppConstants.YOUR_TASKS_PATH);
-        }
-      } else {
-        if ((!submittingToFormIO && !submissionToFormIOSuccessful) ||
-          (!submittingToWorkflow && !submissionToWorkflowSuccessful)) {
+      const processKey = this.props.processDefinition.get('key');
+      switch (submissionStatus) {
+        case SUBMITTING :
+          this.props.log([{
+            user: user,
+            path: path,
+            level: 'info',
+            message: `Submitting data for ${processKey}`
+          }]);
+          break;
+        case SUBMISSION_SUCCESSFUL :
+          this.form.formio.emit('submitDone');
+          this.secureLocalStorage.removeAll();
+          this.props.log([{
+            user: user,
+            path: path,
+            level: 'info',
+            message: `Procedure ${processKey} successfully started`
+          }]);
+          if (this.props.redirectPath) {
+            this.props.history.replace(this.props.redirectPath);
+          } else {
+            this.props.history.replace(AppConstants.YOUR_TASKS_PATH);
+          }
+          break;
+        case FAILED :
           this.props.log([{
             user: user,
             path: path,
             level: 'error',
-            message: `Procedure ${this.props.processDefinition.get('key')} failed to be initiated`
+            message: `Procedure ${processKey} failed to be initiated`
           }]);
-          this.form.formio.emit('error');
-
           const submission = this.form.formio.submission ? this.form.formio.submission :
             this.secureLocalStorage.get(this.props.processDefinition.getIn(['process-definition', 'id']));
-
+          this.form.formio.emit('error');
           this.form.formio.emit('change', submission);
-        }
+          break;
+        default:
+          this.props.log([{
+            level: "warn",
+            path: path,
+            user: user,
+            message: 'Unknown submission status',
+            submissionStatus: submissionStatus
+          }]);
       }
     }
-  }
 
-  submissionInfo(prevProps) {
-    const submittingToWorkflow = (this.props.submittingToWorkflow !== prevProps.submittingToWorkflow)
-      && this.props.submittingToWorkflow;
-    const submissionToWorkflowSuccessful = (this.props.submissionToWorkflowSuccessful !== prevProps.submissionToWorkflowSuccessful)
-      && this.props.submissionToWorkflowSuccessful;
-
-    const submittingToFormIO = (this.props.submittingToFormIO !== prevProps.submittingToFormIO) &&
-      this.props.submittingToFormIO;
-
-    const submissionToFormIOSuccessful = (this.props.submissionToFormIOSuccessful !== prevProps.submissionToFormIOSuccessful)
-      && this.props.submissionToFormIOSuccessful;
-    return {
-      submittingToWorkflow,
-      submissionToWorkflowSuccessful,
-      submittingToFormIO,
-      submissionToFormIOSuccessful
-    };
   }
 
   componentWillUnmount() {
     this.props.clearProcessDefinition();
   }
 
-
   handleCustomEvent = (event) => {
-    if (event.type === 'cancel') {
-      this.secureLocalStorage.removeAll();
-      this.props.history.replace(AppConstants.DASHBOARD_PATH);
+    switch (event.type) {
+      case 'cancel':
+        this.secureLocalStorage.removeAll();
+        this.props.history.replace(AppConstants.DASHBOARD_PATH);
+       break;
+      case 'save-draft':
+        break;
+      default:
     }
   };
 
   render() {
-    const { processDefinition, submittingToWorkflow, form, loadingForm } = this.props;
+    const { processDefinition, submissionStatus, form, loadingForm } = this.props;
     const pointerStyle = { cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline' };
     if (loadingForm) {
       return <DataSpinner message="Loading procedure..."/>;
@@ -133,12 +132,12 @@ export class ProcessStartPage extends React.Component {
 
       return <div>
         {!this.props.noBackLink ? <div style={pointerStyle}
-                                       onClick={(event) => this.props.history.replace('/procedures')}>Back
-          to
-          procedures
-        </div> : null}
+                                       onClick={(event) => {
+                                         event.preventDefault();
+                                         this.props.history.replace('/procedures')
+                                       }}>Back to procedures</div> : null}
 
-        <Loader show={submittingToWorkflow}
+        <Loader show={submissionStatus === SUBMITTING}
                 message={<div style={{ justifyContent: 'center',
                   zIndex: 100,
                   borderRadius: 0,
@@ -148,7 +147,7 @@ export class ProcessStartPage extends React.Component {
                   top: '-20px',
                   margin: 'auto' }}><DataSpinner
                   message="Starting procedure..."/></div>}
-                hideContentOnLoad={submittingToWorkflow}
+                hideContentOnLoad={submissionStatus === SUBMITTING}
                 foregroundStyle={{ color: 'black' }}
                 backgroundStyle={{ backgroundColor: 'white' }}>
           <div className="grid-row">
@@ -202,9 +201,8 @@ ProcessStartPage.propTypes = {
   clearProcessDefinition: PropTypes.func.isRequired,
   submit: PropTypes.func,
   processDefinition: ImmutablePropTypes.map,
-  submittingToWorkflow: PropTypes.bool,
-  submissionToWorkflowSuccessful: PropTypes.bool,
-  loadingForm: PropTypes.bool
+  submissionStatus: PropTypes.string,
+  noBackLink: PropTypes.bool
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
@@ -212,8 +210,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 export default withRouter(connect((state) => {
   return {
     processDefinition: processDefinition(state),
-    submittingToWorkflow: submittingToWorkflow(state),
-    submissionToWorkflowSuccessful: submissionToWorkflowSuccessful(state),
+    submissionStatus: submissionStatus(state),
     form: form(state),
     loadingForm: loadingForm(state),
     isFetchingProcessDefinition: isFetchingProcessDefinition(state),

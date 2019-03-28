@@ -28,6 +28,7 @@ export class ShiftPage extends React.Component {
     super(props);
     this.counter = 0;
   }
+
   componentDidMount() {
     this.props.fetchActiveShift();
     this.props.fetchShiftForm();
@@ -62,7 +63,7 @@ export class ShiftPage extends React.Component {
     } = this.props;
 
     if (loadingShiftForm && isFetchingStaffDetails && isFetchingShift) {
-      return  <DataSpinner message="Loading your shift details"/>;
+      return <DataSpinner message="Loading your shift details"/>;
     }
 
     if (!shiftForm) {
@@ -77,7 +78,7 @@ export class ShiftPage extends React.Component {
               backgroundStyle={{ backgroundColor: 'white' }}>
         <div className="grid-row">
           <div className="column-full" id="shiftWizardForm">
-            {!isFetchingShift && !hasActiveShift && !failedToCreateShift?
+            {!isFetchingShift && !hasActiveShift && !failedToCreateShift ?
               <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '15px' }}>
                 <div className="notice">
                   <i className="icon icon-important">
@@ -89,9 +90,10 @@ export class ShiftPage extends React.Component {
                 </div>
               </div> : null}
 
-            <ShiftForm {...this.props} formReference={(form) => this.form = form } submit={(shiftForm, submission) => {
-              this.props.submit(shiftForm._id, submission.data);
-            }}/>
+            <ShiftForm {...this.props} formReference={(form) => this.form = form}
+                       submit={(shiftForm, submission) => {
+                         this.props.submit(shiftForm._id, submission.data);
+                       }}/>
           </div>
         </div>
       </Loader>
@@ -101,23 +103,23 @@ export class ShiftPage extends React.Component {
 
 }
 
-    ShiftPage.propTypes = {
-      fetchShiftForm: PropTypes.func.isRequired,
-      fetchActiveShift: PropTypes.func.isRequired,
-      fetchStaffDetails: PropTypes.func.isRequired,
-      isFetchingShift: PropTypes.bool,
-      hasActiveShift: PropTypes.bool,
-      isFetchingStaffDetails: PropTypes.bool,
-      shift: ImmutablePropTypes.map,
-      staffDetails: ImmutablePropTypes.map,
-      unauthorised: PropTypes.bool
-    };
+ShiftPage.propTypes = {
+  fetchShiftForm: PropTypes.func.isRequired,
+  fetchActiveShift: PropTypes.func.isRequired,
+  fetchStaffDetails: PropTypes.func.isRequired,
+  isFetchingShift: PropTypes.bool,
+  hasActiveShift: PropTypes.bool,
+  isFetchingStaffDetails: PropTypes.bool,
+  shift: ImmutablePropTypes.map,
+  staffDetails: ImmutablePropTypes.map,
+  unauthorised: PropTypes.bool
+};
 
 
-  const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-  export default withRouter(connect((state) => {
-    return {
+export default withRouter(connect((state) => {
+  return {
     hasActiveShift: hasActiveShift(state),
     isFetchingShift: isFetchingShift(state),
     submittingActiveShift: submittingActiveShift(state),

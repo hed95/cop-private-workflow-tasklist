@@ -63,9 +63,7 @@ describe('Start a procedure page', () => {
   it('renders loading bar if form is loading', async() => {
     const props = {
       loadingForm: true,
-      submittingToWorkflow: false,
-      submissionToWorkflowSuccessful: false,
-      isFetchingProcessDefinition: false,
+      submissionStatus: null,
       match : {
         params: {
           "processKey": "processKey"
@@ -90,9 +88,7 @@ describe('Start a procedure page', () => {
   it ('displays resource not found if form is missing', async() => {
     const props = {
       loadingForm: false,
-      submittingToWorkflow: false,
-      submissionToWorkflowSuccessful: false,
-      isFetchingProcessDefinition: false,
+      submissionStatus: null,
       form: null,
       processDefinition: Immutable.fromJS({
           "formKey" : "formKey"
@@ -118,8 +114,7 @@ describe('Start a procedure page', () => {
   it ('fetches form after loading process definition', async() => {
     const props = {
       loadingForm: true,
-      submittingToWorkflow: false,
-      submissionToWorkflowSuccessful: false,
+      submissionStatus: null,
       isFetchingProcessDefinition: true,
       history: {
         location: {
@@ -171,9 +166,7 @@ describe('Start a procedure page', () => {
         }
       },
       loadingForm: false,
-      submittingToWorkflow: false,
-      submissionToWorkflowSuccessful: false,
-      isFetchingProcessDefinition: false,
+      submissionStatus: null,
       form : form,
       processDefinition: Immutable.fromJS({
         "formKey" : "formKey",
@@ -214,9 +207,7 @@ describe('Start a procedure page', () => {
         }
       },
       loadingForm: false,
-      submittingToWorkflow: false,
-      submissionToWorkflowSuccessful: false,
-      isFetchingProcessDefinition: false,
+      submissionStatus: "SUBMITTING",
       form : form,
       processDefinition: Immutable.fromJS({
         'process-definition' : {
@@ -262,11 +253,7 @@ describe('Start a procedure page', () => {
         }
       },
       loadingForm: false,
-      submittingToWorkflow: true,
-      submissionToWorkflowSuccessful: false,
-      isFetchingProcessDefinition: false,
-      submissionToFormIOSuccessful: true,
-      submittingToFormIO: false,
+      submissionStatus: "SUBMITTING",
       form : form,
       log: jest.fn(),
       processDefinition: Immutable.fromJS({
@@ -296,10 +283,7 @@ describe('Start a procedure page', () => {
       emit: emit
     };
     wrapper.setProps({
-      submittingToWorkflow: false,
-      submissionToWorkflowSuccessful: true,
-      submissionToFormIOSuccessful: true,
-      submittingToFormIO: false});
+      submissionStatus: "SUBMISSION_SUCCESSFUL"});
 
     expect(emit).toHaveBeenCalled();
     expect(secureLocalStorage.removeAll).toHaveBeenCalled();
@@ -309,11 +293,7 @@ describe('Start a procedure page', () => {
   it('does not redirect if there was an error', async() => {
     const props = {
       loadingForm: false,
-      submittingToWorkflow: false,
-      submissionToWorkflowSuccessful: false,
-      isFetchingProcessDefinition: false,
-      submissionToFormIOSuccessful: false,
-      submittingToFormIO: true,
+      submissionStatus: 'SUBMITTING',
       form : form,
       log: jest.fn(),
       processDefinition: Immutable.fromJS({
@@ -360,10 +340,7 @@ describe('Start a procedure page', () => {
       submission: submission
     };
     wrapper.setProps({
-      submittingToWorkflow: false,
-      submissionToWorkflowSuccessful: false,
-      submissionToFormIOSuccessful: false,
-      submittingToFormIO: false});
+      submissionStatus: "FAILED"});
 
     expect(emit).toBeCalledWith("error");
     expect(emit).toBeCalledWith("change", submission);
