@@ -8,9 +8,9 @@ import {connect} from "react-redux";
 import {createStructuredSelector} from "reselect";
 import ImmutablePropTypes from "react-immutable-proptypes";
 import {withRouter} from "react-router";
-import DataSpinner from "../../../core/components/DataSpinner";
+import DataSpinner from "../../../../core/components/DataSpinner";
 import TaskDetailsPage from "./TaskDetailsPage";
-import NotFound from "../../../core/components/NotFound";
+import NotFound from "../../../../core/components/NotFound";
 
 
 class TaskPage extends React.Component {

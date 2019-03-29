@@ -107,6 +107,7 @@ export class YourTasksContainer extends React.Component {
   componentWillUnmount() {
     this.retryCount = 0;
     this.disconnect();
+    this.props.resetYourTasks();
   }
 
   debounceSearch(sortValue, filterValue) {
@@ -147,6 +148,7 @@ export class YourTasksContainer extends React.Component {
 }
 
 YourTasksContainer.propTypes = {
+  resetYourTasks: PropTypes.func,
   fetchTasksAssignedToYou: PropTypes.func.isRequired,
   yourTasks: ImmutablePropTypes.map
 };

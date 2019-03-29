@@ -28,6 +28,7 @@ export class ProcessStartPage extends React.Component {
   constructor(props) {
     super(props);
     this.secureLocalStorage = secureLocalStorage;
+    this.handleSubmission = this.handleSubmission.bind(this);
   }
 
   componentDidMount() {
@@ -49,54 +50,58 @@ export class ProcessStartPage extends React.Component {
     if (submissionStatus !== prevProps.submissionStatus && (this.form && this.form.formio)) {
       const path = this.props.history.location.pathname;
       const user = this.props.kc.tokenParsed.email;
-      const processKey = this.props.processDefinition.get('key');
-      switch (submissionStatus) {
-        case SUBMITTING :
-          this.props.log([{
-            user: user,
-            path: path,
-            level: 'info',
-            message: `Submitting data for ${processKey}`
-          }]);
-          break;
-        case SUBMISSION_SUCCESSFUL :
-          this.form.formio.emit('submitDone');
-          this.secureLocalStorage.removeAll();
-          this.props.log([{
-            user: user,
-            path: path,
-            level: 'info',
-            message: `Procedure ${processKey} successfully started`
-          }]);
-          if (this.props.redirectPath) {
-            this.props.history.replace(this.props.redirectPath);
-          } else {
-            this.props.history.replace(AppConstants.YOUR_TASKS_PATH);
-          }
-          break;
-        case FAILED :
-          this.props.log([{
-            user: user,
-            path: path,
-            level: 'error',
-            message: `Procedure ${processKey} failed to be initiated`
-          }]);
-          const submission = this.form.formio.submission ? this.form.formio.submission :
-            this.secureLocalStorage.get(this.props.processDefinition.getIn(['process-definition', 'id']));
-          this.form.formio.emit('error');
-          this.form.formio.emit('change', submission);
-          break;
-        default:
-          this.props.log([{
-            level: "warn",
-            path: path,
-            user: user,
-            message: 'Unknown submission status',
-            submissionStatus: submissionStatus
-          }]);
-      }
+      const processKey = this.props.processDefinition.getIn(['process-definition','key']);
+      this.handleSubmission(submissionStatus, user, path, processKey);
     }
+  }
 
+  handleSubmission(submissionStatus, user, path, processKey) {
+    switch (submissionStatus) {
+      case SUBMITTING :
+        this.props.log([{
+          user: user,
+          path: path,
+          level: 'info',
+          message: `Submitting data for ${processKey}`
+        }]);
+        break;
+      case SUBMISSION_SUCCESSFUL :
+        window.scrollTo(0, 0);
+        this.form.formio.emit('submitDone');
+        this.secureLocalStorage.removeAll();
+        this.props.log([{
+          user: user,
+          path: path,
+          level: 'info',
+          message: `Procedure ${processKey} successfully started`
+        }]);
+        if (this.props.redirectPath) {
+          this.props.history.replace(this.props.redirectPath);
+        } else {
+          this.props.history.replace(AppConstants.YOUR_TASKS_PATH);
+        }
+        break;
+      case FAILED :
+        this.props.log([{
+          user: user,
+          path: path,
+          level: 'error',
+          message: `Procedure ${processKey} failed to be initiated`
+        }]);
+        const submission = this.form.formio.submission ? this.form.formio.submission :
+          this.secureLocalStorage.get(this.props.processDefinition.getIn(['process-definition', 'id']));
+        this.form.formio.emit('error');
+        this.form.formio.emit('change', submission);
+        break;
+      default:
+        this.props.log([{
+          level: 'warn',
+          path: path,
+          user: user,
+          message: 'Unknown submission status',
+          submissionStatus: submissionStatus
+        }]);
+    }
   }
 
   componentWillUnmount() {
@@ -158,11 +163,31 @@ export class ProcessStartPage extends React.Component {
                     <span
                       className="heading-secondary">Operational procedure</span> {processDefinition.getIn(['process-definition', 'name'])}
                   </h2>
-
                   <StartForm {...this.props}
                              startForm={form}
-                             formReference={(form) => {
-                               this.form = form;
+                             formReference={(formLoaded) => {
+                               this.form = formLoaded;
+                               this.form.createPromise.then(() => {
+                                 this.form.formio.on('componentError', (error) => {
+                                   const path = this.props.history.location.pathname;
+                                   const user = this.props.kc.tokenParsed.email;
+                                   this.props.log([{
+                                     user: user,
+                                     path: path,
+                                     level: 'error',
+                                     form: {
+                                       name: form.name,
+                                       path: form.path,
+                                       display: form.display
+                                     },
+                                     message: error.message,
+                                     component: {
+                                       label : error.component.label,
+                                       key: error.component.key
+                                     }
+                                   }]);
+                                 })
+                               })
                              }}
                              removeAll={this.secureLocalStorage.removeAll()}
                              submission={this.secureLocalStorage.get(processDefinition.getIn(['process-definition','id']))}

@@ -8,7 +8,7 @@ import * as actions from "../actions";
 import {connect} from "react-redux";
 import {createStructuredSelector} from "reselect";
 import moment from "moment";
-import Pagination from "../../../core/components/Pagination";
+import Pagination from "../../../../core/components/Pagination";
 import ShowMore from 'react-show-more';
 
 const uuidv4 = require('uuid/v4');

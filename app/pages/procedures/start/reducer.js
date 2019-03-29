@@ -32,6 +32,7 @@ function reducer(state = initialState, action) {
         .set('form', data);
     case actions.FETCH_FORM_FAILURE:
       return state.set('loadingForm', false);
+
     case actions.SUBMIT:
       return state.set('submissionStatus', SUBMITTING);
     case actions.SUBMIT_FAILURE:

@@ -1,9 +1,9 @@
 import * as types from './actionTypes';
 import * as actions from './actions';
-import { errorObservable } from '../error/epicUtil';
+import { errorObservable } from '../../../core/error/epicUtil';
 import { combineEpics } from 'redux-observable';
 import PubSub from 'pubsub-js';
-import { retry } from '../util/retry';
+import { retry } from '../../../core/util/retry';
 
 
 const createProcessVariables = (action, userEmail) => {

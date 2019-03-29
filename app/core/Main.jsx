@@ -24,7 +24,7 @@ const CalendarPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pa
 const StartProcedurePage = lazy(() => import('../pages/procedures/start/components/ProcedureStartPage'));
 const ProcessStartPage = withOnboardingCheck(withShiftCheck(StartProcedurePage));
 const ProcessDiagramPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/procedures/diagram/components/ProcessDiagramPage'))));
-const TaskPage =  withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/task/component/TaskPage'))));
+const TaskPage =  withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/task/display/component/TaskPage'))));
 
 
 //no checks required
