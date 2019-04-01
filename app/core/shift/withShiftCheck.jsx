@@ -21,7 +21,6 @@ export default function (ComposedComponent) {
         this.props.fetchActiveShift();
       } else {
         if (this.props.location.state.shiftPresent) {
-          console.log('User has shift defined');
           this.props.setHasActiveShift();
         }
       }

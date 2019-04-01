@@ -11,6 +11,7 @@ const hashing = process.env.NODE_ENV === 'production' ? 'chunkhash' : 'hash';
 console.log('content hashing: '+ hashing);
 
 module.exports = {
+
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
     modules: [path.resolve(__dirname), 'node_modules', sourcePath],
@@ -39,6 +40,12 @@ module.exports = {
       title: 'Caching',
       template: './public/index.html',
       favicon: './public/favicon.ico'
+    }),
+
+    new webpack.DefinePlugin({
+      'process.env': {
+        STORAGE_KEY: JSON.stringify(process.env.STORAGE_KEY)
+      }
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',

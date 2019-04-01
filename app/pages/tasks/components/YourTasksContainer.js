@@ -101,12 +101,13 @@ export class YourTasksContainer extends React.Component {
   }
 
   goToTask(taskId) {
-    this.props.history.replace(`/task?taskId=${taskId}`);
+    this.props.history.replace(`/task/${taskId}`);
   }
 
   componentWillUnmount() {
     this.retryCount = 0;
     this.disconnect();
+    this.props.resetYourTasks();
   }
 
   debounceSearch(sortValue, filterValue) {
@@ -147,6 +148,7 @@ export class YourTasksContainer extends React.Component {
 }
 
 YourTasksContainer.propTypes = {
+  resetYourTasks: PropTypes.func,
   fetchTasksAssignedToYou: PropTypes.func.isRequired,
   yourTasks: ImmutablePropTypes.map
 };

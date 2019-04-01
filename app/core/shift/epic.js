@@ -113,31 +113,31 @@ const fetchActiveShift = (action$, store, { client }) =>
 
 const submit = (action$, store, { client }) =>
   action$.ofType(types.SUBMIT_VALIDATION)
-    .mergeMap(action =>
-      client({
+    .mergeMap(action => {
+      const shiftData = action.submissionData;
+      return client({
         method: 'POST',
         path: `/api/form/${action.formId}/submission`,
         entity: {
-          'data': action.submissionData
+          'data': shiftData
         },
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${store.getState().keycloak.token}`,
           'Content-Type': 'application/json'
         }
-      })
-        .take(1)
-        .map(payload => {
-          return {
-            type: types.CREATE_ACTIVE_SHIFT,
-            shiftInfo: payload.entity.data
-          };
-        })
-        .retryWhen(retry)
-        .catch(error => {
+      }).take(1).map(payload => {
+        return {
+          type: types.CREATE_ACTIVE_SHIFT,
+          shiftInfo: payload.entity.data
+        };
+      }).retryWhen(retry).catch(error => {
             return errorObservable(actions.submitFailure(), error);
           }
-        ));
+        )
+    });
+
+
 const createActiveShift = (action$, store, { client }) =>
   action$.ofType(types.CREATE_ACTIVE_SHIFT)
     .mergeMap(action =>

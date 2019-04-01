@@ -1,17 +1,14 @@
 import Immutable from 'immutable';
 import * as actions from './actionTypes';
+import { FAILED, NOT_SUBMITTED, SUBMISSION_SUCCESSFUL, SUBMITTING } from './constants';
 
 const { Map } = Immutable;
 
 const initialState = new Map({
   loadingTaskForm: false,
   form: null,
-  submittingToFormIO: false,
-  submissionToFormIOSuccessful: false,
-  submittingTaskFormForCompletion: false,
-  taskFormCompleteSuccessful: null,
-  customEventSuccessfullyExecuted: false,
-  submittingCustomEvent: false
+  submissionStatus: NOT_SUBMITTED,
+  customEventSubmissionStatus: NOT_SUBMITTED
 });
 
 function reducer(state = initialState, action) {
@@ -30,29 +27,22 @@ function reducer(state = initialState, action) {
     case actions.FETCH_TASK_FROM_FAILURE:
       return state.set('loadingTaskForm', false);
     case actions.SUBMIT_TASK_FORM:
-      return state.set('submittingToFormIO', true);
+      return state.set('submissionStatus', SUBMITTING);
     case actions.SUBMIT_TASK_FORM_FAILURE:
-      return state.set('submittingToFormIO', false)
-        .set('submissionToFormIOSuccessful', false);
+      return state.set('submissionStatus', FAILED);
     case actions.COMPLETE_TASK_FORM:
-      return state.set('submittingTaskFormForCompletion', true)
-        .set('submittingToFormIO', false)
-        .set('submissionToFormIOSuccessful', true);
+      return state.set('submissionStatus', SUBMITTING);
     case actions.COMPLETE_TASK_FORM_SUCCESS:
-      return state.set('submittingTaskFormForCompletion', false)
-        .set('taskFormCompleteSuccessful', true);
+      return state.set('submissionStatus', SUBMISSION_SUCCESSFUL);
     case actions.COMPLETE_TASK_FORM_FAILURE:
-      return state.set('submittingTaskFormForCompletion', false)
-        .set('taskFormCompleteSuccessful', false);
+      return state.set('submissionStatus', FAILED);
 
     case actions.TASK_CUSTOM_EVENT:
-      return state.set('submittingCustomEvent', true);
+      return state.set('customEventSubmissionStatus', SUBMITTING);
     case actions.TASK_CUSTOM_EVENT_SUCCESS:
-      return state.set('submittingCustomEvent', false)
-        .set('customEventSuccessfullyExecuted', true);
+      return state.set('customEventSubmissionStatus', SUBMISSION_SUCCESSFUL);
     case actions.TASK_CUSTOM_EVENT_FAILURE:
-      return state.set('submittingCustomEvent', false)
-        .set('customEventSuccessfullyExecuted', false);
+      return state.set('customEventSubmissionStatus', FAILED);
      default:
       return state;
   }

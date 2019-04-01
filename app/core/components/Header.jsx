@@ -5,10 +5,12 @@ import LoadingBar from 'react-redux-loading-bar'
 
 import img from 'govuk_template_ejs/assets/images/gov.uk_logotype_crown_invert_trans.png?0.23.0'
 import {bindActionCreators} from "redux";
+import secureLocalStorage from '../../common/security/SecureLocalStorage';
 
 class Header extends React.Component {
 
     componentWillMount() {
+        this.secureLocalStorage = secureLocalStorage;
         this.logout = this.logout.bind(this);
         this.dashboard = this.dashboard.bind(this);
     }
@@ -19,6 +21,7 @@ class Header extends React.Component {
     }
 
     logout(event) {
+        this.secureLocalStorage.removeAll();
         event.preventDefault();
         this.props.kc.logout();
     }

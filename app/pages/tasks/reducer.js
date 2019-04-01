@@ -65,6 +65,11 @@ function reducer(state = initialState, action) {
         });
 
       return  state.setIn(['yourGroupTasks', 'tasks'], yourGroupTasks);
+    case actions.RESET_YOUR_TASKS:
+      return state.setIn(['yourTasks', 'tasks'], new List([]))
+        .setIn(['yourTasks' , 'total'], 0)
+        .setIn(['yourTasks' , 'yourTasksSortValue'], 'sort=due,desc')
+        .setIn(['yourTasks' , 'yourTasksFilterValue'], null);
     default:
       return state;
   }

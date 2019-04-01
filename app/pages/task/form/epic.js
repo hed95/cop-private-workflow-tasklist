@@ -1,9 +1,9 @@
 import * as types from './actionTypes';
 import * as actions from './actions';
-import { errorObservable } from '../error/epicUtil';
+import { errorObservable } from '../../../core/error/epicUtil';
 import { combineEpics } from 'redux-observable';
 import PubSub from 'pubsub-js';
-import { retry } from '../util/retry';
+import { retry } from '../../../core/util/retry';
 
 
 const createProcessVariables = (action, userEmail) => {
@@ -75,12 +75,13 @@ const fetchTaskForm = (action$, store, { client }) =>
 
 const submitTaskForm = (action$, store, { client }) =>
   action$.ofType(types.SUBMIT_TASK_FORM)
-    .mergeMap(action =>
-      client({
+    .mergeMap(action => {
+      const submissionData = Object.assign({}, action.submission);
+      return  client({
         method: 'POST',
         path: `/api/form/${action.formId}/submission`,
         entity: {
-          'data': JSON.stringify(action.submission)
+          'data': JSON.stringify(submissionData)
         },
         headers: {
           'Accept': 'application/json',
@@ -93,9 +94,8 @@ const submitTaskForm = (action$, store, { client }) =>
           const data = {
             variables: {}
           };
-
           data.variables[action.variableName] = {
-            value: JSON.stringify(payload.entity.data),
+            value: JSON.stringify(submissionData),
             type: 'Json',
             valueInfo: {}
           };
@@ -108,7 +108,9 @@ const submitTaskForm = (action$, store, { client }) =>
         .catch(error => {
             return errorObservable(actions.submitTaskFormFailure(), error);
           }
-        ));
+        )
+    });
+
 
 
 const completeTaskForm = (action$, store, { client }) =>

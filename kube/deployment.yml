@@ -1,0 +1,167 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{.NAME}}
+spec:
+  selector:
+    matchLabels:
+      name: {{.NAME}}
+  replicas: 3
+  revisionHistoryLimit: 3
+  template:
+    metadata:
+      labels:
+        name: {{.NAME}}
+    spec:
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: certs
+        image: quay.io/ukhomeofficedigital/borders-cfssl-sidekick:bd4901b5a28c
+        securityContext:
+          runAsNonRoot: true
+          capabilities:
+            drop:
+             - SETUID
+             - SETGID
+        args:
+          - --domain={{.NAME}}.{{.KUBE_NAMESPACE}}.svc.cluster.local
+          - --url={{.INTERNAL_CA_URL}}
+          - --verbose=True
+        volumeMounts:
+          - name: certs
+            mountPath: /certs
+          - name: bundle
+            mountPath: /etc/ssl/certs
+            readOnly: true
+      - name: proxy
+        image: quay.io/ukhomeofficedigital/nginx-proxy
+        imagePullPolicy: Always
+        securityContext:
+          runAsNonRoot: true
+          capabilities:
+            drop:
+             - SETUID
+             - SETGID
+        resources:
+         limits:
+          memory: "1024Mi"
+          cpu: "1000m"
+         requests:
+          memory: "1024Mi"
+          cpu: "1000m"
+        command: ["/bin/bash"]
+        args: ["-c", "/bin/cp /mnt/configmap/* /usr/local/openresty/nginx/conf/locations/; cd /usr/local/openresty; /go.sh"]
+        env:
+        - name: CUSTOM_PROXY_CONFIG
+          value: "TRUE"
+        - name: CUSTOM_SECURITY_DEFAULTS
+          value: "TRUE"
+        - name: SERVER_CERT
+          value: "/certs/tls.pem"
+        - name: SERVER_KEY
+          value: "/certs/tls-key.pem"
+        - name: SSL_CIPHERS
+          value: "ECDHE-RSA-AES128-GCM-SHA256:AES256+EECDH:AES256+EDH:!aNULL"
+        - name: ENABLE_UUID_PARAM
+          value: "FALSE"
+        - name: NAXSI_USE_DEFAULT_RULES
+          value: "FALSE"
+        - name: PORT_IN_HOST_HEADER
+          value: "FALSE"
+        - name: ERROR_REDIRECT_CODES
+          value: "599"
+        - name: ADD_NGINX_SERVER_CFG
+          value: 'gzip off; location = /reload { allow 127.0.0.1; deny all; content_by_lua_block { os.execute("touch /tmp/nginx-reload-triggered; /usr/local/openresty/nginx/sbin/nginx -s reload; touch /tmp/nginx-reload-complete;") } }'
+        - name: ADD_NGINX_LOCATION_CFG
+          value: |
+            gzip off;
+            proxy_buffer_size         512k;
+            proxy_buffers             4 1024k;
+            proxy_busy_buffers_size   1024k;
+        - name: LOG_FORMAT_NAME
+          value: "json"
+        - name: NO_LOGGING_URL_PARAMS
+          value: "{{.NO_LOGGING_URL_PARAMS}}"
+        - name: NO_LOGGING_BODY
+          value: "{{.NO_LOGGING_BODY}}"
+        - name: NO_LOGGING_RESPONSE
+          value: "{{.NO_LOGGING_RESPONSE}}"
+        - name: STATSD_METRICS
+          value: "FALSE"
+        ports:
+        - name: https
+          containerPort: 10443
+        volumeMounts:
+        - name: certs
+          mountPath: /certs
+        - name: bundle
+          mountPath: /etc/ssl/certs
+          readOnly: true
+        - name: proxyconfigmap
+          mountPath: /mnt/configmap
+      - name: {{.NAME}}
+        image: "quay.io/ukhomeofficedigital/cop-private-workflow-tasklist:{{.IMAGE_TAG}}"
+        imagePullPolicy: Always
+        env:
+        - name: INT_DOMAIN
+          value: {{.INT_DOMAIN}}
+        - name: DOMAIN
+          value: {{.EXT_DOMAIN}}
+        - name: REPORTING_SERVICE_NAME
+          value: {{.REPORTING_SERVER_NAME}}
+        - name: PLATFORM_DATA
+          value: {{.OPERATIONAL_POSTGREST_NAME}}
+        - name: FORM_IO_NAME
+          value: {{.FORMIO_SERVER_NAME}}
+        - name: WORKFLOW_NAME
+          value: {{.WORKFLOW_SERVER_NAME}}
+        - name: TRANSLATION_SERVICE_NAME
+          value: {{.TRANSLATION_SERVER_NAME}}
+        - name: FILE_UPLOAD_SERVER_NAME
+          value: {{.FILE_UPLOAD_SERVER_NAME}}
+        - name: UI_ENVIRONMENT
+          value: {{.UI_ENVIRONMENT}}
+        - name: UI_VERSION
+          value: {{.UI_VERSION}}
+        - name: AUTH_REALM
+          value: {{.KEYCLOAK_REALM}}
+        - name: AUTH_URL
+          value: {{.KEYCLOAK_URL}}
+        - name: AUTH_CLIENT_ID
+          value: {{.NAME}}
+        - name: AUTH_ACCESS_ROLE
+          value: {{.KEYCLOAK_ROLE}}
+        - name: AUTH_ACCESS_CONTACT
+          value: {{.KEYCLOAK_CONTACT}}
+        securityContext:
+          runAsNonRoot: true
+        readinessProbe:
+          httpGet:
+            path: /readiness
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        volumeMounts:
+          - name: bundle
+            mountPath: /etc/ssl/certs
+            readOnly: true
+      volumes:
+      - name: bundle
+        configMap:
+          name: bundle
+      - name: certs
+        emptyDir: {}
+      - name: proxyconfigmap
+        configMap:
+          name: {{.NAME}}

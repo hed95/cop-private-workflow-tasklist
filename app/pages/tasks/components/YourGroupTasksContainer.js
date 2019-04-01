@@ -4,14 +4,14 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-import * as taskActions from '../../task/actions';
+import * as taskActions from '../../task/display/actions';
 import { yourGroupTasks } from '../selectors';
 import { withRouter } from 'react-router';
 import DataSpinner from '../../../core/components/DataSpinner';
 import YourGroupTasks from './YourGroupTasks';
 import { debounce, throttle } from 'throttle-debounce';
 import AppConstants from '../../../common/AppConstants';
-import { claimSuccessful, unclaimSuccessful } from '../../task/selectors';
+import { claimSuccessful, unclaimSuccessful } from '../../task/display/selectors';
 
 export class YourGroupTasksContainer extends React.Component {
 
@@ -36,7 +36,7 @@ export class YourGroupTasksContainer extends React.Component {
   }
 
   goToTask(taskId) {
-    this.props.history.replace(`/task?taskId=${taskId}`);
+    this.props.history.replace(`/task/${taskId}`);
   }
 
   componentWillUnmount() {

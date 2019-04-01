@@ -22,7 +22,8 @@ function reducer(state = initialState, action) {
       return state.set('isFetchingTaskCounts', false)
         .set('taskCounts', Immutable.fromJS(action.payload.entity));
     case actions.FETCH_TASK_COUNTS_FAILURE:
-      return state.set('isFetchingTaskCounts', true);
+      return state.set('isFetchingTaskCounts', false).setIn(['taskCounts', 'tasksAssignedToUser'], 0)
+        .setIn(['taskCounts', 'totalTasksAllocatedToTeam'], 0);
     case actions.FETCH_NOTIFICATIONS_COUNT:
       return state.set('isFetchingMessageCounts', true);
     case actions.FETCH_NOTIFICATIONS_COUNT_SUCCESS:
@@ -32,8 +33,8 @@ function reducer(state = initialState, action) {
     case actions.FETCH_NOTIFICATIONS_COUNT_FAILURE:
       return state.set('isFetchingMessageCounts', false);
     case actions.SET_DEFAULT_COUNTS:
-
-      return initialState.set('messageCount', 0);
+      return initialState.set('messageCount', 0).setIn(['taskCounts', 'tasksAssignedToUser'], 0)
+        .setIn(['taskCounts', 'totalTasksAllocatedToTeam'], 0);
     default:
       return state;
   }

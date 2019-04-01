@@ -2,7 +2,7 @@ import React from 'react';
 import { mount} from 'enzyme';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
-import {TaskForm} from './TaskForm';
+import {CompleteTaskForm} from './CompleteTaskForm';
 
 const { Map } = Immutable;
 
@@ -124,7 +124,7 @@ const taskForm = {
   "modified": "2019-02-01T07:13:35.069Z",
   "machineName": "customButtonEvent"
 };
-describe('TaskForm Component', () => {
+describe('CompleteTaskForm Component', () => {
   const initialState = {
     'task-form': new Map({
       loadingTaskForm: false,
@@ -158,18 +158,18 @@ describe('TaskForm Component', () => {
       })
     };
     const wrapper = await mount(
-      <TaskForm store={store} {...props}
-                 fetchTaskForm={fetchTaskForm}
-                 resetForm={resetForm}
-                submitTaskForm={submitTaskForm}
-                unclaimTask={unclaimTask}
-                customEvent={customEvent}
+      <CompleteTaskForm store={store} {...props}
+                        fetchTaskForm={fetchTaskForm}
+                        resetForm={resetForm}
+                        submitTaskForm={submitTaskForm}
+                        unclaimTask={unclaimTask}
+                        customEvent={customEvent}
       />
     );
     console.log(wrapper.debug());
     expect(fetchTaskForm).toBeCalled();
-    expect(wrapper.name()).toEqual('TaskForm');
-    expect(wrapper.html()).toEqual('<div><div id="loadingForm">Loading form for testTask</div></div>');
+    expect(wrapper.name()).toEqual('CompleteTaskForm');
+    expect(wrapper.html()).toEqual('<div id="dataSpinner"><div class="loader-content"><div color="black" style="color: black;" class="sk-fade-in sk-spinner line-spin-fade-loader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div><div class="loader-message"><strong class="bold">Loading form for task...</strong></div></div>');
     wrapper.unmount();
     expect(resetForm).toBeCalled();
   });
@@ -188,15 +188,15 @@ describe('TaskForm Component', () => {
       }
     };
     const wrapper = await mount(
-      <TaskForm store={store} {...props}
-                fetchTaskForm={fetchTaskForm}
-                resetForm={resetForm}
-                submitTaskForm={submitTaskForm}
-                unclaimTask={unclaimTask}
-                customEvent={customEvent}
+      <CompleteTaskForm store={store} {...props}
+                        fetchTaskForm={fetchTaskForm}
+                        resetForm={resetForm}
+                        submitTaskForm={submitTaskForm}
+                        unclaimTask={unclaimTask}
+                        customEvent={customEvent}
       />
     );
-    expect(wrapper.html()).toEqual('<div><div class="null null formio-form"><div class="loader-wrapper"><div class="loader text-center"></div></div><div hidden="true" style="visibility: hidden; position: absolute;"><div id="id" class="form-group has-feedback formio-component formio-component-textfield formio-component-text  formio-disabled-input" style=""><label class="control-label" style="">Text</label><input name="data[text]" type="text" class="form-control" lang="en" spellcheck="true" disabled="disabled"></div><div id="cancelOpButton" class="form-group has-feedback formio-component formio-component-button formio-component-canceloperation  form-group formio-disabled-input" style=""><button name="data[canceloperation]" type="button" class="btn btn-primary btn-md" lang="en" disabled="disabled">Cancel operation</button></div></div></div></div>')
+    expect(wrapper).toMatchSnapshot();
   });
 
 });

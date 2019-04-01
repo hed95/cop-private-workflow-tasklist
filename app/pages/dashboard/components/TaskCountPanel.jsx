@@ -1,14 +1,14 @@
-import React  from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from "react-router";
-import {isFetchingTaskCounts, taskCounts} from "../selectors";
-import {createStructuredSelector} from "reselect";
-import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
-import * as actions from "../actions";
-import ImmutablePropTypes from "react-immutable-proptypes";
-import AppConstants from "../../../common/AppConstants";
-import PubSub from "pubsub-js";
+import { withRouter } from 'react-router';
+import { isFetchingTaskCounts, taskCounts } from '../selectors';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import AppConstants from '../../../common/AppConstants';
+import PubSub from 'pubsub-js';
+import withLog from '../../../core/error/component/withLog';
 
 export class TaskCountPanel extends React.Component {
 
@@ -21,7 +21,15 @@ export class TaskCountPanel extends React.Component {
     componentDidMount() {
         if (this.props.hasActiveShift) {
             this.subToken = PubSub.subscribe('refreshCount', (msg, data) => {
-                console.log("Refreshing task count...");
+                const path = this.props.history.location.pathname;
+                const user = this.props.kc.tokenParsed.email;
+                this.props.log([{
+                    level: 'info',
+                    user: user,
+                    path: path,
+                    message: 'refreshing task count',
+                    data
+                }]);
                 this.props.fetchTaskCounts();
             });
             this.props.fetchTaskCounts();
@@ -36,13 +44,20 @@ export class TaskCountPanel extends React.Component {
         }
     }
 
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.hasActiveShift !== nextProps.hasActiveShift && nextProps.hasActiveShift) {
-            this.props.fetchTaskCounts();
-        }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+       if (!this.props.isFetchingTaskCounts) {
+           const path = this.props.history.location.pathname;
+           const user = this.props.kc.tokenParsed.email;
+           const taskCounts = this.props.taskCounts.toJSON();
+           this.props.log([{
+               level: 'info',
+               user: user,
+               path: path,
+               message: 'task count loaded',
+               taskCounts
+           }]);
+       }
     }
-
 
     yourTasks(e) {
         e.preventDefault();
@@ -94,16 +109,19 @@ export class TaskCountPanel extends React.Component {
 }
 
 TaskCountPanel.propTypes = {
+    log: PropTypes.func,
     fetchTaskCounts: PropTypes.func.isRequired,
     setDefaultCounts: PropTypes.func.isRequired,
     taskCounts: ImmutablePropTypes.map
 };
 
-const mapStateToProps = createStructuredSelector({
-    taskCounts: taskCounts,
-    isFetchingTaskCounts: isFetchingTaskCounts
-});
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TaskCountPanel));
+export default connect((state) => {
+    return {
+        taskCounts: taskCounts(state),
+        isFetchingTaskCounts: isFetchingTaskCounts(state),
+        kc: state.keycloak
+    }
+}, mapDispatchToProps)(withRouter(withLog(TaskCountPanel)));

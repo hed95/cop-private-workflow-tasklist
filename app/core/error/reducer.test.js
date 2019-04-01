@@ -1,10 +1,14 @@
 import * as actions from './actions';
 import reducer from './reducer';
-import Immutable from 'immutable';
+import Immutable, { List } from 'immutable';
 
 
 describe('error reducer', () => {
-  const initialState = reducer.initialState;
+  let initialState;
+
+  beforeEach(() => {
+    initialState = reducer.initialState;
+  });
   it('handles unauthorized', () => {
     const state = reducer(initialState, actions.handleUnauthorised());
     expect(state.get('unauthorised')).toEqual(true);
@@ -31,6 +35,31 @@ describe('error reducer', () => {
       }
     });
     const updatedState = reducer(initialState, action);
+    expect(updatedState.get('hasError')).toEqual(true);
+    expect(updatedState.get('errors').size).toEqual(1);
+  });
+  it ('handles duplicate errors', () => {
+    const error = {
+      status: {
+        code: 401
+      },
+      request: {
+        method : 'GET',
+        path: '/api/test'
+      },
+      entity: {
+        message: 'Failed'
+      }
+    };
+
+    const action = actions.handleError(error);
+    const updatedState = reducer(Immutable.fromJS({
+      hasError: true,
+      errors: [{
+        message: 'Failed'
+      }],
+      unauthorised: true,
+    }), action);
     expect(updatedState.get('hasError')).toEqual(true);
     expect(updatedState.get('errors').size).toEqual(1);
   });

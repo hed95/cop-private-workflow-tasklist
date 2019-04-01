@@ -1,5 +1,6 @@
 import Immutable from 'immutable';
 import * as actions from './actionTypes';
+import { FAILED, NOT_SUBMITTED, SUBMISSION_SUCCESSFUL, SUBMITTING } from './constants';
 
 const { Map } = Immutable;
 
@@ -8,10 +9,7 @@ const initialState = new Map({
   processDefinition: Map({}),
   loadingForm: true,
   form: null,
-  submittingToFormIO: false,
-  submissionToFormIOSuccessful: false,
-  submittingToWorkflow: false,
-  submissionToWorkflowSuccessful: null
+  submissionStatus: NOT_SUBMITTED
 });
 
 function reducer(state = initialState, action) {
@@ -34,23 +32,17 @@ function reducer(state = initialState, action) {
         .set('form', data);
     case actions.FETCH_FORM_FAILURE:
       return state.set('loadingForm', false);
+
     case actions.SUBMIT:
-      return state.set('submittingToFormIO', true);
+      return state.set('submissionStatus', SUBMITTING);
     case actions.SUBMIT_FAILURE:
-      return state.set('submittingToFormIO', false)
-        .set('submissionToFormIOSuccessful', false);
+      return state.set('submissionStatus', FAILED);
     case actions.SUBMIT_TO_WORKFLOW || actions.SUBMIT_TO_WORKFLOW_NON_SHIFT:
-      console.log('IFrame: Submitting to workflow');
-      return state.set('submittingToWorkflow', true)
-        .set('submissionToFormIOSuccessful', true)
-        .set('submittingToFormIO', false);
+      return state.set('submissionStatus', SUBMITTING);
     case actions.SUBMIT_TO_WORKFLOW_SUCCESS:
-      console.log('IFrame: Submission to workflow successful');
-      return state.set('submittingToWorkflow', false)
-        .set('submissionToWorkflowSuccessful', true);
+      return state.set('submissionStatus', SUBMISSION_SUCCESSFUL);
     case actions.SUBMIT_TO_WORKFLOW_FAILURE:
-      return state.set('submittingToWorkflow', false)
-        .set('submissionToWorkflowSuccessful', false);
+      return state.set('submissionStatus', FAILED);
     default:
       return state;
   }

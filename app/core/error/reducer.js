@@ -30,10 +30,15 @@ function reducer(state = initialState, action) {
         errorToReturn.message = 'Failed to execute action';
       }
       errorToReturn.raw = error;
+
+
       const errors = state.get('errors')
         .push(Immutable.fromJS(errorToReturn));
+      const updated = errors.groupBy(x => x.get('message')).map(x => x.first()).toList();
+
       return state.set('hasError', true)
-        .set('errors', errors);
+        .set('errors', updated);
+
     case actions.RESET_ERROR:
       return state.set('hasError', false)
         .set('unauthorised', false)

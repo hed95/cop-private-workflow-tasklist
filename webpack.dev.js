@@ -1,3 +1,5 @@
+const express = require('express');
+
 const webpack = require('webpack');
 const common = require('./webpack.common.js');
 const webpackMerge = require('webpack-merge');
@@ -44,6 +46,7 @@ module.exports = webpackMerge(common, {
       new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
+
         contentBase: 'public/',
         hot: true,
         open: true,
@@ -98,8 +101,25 @@ module.exports = webpackMerge(common, {
             "/api/translation": {
                 target: translationServiceUrl,
                 changeOrigin: true
-            },
+            }
 
+        },
+        before(app) {
+            app.post('/log', (req, res, next) => {
+                const body = [];
+                req.on("data", (chunk) => {
+                    console.log(chunk);
+                    body.push(chunk);
+                });
+                req.on("end", () => {
+                    const parsedBody = Buffer.concat(body).toString();
+                    const message = parsedBody.split('=')[1];
+                    console.log(parsedBody);
+                    console.log(message);
+                });
+                console.log(body);
+                res.sendStatus(200);
+            });
         }
     }
 });

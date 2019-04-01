@@ -11,7 +11,7 @@ export class Claim extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.claimSuccessful) {
-            this.props.history.push(`/task?taskId=${this.props.task.get('id')}`);
+            this.props.history.push(`/task/${this.props.task.get('id')}`);
         }
     }
 

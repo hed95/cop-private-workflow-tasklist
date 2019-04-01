@@ -1,8 +1,5 @@
 import {
-  form, loadingForm, submittingToWorkflow,
-  submissionToWorkflowSuccessful,
-  submittingToFormIO,
-  submissionToFormIOSuccessful
+  form, loadingForm, submissionStatus
 } from './selectors';
 
 import Immutable from 'immutable';
@@ -27,32 +24,26 @@ describe('Start form selector', () => {
   });
   it('should return submittingToWorkflow', () => {
     const state = {"procedure-page": new Map({
-        submittingToWorkflow: true
+        submissionStatus: "SUBMITTING"
       })};
-    const result = submittingToWorkflow(state);
-    expect(result).toEqual(true);
+    const result = submissionStatus(state);
+    expect(result).toEqual("SUBMITTING");
   });
-  it('should return submissionToWorkflowSuccessful', () => {
+  it('should return submission successful', () => {
     const state = {"procedure-page": new Map({
-        submissionToWorkflowSuccessful: true
+        submissionStatus: "SUBMISSION_SUCCESSFUL"
       })};
-    const result = submissionToWorkflowSuccessful(state);
-    expect(result).toEqual(true);
+    const result = submissionStatus(state);
+    expect(result).toEqual("SUBMISSION_SUCCESSFUL");
   });
 
-  it('should return submittingToFormIO', () => {
+
+  it('should return submissionFailed', () => {
     const state = {"procedure-page": new Map({
-        submittingToFormIO: true
+        submissionStatus: "FAILED"
       })};
-    const result = submittingToFormIO(state);
-    expect(result).toEqual(true);
-  });
-  it('should return submissionToFormIOSuccessful', () => {
-    const state = {"procedure-page": new Map({
-        submissionToFormIOSuccessful: true
-      })};
-    const result = submissionToFormIOSuccessful(state);
-    expect(result).toEqual(true);
+    const result = submissionStatus(state);
+    expect(result).toEqual("FAILED");
   });
 
 });

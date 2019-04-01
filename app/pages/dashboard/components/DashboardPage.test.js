@@ -13,8 +13,6 @@ describe('DashboardPage', () => {
   beforeEach(() => {
     store = mockStore(initialState);
   });
-  const resetErrors = jest.fn();
-
 
   it('renders panels if shift present', async() => {
     const props = {
@@ -28,10 +26,7 @@ describe('DashboardPage', () => {
     const wrapper = shallow(<DashboardPage
       store={store}
       {...props}
-      resetErrors ={resetErrors}
     />);
-
-    expect(resetErrors).toBeCalled();
 
     expect(wrapper.find('DashboardTitle')).toBeDefined();
     expect(wrapper.find('DashboardPanel')).toBeDefined();

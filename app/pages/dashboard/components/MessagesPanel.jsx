@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from "react-router";
-import ImmutablePropTypes from "react-immutable-proptypes";
-import {createStructuredSelector} from "reselect";
-import {isFetchingMessageCounts, messageCounts} from "../selectors";
-import {bindActionCreators} from "redux";
-import * as actions from "../actions";
-import {connect} from "react-redux";
-import AppConstants from "../../../common/AppConstants";
-import PubSub from "pubsub-js";
+import { withRouter } from 'react-router';
+import { isFetchingMessageCounts, messageCounts } from '../selectors';
+import { bindActionCreators } from 'redux';
+import * as actions from '../actions';
+import { connect } from 'react-redux';
+import AppConstants from '../../../common/AppConstants';
+import PubSub from 'pubsub-js';
+import withLog from '../../../core/error/component/withLog';
 
 export class MessagesPanel extends React.Component {
 
@@ -21,8 +20,15 @@ export class MessagesPanel extends React.Component {
     componentDidMount() {
         if (this.props.hasActiveShift) {
             this.token = PubSub.subscribe('refreshCount', (msg, data) => {
-                console.log("Refreshing messages count...");
-                this.props.fetchMessageCounts();
+              const path = this.props.history.location.pathname;
+              const user = this.props.kc.tokenParsed.email;
+              this.props.log([{
+                level: 'info',
+                user: user,
+                path: path,
+                message: 'refreshing message count',
+              }]);
+              this.props.fetchMessageCounts();
             });
             this.props.fetchMessageCounts();
         } else {
@@ -30,11 +36,22 @@ export class MessagesPanel extends React.Component {
         }
 
     }
-    componentWillReceiveProps(nextProps) {
-        if (this.props.hasActiveShift !== nextProps.hasActiveShift && nextProps.hasActiveShift) {
-            this.props.fetchMessageCounts();
-        }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (!this.props.isFetchingMessageCounts) {
+      const path = this.props.history.location.pathname;
+      const user = this.props.kc.tokenParsed.email;
+
+      const logStatements = [{
+        level: 'info',
+        user: user,
+        path: path,
+        message: 'message count loaded',
+        messageCount: this.props.messageCounts
+      }];
+      this.props.log(logStatements);
     }
+  }
 
     componentWillUnmount() {
         if (this.token) {
@@ -70,16 +87,18 @@ export class MessagesPanel extends React.Component {
 }
 
 MessagesPanel.propTypes = {
-    fetchMessageCounts: PropTypes.func.isRequired,
-    messageCounts: PropTypes.number,
-    isFetchingMessageCounts: PropTypes.bool
+  log: PropTypes.func,
+  fetchMessageCounts: PropTypes.func.isRequired,
+  messageCounts: PropTypes.number,
+  isFetchingMessageCounts: PropTypes.bool
 };
-
-const mapStateToProps = createStructuredSelector({
-    messageCounts: messageCounts,
-    isFetchingMessageCounts: isFetchingMessageCounts
-});
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MessagesPanel));
+export default connect((state) => {
+  return {
+    messageCounts: messageCounts(state),
+    isFetchingMessageCounts: isFetchingMessageCounts(state),
+    kc: state.keycloak
+  }
+}, mapDispatchToProps)(withRouter(withLog(MessagesPanel)));

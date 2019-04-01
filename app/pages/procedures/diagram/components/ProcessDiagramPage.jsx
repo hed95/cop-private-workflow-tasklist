@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProcessViewer from '../../../../core/process-viewer/ProcessViewer';
+import ProcessViewer from './ProcessViewer';
 import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
 import { isFetchingProcessDefinition, processDefinition } from '../../start/selectors';
@@ -42,6 +42,11 @@ class ProcessDiagramPage extends React.Component {
     return <div>
       <div id="backToProcedures" style={pointerStyle} onClick={(event) => this.props.history.replace('/procedures')}>Back to
         procedures
+      </div>
+      <div id="startProcedure" style={{    position: 'absolute', right: '2px', width: '200px'}}>
+        <input id="actionButton" className="btn btn-primary" onClick={(event) => this.props.history.replace('/start-a-procedure/'
+          + processDefinition.getIn(['process-definition', 'key']))} type="submit"
+               value="Start"/>
       </div>
       {isFetchingProcessDefinition && isFetchingProcessDefinitionXml ?  <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20%'}}><Spinner
         name="line-spin-fade-loader" color="black"/></div> : <div>

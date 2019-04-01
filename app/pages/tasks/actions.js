@@ -22,7 +22,11 @@ const fetchTasksAssignedToYouFailure = () => {
   };
 };
 
-
+const resetYourTasks = () => {
+  return {
+    type: types.RESET_YOUR_TASKS
+  }
+};
 const fetchYourGroupTasks = (sortValue, filterValue, skipLoading) => {
   return {
     type: types.FETCH_YOUR_GROUP_TASKS,
@@ -59,5 +63,6 @@ export {
   fetchYourGroupTasks,
   fetchYourGroupTasksSuccess,
   fetchYourGroupTasksFailure,
-  handleUnclaim
+  handleUnclaim,
+  resetYourTasks
 };

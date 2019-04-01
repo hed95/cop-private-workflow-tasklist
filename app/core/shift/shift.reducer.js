@@ -17,12 +17,10 @@ export const shiftInitialState = new Map({
 function shiftReducer(state = shiftInitialState, action) {
   switch (action.type) {
     case actions.FETCH_SHIFT_FORM:
-      return state.set('loadingShiftForm', true)
-        .set('shiftForm', null);
+      return state;
     case actions.FETCH_SHIFT_FORM_SUCCESS:
       const form = action.payload.entity;
-      return state.set('loadingShiftForm', false)
-        .set('shiftForm', form);
+      return state.set('shiftForm', form).set('loadingShiftForm', false)
     case actions.FETCH_SHIFT_FORM_FAILURE:
       return state.set('loadingShiftForm', false);
     case actions.FETCH_ACTIVE_SHIFT:

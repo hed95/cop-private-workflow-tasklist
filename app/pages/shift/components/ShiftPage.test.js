@@ -1,20 +1,24 @@
 import { mount } from 'enzyme/build';
 import { ShiftPage } from './ShiftPage';
 import React from 'react';
-import itParam from 'mocha-param';
+import { ErrorHandlingComponent } from '../../../core/error/component/ErrorHandlingComponent';
+import Immutable from 'immutable';
 
 describe('Shift page', () => {
   const fetchActiveShift = jest.fn();
   const fetchShiftForm = jest.fn();
   const fetchStaffDetails = jest.fn();
 
-  itParam('renders loading page for props = ${JSON.stringify(value)}', [{
-    isFetchingShift: true
-  }, {
-    isFetchingStaffDetails: true
-  }, {
-    loadingShiftForm: true
-  }], async (props) => {
+  it('renders loading page for props', async () => {
+    const props = {
+      isFetchingShift: true,
+      isFetchingStaffDetails: true,
+      loadingShiftForm: true,
+      submittingActiveShift: false,
+      shiftForm: {
+
+      }
+    };
     const wrapper = await mount(<ShiftPage
       {...props}
       fetchActiveShift={fetchActiveShift}
@@ -38,19 +42,24 @@ describe('Shift page', () => {
       failedToCreateShift: true,
       submittingActiveShift: false
     };
-    const wrapper = await mount(<ShiftPage
+    const wrapper = await mount(<ErrorHandlingComponent skipAuth={true} hasError={true} errors={
+      Immutable.fromJS([{
+        message: "failed"
+      }])
+    }><ShiftPage
       {...props}
       fetchActiveShift={fetchActiveShift}
       fetchShiftForm={fetchShiftForm}
       fetchStaffDetails={fetchStaffDetails}
-    />);
+    /></ErrorHandlingComponent>);
 
     expect(fetchStaffDetails).toHaveBeenCalled();
     expect(fetchShiftForm).toHaveBeenCalled();
     expect(fetchStaffDetails).toHaveBeenCalled();
 
+    console.log(wrapper.html());
+
     expect(wrapper.find('.error-summary').exists()).toEqual(true);
-    expect(wrapper.find('.error-summary-list').exists()).toEqual(true);
   });
 
   it ('renders submitting once submitted', async() => {
@@ -59,7 +68,10 @@ describe('Shift page', () => {
       isFetchingStaffDetails: false,
       loadingShiftForm: false,
       failedToCreateShift: false,
-      submittingActiveShift: false
+      submittingActiveShift: false,
+      shiftForm: {
+
+      }
     };
     const wrapper = await mount(<ShiftPage
       {...props}

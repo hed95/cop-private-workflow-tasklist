@@ -1,8 +1,8 @@
-import {errorObservable} from "../../core/error/epicUtil";
+import {errorObservable} from "../../../core/error/epicUtil";
 import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
-import {retry} from "../../core/util/retry";
+import {retry} from "../../../core/util/retry";
 import moment from 'moment';
 
 const updateDueDate = (action$, store, {client}) =>

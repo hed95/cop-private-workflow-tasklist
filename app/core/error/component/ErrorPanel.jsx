@@ -23,10 +23,15 @@ export default class ErrorPanel extends React.Component {
                 <h2 className="heading-medium error-summary-heading" id="error-summary-heading-example-1">
                     We are experiencing technical problems
                 </h2>
-                <ul className="error-summary-list">
-                    {items}
-                </ul>
-
+                <h4 className="heading-small error-summary-heading" id="error-summary-heading-example-1">
+                   The technical issue has been logged for support to investigate.
+                </h4>
+                <details>
+                    <summary><span className="summary">Error details</span></summary>
+                        <ul className="list list-bullet">
+                            {items}
+                        </ul>
+                </details>
             </div>
         } else {
             return <div/>

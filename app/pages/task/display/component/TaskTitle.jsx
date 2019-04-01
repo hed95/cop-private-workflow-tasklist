@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from "moment";
-import {priority} from "../../../core/util/priority";
+import {priority} from "../../../../core/util/priority";
 
 export default class TaskTitle extends React.Component {
 

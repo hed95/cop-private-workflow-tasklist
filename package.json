@@ -114,6 +114,7 @@
     "webpack-subresource-integrity": "^1.0.3"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "bootstrap": "3.3.7",
     "bpmn-js": "^3.0.2",
     "compression": "^1.7.3",
@@ -121,7 +122,7 @@
     "express": "^4.16.2",
     "file-loader": "^0.11.2",
     "flatpickr": "^4.5.2",
-    "formiojs": "^3.9.3",
+    "formiojs": "^3.17.3",
     "fullcalendar": "^3.9.0",
     "govuk-elements-sass": "^3.1.2",
     "govuk_frontend_toolkit": "^7.4.1",
@@ -130,11 +131,13 @@
     "immutable": "^3.8.2",
     "inherits": "^2.0.3",
     "jquery": "^3.3.1",
+    "keycloak-connect": "^5.0.0",
     "keycloak-js": "^4.7.0",
     "less": "^3.9.0",
     "less-loader": "^4.0.5",
     "lodash": "^4.17.4",
     "moment": "^2.22.0",
+    "native-promise-only": "^0.8.1",
     "net": "^1.0.2",
     "prop-types": "^15.6.2",
     "pubsub-js": "^1.6.0",
@@ -142,7 +145,7 @@
     "react-collapsible": "^2.3.2",
     "react-device-detect": "^1.6.1",
     "react-dom": "^16.6.3",
-    "react-formio": "^3.0.1",
+    "react-formio": "^3.1.11",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-hyper-responsive-table": "^0.6.0",
     "react-iframe": "^1.1.0",
@@ -163,11 +166,13 @@
     "reselect": "^3.0.1",
     "rest": "^2.0.0",
     "rxjs": "^5.5.2",
+    "secure-ls": "^1.2.5",
     "sockjs-client": "^1.3.0",
     "stompjs": "^2.3.3",
     "tether": "^1.4.3",
     "throttle-debounce": "^2.0.1",
     "uuid": "^3.2.1",
-    "webpack-icons-installer": "^2.0.0"
+    "webpack-icons-installer": "^2.0.0",
+    "winston": "^3.2.1"
   }
 }
