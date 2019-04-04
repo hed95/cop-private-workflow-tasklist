@@ -82,7 +82,7 @@ pipeline:
       - export UI_ENVIRONMENT=$${DEV_UI_ENVIRONMENT}
       - export UI_VERSION=$${DEV_UI_VERSION}
       - export WHITELIST=$${DEV_WHITELIST}
-      - export IMAGE_TAG=${DRONE_BUILD_NUMBER}
+      - export IMAGE_TAG=$${DRONE_BUILD_NUMBER}
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/nginx-configmap.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
@@ -145,7 +145,7 @@ pipeline:
       - export UI_ENVIRONMENT=$${TEST_UI_ENVIRONMENT}
       - export UI_VERSION=$${TEST_UI_VERSION}
       - export WHITELIST=$${TEST_WHITELIST}
-      - export IMAGE_TAG=${DRONE_BUILD_NUMBER}
+      - export IMAGE_TAG=$${DRONE_BUILD_NUMBER}
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/nginx-configmap.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
@@ -208,7 +208,7 @@ pipeline:
       - export UI_ENVIRONMENT=$${DEMO_UI_ENVIRONMENT}
       - export UI_VERSION=$${DEMO_UI_VERSION}
       - export WHITELIST=$${DEMO_WHITELIST}
-      - export IMAGE_TAG=${DRONE_BUILD_NUMBER}
+      - export IMAGE_TAG=$${IMAGE_TAG}
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/nginx-configmap.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
