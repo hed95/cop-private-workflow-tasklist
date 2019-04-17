@@ -9,7 +9,7 @@ RUN mkdir -p /app && \
 
 ADD . /app/
 
-RUN npm install && npm run build
+RUN npm ci && npm run build
 
 ENV NODE_ENV='production'
 
