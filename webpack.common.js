@@ -72,7 +72,7 @@ module.exports = {
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
-          { loader: 'css-loader', options: { url: false, sourceMap: true, minimize: true } },
+          { loader: 'css-loader', options: { url: false, sourceMap: true } },
           { loader: 'postcss-loader', options: {} },
         ]
       }, {

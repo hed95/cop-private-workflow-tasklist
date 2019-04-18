@@ -1,40 +1,8 @@
-$path: "../../node_modules/govuk_frontend_toolkit/images/";
-
-@import "../../node_modules/govuk_frontend_toolkit/stylesheets/colours"; // Colour variables
-@import "../../node_modules/govuk_frontend_toolkit/stylesheets/font_stack"; // Font family variables
-@import "../../node_modules/govuk_frontend_toolkit/stylesheets/measurements"; // Widths and gutter variables
-
-@import "../../node_modules/govuk_frontend_toolkit/stylesheets/conditionals"; // Media query mixin
-@import "../../node_modules/govuk_frontend_toolkit/stylesheets/device-pixels"; // Retina image mixin
-@import "../../node_modules/govuk_frontend_toolkit/stylesheets/grid_layout"; // Basic grid layout mixin
-@import "../../node_modules/govuk_frontend_toolkit/stylesheets/typography"; // Core bold and heading mixins, also external links
-@import "../../node_modules/govuk_frontend_toolkit/stylesheets/shims"; // Inline block mixin, clearfix placeholder
-
-@import "../../node_modules/govuk_frontend_toolkit/stylesheets/design-patterns/alpha-beta";
-@import "../../node_modules/govuk_frontend_toolkit/stylesheets/design-patterns/buttons";
-@import "../../node_modules/govuk_frontend_toolkit/stylesheets/design-patterns/breadcrumbs";
-@import "../../node_modules/govuk_frontend_toolkit/stylesheets/url-helpers"; // Function to output image-url, or prefixed path (Rails and Compass only)
-
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/helpers"; // Helper functions and classes
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/reset";
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/layout"; // Main content container. Grid layout - rows and column widths
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/elements-typography"; // Typography
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/buttons"; // Buttons
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/icons"; // Icons - numbered steps, calendar, search
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/lists"; // Lists - numbered, bulleted
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/tables"; // Tables - regular, numeric
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/details"; // Details summary
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/panels"; // Panels with a left grey border
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/forms"; // Form - wrappers, inputs, labels
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/forms/form-multiple-choice"; // Custom radio buttons and checkboxes
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/forms/form-date"; // Date of birth pattern
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/forms/form-validation"; // Errors and validation
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/breadcrumbs"; // Breadcrumbs
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/phase-banner"; // Alpha and beta banners and tags
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/components"; // GOV.UK prefixed styles - blue highlighted box
-@import "../../node_modules/govuk-elements-sass/public/sass/elements/shame"; // Hacks and workarounds that will go away eventually
-@import "../../node_modules/govuk_template_ejs/assets/stylesheets/govuk-template.css";
-
+$govuk-global-styles: true;
+$govuk-compatibility-govukfrontendtoolkit: true;
+$govuk-compatibility-govuktemplate: true;
+$govuk-compatibility-govukelements: true;
+@import "../../node_modules/govuk-frontend/all";
 @import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../../node_modules/formiojs/dist/formio.full.css";
 @import "../icons.css";
@@ -70,14 +38,14 @@ body {
 }
 
 .loading-bar {
-  background-color: $govuk-blue;;
+  background-color: govuk-colour("blue");;
   height: 5px;
   position: absolute;
 }
 
 .status {
-  background-color: $govuk-blue;
-  color: $white;
+  background-color: govuk-colour("blue");
+  color: govuk-colour("white");
   padding: 15px;
   margin-bottom: 10px;
   p {
@@ -89,7 +57,7 @@ body {
   }
 }
 
-@include media(tablet) {
+@include govuk-media-query($from: tablet) {
   .status {
     display: flex;
     align-items: center;
@@ -114,8 +82,8 @@ body {
 .flash-card {
   margin-top: 1em;
   padding: 10px;
-  background: $link-colour;
-  color: $page-colour;
+  background: $govuk-link-colour;
+  color: govuk-colour("white");
 
   p {
     margin-left: 32px;
@@ -132,18 +100,18 @@ body {
   }
 
   a {
-    color: $page-colour;
+    color: govuk-colour("white");
     &:visited, &:hover, &:active {
-      color: $page-colour;
+      color: govuk-colour("white");
     }
   }
   details {
     // margin-bottom: 1em;
     summary {
-      color: $page-colour;
+      color: govuk-colour("white");
     }
     .panel {
-      border-left-color: $page-colour;
+      border-left-color: govuk-colour("white");
     }
   }
 
@@ -172,17 +140,17 @@ body {
   transform: scale(2);
 }
 
-.error-required {
-  @extend .error-message
-}
-
-.alert-danger {
-  @extend .error-summary
-}
-
-.has-error {
-  @extend .error-message
-}
+//.error-required {
+//  @extend .error-message
+//}
+//
+//.alert-danger {
+//  @extend .error-summary
+//}
+//
+//.has-error {
+//  @extend .error-message
+//}
 
 .form-control {
   border-radius: 0 !important;
@@ -200,9 +168,9 @@ body {
   width: 100%;
 }
 
-.btn {
-  @extend .button
-}
+//.btn {
+//  @extend .button
+//}
 
 .tooltip {
   font-size: small;
@@ -308,8 +276,8 @@ body {
     display: inline-block;
     a {
       //@include bold-19;
-      @extend .bold-small;
-      color: $govuk-blue;
+     // @extend .bold-small;
+      color: govuk-colour("blue");
       display: inline-block;
       padding: 15px 5px 10px 5px;
       margin-right: 15px;
@@ -321,10 +289,10 @@ body {
     }
     &.active a,
     &.active a:hover {
-      color: $govuk-blue;
-      -webkit-box-shadow: inset 0px -5px 0px 0px $govuk-blue;
-      -moz-box-shadow: inset 0px -5px 0px 0px $govuk-blue;
-      box-shadow: inset 0px -5px 0px 0px $govuk-blue;
+      color: govuk-colour("blue");
+      -webkit-box-shadow: inset 0px -5px 0px 0px govuk-colour("blue");
+      -moz-box-shadow: inset 0px -5px 0px 0px govuk-colour("blue");
+      box-shadow: inset 0px -5px 0px 0px govuk-colour("blue");
     }
   }
 }
@@ -350,19 +318,19 @@ body {
   cursor: pointer;
 
   &:hover, &:focus {
-    background: $highlight-colour;
-    outline: 3px solid $focus-colour;
+    background: govuk-colour("grey-4");
+    outline: 3px solid govuk-colour("yellow");
   }
 
   &.current {
-    color: $text-colour;
+    color: govuk-colour("black");
     font-weight: 700;
     border: none;
     pointer-events: none;
     cursor: default;
 
     &:hover, &:focus {
-      color: $text-colour;
+      color: govuk-colour("black");
       background: none;
     }
   }
@@ -375,15 +343,15 @@ body {
 
 .btn-group .btn {
   margin-right: 5px;
-  background-color: $button-colour;
+  background-color: #00823b;
   &:hover, &:disabled {
-    background-color: $button-colour;
+    background-color: #00823b;
   }
 }
 
 .btn-group .btn:last-child {
   margin-right: 0;
-  background-color: $button-colour;
+  background-color: #00823b;
 }
 
 .app-dl .dl-horizontal dt {
@@ -440,21 +408,21 @@ body {
   width: 90%;
 }
 
-.breadcrumbs {
-  @include breadcrumbs;
-}
-
-nav[aria-label="navigation"] .pagination {
-  @include breadcrumbs;
-  padding-top: 0;
-  padding-bottom: 0;
-  margin-bottom: 0;
-  padding-left: 0;
-}
+//.breadcrumbs {
+//  @include govuk-breadcrumbs;
+//}
+//
+//nav[aria-label="navigation"] .pagination {
+//  @include govuk-breadcrumbs;
+//  padding-top: 0;
+//  padding-bottom: 0;
+//  margin-bottom: 0;
+//  padding-left: 0;
+//}
 
 nav[aria-label="navigation"] .pagination > li > span {
   position: relative;
-  color: $text-colour;
+  color: govuk-colour("black");
   background-color: #fff;
   border: 0 solid #ddd;
   border-bottom-left-radius: 0;
@@ -462,7 +430,7 @@ nav[aria-label="navigation"] .pagination > li > span {
 }
 
 nav[aria-label="navigation"] .pagination > li > span:hover {
-  color: $text-colour;
+  color: govuk-colour("black");
   z-index: 3;
   cursor: pointer;
   background-color: #aaa;
@@ -472,7 +440,7 @@ nav[aria-label="navigation"] .pagination > li > span:hover {
 nav[aria-label="navigation"] .pagination > .active > span {
   padding-bottom: 2px;
   border-bottom: 3px solid #aaa;
-  color: $text-colour;
+  color: govuk-colour("black");
 }
 
 nav[aria-label="navigation"] .pagination > li:last-child > span {
@@ -480,23 +448,23 @@ nav[aria-label="navigation"] .pagination > li:last-child > span {
   border-bottom-right-radius: 0;
 }
 
-.button {
-  @include button;
-}
-
-.btn-primary {
-  @include button($button-colour);
-  text-transform: none;
-  font-size: medium !important;
-  border-radius: 0 !important;
-}
-
-.btn-default {
-  @include button($grey-2);
-  text-transform: none;
-  font-size: medium !important;
-  border-radius: 0 !important;
-}
+//.button {
+//  @include button;
+//}
+//
+//.btn-primary {
+//  @include button(#00823b);
+//  text-transform: none;
+//  font-size: medium !important;
+//  border-radius: 0 !important;
+//}
+//
+//.btn-default {
+//  @include button($grey-2);
+//  text-transform: none;
+//  font-size: medium !important;
+//  border-radius: 0 !important;
+//}
 
 @media only screen and (max-width: 600px) {
   .__card {
@@ -516,9 +484,9 @@ nav[aria-label="navigation"] .pagination > li:last-child > span {
 
 .card__body {
   display: block;
-  background-color: $panel-colour;
+  background-color: govuk-colour("grey-3");
   padding: 1em;
-  color: $text-colour;
+  color: govuk-colour("black");
   text-decoration: none;
 
   span {
@@ -527,19 +495,19 @@ nav[aria-label="navigation"] .pagination > li:last-child > span {
 }
 
 a.card__body {
-  color: $link-colour;
+  color: #005ea5;
 
   &:hover, &:focus {
     cursor: pointer;
-    background-color: $highlight-colour;
-    color: $link-hover-colour;
+    background-color: govuk-colour("grey-4");
+    color: #2b8cc4;
     text-decoration: none;
   }
 }
 
 .card__footer {
   display: block;
-  background-color: $highlight-colour;
+  background-color: govuk-colour("grey-4");
   padding: 1em;
 }
 
