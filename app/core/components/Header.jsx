@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {withRouter} from 'react-router-dom'
-import LoadingBar from 'react-redux-loading-bar'
 // import img from 'govuk_template_ejs/assets/images/gov.uk_logotype_crown_invert_trans.png?0.23.0'
 import {bindActionCreators} from "redux";
 import secureLocalStorage from '../../common/security/SecureLocalStorage';
@@ -27,37 +26,12 @@ class Header extends React.Component {
 
     render() {
         return <div>
-            {/*<header className="govuk-header" role="banner" data-module="header">*/}
-            {/*<div className="header-wrapper">*/}
-            {/*<div className="header-global">*/}
-            {/*<div className="header-logo">*/}
-            {/*<div id="logo" className="content" style={{textDecoration: 'none', pointerEvents: 'none'}}>*/}
-            {/*<img src={null} width="36" height="32" alt="UK Border Force Logo"/> UK Border Force*/}
-            {/*</div>*/}
-            {/*</div>*/}
-            {/*</div>*/}
-            {/*<div className="header-proposition">*/}
-            {/*<div className="content">*/}
-            {/*<div className="grid-row" style={{paddingTop: '10px'}}>*/}
-            {/*<div className="column-two-thirds">*/}
-            {/*<a href="#" onClick={(event) => this.dashboard(event)} id="proposition-name">Central Operations Platform</a>*/}
-            {/*</div>*/}
-            {/*<div className="column-one-quarter">*/}
-            {/*<ul id="proposition-links">*/}
-            {/*<li style={pointerStyle}><a id="logout" onClick={this.logout}>Logout</a></li>*/}
-            {/*</ul>*/}
-            {/*</div>*/}
-            {/*</div>*/}
-            {/*</div>*/}
-            {/*</div>*/}
-
-            {/*</div>*/}
-            {/*</header>*/}
             <header className="govuk-header " role="banner" data-module="header">
                 <div className="govuk-header__container govuk-width-container">
 
                     <div className="govuk-header__logo">
-                        <a href="#" className="govuk-header__link govuk-header__link--homepage" style={{textDecoration: 'none', pointerEvents: 'none'}} >
+                        <a href="#" className="govuk-header__link govuk-header__link--homepage"
+                           style={{textDecoration: 'none', pointerEvents: 'none'}}>
         <span className="govuk-header__logotype">
 
           <svg role="presentation" focusable="false" className="govuk-header__logotype-crown"
@@ -74,16 +48,26 @@ class Header extends React.Component {
         </span>
                         </a>
                     </div>
+
                     <div className="govuk-header__content">
-
-                        <a href="#" onClick={(event) => this.dashboard(event)} className="govuk-header__link govuk-header__link--service-name">
-                            Central Operations Platform
-                        </a>
-
+                        <div className="govuk-grid-row">
+                            <div className="govuk-grid-column-two-thirds">
+                                <a href="#" onClick={(event) => this.dashboard(event)}
+                                   className="govuk-header__link govuk-header__link--service-name">
+                                    Central Operations Platform
+                                </a>
+                            </div>
+                            <div className="govuk-grid-column-one-third">
+                                <a style={{cursor: 'pointer', marginTop: '5px', position: 'absolute'}} id="logout"
+                                   onClick={this.logout}
+                                   className="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold">Logout</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </header>
-            <div id="global-header-bar"/>
+
 
             <div className="govuk-phase-banner">
                 <p className="govuk-phase-banner__content"><strong
@@ -97,13 +81,6 @@ class Header extends React.Component {
                 </p>
             </div>
 
-            <LoadingBar
-                updateTime={100}
-                maxProgress={100}
-                progressIncrease={4}
-                scope="header"
-                className="loading-bar"
-            />
         </div>
     }
 }
