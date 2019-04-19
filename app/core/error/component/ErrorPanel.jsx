@@ -19,11 +19,11 @@ export default class ErrorPanel extends React.Component {
         });
         if (hasError) {
             return <div className="govuk-error-summary" role="alert" aria-labelledby="error-summary-title"
-                        tabIndex="-1" style={{marginTop: '5px'}}>
+                        tabIndex="-1">
                 <h2 className="govuk-error-summary__title" id="error-summary-title">
                     We are experiencing technical problems
                 </h2>
-                <h4 className="govuk-heading-s">The technical { errors.size === 1 ? 'issue has': 'issues have'} been logged for support to investigate.</h4>
+                <h4 className="govuk-heading-s">The technical problems have been logged for support to investigate.</h4>
                 <details className="govuk-details">
                     <summary className="govuk-details__summary">
                         <span className="govuk-details__summary-text">
