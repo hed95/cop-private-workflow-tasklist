@@ -2,10 +2,10 @@ $govuk-global-styles: true;
 $govuk-compatibility-govukfrontendtoolkit: true;
 $govuk-compatibility-govuktemplate: true;
 $govuk-compatibility-govukelements: true;
+
 @import "../../node_modules/govuk-frontend/all";
 @import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../../node_modules/formiojs/dist/formio.full.css";
-@import "../icons.css";
 @import "../../node_modules/flatpickr/dist/themes/airbnb.css";
 
 html {

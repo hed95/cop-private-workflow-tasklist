@@ -5,6 +5,7 @@ const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const sourcePath = path.join(__dirname, './app');
 const buildDirectory = path.join(__dirname, './dist');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { HashedModuleIdsPlugin } = require('webpack');
 
 const hashing = process.env.NODE_ENV === 'production' ? 'chunkhash' : 'hash';
@@ -47,6 +48,9 @@ module.exports = {
         STORAGE_KEY: JSON.stringify(process.env.STORAGE_KEY)
       }
     }),
+    new CopyWebpackPlugin([
+      { from: 'node_modules/govuk-frontend/assets', to: 'assets' }
+    ]),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',

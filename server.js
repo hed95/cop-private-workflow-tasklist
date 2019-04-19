@@ -52,6 +52,7 @@ process.title = 'cop-private-ui';
 
 app.set('port', port);
 
+app.use('/assets', express.static(path.join(__dirname, '/assets')));
 app.use(express.static(__dirname + "/"));
 
 app.use(cors());

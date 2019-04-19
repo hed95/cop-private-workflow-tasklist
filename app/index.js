@@ -8,7 +8,7 @@ import configureStore from './core/store/configureStore';
 import Keycloak from "keycloak-js";
 import 'webpack-icons-installer/bootstrap';
 import '../public/styles/app.scss'
-import '../public/styles/fonts.css'
+import 'govuk-frontend/core/_typography.scss'
 import 'rxjs';
 import ScrollToTop from "./core/components/ScrollToTop";
 import Header from './core/components/Header';
@@ -20,9 +20,11 @@ import {Formio} from 'react-formio';
 import url from './common/formio/url';
 import secureLocalStorage  from './common/security/SecureLocalStorage';
 let kc = null;
+import { initAll } from 'govuk-frontend'
 
 Formio.providers.storage['url'] = url;
 const renderApp = (App, authorizedRole) => {
+    initAll();
     kc.onTokenExpired = () => {
         secureLocalStorage.removeAll();
         kc.updateToken().success((refreshed) => {

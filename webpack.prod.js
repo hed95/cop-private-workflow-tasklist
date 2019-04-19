@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const common = require('./webpack.common.js');
 const webpackMerge = require('webpack-merge');
-const SriPlugin = require('webpack-subresource-integrity');
 const ProgressPlugin = require('progress-webpack-plugin');
 const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
