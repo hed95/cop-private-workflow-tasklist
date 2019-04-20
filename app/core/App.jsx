@@ -59,11 +59,9 @@ export class App extends React.Component {
                     <DataSpinner message="..."/></div>}>
                 <SubmissionBanner/>
             </Suspense>
-            <div className="govuk-width-container" style={{ height: '100vh' }}>
+            <div className="govuk-width-container" style={{height: '100%'}}>
                 <AppBanner {...this.props}/>
-                <main className="govuk-main-wrapper app-main-class" id="main-content" role="main">
-                    <Main/>
-                </main>
+                <Main/>
             </div>
             <Footer/>
         </div>;

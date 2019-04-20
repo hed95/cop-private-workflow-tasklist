@@ -5,7 +5,7 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import * as actions from "../../../core/shift/actions";
 import {endingShift, hasActiveShift} from "../../../core/shift/selectors";
-
+import "./DashboardTitle.css";
 class DashboardTitle extends React.Component {
 
     componentWillMount() {
@@ -32,27 +32,30 @@ class DashboardTitle extends React.Component {
 
 
     render() {
+        return <div className="govuk-grid-row" style={{width: '100%', height: '200px'}}>
+            <div className="govuk-grid-column-one-half">
 
-        return <div className="grid-row" style={{width: '100%', height: '200px'}}>
-            <div className="column-one-half">
-                <h2 className="heading-large">
-                    <span
-                        className="heading-secondary">{this.props.kc.tokenParsed.given_name} {this.props.kc.tokenParsed.family_name}</span>Operational dashboard
-                </h2>
+                <h1 className="govuk-heading-l">
+                    <span className="govuk-caption-l">{this.props.kc.tokenParsed.given_name} {this.props.kc.tokenParsed.family_name}</span>
+                    Operational dashboard
+                </h1>
             </div>
 
             {this.props.hasActiveShift ?
-                <div className="column-one-half" style={{margin: '7% auto', textAlign: 'right'}}>
-                    <div id="shiftButtons">
-                        <input id="editShift" className="btn btn-default" style={{margin: '0'}} type="submit" value="Edit shift"
-                               onClick={this.viewShift} disabled={this.props.endingShift}/> {' '}
-                        <input id="endShift" className="btn btn-primary" style={{margin: '0'}} type="submit" value="End shift"
-                               onClick={this.endShift} disabled={this.props.endingShift}/>
+                <div className="govuk-grid-column-one-half" style={{margin: '7% auto', textAlign: 'right'}}>
+                    <div className="shift-button-ul">
+                        <ul>
+                            <li><button id="editShift" className="govuk-button" style={{margin: '0'}} type="submit"
+                                 onClick={this.viewShift} disabled={this.props.endingShift}>Edit shift</button></li>
+                            <li>
+                                <button id="endShift" className="govuk-button" type="submit"
+                                        onClick={this.endShift} disabled={this.props.endingShift} data-prevent-double-click="true">End shift</button></li>
+                        </ul>
                     </div>
 
-                </div> : <div className="column-one-half" style={{margin: '7% auto', textAlign: 'right'}}>
-                    <input id="startShift" className="btn btn-primary" type="submit" value="Start shift"
-                           onClick={this.viewShift} />
+                </div> : <div className="govuk-grid-column-one-half" style={{margin: '7% auto', textAlign: 'right'}}>
+                    <button id="startShift" className="govuk-button" type="submit"
+                            onClick={this.viewShift}>Start shift</button>
                 </div>}
 
         </div>

@@ -15,12 +15,12 @@ export class ProceduresDashboardPanel extends React.Component {
     }
 
     render() {
-        return <li className="__card column-one-third" id="proceduresPanel">
+        return <li className="__card govuk-grid-column-one-third" id="proceduresPanel">
             <a href="#" onClick={this.procedures.bind(this)} className="card__body" id="proceduresPageLink">
-                <span className="bold-large">procedures</span>
+                <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">procedures</span>
             </a>
             <div className="card__footer">
-                <span className="font-small">Operational procedures</span>
+                <span className="govuk-!-font-size-19">Operational procedures</span>
             </div>
         </li>
     }

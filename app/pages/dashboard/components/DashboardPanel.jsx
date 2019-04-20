@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, {Suspense} from 'react';
 
 import {withRouter} from "react-router";
 import SockJS from 'sockjs-client';
@@ -6,14 +6,14 @@ import Stomp from 'stompjs';
 import {connect} from "react-redux";
 import PubSub from "pubsub-js";
 import DataSpinner from '../../../core/components/DataSpinner';
-import { bindActionCreators } from 'redux';
+import {bindActionCreators} from 'redux';
 import withLog from '../../../core/error/component/withLog';
 
 
 const ProceduresDashboardPanel = React.lazy(() => import('./ProceduresDashboardPanel'));
 const ReportsDashboardPanel = React.lazy(() => import('./ReportsDashboardPanel'));
 const CalendarDashboardPanel = React.lazy(() => import('./CalendarDashboardPanel'));
-const MessagesPanel  = React.lazy(() => import('./MessagesPanel'));
+const MessagesPanel = React.lazy(() => import('./MessagesPanel'));
 const TaskCountPanel = React.lazy(() => import('./TaskCountPanel'));
 const AdminPanel = React.lazy(() => import('./AdminPanel'));
 
@@ -32,8 +32,9 @@ export class DashboardPanel extends React.Component {
         this.stompClient = Stomp.over(this.socket);
         const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
 
-        if (uiEnv !== 'development' &&  uiEnv !== 'local') {
-            this.stompClient.debug = () => {};
+        if (uiEnv !== 'development' && uiEnv !== 'local') {
+            this.stompClient.debug = () => {
+            };
         }
 
         const heartBeat = 5000;
@@ -137,19 +138,25 @@ export class DashboardPanel extends React.Component {
 
     render() {
         return <div>
-            <ul className="grid-row">
-                <TaskCountPanel {...this.props}/>
-                <MessagesPanel {...this.props} />
-            </ul>
-            <hr/>
-            <ul className="grid-row">
-              <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}><DataSpinner message="Loading panels..."/></div>}>
-                <ProceduresDashboardPanel {...this.props}/>
-                <ReportsDashboardPanel {...this.props}/>
-                <CalendarDashboardPanel {...this.props}/>
-                <AdminPanel {...this.props}/>
-              </Suspense>
-            </ul>
+            <div className="govuk-grid-row">
+                <ul className="govuk-list">
+                    <TaskCountPanel {...this.props}/>
+                    <MessagesPanel {...this.props} />
+                </ul>
+            </div>
+            <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible"/>
+            <div className="govuk-grid-row">
+                <Suspense
+                    fallback={<div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><DataSpinner
+                        message="Loading panels..."/></div>}>
+                    <ul className="govuk-list">
+                    <ProceduresDashboardPanel {...this.props}/>
+                    <ReportsDashboardPanel {...this.props}/>
+                    <CalendarDashboardPanel {...this.props}/>
+                    <AdminPanel {...this.props}/>
+                    </ul>
+                </Suspense>
+            </div>
         </div>
     }
 
@@ -162,4 +169,4 @@ export default withRouter(connect((state) => {
         kc: state.keycloak,
         appConfig: state.appConfig
     }
-}, mapDispatchToProps )(withLog(DashboardPanel)));
+}, mapDispatchToProps)(withLog(DashboardPanel)));

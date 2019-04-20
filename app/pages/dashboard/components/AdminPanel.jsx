@@ -19,12 +19,12 @@ class AdminPanel extends React.Component {
             ? this.props.kc.realmAccess.roles.find(role => role === 'platform_admin')
             : null;
 
-        return adminRole ? <li className="__card column-one-third" id="adminPanel">
+        return adminRole ? <li className="__card govuk-grid-column-one-third" id="adminPanel">
             <a href="#" onClick={this.admin.bind(this)} className="card__body">
-                <span className="bold-large">admin</span>
+                <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">admin</span>
             </a>
             <div className="card__footer">
-                <span className="font-small">Admin operations</span>
+                <span className="govuk-!-font-size-19">Admin operations</span>
             </div>
         </li> : <div/>
     }

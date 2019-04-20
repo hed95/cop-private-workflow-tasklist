@@ -58,7 +58,7 @@ class Header extends React.Component {
                             </div>
                             <div className="govuk-grid-column-one-third">
                                 <a style={{cursor: 'pointer', marginTop: '5px', display: 'flex',
-                                    justifyContent: 'center',
+                                    justifyContent: 'right',
                                     alignItems: 'center'}} id="logout"
                                    onClick={this.logout}
                                    className="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold">Sign out</a>
