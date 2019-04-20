@@ -32,7 +32,7 @@ class DashboardTitle extends React.Component {
 
 
     render() {
-        return <div className="govuk-grid-row" style={{width: '100%', height: '200px'}}>
+        return <div className="govuk-grid-row">
             <div className="govuk-grid-column-one-half">
 
                 <h1 className="govuk-heading-l">
@@ -42,7 +42,7 @@ class DashboardTitle extends React.Component {
             </div>
 
             {this.props.hasActiveShift ?
-                <div className="govuk-grid-column-one-half" style={{margin: '7% auto', textAlign: 'right'}}>
+                <div className="govuk-grid-column-one-half" style={{margin: '2% auto', textAlign: 'right'}}>
                     <div className="shift-button-ul">
                         <ul>
                             <li><button id="editShift" className="govuk-button" style={{margin: '0'}} type="submit"
