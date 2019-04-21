@@ -136,7 +136,8 @@ export class ProcessStartPage extends React.Component {
         processDefinition.getIn(['process-definition', 'name']) : procedureKey;
 
       return <div>
-        {!this.props.noBackLink ? <div style={pointerStyle}
+        {!this.props.noBackLink ? <div className="govuk-back-link"
+                                       style={{textDecoration: 'none'}}
                                        onClick={(event) => {
                                          event.preventDefault();
                                          this.props.history.replace('/procedures')

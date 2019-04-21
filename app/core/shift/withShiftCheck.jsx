@@ -46,11 +46,10 @@ export default function (ComposedComponent) {
   class BackButton extends React.Component {
     render() {
       if (this.props.location.pathname !== '/dashboard') {
-        const pointerStyle = { cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline' };
         return <div>
-          <div style={pointerStyle} onClick={() => this.props.history.replace('/dashboard')}>Back to
+          <a href="#"  style={{textDecoration: 'none'}} className="govuk-back-link" onClick={() => this.props.history.replace('/dashboard')}>Back to
             dashboard
-          </div>
+          </a>
           {this.props.children}
         </div>;
       }

@@ -34,18 +34,16 @@ export class MessagesPage extends React.Component {
         return <div>
 
             {this.props.isFetching ?
-                <div id="loadingMessages" className="data-item bold-small">Loading messages...</div> : <div/>
-            }
-            <div className="grid-row" style={{width: '100%', height: '150px'}} id='numberOfMessages'>
-                <div className="column-one-half">
-                    <h2 className="heading-large">
-                    <span
-                        className="heading-secondary">Operational messages</span> {this.props.total} messages
-                    </h2>
-                </div>
-            </div>
+                <h4 className="govuk-heading-s">Loading messages...</h4> : <div className="govuk-grid-row">
+                    <div className="govuk-grid-column-one-half">
+                        <span className="govuk-caption-l">Operational messages</span>
+                        <h2 className="govuk-heading-l">{this.props.total} messages</h2>
+                    </div>
 
-            <div className="grid-row" id="messages">
+                </div>
+            }
+
+            <div className="govuk-grid-row" id="messages">
                 <InfiniteScroll
                     pageStart={0}
                     loadMore={() => this.props.fetchNotificationsNextPage(this.props.nextPage)}
@@ -98,18 +96,18 @@ const NotificationTask = ({task, action}) => {
         e.preventDefault();
         action.acknowledgeNotification(taskId);
     };
-    return <div className="column-one-third">
+    return <div className="govuk-grid-column-one-third">
         <div className="flash-card" style={{'backgroundColor': determineColour(task)}}>
             <header>
-                <h2 className="heading-small" id='messageName'>{determineTitle(task)}: {taskName}</h2>
-                <h5 className="heading-xsmall" id='messageCreated'>{created(task)}</h5>
+                <h2 className="govuk-heading-s" id='messageName' style={{color:'white'}}>{determineTitle(task)}: {taskName}</h2>
+                <h5 className="govuk-!-font-size-16" id='messageCreated'>{created(task)}</h5>
             </header>
-            <div className="grid-row">
-                <div className="column-full">
+            <div className="govuk-grid-row">
+                <div className="govuk-grid-column-full">
                     <a style={{'color': 'white'}} href={taskDescription}> {taskDescription}</a>
                     <div className="form-group bottom-right-container">
-                        <input className="button" type="submit" value="Acknowledge" onClick={onClick}
-                               disabled={action.acknowledgingTaskIds.contains(taskId)}/>
+                        <button className="govuk-button" type="submit"  onClick={onClick}
+                                disabled={action.acknowledgingTaskIds.contains(taskId)}>Acknowledge</button>
                     </div>
                 </div>
             </div>

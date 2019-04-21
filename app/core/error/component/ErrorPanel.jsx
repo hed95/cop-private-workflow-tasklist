@@ -40,7 +40,7 @@ export default class ErrorPanel extends React.Component {
                 </details>
             </div>
         } else {
-            return <div/>
+            return null;
         }
     }
 }

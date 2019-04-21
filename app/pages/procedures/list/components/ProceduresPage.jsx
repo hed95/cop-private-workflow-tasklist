@@ -31,8 +31,6 @@ export class ProceduresPage extends React.Component {
 
   render() {
     const { isFetchingProcessDefinitions, processDefinitions } = this.props;
-    const pointerStyle = { cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline' };
-
     const data = processDefinitions ? processDefinitions.map((p) => {
       const name = p.getIn(['process-definition', 'name']);
       const description = p.getIn(['process-definition', 'description']);
@@ -40,14 +38,13 @@ export class ProceduresPage extends React.Component {
           key: p.getIn(['process-definition', 'key']),
           name: description,
           description: p.getIn(['process-definition', 'description']),
-          action: <input id="actionButton" className="btn btn-primary" onClick={() => this.process(p)} type="submit"
-                         value={name}/>,
-          diagram:  <div id="procedureView" style={pointerStyle} onClick={() => this.viewProcessDiagram(p)}>View procedure</div>
+          action: <button id="actionButton" className="govuk-button" onClick={() => this.process(p)} type="submit">{name}</button>,
+          diagram:  <a href="#" id="procedureView" className="govuk-link govuk-link--no-visited-state" onClick={() => this.viewProcessDiagram(p)}>View procedure</a>
         }
     }).toArray() : [];
 
     const headers = !types.isMobile ? {
-      description: 'Description',
+      description: <div className="govuk-!-font-size-19 govuk-!-font-weight-bold">Description</div>,
       diagram: null,
       action: null,
     } : {
@@ -56,16 +53,14 @@ export class ProceduresPage extends React.Component {
     };
 
     return <div>
-      <div className="grid-row">
-        <div className="column-one-half">
-          <h2 className="heading-large">
-                    <span
-                      className="heading-secondary">Operational procedures</span> {processDefinitions.size} procedures
-          </h2>
+      <div className="govuk-grid-row">
+        <div className="govuk-grid-column-one-half">
+          <span className="govuk-caption-l">Operational procedures</span>
+          <h2 className="govuk-heading-l">{processDefinitions.size} procedures</h2>
         </div>
 
       </div>
-      {isFetchingProcessDefinitions ? <div id="loading">Loading processes....</div> :
+      {isFetchingProcessDefinitions ? <h4 className="govuk-heading-s">Loading processes...</h4> :
           <ReactHyperResponsiveTable
           headers={headers}
           rows={data}

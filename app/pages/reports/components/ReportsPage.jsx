@@ -26,27 +26,25 @@ export class ReportsPage extends React.Component {
             reports.forEach((report) => {
                 items.push(<tr key={uuidv4()} id="report" style={pointerStyle} onClick={() => {
                     this.props.history.push(`/report?reportName=${report.get('htmlName')}`)
-                }}>
-                    <td>{report.get('name')}</td>
-                    <td>{report.get('description')}</td>
+                }} className="govuk-table__row">
+                    <td className="govuk-table__header">{report.get('name')}</td>
+                    <td className="govuk-table__cell">{report.get('description')}</td>
                 </tr>)
             });
         }
 
         return <div>
-            <div className="grid-row">
-                <div className="column-one-half">
-                    <h2 className="heading-large">
-                    <span
-                        className="heading-secondary">Operational reports</span> {reports.size} reports
-                    </h2>
+            <div className="govuk-grid-row">
+                <div className="govuk-grid-column-one-half">
+                    <span className="govuk-caption-l">Operational reports</span>
+                    <h2 className="govuk-heading-l">{reports.size} reports</h2>
                 </div>
 
             </div>
             {loadingReports ? <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><DataSpinner
                 message="Loading reports"/></div> : <div>
-                <table>
-                    <tbody>
+                <table className="govuk-table">
+                    <tbody className="govuk-table__body">
                     {items}
                     </tbody>
                 </table>

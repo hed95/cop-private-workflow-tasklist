@@ -33,7 +33,7 @@ const NoOpDashboardPage = lazy(() => import ('../pages/dashboard/components/NoOp
 
 
 const Main = () => (
-  <main className="govuk-main-wrapper app-main-class" id="main-content" role="main">
+  <main style={{paddingTop: '10px'}}>
     <Suspense fallback={<div style={{ justifyContent: 'center'}}><DataSpinner message="Loading routes"/></div>}>
       <Switch>
         <Route name="Dashboard" exact path={AppConstants.DASHBOARD_PATH} component={() => <DashboardPage />}/>
