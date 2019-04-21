@@ -10,7 +10,7 @@ import {
 } from "../selectors";
 import InfiniteScroll from 'react-infinite-scroller';
 import moment from 'moment';
-
+import './MessagesPage.scss';
 
 export class MessagesPage extends React.Component {
 
