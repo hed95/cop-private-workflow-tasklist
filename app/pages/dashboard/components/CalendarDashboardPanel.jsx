@@ -13,7 +13,7 @@ export class CalendarDashboardPanel extends React.Component {
         });
     }
     render() {
-        return <li className="__card govuk-grid-column-one-third" id="calendarPanel">
+        return <li className="__card govuk-grid-column-one-third" id="calendarPanel" style={{marginBottom: '30px'}}>
             <a href="#" onClick={this.calendar.bind(this)} className="card__body" id="calendarPageLink">
                 <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">calendar</span>
             </a>

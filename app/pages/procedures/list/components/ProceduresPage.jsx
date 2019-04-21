@@ -12,6 +12,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 import ReactHyperResponsiveTable from 'react-hyper-responsive-table';
 import * as types  from "react-device-detect";
+import './ProceduresPage.css';
 
 export class ProceduresPage extends React.Component {
 
@@ -37,9 +38,9 @@ export class ProceduresPage extends React.Component {
       return {
           key: p.getIn(['process-definition', 'key']),
           name: description,
-          description: p.getIn(['process-definition', 'description']),
+          description: <div className="govuk-!-font-size-19">{p.getIn(['process-definition', 'description'])}</div>,
           action: <button id="actionButton" className="govuk-button" onClick={() => this.process(p)} type="submit">{name}</button>,
-          diagram:  <a href="#" id="procedureView" className="govuk-link govuk-link--no-visited-state" onClick={() => this.viewProcessDiagram(p)}>View procedure</a>
+          diagram:  <a href="#" id="procedureView" className="govuk-link govuk-link--no-visited-state" onClick={() => this.viewProcessDiagram(p)}><div className="govuk-!-font-size-19">View procedure</div></a>
         }
     }).toArray() : [];
 

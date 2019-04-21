@@ -15,7 +15,7 @@ export class ProceduresDashboardPanel extends React.Component {
     }
 
     render() {
-        return <li className="__card govuk-grid-column-one-third" id="proceduresPanel">
+        return <li className="__card govuk-grid-column-one-third" id="proceduresPanel" style={{marginBottom: '30px'}}>
             <a href="#" onClick={this.procedures.bind(this)} className="card__body" id="proceduresPageLink">
                 <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">procedures</span>
             </a>
