@@ -38,7 +38,7 @@ class ProcessDiagramPage extends React.Component {
     }
 
     return <div>
-      <a href="#" id="backToProcedures"  style={{textDecoration: 'none'}} className="govuk-back-link" onClick={(event) => this.props.history.replace('/procedures')}>Back to
+      <a href="#" id="backToProcedures"  style={{textDecoration: 'none'}} className="govuk-back-link govuk-!-font-size-19" onClick={(event) => this.props.history.replace('/procedures')}>Back to
         procedures
       </a>
       <div id="startProcedure" style={{ position: 'absolute', right: '2px', width: '200px'}}>
