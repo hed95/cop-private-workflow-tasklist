@@ -109,10 +109,6 @@ body {
   width: 100%;
 }
 
-//.btn {
-//  @extend .button
-//}
-
 .tooltip {
   font-size: small;
 }
@@ -492,43 +488,6 @@ table.narrowtable tr td {
   word-wrap: break-word;
 }
 
-table.narrowtable tr td,
-table.narrowtable tr th {
-  font-size: 14px;
-}
-
-
-table.narrowtable tr:nth-child(5) {
-  border-bottom: solid black 4px;
-}
-
-table.widetable {
-  width: 100%;
-  border-bottom: 1px solid #bfc1c3;
-
-}
-
-table.widetable tr td:nth-child(1) {
-  width: 700px;
-}
-
-table.widetable tr td:nth-child(2) {
-  width: 400px;
-}
-
-
-
-
-table.narrowtable-yourgrouptasks tr td,
-table.narrowtable-yourgrouptasks tr th {
-  border: none;
-  padding: 10px 0 0;
-}
-
-
-table.widetable-yourgrouptasks tr td:nth-child(4) {
-  text-align: right;
-}
 
 .tasksGrouping {
   margin-bottom: 2em;

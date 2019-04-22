@@ -1,6 +1,8 @@
 table.narrowtable-yourtasks {
   width: 100%;
+  word-wrap: break-word;
 }
+
 table.narrowtable-yourtasks tr td,
 table.narrowtable-yourtasks tr th {
   border: none;
