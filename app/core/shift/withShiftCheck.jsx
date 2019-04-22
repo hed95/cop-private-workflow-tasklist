@@ -47,7 +47,7 @@ export default function (ComposedComponent) {
     render() {
       if (this.props.location.pathname !== '/dashboard') {
         return <div>
-          <a href="#"  style={{textDecoration: 'none'}} className="govuk-back-link" onClick={() => this.props.history.replace('/dashboard')}>Back to
+          <a href="#"  style={{textDecoration: 'none'}} className="govuk-back-link govuk-!-font-size-19" onClick={() => this.props.history.replace('/dashboard')}>Back to
             dashboard
           </a>
           {this.props.children}
