@@ -1,10 +1,11 @@
 import React from 'react';
+import * as types from 'react-device-detect';
 
 const SortTasks = ({tasks, sortTasks}) => {
   return <div className="govuk-form-group">
     <label className="govuk-label" htmlFor="sortTask">Sort tasks by:</label>
     <select className="govuk-select" id="sortTask" name="sortTask"
-            onChange={sortTasks}
+            onChange={sortTasks} style={types.isMobile?  {width: '100%'} : null}
             value={tasks.get('sortValue')}>
       <option value="sort=due,desc">Latest due date</option>
       <option value="sort=due,asc">Oldest due date</option>

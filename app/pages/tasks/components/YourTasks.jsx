@@ -53,7 +53,7 @@ const YourTasks = ({ yourTasks, sortYourTasks, filterTasksByName, goToTask, star
       }
     });
     return <div key={`category::${key}`} className="tasksGrouping">
-        <div className="data-item govuk-!-font-size-19 govuk-!-font-weight-bold" key={key}>{key} ({value.length} {value.length === 1 ? 'task' : 'tasks'})</div>
+        <div style={{paddingBottom: '5px'}} className="data-item govuk-!-font-size-19 govuk-!-font-weight-bold" key={key}>{key} ({value.length} {value.length === 1 ? 'task' : 'tasks'})</div>
         <ReactHyperResponsiveTable
           key={`category::${key}`}
         headers={headers}

@@ -4,7 +4,8 @@ table.narrowtable-yourtasks {
 table.narrowtable-yourtasks tr td,
 table.narrowtable-yourtasks tr th {
   border: none;
-  padding: 10px 0 0;
+  padding: 5px 0 0;
+
 }
 
 table.widetable-yourtasks td button {
@@ -14,6 +15,9 @@ table.widetable-yourtasks td button {
 
 table.widetable-yourtasks {
   width: 100%;
+}
+
+table.widetable-yourtasks th, td {
   border-bottom: 1px solid #bfc1c3;
 }
 
