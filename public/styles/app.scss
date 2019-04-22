@@ -468,20 +468,6 @@ a.card__body {
 
 }
 
-.loader-content {
-  padding-top: 15%;
-  display: flex;
-  justify-content: center;
-}
-
-.loader-message {
-  padding-top: 10%;
-  display: flex;
-  justify-content: center;
-
-}
-
-
 @media (max-width: 779px) {
   .btn {
     margin-bottom: 10px;
@@ -518,6 +504,7 @@ table.narrowtable tr:nth-child(5) {
 
 table.widetable {
   width: 100%;
+  border-bottom: 1px solid #bfc1c3;
 
 }
 
@@ -531,11 +518,6 @@ table.widetable tr td:nth-child(2) {
 
 
 
-table.narrowtable-yourtasks tr td,
-table.narrowtable-yourtasks tr th {
-  border: none;
-  padding: 10px 0 0;
-}
 
 table.narrowtable-yourgrouptasks tr td,
 table.narrowtable-yourgrouptasks tr th {
@@ -574,4 +556,10 @@ table.widetable-yourgrouptasks tr td:nth-child(4) {
   &:focus {
     background-color: darken( govuk-colour("grey-3"), 10%);
   }
+}
+
+
+.data-item {
+  display: block;
+  line-height: 1;
 }

@@ -45,7 +45,7 @@ export class ProceduresPage extends React.Component {
     }).toArray() : [];
 
     const headers = !types.isMobile ? {
-      description: <div className="govuk-!-font-size-19 govuk-!-font-weight-bold">Description</div>,
+      description: <div className="govuk-!-font-size-19 govuk-!-font-weight-bold" style={{paddingBottom: '5px'}}>Description</div>,
       diagram: null,
       action: null,
     } : {

@@ -5,9 +5,9 @@ import SortTasks from './SortTasks';
 import FilterTaskName from './FilterTaskName';
 import * as types from 'react-device-detect';
 import _ from 'lodash';
+import "./YourTasks.scss";
 
 const YourTasks = ({ yourTasks, sortYourTasks, filterTasksByName, goToTask, startAProcedure }) => {
-  const underlinedStyle = { cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline' };
 
   const groupedTasks = yourTasks && yourTasks.get('tasks') ?_.groupBy(yourTasks.get('tasks').toJS(), (data) => {
     const groupKey = data['process-definition'] ? data['process-definition']['category']
@@ -38,8 +38,7 @@ const YourTasks = ({ yourTasks, sortYourTasks, filterTasksByName, goToTask, star
   const dataToDisplay = _.map(sortedData, (value, key) => {
     const data = _.map(value, (val) => {
       const task = val.task;
-      const actionButton = <input id="actionButton" className="btn btn-primary" onClick={() => goToTask(task.id)} type="submit"
-                            value="Action"/>;
+      const actionButton = <button id="actionButton" className="govuk-button" onClick={() => goToTask(task.id)} type="submit">Action</button>;
       const name = task.name;
       const taskId = task.id;
       return types.isMobile ? {
@@ -48,36 +47,36 @@ const YourTasks = ({ yourTasks, sortYourTasks, filterTasksByName, goToTask, star
         action: actionButton
       } : {
         id: taskId,
-        name: name,
-        due: "due " + moment().to(moment(task.due)),
+        name: <div className="govuk-!-font-size-19">{name}</div>,
+        due: <div className="govuk-!-font-size-19">{"due " + moment().to(moment(task.due))}</div>,
         action: actionButton
       }
     });
     return <div key={`category::${key}`} className="tasksGrouping">
-        <div className="data-item bold-small" key={key}>{key} ({value.length} {value.length === 1 ? 'task' : 'tasks'})</div>
+        <div className="data-item govuk-!-font-size-19 govuk-!-font-weight-bold" key={key}>{key} ({value.length} {value.length === 1 ? 'task' : 'tasks'})</div>
         <ReactHyperResponsiveTable
           key={`category::${key}`}
         headers={headers}
         rows={data}
         keyGetter={row => row.id}
         breakpoint={578}
-        tableStyling={({ narrow }) => (narrow ? 'narrowtable-yourtasks' : 'widetable')}
+        tableStyling={({ narrow }) => (narrow ? 'narrowtable-yourtasks' : 'widetable-yourtasks')}
         />
     </div>
   });
   return <div>
-    <div style={underlinedStyle} onClick={startAProcedure}>Start a procedure</div>
-    <div style={{ paddingTop: '20px' }}>
+    <a href="#" className="govuk-link" style={{textDecoration:'underline'}} onClick={startAProcedure}>Start a procedure</a>
+    <div style={{ paddingTop: '10px' }}>
       <div className="data" id="yourTasksTotalCount">
           <span
-            className="data-item bold-medium">{yourTasks.get('total')} {yourTasks.get('total') === 1 ? 'task' : 'tasks'} assigned to you</span>
+            className="data-item govuk-!-font-size-24 govuk-!-font-weight-bold">{yourTasks.get('total')} {yourTasks.get('total') === 1 ? 'task' : 'tasks'} assigned to you</span>
       </div>
-      <div className="grid-row">
-        <div className="column-one-half">
+      <div className="govuk-grid-row" style={{paddingTop: '10px'}}>
+        <div className="govuk-grid-column-one-half">
           <SortTasks tasks={yourTasks} sortTasks={sortYourTasks}/>
         </div>
 
-        <div className="column-one-half">
+        <div className="govuk-grid-column-one-half">
           <FilterTaskName tasks={yourTasks} filterTasksByName={filterTasksByName}/>
         </div>
       </div>

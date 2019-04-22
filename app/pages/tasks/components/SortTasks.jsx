@@ -1,9 +1,9 @@
 import React from 'react';
 
 const SortTasks = ({tasks, sortTasks}) => {
-  return <div className="form-group">
-    <label className="form-label" htmlFor="sortTask">Sort tasks by:</label>
-    <select className="form-control" id="sortTask" name="sortTask"
+  return <div className="govuk-form-group">
+    <label className="govuk-label" htmlFor="sortTask">Sort tasks by:</label>
+    <select className="govuk-select" id="sortTask" name="sortTask"
             onChange={sortTasks}
             value={tasks.get('sortValue')}>
       <option value="sort=due,desc">Latest due date</option>
