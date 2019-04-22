@@ -54,13 +54,13 @@ export class App extends React.Component {
     render() {
         return <div>
             <Header/>
-            <Suspense
-                fallback={<div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}>
-                    <DataSpinner message="..."/></div>}>
-                <SubmissionBanner/>
-            </Suspense>
             <div className="container" style={{height: '100%'}}>
                 <AppBanner {...this.props}/>
+                <Suspense
+                    fallback={<div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}>
+                        <DataSpinner message="..."/></div>}>
+                    <SubmissionBanner/>
+                </Suspense>
                 <Main/>
             </div>
             <Footer/>
