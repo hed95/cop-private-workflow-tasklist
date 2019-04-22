@@ -6,7 +6,7 @@ $govuk-compatibility-govukelements: true;
 @import "../../node_modules/govuk-frontend/all";
 @import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../../node_modules/formiojs/dist/formio.full.css";
-@import "../../node_modules/flatpickr/dist/themes/airbnb.css";
+@import "../../node_modules/flatpickr/dist/themes/material_blue.css";
 
 html {
   background-color: transparent;
@@ -347,20 +347,6 @@ a.card__body {
 @media (max-width: 779px) {
   .btn {
     margin-bottom: 10px;
-  }
-}
-
-
-#commentContainer {
-  width: 750px;
-  position: relative;
-  margin: 0 auto;
-  line-height: 1.4em;
-}
-
-@media only screen and (max-width: 479px) {
-  #commentContainer {
-    width: 100%;
   }
 }
 

@@ -79,7 +79,7 @@ export class Comments extends React.Component {
         return <div>
             <div className="data">
                 <span
-                    className="data-item bold-medium">{comments.size} {comments.size === 1 ? 'comment' : 'comments'}</span>
+                    className="data-item govuk-!-font-size-24 govuk-!-font-weight-bold">{comments.size} {comments.size === 1 ? 'comment' : 'comments'}</span>
             </div>
             <CreateComment taskId={this.props.taskId} {...this.props}/>
             {!isFetchingComments && comments.size !== 0 ? commentsView : <div/>}
