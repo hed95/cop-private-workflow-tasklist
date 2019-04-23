@@ -22,16 +22,6 @@ body {
   font-family: "nta", Arial, sans-serif;
 }
 
-.nav-menu {
-  color: white;
-  text-align: right;
-  cursor: pointer;
-}
-
-.small-menu {
-  text-align: left;
-  white-space: nowrap;
-}
 
 .status {
   background-color: govuk-colour("blue");
@@ -85,21 +75,6 @@ body {
 
 .sk-spinner {
   transform: scale(2);
-}
-
-.form-control {
-  border-radius: 0 !important;
-}
-
-.tooltip {
-  font-size: small;
-}
-
-.tooltip-arrow {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border: solid transparent;
 }
 
 .gov-pagination .pagination > li > a {
@@ -179,40 +154,6 @@ body {
   text-align: center;
 }
 
-.btn-group .btn {
-  margin-right: 5px;
-  background-color: #00823b;
-
-  &:hover, &:disabled {
-    background-color: #00823b;
-  }
-}
-
-.btn-group .btn:last-child {
-  margin-right: 0;
-  background-color: #00823b;
-}
-
-.app-dl .dl-horizontal dt {
-  white-space: normal;
-  width: auto;
-  text-align: left;
-}
-
-.task-form {
-  white-space: normal;
-  width: auto;
-  text-align: left;
-}
-
-.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
-  border-radius: 0 0 0 0;
-}
-
-.btn-group > .btn:last-child:not(:first-child), .btn-group > .dropdown-toggle:not(:first-child) {
-  border-radius: 0 0 0 0;
-}
-
 .gov-panel {
 
   .panel-border-wide {
@@ -236,10 +177,6 @@ body {
   }
 }
 
-.active-count {
-  text-decoration: underline;
-
-}
 
 .details-iframe {
   position: absolute;

@@ -15,7 +15,6 @@ const ReportsDashboardPanel = React.lazy(() => import('./ReportsDashboardPanel')
 const CalendarDashboardPanel = React.lazy(() => import('./CalendarDashboardPanel'));
 const MessagesPanel = React.lazy(() => import('./MessagesPanel'));
 const TaskCountPanel = React.lazy(() => import('./TaskCountPanel'));
-const AdminPanel = React.lazy(() => import('./AdminPanel'));
 
 export class DashboardPanel extends React.Component {
 
@@ -145,7 +144,7 @@ export class DashboardPanel extends React.Component {
                 </ul>
             </div>
             <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible"/>
-            <div className="govuk-grid-row">
+            <div className="govuk-grid-row" style={{paddingTop: '10px'}}>
                 <Suspense
                     fallback={<div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><DataSpinner
                         message="Loading panels..."/></div>}>
@@ -153,7 +152,6 @@ export class DashboardPanel extends React.Component {
                     <ProceduresDashboardPanel {...this.props}/>
                     <ReportsDashboardPanel {...this.props}/>
                     <CalendarDashboardPanel {...this.props}/>
-                    <AdminPanel {...this.props}/>
                     </ul>
                 </Suspense>
             </div>
