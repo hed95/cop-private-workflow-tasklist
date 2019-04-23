@@ -169,7 +169,7 @@ describe('CompleteTaskForm Component', () => {
     console.log(wrapper.debug());
     expect(fetchTaskForm).toBeCalled();
     expect(wrapper.name()).toEqual('CompleteTaskForm');
-    expect(wrapper.html()).toEqual('<div id="dataSpinner"><div class="loader-content"><div color="black" style="color: black;" class="sk-fade-in sk-spinner line-spin-fade-loader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div><div class="loader-message"><strong class="bold">Loading form for task...</strong></div></div>');
+    expect(wrapper.html()).toEqual('<div id="dataSpinner"><div class="loader-content"><div color="black" style="color: black;" class="sk-fade-in sk-spinner line-spin-fade-loader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div><div class="loader-message"><strong class="govuk-!-font-weight-bold">Loading form for task...</strong></div></div>');
     wrapper.unmount();
     expect(resetForm).toBeCalled();
   });

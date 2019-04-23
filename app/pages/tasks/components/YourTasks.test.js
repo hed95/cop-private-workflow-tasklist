@@ -149,7 +149,7 @@ describe('YourTasks Page', () => {
     const tableWrapper = wrapper.find('table');
     expect(tableWrapper.exists()).toEqual(true);
 
-    const rows = wrapper.find('.widetable');
+    const rows = wrapper.find('.widetable-yourtasks');
     expect(rows.length).toEqual(5);
 
     const firstRowColumns = rows.first().find('td').map(column => column.text());

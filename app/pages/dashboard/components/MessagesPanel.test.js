@@ -42,8 +42,7 @@ describe('MessagesPanel', () => {
 
     const messagesPanel = wrapper.find('#messagesPanel');
     expect(messagesPanel.exists()).toEqual(true);
-    expect(messagesPanel.find('.bold-xlarge').text()).toEqual('0');
-    expect(messagesPanel.find('.bold-small').text()).toEqual('messages');
+    expect(messagesPanel.find('#messageCount').text()).toEqual('0');
 
   });
 
@@ -65,8 +64,7 @@ describe('MessagesPanel', () => {
 
     const messagesPanel = wrapper.find('#messagesPanel');
     expect(messagesPanel.exists()).toEqual(true);
-    expect(messagesPanel.find('.bold-xlarge').text()).toEqual('10');
-    expect(messagesPanel.find('.bold-small').text()).toEqual('messages');
+    expect(messagesPanel.find('#messageCount').text()).toEqual('10');
 
   });
   it('navigates to messages page on click', async() => {

@@ -27,8 +27,8 @@ export class Complete extends React.Component {
         const userId = kc.tokenParsed.email;
         const taskAssignee = task.get('assignee');
         const displayButton = taskAssignee && taskAssignee === userId;
-        return displayButton ? <input className="btn btn-primary" onClick={() => this.complete()}
-                   type="submit" value="Complete" disabled={!displayButton}/> : <div/>
+        return displayButton ? <button className="govuk-button" onClick={() => this.complete()}
+                                       type="submit" disabled={!displayButton}>Complete</button> : <div/>
 
 
 

@@ -83,7 +83,7 @@ export class TaskCountPanel extends React.Component {
                 <a href="#" onClick={this.yourTasks} className="card__body" id="yourTasksPageLink">
                     {isFetchingTaskCounts ? <span
                       className="govuk-!-font-size-19 govuk-!-font-weight-bold">Loading</span> :<span
-                      className="govuk-!-font-size-48 govuk-!-font-weight-bold">{taskCounts.get('tasksAssignedToUser')}</span>
+                      className="govuk-!-font-size-48 govuk-!-font-weight-bold" id="yourTaskCount">{taskCounts.get('tasksAssignedToUser')}</span>
                     }
                     <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">tasks assigned to you</span>
                 </a>
@@ -97,7 +97,7 @@ export class TaskCountPanel extends React.Component {
                     {
                         isFetchingTaskCounts ? <span
                           className="govuk-!-font-size-19 govuk-!-font-weight-bold">Loading</span>: <span
-                          className="govuk-!-font-size-48 govuk-!-font-weight-bold">{taskCounts.get('totalTasksAllocatedToTeam')}</span>
+                          className="govuk-!-font-size-48 govuk-!-font-weight-bold" id="yourGroupTaskCount">{taskCounts.get('totalTasksAllocatedToTeam')}</span>
                     }
                        <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">tasks allocated to your team</span>
                 </a>

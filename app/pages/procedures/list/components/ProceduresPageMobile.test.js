@@ -55,7 +55,7 @@ describe('ProceduresPage', () => {
     />);
     console.log(wrapper.html());
     expect(fetchProcessDefinitions).toBeCalled();
-    expect(wrapper.find('.heading-large').text()).toEqual('Operational procedures 2 procedures');
+    expect(wrapper.find('#proceduresCountLabel').text()).toEqual('2 procedures');
 
     const tableWrapper = wrapper.find('table');
     expect(tableWrapper.exists()).toEqual(true);
@@ -68,7 +68,7 @@ describe('ProceduresPage', () => {
     expect(firstRowColumns[0]).toEqual('processADescription');
 
     const map = rows.first().find('td').map(column => column);
-    expect(map[1].find('input').prop("value")).toEqual("processA")
+    expect(map[1].find('button').text()).toEqual("processA");
 
   });
 });

@@ -24,13 +24,12 @@ class Unclaim extends React.Component {
         const displayButton = taskAssignee && taskAssignee === userId;
 
         return displayButton ?
-          <input id={'claimTask'+ taskId}
-                 className="btn btn-primary"
+          <button id={'claimTask'+ taskId}
+                 className="govuk-button"
                  disabled={submittingUnclaim}
                  onClick={() => {
                      this.props.unclaimTask(this.props.task.get('id'));
-                 }} type="submit"
-                 value={"Unclaim"}/> : <div/>;
+                 }} type="submit">Unclaim</button> : <div/>;
     }
 
 }

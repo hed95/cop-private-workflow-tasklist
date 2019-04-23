@@ -38,8 +38,8 @@ describe('ProceduresPage', () => {
 
     console.log(wrapper.html());
     expect(fetchProcessDefinitions).toBeCalled();
-    expect(wrapper.find('.heading-large').text()).toEqual('Operational procedures 0 procedures');
-    expect(wrapper.find('#loading').text()).toEqual('Loading processes....');
+    expect(wrapper.find('#proceduresCountLabel').text()).toEqual('0 procedures');
+    expect(wrapper.find('#loading').text()).toEqual('Loading processes...');
     expect(fetchProcessDefinitions).toBeCalled();
   });
 
@@ -75,7 +75,7 @@ describe('ProceduresPage', () => {
 
     console.log(wrapper.html());
     expect(fetchProcessDefinitions).toBeCalled();
-    expect(wrapper.find('.heading-large').text()).toEqual('Operational procedures 2 procedures');
+    expect(wrapper.find('#proceduresCountLabel').text()).toEqual('2 procedures');
     const tableWrapper = wrapper.find('table');
     expect(tableWrapper.exists()).toEqual(true);
 
@@ -91,7 +91,7 @@ describe('ProceduresPage', () => {
     const actionButton = map[2];
 
     expect(viewProcessColumn.find('#procedureView').text()).toEqual('View procedure');
-    expect(actionButton.find('input').prop("value")).toEqual("processA");
+    expect(actionButton.find('button').text()).toEqual("processA");
 
     window.matchMedia = null;
   });

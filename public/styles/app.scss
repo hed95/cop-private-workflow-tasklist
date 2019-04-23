@@ -260,7 +260,13 @@ a.card__body {
   height: 4em;
 }
 
+.btn-group button {
+  margin-right: 5px;
+}
 
+.btn-block {
+  display: block;
+}
 
 @keyframes ellipsis {
   to {

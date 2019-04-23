@@ -74,7 +74,7 @@ export class MessagesPanel extends React.Component {
                 {
                     isFetchingMessageCounts ?   <span
                     className="govuk-!-font-size-19 govuk-!-font-weight-bold">Loading</span>: <span
-                    className="govuk-!-font-size-48 govuk-!-font-weight-bold">{messageCounts}</span>
+                    className="govuk-!-font-size-48 govuk-!-font-weight-bold" id="messageCount">{messageCounts}</span>
                 }
                 <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">messages</span>
             </a>

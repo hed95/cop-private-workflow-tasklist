@@ -28,7 +28,7 @@ export default class TaskTitle extends React.Component {
                     <h4 className="govuk-heading-m govuk-!-font-size-19">{taskPriority}</h4>
                 </div>
                 <div
-                    className="govuk-grid-column-one-third" id="taskTeam">
+                    className="govuk-grid-column-one-third" id="taskTeams">
                     <span className="govuk-caption-m govuk-!-font-size-19">Team</span>
                     <h4 className="govuk-heading-m govuk-!-font-size-19">{candidateGroups.toJS().toString()}</h4>
                 </div>

@@ -122,7 +122,6 @@ export class ProcessStartPage extends React.Component {
 
   render() {
     const { processDefinition, submissionStatus, form, loadingForm } = this.props;
-    const pointerStyle = { cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline' };
     if (loadingForm) {
       return <DataSpinner message="Loading procedure..."/>;
     } else {
@@ -136,7 +135,7 @@ export class ProcessStartPage extends React.Component {
         processDefinition.getIn(['process-definition', 'name']) : procedureKey;
 
       return <div>
-        {!this.props.noBackLink ? <div className="govuk-back-link"
+        {!this.props.noBackLink ? <div className="govuk-back-link govuk-!-font-size-19"
                                        style={{textDecoration: 'none'}}
                                        onClick={(event) => {
                                          event.preventDefault();
@@ -160,10 +159,9 @@ export class ProcessStartPage extends React.Component {
             <div className="column-full">
               <fieldset>
                 <div>
-                  <h2 className="heading-large">
-                    <span
-                      className="heading-secondary">Operational procedure</span> {processDefinition.getIn(['process-definition', 'name'])}
-                  </h2>
+                  <span className="govuk-caption-l">Operational procedure</span>
+                  <h2 className="govuk-heading-l">{processDefinition.getIn(['process-definition', 'name'])}</h2>
+
                   <StartForm {...this.props}
                              startForm={form}
                              formReference={(formLoaded) => {

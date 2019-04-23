@@ -34,10 +34,10 @@ export class MessagesPage extends React.Component {
         return <div>
 
             {this.props.isFetching ?
-                <h4 className="govuk-heading-s">Loading messages...</h4> : <div className="govuk-grid-row">
+                <h4 className="govuk-heading-s" id="loadingMessages">Loading messages...</h4> : <div className="govuk-grid-row">
                     <div className="govuk-grid-column-one-half">
                         <span className="govuk-caption-l">Operational messages</span>
-                        <h2 className="govuk-heading-l">{this.props.total} messages</h2>
+                        <h2 className="govuk-heading-l" id="numberOfMessages">{this.props.total} messages</h2>
                     </div>
 
                 </div>
