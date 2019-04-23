@@ -21,8 +21,14 @@ import url from './common/formio/url';
 import secureLocalStorage  from './common/security/SecureLocalStorage';
 let kc = null;
 import { initAll } from 'govuk-frontend'
+import formioTemplate from './common/formio/formio-template'
+
+
+
 
 Formio.providers.storage['url'] = url;
+Formio.Templates.current = formioTemplate;
+
 const renderApp = (App, authorizedRole) => {
     initAll();
     kc.onTokenExpired = () => {

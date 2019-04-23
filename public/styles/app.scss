@@ -4,7 +4,9 @@ $govuk-compatibility-govuktemplate: true;
 $govuk-compatibility-govukelements: true;
 
 @import "../../node_modules/govuk-frontend/all";
-@import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../../node_modules/bootstrap/dist/css/bootstrap-grid.css";
+@import "../../node_modules/bootstrap/dist/css/bootstrap-reboot.css";
+
 @import "../../node_modules/formiojs/dist/formio.full.css";
 @import "../../node_modules/flatpickr/dist/themes/material_blue.css";
 
