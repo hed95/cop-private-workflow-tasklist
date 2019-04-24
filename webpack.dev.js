@@ -39,7 +39,8 @@ module.exports = webpackMerge(common, {
           'AUTH_URL': JSON.stringify(process.env.AUTH_URL),
           'CLIENT_ID': JSON.stringify(process.env.AUTH_CLIENT_ID),
           'AUTH_ACCESS_ROLE': JSON.stringify(process.env.AUTH_ACCESS_ROLE),
-          'UI_ENVIRONMENT': JSON.stringify(process.env.UI_ENVIRONMENT)
+          'UI_ENVIRONMENT': JSON.stringify(process.env.UI_ENVIRONMENT),
+          'STORAGE_KEY' : JSON.stringify(process.env.STORAGE_KEY)
         }
       }),
       new BundleAnalyzerPlugin(),
@@ -81,7 +82,7 @@ module.exports = webpackMerge(common, {
             "/ws/workflow": {
                 target: workflowUrl,
                 secure: false,
-                ws: true
+                ws: false
             },
             "/api/workflow": {
                 target: workflowUrl,

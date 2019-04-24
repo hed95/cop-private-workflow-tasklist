@@ -24,22 +24,6 @@ body {
   font-family: "nta", Arial, sans-serif;
 }
 
-
-.status {
-  background-color: govuk-colour("blue");
-  color: govuk-colour("white");
-  padding: 15px;
-  margin-bottom: 10px;
-
-  p {
-    font-weight: 400;
-  }
-
-  .status-extra {
-    font-weight: normal;
-  }
-}
-
 @include govuk-media-query($from: tablet) {
   .status {
     display: flex;
@@ -83,79 +67,6 @@ body {
   border: none;
 }
 
-.pagination .pagination_list-items {
-
-  li {
-    display: inline-block;
-
-    a {
-      //@include bold-19;
-      // @extend .bold-small;
-      color: govuk-colour("blue");
-      display: inline-block;
-      padding: 15px 5px 10px 5px;
-      margin-right: 15px;
-      text-decoration: none;
-
-      &:focus {
-        outline: 0;
-      }
-    }
-
-    &.active a,
-    &.active a:hover {
-      color: govuk-colour("blue");
-      -webkit-box-shadow: inset 0px -5px 0px 0px govuk-colour("blue");
-      -moz-box-shadow: inset 0px -5px 0px 0px govuk-colour("blue");
-      box-shadow: inset 0px -5px 0px 0px govuk-colour("blue");
-    }
-  }
-}
-
-.padding {
-  padding-left: 15px;
-}
-
-.pagination {
-  padding: 5px;
-}
-
-.pagination__item {
-  display: inline-block;
-  list-style: none;
-
-}
-
-.pagination__link {
-  display: block;
-  padding: 5px 10px;
-  text-decoration: none;
-  cursor: pointer;
-
-  &:hover, &:focus {
-    background: govuk-colour("grey-4");
-    outline: 3px solid govuk-colour("yellow");
-  }
-
-  &.current {
-    color: govuk-colour("black");
-    font-weight: 700;
-    border: none;
-    pointer-events: none;
-    cursor: default;
-
-    &:hover, &:focus {
-      color: govuk-colour("black");
-      background: none;
-    }
-  }
-}
-
-.pagination__summary {
-  padding: 0 0;
-  text-align: center;
-}
-
 .gov-panel {
 
   .panel-border-wide {
@@ -185,36 +96,6 @@ body {
   height: 100%;
   width: 90%;
 }
-
-
-nav[aria-label="navigation"] .pagination > li > span {
-  position: relative;
-  color: govuk-colour("black");
-  background-color: #fff;
-  border: 0 solid #ddd;
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-}
-
-nav[aria-label="navigation"] .pagination > li > span:hover {
-  color: govuk-colour("black");
-  z-index: 3;
-  cursor: pointer;
-  background-color: #aaa;
-  border-color: #aaa;
-}
-
-nav[aria-label="navigation"] .pagination > .active > span {
-  padding-bottom: 2px;
-  border-bottom: 3px solid #aaa;
-  color: govuk-colour("black");
-}
-
-nav[aria-label="navigation"] .pagination > li:last-child > span {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
 
 @media only screen and (max-width: 600px) {
   .__card {
@@ -327,4 +208,8 @@ a.card__body {
 .data-item {
   display: block;
   line-height: 1;
+}
+
+input:disabled {
+  background: govuk-colour("grey-4");
 }

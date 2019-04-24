@@ -59,15 +59,15 @@ export class Comments extends React.Component {
         }}><div>
             {this.state.pageOfItems.map((comment) => {
                 return <div key={uuidv4()}>
-                            <span className="font-xsmall">{comment.get('email')} <span
-                                className="text-secondary"> {moment(comment.get('createdon')).fromNow(false)}</span></span>
+                            <span className="govuk-!-font-size-16">{comment.get('email')} <span
+                                className="govuk-!-font-size-14">({moment(comment.get('createdon')).fromNow(false)})</span></span>
                     <div className="gov-panel">
                         <div className="panel panel-border-wide small">
                             <ShowMore
                                 lines={1}
                                 more='Show more'
                                 less='Show less'
-                                anchorClass=''>
+                                anchorClass='govuk-link govuk-link--no-visited-state'>
                                 {comment.get('comment')}
                             </ShowMore>
                         </div>

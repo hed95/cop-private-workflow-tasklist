@@ -266,44 +266,47 @@ exports[`Pagination renders pagination 1`] = `
   pageSize={10}
 >
   <div
-    className="grid-row"
+    className="govuk-grid-row"
     style={
       Object {
         "display": "flex",
       }
     }
   >
-    <nav
-      aria-label="comments-pagination"
-      role="navigation"
+    <div
+      className="govuk-grid-column-full"
     >
       <div
-        className="gov-pagination"
+        className="pagination__summary govuk-!-font-size-19"
       >
-        <div
-          className="pagination__summary small"
-        >
-          Showing 1 — 5 of 50 results
-        </div>
+        Showing 1 - 5 of 50 results
+      </div>
+      <nav
+        aria-label="comments-pagination"
+        role="navigation"
+        style={
+          Object {
+            "textAlign": "center",
+          }
+        }
+      >
         <ul
-          className="pagination small"
+          className="pagination govuk-!-font-size-19"
         >
           <li
-            className="disabled"
+            className="pagination__item"
           >
             <a
+              className="pagination__link"
               onClick={[Function]}
             >
-              First
-            </a>
-          </li>
-          <li
-            className="disabled"
-          >
-            <a
-              onClick={[Function]}
-            >
-              Previous
+              <span
+                aria-hidden="true"
+                role="presentation"
+              >
+                «
+              </span>
+               Previous
             </a>
           </li>
           <li
@@ -362,26 +365,25 @@ exports[`Pagination renders pagination 1`] = `
             </a>
           </li>
           <li
-            className=""
+            className="pagination__item"
           >
             <a
+              className="pagination__link"
               onClick={[Function]}
             >
-              Next
-            </a>
-          </li>
-          <li
-            className=""
-          >
-            <a
-              onClick={[Function]}
-            >
-              Last
+              Next 
+              <span
+                aria-hidden="true"
+                role="presentation"
+              >
+                »
+              </span>
+               
             </a>
           </li>
         </ul>
-      </div>
-    </nav>
+      </nav>
+    </div>
   </div>
 </Pagination>
 `;
