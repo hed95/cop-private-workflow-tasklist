@@ -74,7 +74,7 @@ export class ShiftPage extends React.Component {
                     hideContentOnLoad={submittingActiveShift}
                     foregroundStyle={{color: 'black'}}
                     backgroundStyle={{backgroundColor: 'white'}}>
-                <div className="govuk-grid-row">
+                <div className="govuk-grid-row" style={{padding: '10px 10px'}}>
                     <div className="govuk-grid-row-column-full" id="shiftWizardForm">
                         {!isFetchingShift && !hasActiveShift && !failedToCreateShift  ?
                             <div style={{display: 'flex', justifyContent: 'center', paddingTop: '15px'}}>
