@@ -6,6 +6,7 @@
 @import "../../node_modules/flatpickr/dist/themes/material_blue.css";
 @import "../../node_modules/govuk-frontend/all";
 @import "./card";
+@import "./buttons";
 
 html {
   background-color: transparent;
@@ -21,38 +22,12 @@ body {
   font-family: "nta", Arial, sans-serif;
 }
 
-@include govuk-media-query($from: tablet) {
-  .status {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-
-    p {
-      font-size: 20px;
-      margin: 0;
-    }
-
-    .status-extra {
-      font-size: 18px;
-    }
-  }
-}
-
 .padding {
   padding-left: 15px;
 }
 
 .sk-spinner {
   transform: scale(2);
-}
-
-.btn-group button {
-  margin-right: 5px;
-}
-
-.btn-block {
-  display: block;
 }
 
 @keyframes ellipsis {
@@ -78,30 +53,6 @@ body {
   margin-bottom: 2em;
 }
 
-.button--secondary {
-  background-color: govuk-colour("grey-3");
-  box-shadow: 0 $govuk-border-width-form-element 0 darken(govuk-colour("grey-3"), 40%);
-
-  &,
-  &:link,
-  &:visited,
-  &:active,
-  &:hover {
-    color:  govuk-colour("black");
-  }
-
-  @include govuk-compatibility(govuk_template) {
-    &:link:focus {
-      color: darken( govuk-colour("grey-3"), 10%);
-    }
-  }
-
-  &:hover,
-  &:focus {
-    background-color: darken( govuk-colour("grey-3"), 10%);
-  }
-}
-
 
 .data-item {
   display: block;
@@ -113,3 +64,10 @@ input:disabled {
 }
 
 
+.govuk-caption-s {
+  @include govuk-font($size: 16);
+
+  display: block;
+
+  color: $govuk-secondary-text-colour;
+}

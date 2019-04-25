@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 import CreateComment from "./CreateComment";
 import ImmutablePropTypes from "react-immutable-proptypes";
@@ -10,9 +10,9 @@ import {createStructuredSelector} from "reselect";
 import moment from "moment";
 import Pagination from "../../../../core/components/Pagination";
 import ShowMore from 'react-show-more';
+import Collapsible from 'react-collapsible';
 
 const uuidv4 = require('uuid/v4');
-import Collapsible from 'react-collapsible';
 
 export class Comments extends React.Component {
 
@@ -56,32 +56,35 @@ export class Comments extends React.Component {
             this.setState({isOpen: true});
         }} onClose={() => {
             this.setState({isOpen: false});
-        }}><div>
-            {this.state.pageOfItems.map((comment) => {
-                return <div key={uuidv4()}>
-                            <span className="govuk-!-font-size-16">{comment.get('email')} <span
-                                className="govuk-!-font-size-14">({moment(comment.get('createdon')).fromNow(false)})</span></span>
-                    <div className="gov-panel">
-                        <div className="panel panel-border-wide small">
+        }}>
+            <div>
+                {this.state.pageOfItems.map((comment) => {
+                    return <div className="govuk-card" key={uuidv4()}>
+                        <div className="govuk-card__content">
+                            <h4 className="govuk-heading-s">
+                                <span
+                                    className="govuk-caption-s">{moment(comment.get('createdon')).fromNow(false)}</span>
+                                {comment.get('email')}
+                            </h4>
                             <ShowMore
-                                lines={1}
+                                lines={2}
                                 more='Show more'
                                 less='Show less'
                                 anchorClass='govuk-link govuk-link--no-visited-state'>
-                                {comment.get('comment')}
+                                <p className="govuk-body-s">{comment.get('comment')}</p>
                             </ShowMore>
                         </div>
                     </div>
-                </div>
-            })}
-            <Pagination items={comments} pageSize={5} onChangePage={this.onChangePage}/>
-        </div></Collapsible>;
+                })}
+                <Pagination items={comments} pageSize={5} onChangePage={this.onChangePage}/>
+            </div>
+        </Collapsible>;
         return <div>
+            <CreateComment taskId={this.props.taskId} {...this.props}/>
             <div className="data">
                 <span
                     className="data-item govuk-!-font-size-24 govuk-!-font-weight-bold">{comments.size} {comments.size === 1 ? 'comment' : 'comments'}</span>
             </div>
-            <CreateComment taskId={this.props.taskId} {...this.props}/>
             {!isFetchingComments && comments.size !== 0 ? commentsView : <div/>}
 
         </div>
