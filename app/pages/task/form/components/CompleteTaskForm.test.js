@@ -53,7 +53,7 @@ const taskForm = {
       "properties": {}
     },
     {
-      "id": 'cancelOpButton',
+      "id": "canceloperation",
       "autofocus": false,
       "input": true,
       "label": "Cancel operation",
@@ -187,7 +187,7 @@ describe('CompleteTaskForm Component', () => {
 
       }
     };
-    const wrapper = await mount(
+    const wrapper = await shallow(
       <CompleteTaskForm store={store} {...props}
                         fetchTaskForm={fetchTaskForm}
                         resetForm={resetForm}

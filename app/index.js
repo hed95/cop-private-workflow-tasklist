@@ -23,9 +23,6 @@ let kc = null;
 import { initAll } from 'govuk-frontend'
 import formioTemplate from './common/formio/formio-template'
 
-
-
-
 Formio.providers.storage['url'] = url;
 Formio.Templates.current = formioTemplate;
 

@@ -7,6 +7,7 @@ import * as actions from '../../../core/shift/actions';
 import { connect } from 'react-redux';
 import * as errorActions from '../../../core/error/actions';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import "./Dashboard.scss";
 
 export class DashboardPage extends React.Component {
 

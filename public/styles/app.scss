@@ -1,14 +1,11 @@
 
-$govuk-compatibility-govukfrontendtoolkit: true;
-$govuk-compatibility-govuktemplate: true;
-$govuk-compatibility-govukelements: true;
-
-@import "../../node_modules/govuk-frontend/all";
 @import "../../node_modules/bootstrap/dist/css/bootstrap-grid.css";
 @import "../../node_modules/bootstrap/dist/css/bootstrap-reboot.css";
 
 @import "../../node_modules/formiojs/dist/formio.full.css";
 @import "../../node_modules/flatpickr/dist/themes/material_blue.css";
+@import "../../node_modules/govuk-frontend/all";
+@import "./card";
 
 html {
   background-color: transparent;
@@ -46,101 +43,8 @@ body {
   padding-left: 15px;
 }
 
-
-.circle-white {
-  color: #005ea5;
-  background: #fff;
-  float: left;
-  margin-right: 10px;
-}
-
-.bottom-right-container {
-  justify-content: flex-end;
-  display: flex;
-}
-
 .sk-spinner {
   transform: scale(2);
-}
-
-.gov-pagination .pagination > li > a {
-  border: none;
-}
-
-.gov-panel {
-
-  .panel-border-wide {
-    border-left-width: 10px;
-  }
-
-  .panel {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    clear: both;
-    border-left-style: solid;
-    border-color: #bfc1c3;
-    padding: 0.78947em;
-    margin-bottom: 0.78947em;
-    border-radius: 0;
-    border-bottom-style: none;
-    border-top-style: none;
-    border-right-style: none;
-    box-shadow: 0 0 0;
-  }
-}
-
-
-.details-iframe {
-  position: absolute;
-  height: 100%;
-  width: 90%;
-}
-
-@media only screen and (max-width: 600px) {
-  .__card {
-    display: block;
-    float: left;
-    margin-bottom: 30px;
-    width: 100%;
-  }
-}
-
-.__card {
-  display: block;
-  float: left;
-  margin-bottom: 30px;
-
-}
-
-.card__body {
-  display: block;
-  background-color: govuk-colour("grey-3");
-  padding: 1em;
-  color: govuk-colour("black");
-  text-decoration: none;
-
-  span {
-    display: block;
-  }
-}
-
-a.card__body {
-  color: #005ea5;
-
-  &:hover, &:focus {
-    cursor: pointer;
-    background-color: govuk-colour("grey-4");
-    color: #2b8cc4;
-    text-decoration: none;
-  }
-}
-
-.card__footer {
-  display: block;
-  background-color: govuk-colour("grey-4");
-  padding: 1em;
-  height: 4em;
 }
 
 .btn-group button {
@@ -168,12 +72,6 @@ a.card__body {
     transform: scale(0.85);
   }
 
-}
-
-@media (max-width: 779px) {
-  .btn {
-    margin-bottom: 10px;
-  }
 }
 
 .tasksGrouping {
@@ -213,3 +111,5 @@ a.card__body {
 input:disabled {
   background: govuk-colour("grey-4");
 }
+
+
