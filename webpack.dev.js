@@ -1,3 +1,4 @@
+
 const express = require('express');
 
 const webpack = require('webpack');
@@ -5,7 +6,7 @@ const common = require('./webpack.common.js');
 const webpackMerge = require('webpack-merge');
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
+const compression = require('compression')
 const port = process.env.PORT || 8080;
 
 
@@ -47,7 +48,7 @@ module.exports = webpackMerge(common, {
       new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
-
+        compress: true,
         contentBase: 'public/',
         hot: true,
         open: true,
@@ -106,6 +107,7 @@ module.exports = webpackMerge(common, {
 
         },
         before(app) {
+            app.use(compression({}));
             app.post('/log', (req, res, next) => {
                 const body = [];
                 req.on("data", (chunk) => {
