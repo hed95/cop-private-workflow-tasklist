@@ -12,7 +12,7 @@ export class ReportPage extends React.Component {
         const reportName = params.reportName;
 
         return <div>
-            <div id="backToReports" style={{textDecoration: 'none'}} className="govuk-back-link govuk-!-font-size-19" onClick={() => this.props.history.replace('/reports')}>Back to reports</div>
+            <a href="#" id="backToReports" style={{textDecoration: 'none'}} className="govuk-link govuk-back-link govuk-!-font-size-19" onClick={() => this.props.history.replace('/reports')}>Back to reports</a>
 
             <div style={{
                 display: 'flex',
