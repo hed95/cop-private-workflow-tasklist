@@ -5,9 +5,7 @@ import {bindActionCreators} from 'redux';
 import ImmutablePropTypes from "react-immutable-proptypes";
 import {createStructuredSelector} from "reselect";
 import * as actions from '../actions';
-import {
-    pageSize, hasMoreItems, isFetching, nextPage, notifications, total, acknowledgingTaskIds
-} from "../selectors";
+import {acknowledgingTaskIds, hasMoreItems, isFetching, nextPage, notifications, pageSize, total} from "../selectors";
 import InfiniteScroll from 'react-infinite-scroller';
 import moment from 'moment';
 import './MessagesPage.scss';
@@ -22,6 +20,7 @@ export class MessagesPage extends React.Component {
         this.props.clearNotifications();
     }
 
+
     render() {
         const items = [];
         this.props.notifications.forEach(task => {
@@ -32,9 +31,9 @@ export class MessagesPage extends React.Component {
         });
 
         return <div>
-
             {this.props.isFetching ?
-                <h4 className="govuk-heading-s" id="loadingMessages">Loading messages...</h4> : <div className="govuk-grid-row">
+                <h4 className="govuk-heading-s" id="loadingMessages">Loading messages...</h4> :
+                <div className="govuk-grid-row">
                     <div className="govuk-grid-column-one-half">
                         <span className="govuk-caption-l">Operational messages</span>
                         <h2 className="govuk-heading-l" id="numberOfMessages">{this.props.total} messages</h2>
@@ -42,18 +41,16 @@ export class MessagesPage extends React.Component {
 
                 </div>
             }
+            <InfiniteScroll
+                pageStart={0}
+                loadMore={() => this.props.fetchNotificationsNextPage(this.props.nextPage)}
+                initialLoad={false}
+                hasMore={this.props.hasMoreItems}>
+                <div className="govuk-card__flex-container govuk-grid-row" id="messages">
+                    {items}
+                </div>
+            </InfiniteScroll>
 
-            <div className="govuk-grid-row" id="messages">
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={() => this.props.fetchNotificationsNextPage(this.props.nextPage)}
-                    initialLoad={false}
-                    hasMore={this.props.hasMoreItems}>
-                    <div>
-                        {items}
-                    </div>
-                </InfiniteScroll>
-            </div>
         </div>
     }
 }
@@ -62,18 +59,8 @@ const NotificationTask = ({task, action}) => {
     const taskId = task.getIn(['task', 'id']);
     const taskDescription = task.getIn(['task', 'description']);
     const taskName = task.getIn(['task', 'name']);
+    const taskPriority = task.getIn(['task', 'priority']);
 
-    const determineColour = (task) => {
-        const taskPriority = task.getIn(['task', 'priority']);
-        switch (taskPriority) {
-            case 1000:
-                return '#B10E1E';
-            case 100:
-                return '#F47738';
-            default:
-                return '#BFC1C3';
-        }
-    };
 
     const determineTitle = (task) => {
         const taskPriority = task.getIn(['task', 'priority']);
@@ -96,20 +83,30 @@ const NotificationTask = ({task, action}) => {
         e.preventDefault();
         action.acknowledgeNotification(taskId);
     };
-    return <div className="govuk-grid-column-one-third">
-        <div className="flash-card" style={{'backgroundColor': determineColour(task)}}>
-            <header>
-                <h2 className="govuk-heading-s" id='messageName' style={{color:'white'}}>{determineTitle(task)}: {taskName}</h2>
-                <h5 className="govuk-!-font-size-16" id='messageCreated'>{created(task)}</h5>
-            </header>
-            <div className="govuk-grid-row">
-                <div className="govuk-grid-column-full">
-                    <a style={{'color': 'white'}} href={taskDescription}> {taskDescription}</a>
-                    <div className="form-group bottom-right-container">
-                        <button className="govuk-button" type="submit"  onClick={onClick}
-                                disabled={action.acknowledgingTaskIds.contains(taskId)}>Acknowledge</button>
+    return <div className="govuk-card__flex-item govuk-grid-column-one-third">
+        <div className="govuk-card">
+            <span className="govuk-caption-m" id="messageCreated">{created(task)}</span>
+            <h3 className="govuk-heading-m" id="messageName">
+                {taskPriority >= 100  && taskPriority <= 1000 ?
+                    <div className="govuk-warning-text ">
+                    <span className="govuk-warning-text__icon" aria-hidden="true"
+                          style={{width: '40px', height: '40px'}}>!</span>
+                        <strong className="govuk-warning-text__text">
+                            <span className="govuk-warning-text__assistive">Warning</span>
+                            {determineTitle(task)}: {taskName}
+                        </strong>
                     </div>
-                </div>
+                    :
+                    <div>{determineTitle(task)}: {taskName}</div>
+                }
+            </h3>
+            <div className="govuk-card__content">
+                <p className="govuk-body"> {taskDescription}</p>
+            </div>
+            <div className="govuk-card__actions">
+                <button className="govuk-button" type="submit" onClick={onClick}
+                        disabled={action.acknowledgingTaskIds.contains(taskId)}>Acknowledge
+                </button>
             </div>
         </div>
     </div>

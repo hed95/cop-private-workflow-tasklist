@@ -32,6 +32,9 @@ function reducer(state = initialState, action) {
                 nextPage = links.next.href;
                 hasMoreItems = true;
             }
+            if (data && data.length > 0) {
+                data.sort((a,b) => a - b);
+            }
             return state.set('notifications', Immutable.fromJS(data))
                 .set('isFetching', false)
                 .set('pageSize', pageSize)
