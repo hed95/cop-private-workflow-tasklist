@@ -11,6 +11,7 @@ const buildDirectory = path.join(__dirname, './dist');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
 const CompressionPlugin = require('compression-webpack-plugin');
@@ -146,6 +147,23 @@ module.exports = webpackMerge(common, {
         additional: ['*.chunk.js']
       },
       safeToUseOptionalCaches: true
+    }),
+    new WebpackPwaManifest({
+      name: 'COP UI',
+      short_name: 'cop-private-ui',
+      description: 'Central Operational Platform Private UI',
+      background_color: '#fff',
+      theme_color: '#1d8feb',
+      inject: true,
+      ios: true,
+      icons: [
+        {
+          src: path.join(__dirname, 'node_modules/govuk-frontend/assets/images/govuk-opengraph-image.png'),
+          size: "1200x630",
+          type: "image/png"
+        }
+      ],
+
     })
   ],
 

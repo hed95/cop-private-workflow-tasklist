@@ -7,7 +7,6 @@ const buildDirectory = path.join(__dirname, './dist');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {HashedModuleIdsPlugin} = require('webpack');
-const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 const hashing = process.env.NODE_ENV === 'production' ? 'chunkhash' : 'hash';
 console.log('content hashing: '+ hashing);
@@ -61,23 +60,6 @@ module.exports = {
       'window.Tether': 'tether',
       React: 'react',
       ReactDOM: 'react-dom'
-    }),
-    new WebpackPwaManifest({
-      name: 'COP UI',
-      short_name: 'cop-private-ui',
-      description: 'Central Operational Platform Private UI',
-      background_color: '#fff',
-      theme_color: '#1d8feb',
-      inject: true,
-      ios: true,
-      icons: [
-        {
-          src: path.join(__dirname, 'node_modules/govuk-frontend/assets/images/govuk-opengraph-image.png'),
-          size: "1200x630",
-          type: "image/png"
-        }
-      ],
-
     })
   ],
   module: {
