@@ -26,7 +26,6 @@ import ShiftForm from './ShiftForm';
 export class ShiftPage extends React.Component {
     constructor(props) {
         super(props);
-        this.counter = 0;
     }
 
     componentDidMount() {
