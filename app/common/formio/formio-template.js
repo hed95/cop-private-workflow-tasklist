@@ -3,25 +3,26 @@ const classes = {
     'form-control ui fluid selection dropdown': 'form-control ui fluid selection dropdown govuk-select',
     'formio-day-component-month': 'formio-day-component-month govuk-date-input__input govuk-input--width-2',
     'formio-day-component-day': 'ormio-day-component-day govuk-date-input__input govuk-input--width-2',
-    'formio-day-component-year': 'formio-day-component-year govuk-date-input__input govuk-input--width-4'
+    'formio-day-component-year': 'formio-day-component-year govuk-date-input__input govuk-input--width-4',
+    'alert alert-danger': 'govuk-form-group--error'
 };
 const templates = {
     button: {
         form: `
-              <{{input.type}}
-                ref="button"
-                {% for (var attr in input.attr) { %}
-                {{attr}}="{{input.attr[attr]}}{% if (attr==='class') { %} govuk-button {% } %}"
-                {% } %}
-              >
-              {% if (component.leftIcon) { %}<span class="{{component.leftIcon}}"></span>&nbsp;{% } %}
-              {{input.content}}
-              {% if (component.rightIcon) { %}&nbsp;<span class="{{component.rightIcon}}"></span>{% } %}
-              </{{input.type}}>
-              <div ref="buttonMessageContainer">
-                <span class="help-block" ref="buttonMessage"></span>
-              </div>
-                `
+                  <{{input.type}}
+                    ref="button"
+                    {% for (var attr in input.attr) { %}
+                    {{attr}}="{{input.attr[attr]}}{% if (attr==='class') { %} govuk-button {% } %}"
+                    {% } %}
+                  >
+                  {% if (component.leftIcon) { %}<span class="{{component.leftIcon}}"></span>&nbsp;{% } %}
+                  {{input.content}}
+                  {% if (component.rightIcon) { %}&nbsp;<span class="{{component.rightIcon}}"></span>{% } %}
+                  </{{input.type}}>
+                  <div ref="buttonMessageContainer">
+                    <span class="help-block" ref="buttonMessage"></span>
+                  </div>
+                  `
     },
     checkbox: {
         form: `
@@ -156,9 +157,9 @@ const templates = {
     },
     panel: {
         form: `
-                    <div class="govuk-card--borderless">
-                      <div>
-                        <span class="mb-0 card-title govuk-body govuk-!-font-size-19 govuk-!-font-weight-bold" ref="header">
+                    <div class="mb-2 card border govuk-panel govuk-panel--confirmation">
+                      <div class="card-header govuk-panel__title {{transform('class', 'bg-' + component.theme)}}">
+                        <span class="mb-0 card-title" ref="header">
                           {% if (component.collapsible) { %}
                             <i class="formio-collapse-icon {{iconClass(collapsed ? 'plus-square-o' : 'minus-square-o')}} text-muted" data-title="Collapse Panel"></i>
                           {% } %}
@@ -169,7 +170,7 @@ const templates = {
                         </span>
                       </div>
                       {% if (!collapsed || (options.attachMode === 'builder')) { %}
-                      <div class="govuk-card__content" ref="{{nestedKey}}">
+                      <div class="card-body govuk-panel__body" ref="{{nestedKey}}">
                         {{children}}
                       </div>
                       {% } %}
@@ -239,9 +240,8 @@ const templates = {
                     <div style="position: relative;">
                       <nav class="govuk-breadcrumbs" aria-label="navigation">
                         <ul class="govuk-breadcrumbs__list">
-                          {% panels.forEach(function(panel, index) { 
-                          %}
-                          <li class="govuk-breadcrumbs__list-item{{currentPage === index ? ' active' : ''}}" style="{{currentPage === index ? 'text-decoration: none' : ' text-decoration: underline'}}">
+                          {% panels.forEach(function(panel, index) { %}
+                          <li class="govuk-breadcrumbs__list-item{{currentPage === index ? ' active' : ''}}" style="">
                             {% if (currentPage === index) { %}
                             <span class="govuk-breadcrumbs__link" ref="{{wizardKey}}-link">{{panel.title}}</span>
                             {% } else { %}
@@ -271,4 +271,5 @@ const templates = {
     },
     cssClasses: classes
 };
+
 export default templates;
