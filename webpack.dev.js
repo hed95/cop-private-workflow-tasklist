@@ -1,3 +1,4 @@
+
 const express = require('express');
 
 const webpack = require('webpack');
@@ -5,7 +6,7 @@ const common = require('./webpack.common.js');
 const webpackMerge = require('webpack-merge');
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
+const compression = require('compression')
 const port = process.env.PORT || 8080;
 
 
@@ -39,14 +40,15 @@ module.exports = webpackMerge(common, {
           'AUTH_URL': JSON.stringify(process.env.AUTH_URL),
           'CLIENT_ID': JSON.stringify(process.env.AUTH_CLIENT_ID),
           'AUTH_ACCESS_ROLE': JSON.stringify(process.env.AUTH_ACCESS_ROLE),
-          'UI_ENVIRONMENT': JSON.stringify(process.env.UI_ENVIRONMENT)
+          'UI_ENVIRONMENT': JSON.stringify(process.env.UI_ENVIRONMENT),
+          'STORAGE_KEY' : JSON.stringify(process.env.STORAGE_KEY)
         }
       }),
       new BundleAnalyzerPlugin(),
       new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
-
+        compress: true,
         contentBase: 'public/',
         hot: true,
         open: true,
@@ -81,7 +83,7 @@ module.exports = webpackMerge(common, {
             "/ws/workflow": {
                 target: workflowUrl,
                 secure: false,
-                ws: true
+                ws: false
             },
             "/api/workflow": {
                 target: workflowUrl,
@@ -105,6 +107,7 @@ module.exports = webpackMerge(common, {
 
         },
         before(app) {
+            app.use(compression({}));
             app.post('/log', (req, res, next) => {
                 const body = [];
                 req.on("data", (chunk) => {

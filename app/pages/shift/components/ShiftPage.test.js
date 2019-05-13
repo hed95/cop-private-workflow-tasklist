@@ -59,7 +59,7 @@ describe('Shift page', () => {
 
     console.log(wrapper.html());
 
-    expect(wrapper.find('.error-summary').exists()).toEqual(true);
+    expect(wrapper.find('.govuk-error-summary').exists()).toEqual(true);
   });
 
   it ('renders submitting once submitted', async() => {

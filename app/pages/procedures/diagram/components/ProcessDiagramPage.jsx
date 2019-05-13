@@ -28,25 +28,23 @@ class ProcessDiagramPage extends React.Component {
 
   render() {
     const {isFetchingProcessDefinition, processDefinition, processDefinitionXml, isFetchingProcessDefinitionXml} = this.props;
-    const pointerStyle = {cursor: 'pointer', paddingTop: '2px', textDecoration: 'underline'};
-
     if (isMobile) {
       return <div>
-        <div style={pointerStyle} onClick={(event) => this.props.history.replace('/procedures')}>Back to
+        <div className="govuk-back-link" style={{textDecoration: 'none'}} onClick={(event) => this.props.history.replace('/procedures')}>Back to
           procedures
         </div>
-        <div className="heading-medium">Process diagram not viewable on mobile screen</div>
+        <div className="govuk-heading-m">Process diagram not viewable on mobile screen</div>
       </div>
     }
 
     return <div>
-      <div id="backToProcedures" style={pointerStyle} onClick={(event) => this.props.history.replace('/procedures')}>Back to
+      <a href="#" id="backToProcedures"  style={{textDecoration: 'none'}} className="govuk-back-link govuk-!-font-size-19" onClick={(event) => this.props.history.replace('/procedures')}>Back to
         procedures
-      </div>
-      <div id="startProcedure" style={{    position: 'absolute', right: '2px', width: '200px'}}>
-        <input id="actionButton" className="btn btn-primary" onClick={(event) => this.props.history.replace('/start-a-procedure/'
+      </a>
+      <div id="startProcedure" style={{ position: 'absolute', right: '2px', width: '200px'}}>
+        <button id="actionButton" className="govuk-button app-button--inverse" onClick={(event) => this.props.history.replace('/start-a-procedure/'
           + processDefinition.getIn(['process-definition', 'key']))} type="submit"
-               value="Start"/>
+        >Start</button>
       </div>
       {isFetchingProcessDefinition && isFetchingProcessDefinitionXml ?  <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20%'}}><Spinner
         name="line-spin-fade-loader" color="black"/></div> : <div>

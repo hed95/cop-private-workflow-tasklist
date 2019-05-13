@@ -1,45 +1,34 @@
-import React, { Suspense } from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
-import DashboardTitle from './DashboardTitle';
-import DashboardPanel from './DashboardPanel';
-import { bindActionCreators } from 'redux';
+import React from 'react';
+import {withRouter} from 'react-router';
+import {bindActionCreators} from 'redux';
 import * as actions from '../../../core/shift/actions';
-import { connect } from 'react-redux';
-import {
-  endingShift,
-  hasActiveShift, isFetchingShift, shift
-} from '../../../core/shift/selectors';
-import { errors, hasError } from '../../../core/error/selectors';
-import ErrorPanel from '../../../core/error/component/ErrorPanel';
-import DataSpinner from '../../../core/components/DataSpinner';
-import * as errorActions from '../../../core/error/actions';
+import {connect} from 'react-redux';
+
 
 export class NoOpDashboardPage extends React.Component {
 
-  render() {
-    return <div id="dashboardContent">
-      <div className="grid-row" style={{ width: '100%', height: '200px' }}>
-        <div className="column-one-half">
-          <h2 className="heading-large">
-                    <span
-                      className="heading-secondary">Operational platform</span>{this.props.kc.tokenParsed.given_name} {this.props.kc.tokenParsed.family_name}
-          </h2>
+    render() {
+        return <div className="govuk-grid-row" style={{ width: '100%', height: '200px' }}>
+            <div className="govuk-grid-column-full">
+                <h2 className="govuk-heading-l">
+                    <span className="govuk-caption-l">{this.props.kc.tokenParsed.given_name} {this.props.kc.tokenParsed.family_name}</span>
+                    Operational dashboard
+                </h2>
+            </div>
+            <div className="govuk-grid-column-full">
+                <h3 className="govuk-heading-m">Access to the platform will be granted once your onboarding or mandatory declaration has been processed</h3>
+                <h4 className="govuk-heading-s">Please click <a href="#" className="govuk-link govuk-link--no-visited-state"  onClick={(e) => {this.props.history.replace("/dashboard")}}> here </a>once you have received notification of approval.</h4>
+            </div>
         </div>
-      </div>
-      <h2 className="heading-medium">Access to the platform will be granted once your onboarding or mandatory declaration has been processed</h2>
-
-      <h4>Please click <a onClick={(e) => {this.props.history.replace("/dashboard")}}>here</a>once you have received notification of approval.</h4>
-    </div>;
-  }
+    }
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default withRouter(connect((state) => {
-  return {
-    kc: state.keycloak
-  };
+    return {
+        kc: state.keycloak
+    };
 }, mapDispatchToProps)(NoOpDashboardPage));
 
 

@@ -183,7 +183,7 @@ describe('Start a procedure page', () => {
     const fetchProcessDefinition = jest.fn();
     const clearProcessDefinition = jest.fn();
 
-    const wrapper = await mount(<ProcessStartPage
+    const wrapper = await shallow(<ProcessStartPage
       {...props}
       clearProcessDefinition={clearProcessDefinition}
       fetchProcessDefinition={fetchProcessDefinition}

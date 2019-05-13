@@ -5,6 +5,7 @@ import SortTasks from './SortTasks';
 import FilterTaskName from './FilterTaskName';
 import * as types from 'react-device-detect';
 import _ from 'lodash';
+import './YourGroupTasks.scss';
 
 const YourGroupTasks = ({ yourGroupTasks,
                           sortYourGroupTasks,
@@ -14,7 +15,6 @@ const YourGroupTasks = ({ yourGroupTasks,
                           handleUnclaim,
                           claimTask,
                           userId}) => {
-  const underlinedStyle = { cursor: 'pointer', paddingTop: '10px', textDecoration: 'underline' };
 
   const groupedTasks = yourGroupTasks && yourGroupTasks.get('tasks') ?_.groupBy(yourGroupTasks.get('tasks').toJS(), (data) => {
     const groupKey = data['process-definition'] ? data['process-definition']['category']
@@ -46,16 +46,17 @@ const YourGroupTasks = ({ yourGroupTasks,
   const dataToDisplay = _.map(sortedData, (value, key) => {
     const data = _.map(value, (val) => {
       const task = val.task;
-      const claimButton  =  <input id="actionButton" className="btn btn-primary" onClick={() => claimTask(task.id)} type="submit"
-                                   value="Claim"/>;
-      const unclaimButton = <input id="actionButton" className="btn btn-primary" onClick={() => {
+      const claimButton  =  <button id="actionButton" className="govuk-button" onClick={() => claimTask(task.id)} type="submit">Claim</button>;
+      const unclaimButton = <button id="actionButton" className="govuk-button" onClick={() => {
         handleUnclaim(task.id)
-      }} type="submit" value="Unclaim"/>;
+      }} type="submit" >Unclaim</button>;
 
       const name = task.name;
       const taskId = task.id;
 
-      const toView= <div style={underlinedStyle} onClick={() => goToTask(taskId)}>{name}</div>;
+      const assignee = task.assignee === null ? <div className="govuk-!-font-size-19">{'Unassigned'}</div> : (task.assignee === userId ? <div className="govuk-!-font-size-19">{'Assigned to you'}</div> : <div className="govuk-!-font-size-19">{task.assignee}</div>)
+
+      const toView= <a href="#" style={{textDecoration: 'underline'}} className="govuk-link govuk-!-font-size-19" onClick={() => goToTask(taskId)}>{name}</a>;
 
       return types.isMobile ? {
         id: taskId,
@@ -64,13 +65,13 @@ const YourGroupTasks = ({ yourGroupTasks,
       } : {
         id: taskId,
         name: toView,
-        due: "due " + moment().to(moment(task.due)),
-        assignee: task.assignee === null ? 'Unassigned' : (task.assignee === userId ? 'Assigned to you' : task.assignee),
+        due: <div className="govuk-!-font-size-19">{"due " + moment().to(moment(task.due))}</div>,
+        assignee: assignee,
         action: task.assignee === null || task.assignee !== userId ? claimButton : unclaimButton
       }
     });
     return <div key={`category::${key}`} className="tasksGrouping">
-      <div className="data-item bold-small" key={key}>{key} ({value.length} {value.length === 1 ? 'task' : 'tasks'})</div>
+      <div style={{paddingBottom: '5px'}} className="data-item govuk-!-font-size-19 govuk-!-font-weight-bold" key={key}>{key} ({value.length} {value.length === 1 ? 'task' : 'tasks'})</div>
       <ReactHyperResponsiveTable
         key={`category::${key}`}
         headers={headers}
@@ -82,18 +83,18 @@ const YourGroupTasks = ({ yourGroupTasks,
     </div>
   });
   return <div>
-    <div style={underlinedStyle} onClick={startAProcedure}>Start a procedure</div>
-    <div style={{ paddingTop: '20px' }}>
+    <a href="#" className="govuk-link govuk-!-font-size-19" style={{textDecoration:'underline'}} onClick={startAProcedure}>Start a procedure</a>
+    <div style={{ paddingTop: '10px' }}>
       <div className="data" id="yourGroupTasksTotalCount">
           <span
-            className="data-item bold-medium">{yourGroupTasks.get('total')} {yourGroupTasks.get('total') === 1 ? 'task' : 'tasks'} allocated to your team</span>
+            className="data-item govuk-!-font-size-24 govuk-!-font-weight-bold">{yourGroupTasks.get('total')} {yourGroupTasks.get('total') === 1 ? 'task' : 'tasks'} allocated to your team</span>
       </div>
-      <div className="grid-row">
-        <div className="column-one-half">
+      <div className="govuk-grid-row" style={{paddingTop: '10px'}}>
+        <div className="govuk-grid-column-one-half">
           <SortTasks tasks={yourGroupTasks} sortTasks={sortYourGroupTasks}/>
         </div>
 
-        <div className="column-one-half">
+        <div className="govuk-grid-column-one-half">
           <FilterTaskName tasks={yourGroupTasks} filterTasksByName={filterTasksByName}/>
         </div>
       </div>

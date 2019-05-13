@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const common = require('./webpack.common.js');
 const webpackMerge = require('webpack-merge');
-const SriPlugin = require('webpack-subresource-integrity');
 const ProgressPlugin = require('progress-webpack-plugin');
 const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -11,6 +10,7 @@ const path = require('path');
 const buildDirectory = path.join(__dirname, './dist');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
@@ -155,7 +155,15 @@ module.exports = webpackMerge(common, {
       background_color: '#fff',
       theme_color: '#1d8feb',
       inject: true,
-      ios: true
+      ios: true,
+      icons: [
+        {
+          src: path.join(__dirname, 'node_modules/govuk-frontend/assets/images/govuk-opengraph-image.png'),
+          size: "1200x630",
+          type: "image/png"
+        }
+      ],
+
     })
   ],
 

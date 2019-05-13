@@ -6,6 +6,7 @@ import * as actions from '../actions';
 import { createStructuredSelector } from 'reselect';
 import { form, isFetchingCreateCommentForm } from '../selectors';
 import { Form } from 'react-formio';
+import './Comment.scss';
 
 class CreateComment extends React.Component {
 
@@ -64,3 +65,4 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateComment);
+

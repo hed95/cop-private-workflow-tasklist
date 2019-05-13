@@ -13,12 +13,12 @@ export class CalendarDashboardPanel extends React.Component {
         });
     }
     render() {
-        return <li className="__card column-one-third" id="calendarPanel">
+        return <li className="__card govuk-grid-column-one-third" id="calendarPanel" style={{marginBottom: '30px'}}>
             <a href="#" onClick={this.calendar.bind(this)} className="card__body" id="calendarPageLink">
-                <span className="bold-large">calendar</span>
+                <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">calendar</span>
             </a>
             <div className="card__footer">
-                <span className="font-small">Operational calendar</span>
+                <span className="govuk-!-font-size-19">Operational calendar</span>
             </div>
         </li>
     }

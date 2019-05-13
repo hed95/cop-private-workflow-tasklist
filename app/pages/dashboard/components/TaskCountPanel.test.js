@@ -45,14 +45,12 @@ describe('TaskCountPanel', () => {
 
     const yourTasksPanel = wrapper.find('#yourTasksPanel');
     expect(yourTasksPanel.exists()).toEqual(true);
-    expect(yourTasksPanel.find('.bold-xlarge').text()).toEqual('0');
-    expect(yourTasksPanel.find('.bold-small').text()).toEqual('tasks assigned to you');
+    expect(yourTasksPanel.find('li span').first().text()).toEqual('0');
 
 
     const youTeamTasks = wrapper.find('#youTeamTasks');
     expect(youTeamTasks.exists()).toEqual(true);
-    expect(youTeamTasks.find('.bold-xlarge').text()).toEqual('0');
-    expect(youTeamTasks.find('.bold-small').text()).toEqual('tasks allocated to your team');
+    expect(youTeamTasks.find('li span').first().text()).toEqual('0');
 
   });
   it('renders values when shift active', async() => {
@@ -76,12 +74,10 @@ describe('TaskCountPanel', () => {
 
     const yourTasksPanel = wrapper.find('#yourTasksPanel');
     expect(yourTasksPanel.exists()).toEqual(true);
-    expect(yourTasksPanel.find('.bold-xlarge').text()).toEqual('10');
-    expect(yourTasksPanel.find('.bold-small').text()).toEqual('tasks assigned to you');
+    expect(yourTasksPanel.find('li span').first().text()).toEqual('10');
 
     const youTeamTasks = wrapper.find('#youTeamTasks');
     expect(youTeamTasks.exists()).toEqual(true);
-    expect(youTeamTasks.find('.bold-xlarge').text()).toEqual('10');
-    expect(youTeamTasks.find('.bold-small').text()).toEqual('tasks allocated to your team');
+    expect(youTeamTasks.find('li span').first().text()).toEqual('10');
   });
 });

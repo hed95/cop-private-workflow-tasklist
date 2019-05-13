@@ -33,7 +33,7 @@ describe('Reports Page', () => {
     />);
     console.log(wrapper.html());
     expect(fetchReportsList).toBeCalled();
-    expect(wrapper.find('.heading-large').text()).toEqual('Operational reports 0 reports');
+    expect(wrapper.find('#reportsCountLabel').text()).toEqual('0 reports');
     expect(wrapper.containsMatchingElement(Spinner)).toEqual(true);
   });
   it ('renders list of reports', async() => {
@@ -55,7 +55,7 @@ describe('Reports Page', () => {
     />);
     console.log(wrapper.html());
     expect(fetchReportsList).toBeCalled();
-    expect(wrapper.find('.heading-large').text()).toEqual('Operational reports 1 reports');
+    expect(wrapper.find('#reportsCountLabel').text()).toEqual('1 report');
 
     const tableWrapper = wrapper.find('table');
     expect(tableWrapper.exists()).toEqual(true);

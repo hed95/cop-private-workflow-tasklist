@@ -17,6 +17,6 @@ describe('SubmissionBanner', () => {
       message: 'test',
     });
     expect(wrapper.html())
-      .toEqual('<div class="container" id="successfulSubmission"><div class="govuk-box-highlight confirm-page new"><span class="hod-checkmark"></span><h2 class="heading-small">test</h2></div></div>')
+      .toEqual('<div class="container" id="successfulSubmission" style="padding-top: 5px;"><div class="govuk-panel govuk-panel--confirmation"><div class="govuk-panel__body govuk-!-font-size-24 govuk-!-font-weight-bold">test</div></div></div>')
   });
 });

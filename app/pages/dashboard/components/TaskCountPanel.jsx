@@ -76,32 +76,33 @@ export class TaskCountPanel extends React.Component {
     }
 
     render() {
+
         const {taskCounts, isFetchingTaskCounts} = this.props;
         return <div>
-            <li className="__card column-one-third" id="yourTasksPanel">
+            <li className="__card govuk-grid-column-one-third" id="yourTasksPanel">
                 <a href="#" onClick={this.yourTasks} className="card__body" id="yourTasksPageLink">
                     {isFetchingTaskCounts ? <span
-                      className="bold-small">Loading</span> :<span
-                      className="bold-xlarge">{taskCounts.get('tasksAssignedToUser')}</span>
+                      className="govuk-!-font-size-19 govuk-!-font-weight-bold">Loading</span> :<span
+                      className="govuk-!-font-size-48 govuk-!-font-weight-bold" id="yourTaskCount">{taskCounts.get('tasksAssignedToUser')}</span>
                     }
-                    <span className="bold-small">tasks assigned to you</span>
+                    <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">tasks assigned to you</span>
                 </a>
                 <div className="card__footer">
-                    <span className="font-small">Tasks assigned to you</span>
+                    <span className="govuk-!-font-size-19">Tasks assigned to you</span>
                 </div>
             </li>
-            <li className="__card column-one-third" id="youTeamTasks">
+            <li className="__card govuk-grid-column-one-third" id="youTeamTasks">
                 <a href="#" onClick={this.yourTeamTotalTasks} className="card__body" id="yourTeamTasksPageLink">
 
                     {
                         isFetchingTaskCounts ? <span
-                          className="bold-small">Loading</span>: <span
-                          className="bold-xlarge">{taskCounts.get('totalTasksAllocatedToTeam')}</span>
+                          className="govuk-!-font-size-19 govuk-!-font-weight-bold">Loading</span>: <span
+                          className="govuk-!-font-size-48 govuk-!-font-weight-bold" id="yourGroupTaskCount">{taskCounts.get('totalTasksAllocatedToTeam')}</span>
                     }
-                       <span className="bold-small">tasks allocated to your team</span>
+                       <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">tasks allocated to your team</span>
                 </a>
                 <div className="card__footer">
-                    <span className="font-small">Overall tasks assigned to your team</span>
+                    <span className="govuk-!-font-size-19">Overall tasks assigned to your team</span>
                 </div>
             </li>
         </div>

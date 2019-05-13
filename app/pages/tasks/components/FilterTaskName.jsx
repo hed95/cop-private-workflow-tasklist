@@ -1,9 +1,9 @@
 import React from 'react';
 
 const FilterTaskName = ({tasks, filterTasksByName}) => {
-  return  <div className="form-group">
-    <label className="form-label" htmlFor="filterTaskName">Search by task name:</label>
-    <input className="form-control" id="filterTaskName" type="text" name="filterTaskName"
+  return  <div className="govuk-form-group">
+    <label className="govuk-label" htmlFor="filterTaskName">Search by task name:</label>
+    <input className="govuk-input govuk-!-width-two-thirds" id="filterTaskName" type="text" name="filterTaskName"
            onChange={filterTasksByName}
            defaultValue={tasks.get('yourTasksFilterValue')}/>
   </div>

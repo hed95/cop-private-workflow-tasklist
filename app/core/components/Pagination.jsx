@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from "react-immutable-proptypes";
+import './Pagination.scss';
 
 const propTypes = {
     items: ImmutablePropTypes.list.isRequired,
@@ -107,26 +108,21 @@ class Pagination extends React.Component {
         };
     }
 
-    // pager.currentPage === page ? 'active' : ''
     render() {
         let pager = this.state.pager;
 
         if (!pager.pages || pager.pages.length <= 1) {
-            // don't display pager if there is only 1 page
             return null;
         }
-        const summary = `Showing ${pager.currentPage} — ${pager.totalPages} of ${pager.totalItems} results`;
+        const summary = `Showing ${pager.currentPage} - ${pager.totalPages} of ${pager.totalItems} results`;
         return (
-            <div className="grid-row" style={{display:'flex'}}>
-                <nav role="navigation" aria-label="comments-pagination">
-                    <div className="gov-pagination">
-                        <div className="pagination__summary small">{summary}</div>
-                        <ul className="pagination small">
-                            <li className={pager.currentPage === 1 ? 'disabled' : ''}>
-                                <a onClick={() => this.setPage(1)}>First</a>
-                            </li>
-                            <li className={pager.currentPage === 1 ? 'disabled' : ''}>
-                                <a onClick={() => this.setPage(pager.currentPage - 1)}>Previous</a>
+            <div className="govuk-grid-row" style={{display: 'flex'}}>
+                <div className="govuk-grid-column-full">
+                    <div className="pagination__summary govuk-!-font-size-19">{summary}</div>
+                    <nav role="navigation" aria-label="comments-pagination" style={{textAlign:'center'}}>
+                        <ul className="pagination govuk-!-font-size-19">
+                            <li className="pagination__item">
+                                <a className="pagination__link" onClick={() => this.setPage(pager.currentPage - 1)}><span aria-hidden="true" role="presentation">&laquo;</span> Previous</a>
                             </li>
                             {pager.pages.map((page, index) => {
                                     const current = pager.currentPage === page ? 'current' : '';
@@ -138,16 +134,13 @@ class Pagination extends React.Component {
 
                                 }
                             )}
-                            <li className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
-                                <a onClick={() => this.setPage(pager.currentPage + 1)}>Next</a>
-                            </li>
-                            <li className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
-                                <a onClick={() => this.setPage(pager.totalPages)}>Last</a>
+                            <li className="pagination__item">
+                                <a className="pagination__link" onClick={() => this.setPage(pager.currentPage + 1)}>Next <span aria-hidden="true" role="presentation">&raquo;</span> </a>
                             </li>
                         </ul>
-                    </div>
+                    </nav>
 
-                </nav>
+                </div>
             </div>
         );
     }

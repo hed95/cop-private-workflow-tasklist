@@ -1,13 +1,21 @@
 import React from 'react';
 
 const UnauthorizedPage = () => {
-    return <div className="error-summary" role="alert" aria-labelledby="error-summary-heading-example-1">
-      <h2 className="heading-medium error-summary-heading" id="error-summary-heading-example-1" id="unauthorizedText">
-        You are not authorized to access the platform
-      </h2>
-      <p>Please contact operational support to get access</p>
+    return <div style={{marginTop: '20px'}} className="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabIndex="-1"
+                data-module="error-summary">
+        <h2 className="govuk-error-summary__title" id="error-summary-title" id="unauthorizedText">
+            You are not authorized to access the platform
+        </h2>
+        <div className="govuk-error-summary__body">
+            <ul className="govuk-list govuk-error-summary__list">
+                <li>
+                    <p className="govuk-body">Please contact operational support to get access</p></li>
 
+            </ul>
+        </div>
     </div>
+
+
 };
 
 export default UnauthorizedPage;

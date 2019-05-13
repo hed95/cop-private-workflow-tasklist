@@ -14,8 +14,13 @@ exports[`Reports Dashboard Panel renders reports dashboard panel 1`] = `
   }
 >
   <li
-    className="__card column-one-third"
+    className="__card govuk-grid-column-one-third"
     id="reportsPanel"
+    style={
+      Object {
+        "marginBottom": "30px",
+      }
+    }
   >
     <a
       className="card__body"
@@ -24,7 +29,7 @@ exports[`Reports Dashboard Panel renders reports dashboard panel 1`] = `
       onClick={[Function]}
     >
       <span
-        className="bold-large"
+        className="govuk-!-font-size-36 govuk-!-font-weight-bold"
       >
         reports
       </span>
@@ -33,7 +38,7 @@ exports[`Reports Dashboard Panel renders reports dashboard panel 1`] = `
       className="card__footer"
     >
       <span
-        className="font-small"
+        className="govuk-!-font-size-19"
       >
         Operational reports
       </span>

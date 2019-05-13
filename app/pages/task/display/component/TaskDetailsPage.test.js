@@ -39,9 +39,9 @@ describe('TaskDetailsPage', () => {
     />);
     console.log(wrapper.html());
     expect(wrapper.find('#taskName').text()).toEqual('test');
-    expect(wrapper.find('#taskAssignee').text()).toEqual('Unassigned');
-    expect(wrapper.find('#taskPriority').text()).toEqual('Priority: High');
-    expect(wrapper.find('#taskTeams').text()).toEqual('Team: teamA');
+    expect(wrapper.find('#taskAssignee').text()).toEqual('AssigneeUnassigned');
+    expect(wrapper.find('#taskPriority').text()).toEqual('PriorityHigh');
+    expect(wrapper.find('#taskTeams').text()).toEqual('TeamteamA');
     expect(wrapper.find('#taskDescription').text()).toEqual('test');
     const dueDateInput = wrapper.find('#updateDueDate');
     expect(dueDateInput.props().defaultValue).toEqual(dueDate.format("DD-MM-YYYY HH:mm"));
