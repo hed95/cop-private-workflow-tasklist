@@ -3,6 +3,17 @@ table.widetable-process {
     width: 100%;
 }
 
+.process-description {
+    margin: 10px 0;
+    width: 45em;
+}
+
+table.widetable-process tbody tr td:first-child {
+    border-left: none;
+    max-width: 45em;
+}
+
+
 table.widetable-process th, table.widetable-process td {
     border-bottom: 1px solid #bfc1c3;
 }

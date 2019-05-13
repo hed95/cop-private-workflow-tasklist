@@ -91,7 +91,7 @@ describe('ProceduresPage', () => {
     const actionButton = map[2];
 
     expect(viewProcessColumn.find('#procedureView').text()).toEqual('View procedure');
-    expect(actionButton.find('button').text()).toEqual("processA");
+    expect(actionButton.find('button').text()).toEqual("Start");
 
     window.matchMedia = null;
   });

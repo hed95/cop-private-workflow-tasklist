@@ -157,9 +157,9 @@ const templates = {
     },
     panel: {
         form: `
-                    <div class="mb-2 card border govuk-panel govuk-panel--confirmation">
-                      <div class="card-header govuk-panel__title {{transform('class', 'bg-' + component.theme)}}">
-                        <span class="mb-0 card-title" ref="header">
+                    <div class="govuk-card--borderless">
+                      <div>
+                        <span class="mb-0 card-title govuk-body govuk-!-font-size-19 govuk-!-font-weight-bold" ref="header">
                           {% if (component.collapsible) { %}
                             <i class="formio-collapse-icon {{iconClass(collapsed ? 'plus-square-o' : 'minus-square-o')}} text-muted" data-title="Collapse Panel"></i>
                           {% } %}
@@ -170,7 +170,7 @@ const templates = {
                         </span>
                       </div>
                       {% if (!collapsed || (options.attachMode === 'builder')) { %}
-                      <div class="card-body govuk-panel__body" ref="{{nestedKey}}">
+                      <div class="govuk-card__content" ref="{{nestedKey}}">
                         {{children}}
                       </div>
                       {% } %}
@@ -255,7 +255,7 @@ const templates = {
                         {{components}}
                       </div>
                       {% if (buttons.cancel) { %}
-                        <button class="govuk-button btn button--secondary btn-wizard-nav-cancel">{{t('cancel')}}</button>
+                        <button class="govuk-button btn button--secondary btn-wizard-nav-cancel" ref="{{wizardKey}}-cancel">{{t('cancel')}}</button>
                       {% } %}
                       {% if (buttons.previous) { %}
                         <button class="govuk-button btn btn-primary btn-wizard-nav-previous" ref="{{wizardKey}}-previous">{{t('previous')}}</button>
