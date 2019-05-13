@@ -59,6 +59,7 @@ pipeline:
       - DEV_UI_ENVIRONMENT
       - DEV_UI_VERSION
       - DEV_WHITELIST
+      - DEV_UPTIME
     commands:
       - export NAME=$${DEV_NAME}
       - export KUBE_NAMESPACE=$${DEV_KUBE_NAMESPACE}
@@ -85,6 +86,7 @@ pipeline:
       - export UI_VERSION=$${DEV_UI_VERSION}
       - export WHITELIST=$${DEV_WHITELIST}
       - export IMAGE_TAG=$${DRONE_BUILD_NUMBER}
+      - export UPTIME=$${DEV_UPTIME}
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/nginx-configmap.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
@@ -123,6 +125,7 @@ pipeline:
       - TEST_UI_ENVIRONMENT
       - TEST_UI_VERSION
       - TEST_WHITELIST
+      - TEST_UPTIME
     commands:
       - export NAME=$${TEST_NAME}
       - export KUBE_NAMESPACE=$${TEST_KUBE_NAMESPACE}
@@ -149,6 +152,7 @@ pipeline:
       - export UI_VERSION=$${TEST_UI_VERSION}
       - export WHITELIST=$${TEST_WHITELIST}
       - export IMAGE_TAG=$${DRONE_BUILD_NUMBER}
+      - export UPTIME=$${TEST_UPTIME}
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/nginx-configmap.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
@@ -187,6 +191,7 @@ pipeline:
       - DEMO_UI_ENVIRONMENT
       - DEMO_UI_VERSION
       - DEMO_WHITELIST
+      - DEMO_UPTIME
     commands:
       - export NAME=$${DEMO_NAME}
       - export KUBE_NAMESPACE=$${DEMO_KUBE_NAMESPACE}
@@ -213,6 +218,7 @@ pipeline:
       - export UI_VERSION=$${DEMO_UI_VERSION}
       - export WHITELIST=$${DEMO_WHITELIST}
       - export IMAGE_TAG=$${IMAGE_TAG}
+      - export UPTIME=$${DEMO_UPTIME}
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/nginx-configmap.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
