@@ -33,13 +33,12 @@ export class ProceduresPage extends React.Component {
   render() {
     const { isFetchingProcessDefinitions, processDefinitions } = this.props;
     const data = processDefinitions ? processDefinitions.map((p) => {
-      const name = p.getIn(['process-definition', 'name']);
       const description = p.getIn(['process-definition', 'description']);
       return {
           key: p.getIn(['process-definition', 'key']),
           name: description,
-          description: <div className="govuk-!-font-size-19">{p.getIn(['process-definition', 'description'])}</div>,
-          action: <button id="actionButton" className="govuk-button" onClick={() => this.process(p)} type="submit">{name}</button>,
+          description: <p className="process-description govuk-body govuk-!-font-size-19">{p.getIn(['process-definition', 'description'])}</p>,
+          action: <button id="actionButton" className="govuk-button" onClick={() => this.process(p)} type="submit">Start</button>,
           diagram:  <a href="#" id="procedureView" className="govuk-link govuk-link--no-visited-state" onClick={() => this.viewProcessDiagram(p)}><div className="govuk-!-font-size-19">View procedure</div></a>
         }
     }).toArray() : [];

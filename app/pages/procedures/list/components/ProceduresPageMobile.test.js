@@ -68,7 +68,7 @@ describe('ProceduresPage', () => {
     expect(firstRowColumns[0]).toEqual('processADescription');
 
     const map = rows.first().find('td').map(column => column);
-    expect(map[1].find('button').text()).toEqual("processA");
+    expect(map[1].find('button').text()).toEqual("Start");
 
   });
 });
