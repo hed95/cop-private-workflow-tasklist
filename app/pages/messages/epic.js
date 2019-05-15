@@ -6,13 +6,14 @@ import * as types from './actionTypes';
 import * as actions from './actions';
 import { errorObservable } from '../../core/error/epicUtil';
 import { retry } from '../../core/util/retry';
+import config from '../../config';
 
 const fetchNotifications = (action$, store, { client }) =>
   action$.ofType(types.FETCH_NOTIFICATIONS)
     .mergeMap(action =>
       client({
         method: 'GET',
-        path: `/api/workflow/notifications?countOnly=false`,
+        path: `${config.services.workflow.url}/api/workflow/notifications?countOnly=false`,
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${store.getState().keycloak.token}`
@@ -47,7 +48,7 @@ const acknowledgeNotification = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'DELETE',
-        path: `/api/workflow/notifications/task/${action.taskId}`,
+        path: `${config.services.workflow.url}/api/workflow/notifications/task/${action.taskId}`,
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${store.getState().keycloak.token}`

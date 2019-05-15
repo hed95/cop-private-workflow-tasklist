@@ -4,6 +4,7 @@ import { errorObservable } from '../../../core/error/epicUtil';
 import { combineEpics } from 'redux-observable';
 import PubSub from 'pubsub-js';
 import { retry } from '../../../core/util/retry';
+import config from '../../../config';
 
 
 const createProcessVariables = (action, userEmail) => {
@@ -59,7 +60,7 @@ const fetchTaskForm = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'GET',
-        path: `/api/translation/form/${action.task.get('formKey')}?taskId=${action.task.get('id')}&processInstanceId=${action.task.get('processInstanceId')}`,
+        path: `${config.services.translation.url}/api/translation/form/${action.task.get('formKey')}?taskId=${action.task.get('id')}&processInstanceId=${action.task.get('processInstanceId')}`,
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${store.getState().keycloak.token}`
@@ -79,7 +80,7 @@ const submitTaskForm = (action$, store, { client }) =>
       const submissionData = Object.assign({}, action.submission);
       return  client({
         method: 'POST',
-        path: `/api/form/${action.formId}/submission`,
+        path: `${config.services.form.url}/${action.formId}/submission`,
         entity: {
           'data': JSON.stringify(submissionData)
         },
@@ -118,7 +119,7 @@ const completeTaskForm = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'POST',
-        path: `/api/workflow/tasks/${action.taskId}/form/_complete`,
+        path: `${config.services.workflow.url}/api/workflow/tasks/${action.taskId}/form/_complete`,
         entity: action.data,
         headers: {
           'Accept': 'application/json',
