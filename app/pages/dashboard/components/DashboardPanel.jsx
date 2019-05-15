@@ -8,7 +8,7 @@ import PubSub from "pubsub-js";
 import DataSpinner from '../../../core/components/DataSpinner';
 import {bindActionCreators} from 'redux';
 import withLog from '../../../core/error/component/withLog';
-
+import config from '../../../config';
 
 const ProceduresDashboardPanel = React.lazy(() => import('./ProceduresDashboardPanel'));
 const ReportsDashboardPanel = React.lazy(() => import('./ReportsDashboardPanel'));
@@ -27,7 +27,7 @@ export class DashboardPanel extends React.Component {
     }
 
     connect = (user) => {
-        this.socket = new SockJS("/ws/workflow/tasks");
+        this.socket = new SockJS(`${config.services.workflow.url}/ws/workflow/tasks`);
         this.stompClient = Stomp.over(this.socket);
         const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
 

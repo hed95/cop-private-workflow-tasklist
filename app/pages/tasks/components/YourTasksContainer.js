@@ -11,6 +11,7 @@ import { debounce, throttle } from 'throttle-debounce';
 import YourTasks from './YourTasks';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
+import config from '../../../config';
 
 export class YourTasksContainer extends React.Component {
 
@@ -28,7 +29,7 @@ export class YourTasksContainer extends React.Component {
   }
 
   connect = () => {
-    this.socket = new SockJS('/ws/workflow/tasks');
+    this.socket = new SockJS(`${config.services.workflow.url}/ws/workflow/tasks`);
     this.stompClient = Stomp.over(this.socket);
     const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
     if (uiEnv !== 'development' && uiEnv !== 'local') {

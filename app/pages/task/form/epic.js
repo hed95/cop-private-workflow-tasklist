@@ -30,7 +30,7 @@ const customEvent = (action$, store, { client }) =>
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${store.getState().keycloak.token}`
         },
-        path: `/rest/camunda/message`,
+        path: `${config.services.workflow.url}/rest/camunda/message`,
         entity:  {
           'messageName': action.event.type,
           'processInstanceId': action.task.get('processInstanceId'),
