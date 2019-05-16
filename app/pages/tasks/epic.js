@@ -3,13 +3,14 @@ import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
 import {retry} from "../../core/util/retry";
+import config from '../../config';
 
 const fetchTasksAssignedYou = (action$, store, {client}) =>
     action$.ofType(types.FETCH_TASKS_ASSIGNED_TO_YOU)
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/workflow/tasks?assignedToMeOnly=true&${action.sortValue 
+                path: `${config.services.workflow.url}/api/workflow/tasks?assignedToMeOnly=true&${action.sortValue
                   ? action.sortValue: 'sort=due,desc' }${action.filterValue?'&name=' + action.filterValue: ''}`,
                 headers: {
                     "Accept": "application/json",
@@ -27,7 +28,7 @@ const fetchYourGroupTasks = (action$, store, {client}) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/workflow/tasks?teamOnly=true&${action.sortValue
+                path: `${config.services.workflow.url}/api/workflow/tasks?teamOnly=true&${action.sortValue
                 ? action.sortValue: 'sort=due,desc' }${action.filterValue?'&name=' + action.filterValue: ''}`,
                 headers: {
                     "Accept": "application/json",

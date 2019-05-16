@@ -3,6 +3,7 @@ import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
 import {retry} from "../../core/util/retry";
+import config from '../../config';
 
 
 const fetchTaskCounts = (action$, store, {client}) =>
@@ -10,7 +11,7 @@ const fetchTaskCounts = (action$, store, {client}) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/workflow/tasks/_task-counts`,
+                path: `${config.services.workflow.url}/api/workflow/tasks/_task-counts`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
@@ -27,7 +28,7 @@ const fetchMessageCounts = (action$, store, {client}) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/workflow/notifications?countOnly=true`,
+                path: `${config.services.workflow.url}/api/workflow/notifications?countOnly=true`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`

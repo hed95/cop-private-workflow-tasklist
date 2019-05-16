@@ -4,6 +4,7 @@ import {combineEpics} from "redux-observable";
 import {errorObservable} from "../../../core/error/epicUtil";
 import {retry} from "../../../core/util/retry";
 import PubSub from 'pubsub-js';
+import config from '../../../config';
 
 
 const fetchProcessDefinition = (action$, store,  {client}) =>
@@ -11,7 +12,7 @@ const fetchProcessDefinition = (action$, store,  {client}) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/workflow/process-definitions/${action.processKey}`,
+                path: `${config.services.workflow.url}/api/workflow/process-definitions/${action.processKey}`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
@@ -27,7 +28,7 @@ const fetchForm = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'GET',
-        path: `/api/translation/form/${action.formName}`,
+        path: `${config.servics.translation.url}/api/translation/form/${action.formName}`,
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${store.getState().keycloak.token}`
@@ -45,7 +46,7 @@ const fetchFormWithContext = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'POST',
-        path: `/api/translation/form`,
+        path: `${config.services.translation.url}/api/translation/form`,
         entity: {
           'formName': action.formName,
           'dataContext': action.dataContext
@@ -69,7 +70,7 @@ const submit = (action$, store, { client }) =>
       const submissionData = action.submissionData;
       return  client({
         method: 'POST',
-        path: `/api/form/${action.formId}/submission`,
+        path: `${config.services.form.url}/${action.formId}/submission`,
         entity: {
           'data':submissionData
         },
@@ -111,7 +112,7 @@ const submitToWorkflow = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'POST',
-        path: `/api/workflow/process-instances`,
+        path: `${config.services.workflow.url}/api/workflow/process-instances`,
         entity: {
           'data': action.data,
           'processKey': action.processKey,
@@ -163,7 +164,7 @@ const submitToWorkflowUsingNonShiftApi = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'POST',
-        path: `/rest/camunda/process-definition/key/${action.processKey}/start`,
+        path: `${config.services.workflow.url}/rest/camunda/process-definition/key/${action.processKey}/start`,
         entity: createVariable(action, store.getState().keycloak.tokenParsed.email),
         headers: {
           'Accept': 'application/json',

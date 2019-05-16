@@ -1,6 +1,7 @@
 import { shallow } from 'enzyme/build/index';
 import { ReportPage } from './ReportPage';
 import React from 'react';
+import config from '../../../config';
 
 
 
@@ -16,6 +17,6 @@ describe('Report Page', () => {
     />);
     expect(wrapper.find('#backToReports').exists()).toEqual(true);
     const iframeWrapper = wrapper.find('Iframe');
-    expect(iframeWrapper.prop('url')).toEqual('/api/reports/myReport.html');
+    expect(iframeWrapper.prop('url')).toEqual(`${config.services.report.url}/api/reports/myReport.html`);
   });
 });

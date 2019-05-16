@@ -3,13 +3,14 @@ import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
 import {errorObservable} from "../../../core/error/epicUtil";
 import {retry} from "../../../core/util/retry";
+import config from '../../../config';
 
 const fetchProcessDefinitions = (action$, store, {client}) =>
     action$.ofType(types.FETCH_PROCESS_DEFINITIONS)
         .mergeMap(action => {
             return client({
                 method: 'GET',
-                path: `/api/workflow/process-definitions`,
+                path: `${config.services.workflow.url}/api/workflow/process-definitions`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
