@@ -106,7 +106,7 @@ spec:
         env:
         - name: INT_DOMAIN
           value: {{.INT_DOMAIN}}
-        - name: DOMAIN
+        - name: EXT_DOMAIN
           value: {{.EXT_DOMAIN}}
         - name: REPORTING_SERVICE_NAME
           value: {{.REPORTING_SERVER_NAME}}
@@ -134,6 +134,18 @@ spec:
           value: {{.KEYCLOAK_ROLE}}
         - name: AUTH_ACCESS_CONTACT
           value: {{.KEYCLOAK_CONTACT}}
+        - name: PROTOCOL
+          value: {{.PROTOCOL}}
+        - name: FORMIO_SERVER_NAME
+          value: {{.FORMIO_SERVER_NAME}}
+        - name: OPERATIONAL_POSTGREST_NAME
+          value: {{.OPERATIONAL_POSTGREST_NAME}}
+        - name: REPORTING_SERVER_NAME
+          value: {{.REPORTING_SERVER_NAME}}
+        - name: TRANSLATION_SERVER_NAME
+          value: {{.TRANSLATION_SERVER_NAME}}
+        - name: WORKFLOW_SERVER_NAME
+          value: {{.WORKFLOW_SERVER_NAME}}
         securityContext:
           runAsNonRoot: true
         readinessProbe:
