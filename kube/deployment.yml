@@ -146,6 +146,16 @@ spec:
           value: {{.TRANSLATION_SERVER_NAME}}
         - name: WORKFLOW_SERVER_NAME
           value: {{.WORKFLOW_SERVER_NAME}}
+        - name: FORM_SERVICE_URL
+          value: {{PROTOCOL}}{{.FORMIO_SERVER_NAME}}.{{.EXT_DOMAIN}}
+        - name: OPERATIONAL_DATA_URL
+          value: {{PROTOCOL}}{{.OPERATIONAL_POSTGREST_NAME}}.{{.EXT_DOMAIN}}
+        - name: REPORT_SERVICE_URL
+          value: {{PROTOCOL}}{{.REPORTING_SERVER_NAME}}.{{.EXT_DOMAIN}}
+        - name: TRANSLATION_SERVICE_URL
+          value: {{PROTOCOL}}{{.TRANSLATION_SERVER_NAME}}.{{.EXT_DOMAIN}}
+        - name: WORKFLOW_SERVICE_URL
+          value: {{PROTOCOL}}{{.WORKFLOW_SERVER_NAME}}.{{.EXT_DOMAIN}}
         securityContext:
           runAsNonRoot: true
         readinessProbe:
