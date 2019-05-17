@@ -3,14 +3,13 @@ import {retry} from "../../core/util/retry";
 import * as types from "./actionTypes";
 import * as actions from "./actions";
 import {combineEpics} from "redux-observable";
-import config from '../../config';
 
 const fetchReports = (action$, store, {client}) =>
     action$.ofType(types.FETCH_REPORTS_LIST)
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `${config.services.report.url}/api/reports`,
+                path: `${store.getState().appConfig.reportServiceUrl}/api/reports`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`

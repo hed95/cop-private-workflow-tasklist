@@ -16,7 +16,10 @@ describe('Messages epic', () => {
       tokenParsed: {
         email : 'testEmail@email.com'
       }
-    }
+    },
+    appConfig: {
+      workflowServiceUrl: 'http://localhost:9000',
+    },
   });
   store.replaceReducer(reducer);
   it('can fetchNotifications', (done) => {

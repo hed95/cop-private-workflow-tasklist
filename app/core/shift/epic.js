@@ -5,13 +5,12 @@ import { errorObservable } from '../../core/error/epicUtil';
 import PubSub from 'pubsub-js';
 import * as Rx from 'rxjs/Observable';
 import { retry } from '../../core/util/retry';
-import config from '../../config';
 
-const shift = (email, token, client) => {
+const shift = (email, token, operationalDataUrl, client) => {
   console.log(`Requesting shift details for ${email}`);
   return client({
     method: 'GET',
-    path: `${config.services.operationalData.url}/shift?email=eq.${encodeURIComponent(email)}`,
+    path: `${operationalDataUrl}/shift?email=eq.${encodeURIComponent(email)}`,
     headers: {
       'Accept': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -24,7 +23,7 @@ const endShift = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'DELETE',
-        path: `${config.services.workflow.url}/api/workflow/shift/${encodeURIComponent(store.getState().keycloak.tokenParsed.email)}?deletedReason=finished`,
+        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/shift/${encodeURIComponent(store.getState().keycloak.tokenParsed.email)}?deletedReason=finished`,
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${store.getState().keycloak.token}`
@@ -43,7 +42,7 @@ const fetchStaffDetails = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'POST',
-        path: `${config.services.operationalData.url}/rpc/staffdetails`,
+        path: `${store.getState().appConfig.operationalDataUrl}/rpc/staffdetails`,
         entity: {
           'argstaffemail': `${store.getState().keycloak.tokenParsed.email}`
         },
@@ -66,7 +65,7 @@ const fetchShiftForm = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'GET',
-        path: `${config.services.translation.url}/api/translation/form/startShift`,
+        path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/startShift`,
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${store.getState().keycloak.token}`
@@ -82,7 +81,12 @@ const fetchShiftForm = (action$, store, { client }) =>
 const fetchActiveShift = (action$, store, { client }) =>
   action$.ofType(types.FETCH_ACTIVE_SHIFT)
     .mergeMap(action =>
-      shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token, client)
+      shift(
+        store.getState().keycloak.tokenParsed.email,
+        store.getState().keycloak.token,
+        store.getState().appConfig.operationalDataUrl,
+        client,
+      )
         .retryWhen(retry)
         .map(payload => {
           if (payload.status.code === 200 && payload.entity.length === 0) {
@@ -116,7 +120,7 @@ const submit = (action$, store, { client }) =>
       const shiftData = action.submissionData;
       return client({
         method: 'POST',
-        path: `${config.services.form.url}/${action.formId}/submission`,
+        path: `${store.getState().appConfig.formServiceUrl}/${action.formId}/submission`,
         entity: {
           'data': shiftData
         },
@@ -143,7 +147,7 @@ const createActiveShift = (action$, store, { client }) =>
       client({
         method: 'POST',
         entity: action.shiftInfo,
-        path: `${config.services.workflow.url}/api/workflow/shift`,
+        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/shift`,
         headers: {
           'Authorization': `Bearer ${store.getState().keycloak.token}`,
           'Accept': 'application/json',
@@ -165,7 +169,12 @@ const createActiveShift = (action$, store, { client }) =>
 const fetchActiveShiftAfterCreation = (action$, store, { client }) =>
   action$.ofType(types.FETCH_ACTIVE_SHIFT_AFTER_CREATE)
     .mergeMap(action =>
-      shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token, client)
+      shift(
+        store.getState().keycloak.tokenParsed.email,
+        store.getState().keycloak.token,
+        store.getState().appConfig.operationalDataUrl,
+        client,
+      )
         .retryWhen(retry)
         .flatMap(payload => {
           if (payload.status.code === 200 && payload.entity.length === 0) {

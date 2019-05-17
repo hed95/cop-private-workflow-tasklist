@@ -3,7 +3,6 @@ import Iframe from "react-iframe";
 
 import queryString from 'query-string';
 import {withRouter} from "react-router";
-import config from '../../../config';
 
 export class ReportPage extends React.Component {
 
@@ -22,7 +21,7 @@ export class ReportPage extends React.Component {
                 justifyContent: 'center',
                 height: '100vh'
             }}>
-                <Iframe url={`${config.services.report.url}/api/reports/${reportName}`}
+                <Iframe url={`${this.props.appConfig.reportServiceUrl}/api/reports/${reportName}`}
                         id="report"
                         width="100%"
                         height="100%"
