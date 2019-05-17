@@ -11,7 +11,6 @@ import moment from "moment";
 import Pagination from "../../../../core/components/Pagination";
 import ShowMore from 'react-show-more';
 import Collapsible from 'react-collapsible';
-import config from '../../../../config';
 
 const uuidv4 = require('uuid/v4');
 
@@ -33,7 +32,7 @@ export class Comments extends React.Component {
 
     componentDidMount() {
         this.setState({pageOfItems: []});
-        this.props.fetchComments(`${config.services.workflow.url}/api/workflow/tasks/${this.props.taskId}/comments`);
+        this.props.fetchComments(`${this.props.appConfig.workflowServiceUrl}/api/workflow/tasks/${this.props.taskId}/comments`);
 
     }
 
@@ -44,7 +43,7 @@ export class Comments extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.taskId !== this.props.taskId) {
             this.setState({pageOfItems: []});
-            this.props.fetchComments(`${config.services.workflow.url}/api/workflow/tasks/${nextProps.taskId}/comments`);
+            this.props.fetchComments(`${this.props.appConfig.workflowServiceUrl}/api/workflow/tasks/${nextProps.taskId}/comments`);
         }
     }
 

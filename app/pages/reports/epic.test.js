@@ -16,7 +16,10 @@ describe('reports epic', () => {
       tokenParsed: {
         email : 'testEmail@email.com'
       }
-    }
+    },
+    appConfig: {
+      reportServiceUrl: 'http://localhost:9000',
+    },
   });
   store.replaceReducer(reducer);
   it('fetches reports', (done) => {

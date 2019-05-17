@@ -4,7 +4,6 @@ import { errorObservable } from '../../../core/error/epicUtil';
 import { combineEpics } from 'redux-observable';
 import PubSub from 'pubsub-js';
 import { retry } from '../../../core/util/retry';
-import config from '../../../config';
 
 
 const createProcessVariables = (action, userEmail) => {
@@ -30,7 +29,7 @@ const customEvent = (action$, store, { client }) =>
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${store.getState().keycloak.token}`
         },
-        path: `${config.services.workflow.url}/rest/camunda/message`,
+        path: `${store.getState().appConfig.workflowServiceUrl}/rest/camunda/message`,
         entity:  {
           'messageName': action.event.type,
           'processInstanceId': action.task.get('processInstanceId'),
@@ -60,7 +59,7 @@ const fetchTaskForm = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'GET',
-        path: `${config.services.translation.url}/api/translation/form/${action.task.get('formKey')}?taskId=${action.task.get('id')}&processInstanceId=${action.task.get('processInstanceId')}`,
+        path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/${action.task.get('formKey')}?taskId=${action.task.get('id')}&processInstanceId=${action.task.get('processInstanceId')}`,
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${store.getState().keycloak.token}`
@@ -80,7 +79,7 @@ const submitTaskForm = (action$, store, { client }) =>
       const submissionData = Object.assign({}, action.submission);
       return  client({
         method: 'POST',
-        path: `${config.services.form.url}/${action.formId}/submission`,
+        path: `${store.getState().appConfig.formServiceUrl}/${action.formId}/submission`,
         entity: {
           'data': JSON.stringify(submissionData)
         },
@@ -119,7 +118,7 @@ const completeTaskForm = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'POST',
-        path: `${config.services.workflow.url}/api/workflow/tasks/${action.taskId}/form/_complete`,
+        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks/${action.taskId}/form/_complete`,
         entity: action.data,
         headers: {
           'Accept': 'application/json',

@@ -30,7 +30,10 @@ describe('TaskDetailsPage', () => {
         due: dueDate,
         id: 'taskid',
         priority: 1000
-      })
+      }),
+      appConfig: {
+        workflowServiceUrl: 'http://localhost:9000',
+      },
     };
     const wrapper = await mount(<TaskDetailsPage
       store={store}

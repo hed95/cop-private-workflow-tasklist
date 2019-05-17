@@ -26,7 +26,10 @@ describe('shift epic', () => {
       tokenParsed: {
         email : 'testEmail@email.com'
       }
-    }
+    },
+    appConfig: {
+      workflowServiceUrl: 'http://localhost:9000',
+    },
   });
   store.replaceReducer(reducer);
   it ('can perform endShift', (done) => {
