@@ -15,8 +15,6 @@ const path = require('path');
 const cors = require('cors');
 const fs = require('fs');
 
-const config = require('./app/config');
-
 const logger = createLogger({
   format: combine(
     timestamp(),
@@ -90,11 +88,11 @@ app.get('/api/config', (req, res) => {
         "UI_VERSION": process.env.UI_VERSION,
         "UI_ENVIRONMENT" : process.env.UI_ENVIRONMENT,
         "AUTH_ACCESS_ROLE" : process.env.AUTH_ACCESS_ROLE,
-        "OPERATIONAL_DATA_URL" : config.services.operationalData.url,
-        "WORKFLOW_SERVICE_URL" : config.services.workflow.url,
-        "TRANSLATION_SERVICE_URL" : config.services.translation.url,
-        "FORM_SERVICE_URL" : config.services.form.url,
-        "REPORT_SERVICE_URL" : config.services.report.url,
+        "OPERATIONAL_DATA_URL" : process.env.OPERATIONAL_DATA_URL,
+        "WORKFLOW_SERVICE_URL" : process.env.WORKFLOW_SERVICE_URL,
+        "TRANSLATION_SERVICE_URL" : process.env.TRANSLATION_SERVICE_URL,
+        "FORM_SERVICE_URL" : process.env.FORM_SERVICE_URL,
+        "REPORT_SERVICE_URL" : process.env.REPORT_SERVICE_URL,
     })
 });
 
