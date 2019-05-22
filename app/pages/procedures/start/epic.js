@@ -69,7 +69,7 @@ const submit = (action$, store, { client }) =>
       const submissionData = action.submissionData;
       return  client({
         method: 'POST',
-        path: `${store.getState().appConfig.formServiceUrl}/${action.formId}/submission`,
+        path: `${store.getState().appConfig.formServiceUrl}/form/${action.formId}/submission`,
         entity: {
           'data':submissionData
         },
