@@ -20,6 +20,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = webpackMerge(common, {
   mode: 'production',
+  devtool: 'source-map',
   entry: [
     require.resolve('react-app-polyfill/ie11'),
     path.join(process.cwd(), './app/index.js')
