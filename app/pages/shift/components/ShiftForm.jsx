@@ -1,6 +1,7 @@
 import React from 'react';
 import {Form} from 'react-formio';
 import moment from 'moment';
+import AppConstants from "../../../common/AppConstants";
 
 export default class ShiftForm extends React.Component {
 
@@ -13,22 +14,33 @@ export default class ShiftForm extends React.Component {
         return false;
     }
 
+    handleCancel = (resetForm) => {
+        this.props.history.replace(AppConstants.DASHBOARD_PATH);
+        resetForm(false);
+    };
+    options = {
+        noAlerts: true,
+        language: 'en',
+        buttonSettings: {
+            showCancel: true
+        },
+        hooks:{
+            beforeCancel: (...args) => {
+                this.handleCancel(args);
+            }
+        },
+        i18n: {
+            en: {
+                cancel: 'Cancel',
+                previous: 'Back',
+                next: 'Next'
+            }
+        },
+    };
+
     render() {
         const {shiftForm, shift, staffDetails, formReference, submit} = this.props;
-        const options = {
-            noAlerts: true,
-            language: 'en',
-            buttonSettings: {
-                showCancel: true
-            },
-            i18n: {
-                en: {
-                    cancel: 'Cancel',
-                    previous: 'Back',
-                    next: 'Next'
-                }
-            },
-        };
+
         if (!shiftForm) {
             return <div/>;
         }
@@ -44,9 +56,9 @@ export default class ShiftForm extends React.Component {
                     phone: shift.get('phone')
                 }
             };
-            options.i18n.en.submit = 'Amend shift';
+            this.options.i18n.en.submit = 'Amend shift';
 
-            return <Form form={shiftForm} submission={shiftSubmission} options={options}
+            return <Form form={shiftForm} submission={shiftSubmission} options={this.options}
                          ref={(form) => {
                              formReference(form);
                          }}
@@ -54,7 +66,7 @@ export default class ShiftForm extends React.Component {
                              submit(shiftForm, submission);
                          }}/>;
         } else {
-            options.i18n.en.submit = 'Start shift';
+            this.options.i18n.en.submit = 'Start shift';
             if (staffDetails) {
                 const shiftSubmission = {
                     data: {
@@ -66,7 +78,7 @@ export default class ShiftForm extends React.Component {
                         phone: staffDetails.get('phone')
                     }
                 };
-                return <Form form={shiftForm} submission={shiftSubmission} options={options}
+                return <Form form={shiftForm} submission={shiftSubmission} options={this.options}
                              ref={(form) => {
                                  formReference(form)
                              }}
@@ -76,7 +88,7 @@ export default class ShiftForm extends React.Component {
             } else {
                 return <Form form={shiftForm}
                              ref={(form) => formReference(form)}
-                             options={options}
+                             options={this.options}
                              onSubmit={(submission) => {
                                  submit(shiftForm, submission)
                              }}/>
