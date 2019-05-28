@@ -10,7 +10,7 @@ const fetchTaskCounts = (action$, store, {client}) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/workflow/tasks/_task-counts`,
+                path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks/_task-counts`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
@@ -27,7 +27,7 @@ const fetchMessageCounts = (action$, store, {client}) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/workflow/notifications?countOnly=true`,
+                path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/notifications?countOnly=true`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`

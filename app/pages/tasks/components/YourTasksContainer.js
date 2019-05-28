@@ -28,7 +28,7 @@ export class YourTasksContainer extends React.Component {
   }
 
   connect = () => {
-    this.socket = new SockJS('/ws/workflow/tasks');
+    this.socket = new SockJS(`${this.props.appConfig.workflowServiceUrl}/ws/workflow/tasks`);
     this.stompClient = Stomp.over(this.socket);
     const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
     if (uiEnv !== 'development' && uiEnv !== 'local') {

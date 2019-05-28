@@ -6,12 +6,11 @@ import PubSub from 'pubsub-js';
 import * as Rx from 'rxjs/Observable';
 import { retry } from '../../core/util/retry';
 
-
-const shift = (email, token, client) => {
+const shift = (email, token, operationalDataUrl, client) => {
   console.log(`Requesting shift details for ${email}`);
   return client({
     method: 'GET',
-    path: `/api/platform-data/shift?email=eq.${encodeURIComponent(email)}`,
+    path: `${operationalDataUrl}/shift?email=eq.${encodeURIComponent(email)}`,
     headers: {
       'Accept': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -19,13 +18,12 @@ const shift = (email, token, client) => {
   });
 };
 
-
 const endShift = (action$, store, { client }) =>
   action$.ofType(types.END_SHIFT)
     .mergeMap(action =>
       client({
         method: 'DELETE',
-        path: `/api/workflow/shift/${encodeURIComponent(store.getState().keycloak.tokenParsed.email)}?deletedReason=finished`,
+        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/shift/${encodeURIComponent(store.getState().keycloak.tokenParsed.email)}?deletedReason=finished`,
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${store.getState().keycloak.token}`
@@ -44,7 +42,7 @@ const fetchStaffDetails = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'POST',
-        path: `/api/platform-data/rpc/staffdetails`,
+        path: `${store.getState().appConfig.operationalDataUrl}/rpc/staffdetails`,
         entity: {
           'argstaffemail': `${store.getState().keycloak.tokenParsed.email}`
         },
@@ -67,7 +65,7 @@ const fetchShiftForm = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'GET',
-        path: `/api/translation/form/startShift`,
+        path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/startShift`,
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${store.getState().keycloak.token}`
@@ -83,7 +81,12 @@ const fetchShiftForm = (action$, store, { client }) =>
 const fetchActiveShift = (action$, store, { client }) =>
   action$.ofType(types.FETCH_ACTIVE_SHIFT)
     .mergeMap(action =>
-      shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token, client)
+      shift(
+        store.getState().keycloak.tokenParsed.email,
+        store.getState().keycloak.token,
+        store.getState().appConfig.operationalDataUrl,
+        client,
+      )
         .retryWhen(retry)
         .map(payload => {
           if (payload.status.code === 200 && payload.entity.length === 0) {
@@ -117,7 +120,7 @@ const submit = (action$, store, { client }) =>
       const shiftData = action.submissionData;
       return client({
         method: 'POST',
-        path: `/api/form/${action.formId}/submission`,
+        path: `${store.getState().appConfig.formServiceUrl}/form/${action.formId}/submission`,
         entity: {
           'data': shiftData
         },
@@ -144,7 +147,7 @@ const createActiveShift = (action$, store, { client }) =>
       client({
         method: 'POST',
         entity: action.shiftInfo,
-        path: `/api/workflow/shift`,
+        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/shift`,
         headers: {
           'Authorization': `Bearer ${store.getState().keycloak.token}`,
           'Accept': 'application/json',
@@ -166,7 +169,12 @@ const createActiveShift = (action$, store, { client }) =>
 const fetchActiveShiftAfterCreation = (action$, store, { client }) =>
   action$.ofType(types.FETCH_ACTIVE_SHIFT_AFTER_CREATE)
     .mergeMap(action =>
-      shift(store.getState().keycloak.tokenParsed.email, store.getState().keycloak.token, client)
+      shift(
+        store.getState().keycloak.tokenParsed.email,
+        store.getState().keycloak.token,
+        store.getState().appConfig.operationalDataUrl,
+        client,
+      )
         .retryWhen(retry)
         .flatMap(payload => {
           if (payload.status.code === 200 && payload.entity.length === 0) {

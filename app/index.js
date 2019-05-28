@@ -111,7 +111,12 @@ if (process.env.NODE_ENV === 'production') {
         });
         store.getState().appConfig = {
             "uiVersion": data.UI_VERSION,
-            "uiEnvironment": data.UI_ENVIRONMENT
+            "uiEnvironment": data.UI_ENVIRONMENT,
+            "operationalDataUrl": data.OPERATIONAL_DATA_URL,
+            "workflowServiceUrl": data.WORKFLOW_SERVICE_URL,
+            "translationServiceUrl": data.TRANSLATION_SERVICE_URL,
+            "formServiceUrl": data.FORM_SERVICE_URL,
+            "reportServiceUrl": data.REPORT_SERVICE_URL
         };
         renderApp(App, data.AUTH_ACCESS_ROLE);
     })

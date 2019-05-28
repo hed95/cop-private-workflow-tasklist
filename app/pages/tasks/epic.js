@@ -9,7 +9,7 @@ const fetchTasksAssignedYou = (action$, store, {client}) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/workflow/tasks?assignedToMeOnly=true&${action.sortValue 
+                path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks?assignedToMeOnly=true&${action.sortValue
                   ? action.sortValue: 'sort=due,desc' }${action.filterValue?'&name=' + action.filterValue: ''}`,
                 headers: {
                     "Accept": "application/json",
@@ -27,7 +27,7 @@ const fetchYourGroupTasks = (action$, store, {client}) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/workflow/tasks?teamOnly=true&${action.sortValue
+                path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks?teamOnly=true&${action.sortValue
                 ? action.sortValue: 'sort=due,desc' }${action.filterValue?'&name=' + action.filterValue: ''}`,
                 headers: {
                     "Accept": "application/json",

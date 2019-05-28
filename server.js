@@ -87,7 +87,12 @@ app.get('/api/config', (req, res) => {
         'CLIENT_ID': process.env.AUTH_CLIENT_ID,
         "UI_VERSION": process.env.UI_VERSION,
         "UI_ENVIRONMENT" : process.env.UI_ENVIRONMENT,
-        "AUTH_ACCESS_ROLE" : process.env.AUTH_ACCESS_ROLE
+        "AUTH_ACCESS_ROLE" : process.env.AUTH_ACCESS_ROLE,
+        "OPERATIONAL_DATA_URL" : process.env.OPERATIONAL_DATA_URL,
+        "WORKFLOW_SERVICE_URL" : process.env.WORKFLOW_SERVICE_URL,
+        "TRANSLATION_SERVICE_URL" : process.env.TRANSLATION_SERVICE_URL,
+        "FORM_SERVICE_URL" : process.env.FORM_SERVICE_URL,
+        "REPORT_SERVICE_URL" : process.env.REPORT_SERVICE_URL,
     })
 });
 

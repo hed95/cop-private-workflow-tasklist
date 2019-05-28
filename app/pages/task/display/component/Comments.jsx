@@ -32,7 +32,7 @@ export class Comments extends React.Component {
 
     componentDidMount() {
         this.setState({pageOfItems: []});
-        this.props.fetchComments(`/api/workflow/tasks/${this.props.taskId}/comments`);
+        this.props.fetchComments(`${this.props.appConfig.workflowServiceUrl}/api/workflow/tasks/${this.props.taskId}/comments`);
 
     }
 
@@ -43,7 +43,7 @@ export class Comments extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.taskId !== this.props.taskId) {
             this.setState({pageOfItems: []});
-            this.props.fetchComments(`/api/workflow/tasks/${nextProps.taskId}/comments`);
+            this.props.fetchComments(`${this.props.appConfig.workflowServiceUrl}/api/workflow/tasks/${nextProps.taskId}/comments`);
         }
     }
 

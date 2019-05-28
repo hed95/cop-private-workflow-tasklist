@@ -9,7 +9,7 @@ const fetchReports = (action$, store, {client}) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/reports`,
+                path: `${store.getState().appConfig.reportServiceUrl}/api/reports`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`

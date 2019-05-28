@@ -9,7 +9,7 @@ const fetchProcessDefinitionXml = (action$, store,  {client}) =>
     .mergeMap(action =>
       client({
         method: 'GET',
-        path: `/rest/camunda/process-definition/key/${action.processDefinitionId}/xml`,
+        path: `${store.getState().appConfig.workflowServiceUrl}/rest/camunda/process-definition/key/${action.processDefinitionId}/xml`,
         headers: {
           "Accept": "application/json",
           "Authorization": `Bearer ${store.getState().keycloak.token}`

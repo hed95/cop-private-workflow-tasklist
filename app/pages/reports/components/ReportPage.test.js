@@ -9,13 +9,16 @@ describe('Report Page', () => {
     const props = {
       location: {
         search: '?reportName=myReport.html'
-      }
+      },
+      appConfig: {
+        reportServiceUrl: 'http://localhost:9000'
+      },
     };
     const wrapper = shallow(<ReportPage
       {...props}
     />);
     expect(wrapper.find('#backToReports').exists()).toEqual(true);
     const iframeWrapper = wrapper.find('Iframe');
-    expect(iframeWrapper.prop('url')).toEqual('/api/reports/myReport.html');
+    expect(iframeWrapper.prop('url')).toEqual(`${props.appConfig.reportServiceUrl}/api/reports/myReport.html`);
   });
 });

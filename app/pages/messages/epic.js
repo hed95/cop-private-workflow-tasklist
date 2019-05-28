@@ -12,7 +12,7 @@ const fetchNotifications = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'GET',
-        path: `/api/workflow/notifications?countOnly=false`,
+        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/notifications?countOnly=false`,
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${store.getState().keycloak.token}`
@@ -47,7 +47,7 @@ const acknowledgeNotification = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'DELETE',
-        path: `/api/workflow/notifications/task/${action.taskId}`,
+        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/notifications/task/${action.taskId}`,
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${store.getState().keycloak.token}`

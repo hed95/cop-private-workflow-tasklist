@@ -9,7 +9,6 @@ import DataSpinner from '../../../core/components/DataSpinner';
 import {bindActionCreators} from 'redux';
 import withLog from '../../../core/error/component/withLog';
 
-
 const ProceduresDashboardPanel = React.lazy(() => import('./ProceduresDashboardPanel'));
 const ReportsDashboardPanel = React.lazy(() => import('./ReportsDashboardPanel'));
 const CalendarDashboardPanel = React.lazy(() => import('./CalendarDashboardPanel'));
@@ -27,7 +26,7 @@ export class DashboardPanel extends React.Component {
     }
 
     connect = (user) => {
-        this.socket = new SockJS("/ws/workflow/tasks");
+        this.socket = new SockJS(`${this.props.appConfig.workflowServiceUrl}/ws/workflow/tasks`);
         this.stompClient = Stomp.over(this.socket);
         const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
 

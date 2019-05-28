@@ -10,7 +10,7 @@ const updateDueDate = (action$, store, {client}) =>
     .mergeMap(action =>
       client({
         method: 'PUT',
-        path: `/api/workflow/tasks/${action.taskId}`,
+        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks/${action.taskId}`,
         entity: {
             "id": action.taskId,
             "due": moment(action.dueDate, 'DD-MM-YYYY HH:mm').utc()
@@ -48,7 +48,7 @@ const fetchTask = (action$, store, {client}) =>
     action$.ofType(types.FETCH_TASK)
         .mergeMap(action => client({
             method: 'GET',
-            path: `/api/workflow/tasks/${action.taskId}?includeVariables=true`,
+            path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks/${action.taskId}?includeVariables=true`,
             headers: {
                 "Accept": "application/json",
                 "Authorization": `Bearer ${store.getState().keycloak.token}`
@@ -65,7 +65,7 @@ const fetchCreateCommentForm = (action$, store, {client}) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `/api/translation/form/createAComment`,
+                path: `${store.getState().appConfig.workflowServiceUrl}/api/translation/form/createAComment`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`
@@ -86,7 +86,7 @@ const createComment = (action$, store, {client}) =>
                     "comment": action.comment.message,
                     "taskid": action.taskId,
                 },
-                path: `/api/workflow/tasks/comments`,
+                path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks/comments`,
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
@@ -105,7 +105,7 @@ const claimTask = (action$, store, {client}) =>
             client({
                 method: 'POST',
                 entity: {},
-                path: `/api/workflow/tasks/${action.taskId}/_claim`,
+                path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks/${action.taskId}/_claim`,
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
@@ -124,7 +124,7 @@ const unclaimTask = (action$, store, {client}) =>
             client({
                 method: 'POST',
                 entity: {},
-                path: `/api/workflow/tasks/${action.taskId}/_unclaim`,
+                path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks/${action.taskId}/_unclaim`,
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
@@ -142,7 +142,7 @@ const completeTask = (action$, store, {client}) =>
             client({
                 method: 'POST',
                 entity: {},
-                path: `/api/workflow/tasks/${action.taskId}/_complete`,
+                path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks/${action.taskId}/_complete`,
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",

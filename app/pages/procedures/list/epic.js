@@ -9,7 +9,7 @@ const fetchProcessDefinitions = (action$, store, {client}) =>
         .mergeMap(action => {
             return client({
                 method: 'GET',
-                path: `/api/workflow/process-definitions`,
+                path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/process-definitions`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`

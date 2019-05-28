@@ -21,7 +21,7 @@ export class ReportPage extends React.Component {
                 justifyContent: 'center',
                 height: '100vh'
             }}>
-                <Iframe url={`/api/reports/${reportName}`}
+                <Iframe url={`${this.props.appConfig.reportServiceUrl}/api/reports/${reportName}`}
                         id="report"
                         width="100%"
                         height="100%"
