@@ -145,7 +145,7 @@
     "react-collapsible": "^2.3.2",
     "react-device-detect": "^1.6.1",
     "react-dom": "^16.6.3",
-    "react-formio": "^v4.0.0-beta.16",
+    "react-formio": "^v4.0.0-beta.18",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-hyper-responsive-table": "^0.6.0",
     "react-iframe": "^1.1.0",
