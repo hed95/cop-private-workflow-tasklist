@@ -95,6 +95,7 @@ Comments.propTypes = {
     fetchComments: PropTypes.func.isRequired,
     isFetchingComments: PropTypes.bool,
     comments: ImmutablePropTypes.list,
+    appConfig: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
