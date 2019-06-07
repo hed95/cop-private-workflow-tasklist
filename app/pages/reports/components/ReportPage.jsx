@@ -38,6 +38,6 @@ export class ReportPage extends React.Component {
 
 export default withRouter(connect((state) => {
     return {
-        appConfig: appConfig(state)
+        appConfig: state.appConfig
     };
 }, {})(ReportPage));
