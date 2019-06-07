@@ -128,8 +128,13 @@ if (process.env.NODE_ENV === 'production') {
         "clientId": process.env.CLIENT_ID
     });
     store.getState().appConfig = {
-        "uiVersion": process.env.UI_VERSION || "ALPHA",
-        "uiEnvironment": process.env.UI_ENVIRONMENT || 'LOCAL'
+        "uiVersion": data.UI_VERSION,
+        "uiEnvironment": data.UI_ENVIRONMENT,
+        "operationalDataUrl": data.OPERATIONAL_DATA_URL,
+        "workflowServiceUrl": data.WORKFLOW_SERVICE_URL,
+        "translationServiceUrl": data.TRANSLATION_SERVICE_URL,
+        "formServiceUrl": data.FORM_SERVICE_URL,
+        "reportServiceUrl": data.REPORT_SERVICE_URL
     };
     renderApp(App, authAccessRole);
 

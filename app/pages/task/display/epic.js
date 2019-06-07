@@ -65,7 +65,7 @@ const fetchCreateCommentForm = (action$, store, {client}) =>
         .mergeMap(action =>
             client({
                 method: 'GET',
-                path: `${store.getState().appConfig.workflowServiceUrl}/api/translation/form/createAComment`,
+                path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/createAComment`,
                 headers: {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${store.getState().keycloak.token}`

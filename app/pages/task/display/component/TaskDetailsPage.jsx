@@ -90,6 +90,7 @@ export default withRouter(connect((state) => {
     return {
         kc: state.keycloak,
         submissionStatus: submissionStatus(state),
-        customEventSubmissionStatus: customEventSubmissionStatus(state)
+        customEventSubmissionStatus: customEventSubmissionStatus(state),
+        appConfig: appConfig(state)
     };
 }, mapDispatchToProps)(TaskDetailsPage));
