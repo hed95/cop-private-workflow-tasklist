@@ -11,9 +11,6 @@ import moment from "moment";
 import Pagination from "../../../../core/components/Pagination";
 import ShowMore from 'react-show-more';
 import Collapsible from 'react-collapsible';
-import {withRouter} from "react-router";
-import {yourTasks} from "../../../tasks/selectors";
-import {YourTasksContainer} from "../../../tasks/components/YourTasksContainer";
 
 const uuidv4 = require('uuid/v4');
 
@@ -101,12 +98,11 @@ Comments.propTypes = {
     appConfig: PropTypes.object,
 };
 
+const mapStateToProps = createStructuredSelector({
+    isFetchingComments: isFetchingComments,
+    comments: comments,
+});
+
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default connect((state) => {
-    return {
-        isFetchingComments: isFetchingComments(state),
-        comments: comments(state),
-        appConfig: state.appConfig,
-    }
-}, mapDispatchToProps)(Comments);
+export default connect(mapStateToProps, mapDispatchToProps)(Comments);
