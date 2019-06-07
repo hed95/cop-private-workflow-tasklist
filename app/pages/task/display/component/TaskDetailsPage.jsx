@@ -91,6 +91,6 @@ export default withRouter(connect((state) => {
         kc: state.keycloak,
         submissionStatus: submissionStatus(state),
         customEventSubmissionStatus: customEventSubmissionStatus(state),
-        appConfig: appConfig(state)
+        appConfig: state.appConfig
     };
 }, mapDispatchToProps)(TaskDetailsPage));

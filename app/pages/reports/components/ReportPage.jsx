@@ -3,6 +3,7 @@ import Iframe from "react-iframe";
 
 import queryString from 'query-string';
 import {withRouter} from "react-router";
+import {connect} from "react-redux";
 
 export class ReportPage extends React.Component {
 
@@ -12,7 +13,9 @@ export class ReportPage extends React.Component {
         const reportName = params.reportName;
 
         return <div>
-            <a href="#" id="backToReports" style={{textDecoration: 'none'}} className="govuk-link govuk-back-link govuk-!-font-size-19" onClick={() => this.props.history.replace('/reports')}>Back to reports</a>
+            <a href="#" id="backToReports" style={{textDecoration: 'none'}}
+               className="govuk-link govuk-back-link govuk-!-font-size-19"
+               onClick={() => this.props.history.replace('/reports')}>Back to reports</a>
 
             <div style={{
                 display: 'flex',
@@ -33,4 +36,8 @@ export class ReportPage extends React.Component {
     }
 }
 
-export default withRouter(ReportPage);
+export default withRouter(connect((state) => {
+    return {
+        appConfig: state.appConfig
+    };
+}, {})(ReportPage));
