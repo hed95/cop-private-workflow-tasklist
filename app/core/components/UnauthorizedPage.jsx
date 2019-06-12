@@ -8,7 +8,9 @@ const UnauthorizedPage = () => (
     <div className="govuk-error-summary__body">
       <ul className="govuk-list govuk-error-summary__list">
         <li>
-          <p className="govuk-body">Please contact operational support to get access</p>
+          <p className="govuk-body">
+            To get access, please raise a request via <a className="govuk-link" href="https://lssiprod.service-now.com/ess?id=sc_cat_item&sys_id=e452ca8e4f83eb480900e1128110c730.">IT Now</a>
+          </p>
         </li>
       </ul>
     </div>
