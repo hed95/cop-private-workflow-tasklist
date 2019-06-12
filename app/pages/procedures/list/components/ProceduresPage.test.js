@@ -1,21 +1,21 @@
-jest.mock('react-device-detect', () => ({
-  isMobile: false
-}));
-
 import React from 'react';
-import { mount,shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import { ProceduresPage } from './ProceduresPage';
 
-const { Map,List} = Immutable;
+jest.mock('react-device-detect', () => ({
+  isMobile: false,
+}));
+
+const { Map, List } = Immutable;
 
 describe('ProceduresPage', () => {
   const initialState = {
     'procedures-list-page': new Map({
       isFetchingProcessDefinitions: true,
-      processDefinitions: List([])
-    })
+      processDefinitions: List([]),
+    }),
   };
   const mockStore = configureStore();
   let store;
@@ -28,7 +28,7 @@ describe('ProceduresPage', () => {
   it('renders loading when fetching data', () => {
     const props = {
       isFetchingProcessDefinitions: true,
-      processDefinitions: List([])
+      processDefinitions: List([]),
     };
     const wrapper = shallow(<ProceduresPage
       store={store}
@@ -44,11 +44,11 @@ describe('ProceduresPage', () => {
   });
 
   it('renders  a list of procedures with procedure view', async () => {
-    window.matchMedia = window.matchMedia || function() {
+    window.matchMedia = window.matchMedia || function () {
       return {
-        matches : true,
-        addListener : function() {},
-        removeListener: function() {}
+        matches: true,
+        addListener() {},
+        removeListener() {},
       };
     };
     const props = {
@@ -57,17 +57,17 @@ describe('ProceduresPage', () => {
         'process-definition': {
           key: 'processA',
           name: 'processA',
-          description: 'processADescription'
-        }
-      },{
+          description: 'processADescription',
+        },
+      }, {
         'process-definition': {
           key: 'processB',
           name: 'processB',
-          description: 'processBDescription'
-        }
-      }])
+          description: 'processBDescription',
+        },
+      }]),
     };
-    const wrapper =  await mount(<ProceduresPage
+    const wrapper = await mount(<ProceduresPage
       store={store}
       {...props}
       fetchProcessDefinitions={fetchProcessDefinitions}
@@ -91,7 +91,7 @@ describe('ProceduresPage', () => {
     const actionButton = map[2];
 
     expect(viewProcessColumn.find('#procedureView').text()).toEqual('View procedure');
-    expect(actionButton.find('button').text()).toEqual("Start");
+    expect(actionButton.find('button').text()).toEqual('Start');
 
     window.matchMedia = null;
   });

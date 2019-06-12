@@ -1,5 +1,6 @@
 import * as selectors from './selectors';
 import Immutable from 'immutable';
+
 const { Map } = Immutable;
 
 describe('shift selector', () => {
@@ -7,21 +8,21 @@ describe('shift selector', () => {
     isFetchingShift: true,
     hasActiveShift: true,
     shift: Immutable.fromJS({
-      'staffid' : 'staffid'
+      staffid: 'staffid',
     }),
     submittingActiveShift: true,
     activeShiftSuccess: true,
     loadingShiftForm: true,
     shiftForm: {
       name: 'shiftForm',
-      components: []
+      components: [],
     },
     staffDetails: null,
     isFetchingStaffDetails: true,
-    endingShift: false
+    endingShift: false,
   });
   const state = {
-    'shift-page' : initialState
+    'shift-page': initialState,
   };
   it('should return hasActiveShift', () => {
     const result = selectors.hasActiveShift(state);
@@ -51,5 +52,4 @@ describe('shift selector', () => {
     const result = selectors.endingShift(state);
     expect(result).toEqual(false);
   });
-
 });

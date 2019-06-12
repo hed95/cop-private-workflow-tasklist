@@ -1,7 +1,7 @@
 import Immutable, { List } from 'immutable';
 import * as actions from './actionTypes';
 
-const { Map} = Immutable;
+const { Map } = Immutable;
 
 export const initialState = new Map({
   hasError: false,
@@ -17,7 +17,7 @@ function reducer(state = initialState, action) {
       const error = action.payload;
       const errorToReturn = {};
       errorToReturn.status = error.status.code;
-      errorToReturn.url = error.request ? error.request.method + ' -> ' + error.request.path : '';
+      errorToReturn.url = error.request ? `${error.request.method} -> ${error.request.path}` : '';
       if (error.entity) {
         errorToReturn.error = error.entity.error;
         if (error.entity.message) {

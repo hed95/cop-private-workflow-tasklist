@@ -1,23 +1,22 @@
 import * as selectors from './selectors';
 import Immutable from 'immutable';
 
-const {Map, List, Set} = Immutable;
+const { Map, List, Set } = Immutable;
 describe('Messages selector', () => {
-
   const state = {
     'notification-page': new Map({
       isFetching: false,
       notifications: List([Immutable.fromJS({
-        'task' : {
-          'id' : 'id'
-        }
+        task: {
+          id: 'id',
+        },
       })]),
       total: 1,
       nextPage: 'nextPage',
       hasMoreItems: true,
       pageSize: null,
-      acknowledgingTaskIds: Set([])
-    })
+      acknowledgingTaskIds: Set([]),
+    }),
   };
   it('can get notifications', () => {
     const result = selectors.notifications(state);

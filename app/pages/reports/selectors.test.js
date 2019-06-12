@@ -1,15 +1,16 @@
 import * as selectors from './selectors';
 import Immutable from 'immutable';
+
 const { Map } = Immutable;
 
 describe('reports selector', () => {
   const state = {
     'reports-page': new Map({
       reports: Immutable.fromJS([{
-        'report': 'report'
+        report: 'report',
       }]),
-      loadingReports: true
-    })
+      loadingReports: true,
+    }),
   };
   it('can get loadingReports', () => {
     const result = selectors.loadingReports(state);

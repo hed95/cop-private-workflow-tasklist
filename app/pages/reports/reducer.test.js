@@ -11,8 +11,8 @@ describe('reports reducer', () => {
   it('can handle reports', () => {
     const result = reducer(initialStateToTest, actions.fetchReportsListSuccess({
       entity: [{
-        name: 'reportname'
-      }]
+        name: 'reportname',
+      }],
     }));
     expect(result.get('loadingReports')).toEqual(false);
     expect(result.get('reports').size).toEqual(1);

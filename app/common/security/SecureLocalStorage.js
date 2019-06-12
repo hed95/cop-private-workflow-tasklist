@@ -4,7 +4,7 @@ const secureLocalStorage = new SecureLS(
   {
     encodingType: 'aes',
     encryptionSecret: process.env.STORAGE_KEY,
-    isCompression: true
+    isCompression: true,
   });
 
 export default secureLocalStorage;

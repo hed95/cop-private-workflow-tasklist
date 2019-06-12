@@ -2,43 +2,43 @@ import * as types from './actionTypes';
 
 
 const fetchShiftForm = () => ({
-  type: types.FETCH_SHIFT_FORM
+  type: types.FETCH_SHIFT_FORM,
 });
 
 const fetchShiftFormSuccess = payload => ({
   type: types.FETCH_SHIFT_FORM_SUCCESS,
-  payload
+  payload,
 });
 
 const fetchShiftFormFailure = () => ({
-  type: types.FETCH_SHIFT_FORM_FAILURE
+  type: types.FETCH_SHIFT_FORM_FAILURE,
 });
 
 
 const fetchActiveShift = () => ({
-  type: types.FETCH_ACTIVE_SHIFT
+  type: types.FETCH_ACTIVE_SHIFT,
 });
 
 const fetchActiveShiftSuccess = payload => ({
   type: types.FETCH_ACTIVE_SHIFT_SUCCESS,
-  payload
+  payload,
 });
 
 const fetchActiveShiftFailure = () => ({
-  type: types.FETCH_ACTIVE_SHIFT_FAILURE
+  type: types.FETCH_ACTIVE_SHIFT_FAILURE,
 });
 
-const createActiveShift = (shiftInfo) => ({
+const createActiveShift = shiftInfo => ({
   type: types.CREATE_ACTIVE_SHIFT,
-  shiftInfo
+  shiftInfo,
 });
 
 const createActiveShiftSuccess = () => ({
-  type: types.CREATE_ACTIVE_SHIFT_SUCCESS
+  type: types.CREATE_ACTIVE_SHIFT_SUCCESS,
 });
 
 const createActiveShiftFailure = () => ({
-  type: types.CREATE_ACTIVE_SHIFT_FAILURE
+  type: types.CREATE_ACTIVE_SHIFT_FAILURE,
 });
 
 const submit = (formId, submissionData) => ({
@@ -47,21 +47,21 @@ const submit = (formId, submissionData) => ({
   submissionData,
 });
 
-const submitSuccess = (payload) => ({
+const submitSuccess = payload => ({
   type: types.SUBMIT_VALIDATION_SUCCESS,
-  payload
+  payload,
 });
 
 const submitFailure = () => ({
-  type: types.SUBMIT_VALIDATION_FAILURE
+  type: types.SUBMIT_VALIDATION_FAILURE,
 });
 
 const fetchStaffDetails = () => ({
-  type: types.FETCH_STAFF_DETAILS
+  type: types.FETCH_STAFF_DETAILS,
 });
-const fetchStaffDetailsSuccess = (payload) => ({
+const fetchStaffDetailsSuccess = payload => ({
   type: types.FETCH_STAFF_DETAILS_SUCCESS,
-  payload
+  payload,
 });
 
 const fetchStaffDetailsFailure = () => ({
@@ -70,28 +70,28 @@ const fetchStaffDetailsFailure = () => ({
 
 
 const endShift = () => ({
-  type: types.END_SHIFT
+  type: types.END_SHIFT,
 });
 
-const endShiftSuccess = (payload) => ({
+const endShiftSuccess = payload => ({
   type: types.END_SHIFT_SUCCESS,
-  payload
+  payload,
 });
 
 const endShiftFailure = () => ({
-  type: types.END_SHIFT_FAILURE
+  type: types.END_SHIFT_FAILURE,
 });
 
 const setHasActiveShift = () => ({
-  type: types.SET_HAS_ACTIVE_SHIFT
+  type: types.SET_HAS_ACTIVE_SHIFT,
 });
 
 const performOnboardingCheck = () => ({
-  type: types.PERFORM_ONBOARDING_CHECK
+  type: types.PERFORM_ONBOARDING_CHECK,
 });
 
 const onboardingCheckCompete = () => ({
-  type: types.PERFORM_ONBOARDING_CHECK_COMPLETE
+  type: types.PERFORM_ONBOARDING_CHECK_COMPLETE,
 });
 
 
@@ -116,5 +116,5 @@ export {
   endShiftSuccess,
   setHasActiveShift,
   performOnboardingCheck,
-  onboardingCheckCompete
+  onboardingCheckCompete,
 };

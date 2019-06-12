@@ -8,14 +8,14 @@ import 'rxjs';
 import 'rxjs/add/operator/mergeMap';
 
 describe('epicUtil', () => {
-  it ('can handle 403', (done) => {
+  it('can handle 403', (done) => {
     const action$ = ActionsObservable.of(
-      { type: 'ERROR', formName: 'formName' }
+      { type: 'ERROR', formName: 'formName' },
     );
     Observable.concat(errorObservable(action$, {
       status: {
-        code: 403
-      }
+        code: 403,
+      },
     })).toArray()
       .subscribe((result) => {
         const unauthorised = result[0];
@@ -26,16 +26,15 @@ describe('epicUtil', () => {
           done();
         });
       });
-
   });
   it('can handle any other exception', (done) => {
     const action$ = ActionsObservable.of(
-      { type: 'FETCH_FORM_FAILURE', formName: 'formName' }
+      { type: 'FETCH_FORM_FAILURE', formName: 'formName' },
     );
     Observable.concat(errorObservable(action$, {
       status: {
-        code: 500
-      }
+        code: 500,
+      },
     })).toArray()
       .subscribe((result) => {
         const failureAction = result[0];

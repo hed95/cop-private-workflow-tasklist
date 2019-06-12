@@ -17,7 +17,7 @@ describe('Shift page', () => {
       submittingActiveShift: false,
       shiftForm: {
 
-      }
+      },
     };
     const wrapper = await mount(<ShiftPage
       {...props}
@@ -34,19 +34,21 @@ describe('Shift page', () => {
     expect(wrapper.find('.loader-message').text()).toEqual('Loading your shift details');
   });
 
-  it ('renders error panel if submission fails', async() => {
+  it('renders error panel if submission fails', async () => {
     const props = {
       isFetchingShift: false,
       isFetchingStaffDetails: false,
       loadingShiftForm: false,
       failedToCreateShift: true,
-      submittingActiveShift: false
+      submittingActiveShift: false,
     };
-    const wrapper = await mount(<ErrorHandlingComponent skipAuth={true} hasError={true} errors={
+    const wrapper = await mount(<ErrorHandlingComponent
+      skipAuth hasError errors={
       Immutable.fromJS([{
-        message: "failed"
+        message: 'failed',
       }])
-    }><ShiftPage
+    }
+    ><ShiftPage
       {...props}
       fetchActiveShift={fetchActiveShift}
       fetchShiftForm={fetchShiftForm}
@@ -62,7 +64,7 @@ describe('Shift page', () => {
     expect(wrapper.find('.govuk-error-summary').exists()).toEqual(true);
   });
 
-  it ('renders submitting once submitted', async() => {
+  it('renders submitting once submitted', async () => {
     const props = {
       isFetchingShift: false,
       isFetchingStaffDetails: false,
@@ -71,7 +73,7 @@ describe('Shift page', () => {
       submittingActiveShift: false,
       shiftForm: {
 
-      }
+      },
     };
     const wrapper = await mount(<ShiftPage
       {...props}
@@ -80,56 +82,56 @@ describe('Shift page', () => {
       fetchStaffDetails={fetchStaffDetails}
     />);
 
-    wrapper.setProps({submittingActiveShift: true});
+    wrapper.setProps({ submittingActiveShift: true });
     const loaderContent = wrapper.find('.Loader__content');
     expect(loaderContent.exists()).toEqual(true);
-    expect(loaderContent.prop('style')).toEqual({opacity: 0});
+    expect(loaderContent.prop('style')).toEqual({ opacity: 0 });
   });
 
-  it('redirects to dashboard after shift created', async() => {
+  it('redirects to dashboard after shift created', async () => {
     const form = {
-      'display': 'form',
-      'components': [
+      display: 'form',
+      components: [
         {
-          'id': 'shiftminutes',
-          'label': 'Shift minutes',
-          'allowMultipleMasks': false,
-          'showWordCount': false,
-          'showCharCount': false,
-          'tableView': true,
-          'alwaysEnabled': false,
-          'type': 'textfield',
-          'input': true,
-          'key': 'firstName',
-          'widget': {
-            'type': ''
-          }
+          id: 'shiftminutes',
+          label: 'Shift minutes',
+          allowMultipleMasks: false,
+          showWordCount: false,
+          showCharCount: false,
+          tableView: true,
+          alwaysEnabled: false,
+          type: 'textfield',
+          input: true,
+          key: 'firstName',
+          widget: {
+            type: '',
+          },
         },
         {
-          'id': 'shifthours',
-          'label': 'Shift hours',
-          'allowMultipleMasks': false,
-          'showWordCount': false,
-          'showCharCount': false,
-          'tableView': true,
-          'alwaysEnabled': false,
-          'type': 'textfield',
-          'input': true,
-          'key': 'firstName',
-          'widget': {
-            'type': ''
-          }
+          id: 'shifthours',
+          label: 'Shift hours',
+          allowMultipleMasks: false,
+          showWordCount: false,
+          showCharCount: false,
+          tableView: true,
+          alwaysEnabled: false,
+          type: 'textfield',
+          input: true,
+          key: 'firstName',
+          widget: {
+            type: '',
+          },
         },
         {
-          'id': 'submitId',
-          'type': 'button',
-          'label': 'Submit',
-          'key': 'submit',
-          'disableOnInvalid': true,
-          'theme': 'primary',
-          'input': true,
-          'tableView': true
-        }
+          id: 'submitId',
+          type: 'button',
+          label: 'Submit',
+          key: 'submit',
+          disableOnInvalid: true,
+          theme: 'primary',
+          input: true,
+          tableView: true,
+        },
       ],
     };
     const props = {
@@ -140,9 +142,9 @@ describe('Shift page', () => {
       submittingActiveShift: true,
       activeShiftSuccess: null,
       history: {
-        replace: jest.fn()
+        replace: jest.fn(),
       },
-      shiftForm : form,
+      shiftForm: form,
     };
 
     const wrapper = await mount(<ShiftPage
@@ -152,21 +154,20 @@ describe('Shift page', () => {
       fetchStaffDetails={fetchStaffDetails}
     />);
 
-    const emit = jest.fn(args => console.log("Event " + args));
+    const emit = jest.fn(args => console.log(`Event ${args}`));
 
     const submission = {
       data: {
-        "shiftminutes" : 10,
-        "shifthours" : 10
-      }
+        shiftminutes: 10,
+        shifthours: 10,
+      },
     };
     wrapper.instance().form.formio = {
-      emit: emit,
-      submission: submission
+      emit,
+      submission,
     };
-    wrapper.setProps({activeShiftSuccess: true, submittingActiveShift: false});
+    wrapper.setProps({ activeShiftSuccess: true, submittingActiveShift: false });
     expect(emit).toHaveBeenCalled();
     expect(props.history.replace).toHaveBeenCalled();
-
   });
 });

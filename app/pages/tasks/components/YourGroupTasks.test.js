@@ -13,7 +13,6 @@ const { Map } = Immutable;
 jest.useFakeTimers();
 
 describe('YourGroupTasksContainer Page', () => {
-
   const mockStore = configureStore();
   let store;
   const date = moment();
@@ -28,9 +27,9 @@ describe('YourGroupTasksContainer Page', () => {
         priority: 1000,
         due: date,
         created: date,
-        assignee: 'test@test.com'
-      }
-    }]
+        assignee: 'test@test.com',
+      },
+    }],
   });
   beforeEach(() => {
     store = mockStore({
@@ -38,17 +37,17 @@ describe('YourGroupTasksContainer Page', () => {
       'task-page': new Map({}),
       keycloak: {
         tokenParsed: {
-          email: "test@test.com"
-        }
-      }
+          email: 'test@test.com',
+        },
+      },
     });
     window.matchMedia = window.matchMedia || function () {
       return {
         matches: true,
-        addListener: function () {
+        addListener() {
         },
-        removeListener: function () {
-        }
+        removeListener() {
+        },
       };
     };
   });
@@ -59,13 +58,13 @@ describe('YourGroupTasksContainer Page', () => {
   it('renders data spinner while loading tasks', async () => {
     const props = {
       yourGroupTasks: Immutable.fromJS({
-        isFetchingYourGroupTasks: true
+        isFetchingYourGroupTasks: true,
       }),
-      kc : {
+      kc: {
         tokenParsed: {
-          email: "email"
-        }
-      }
+          email: 'email',
+        },
+      },
     };
     const wrapper = await mount(<YourGroupTasksContainer
       store={store}
@@ -76,17 +75,17 @@ describe('YourGroupTasksContainer Page', () => {
     expect(wrapper.find('.loader-content').exists()).toEqual(true);
     expect(wrapper.find('.loader-message').text()).toEqual('Fetching your group tasks');
   });
-  it('renders your group tasks', async() => {
-    const history = createMemoryHistory("/your-tasks");
+  it('renders your group tasks', async () => {
+    const history = createMemoryHistory('/your-tasks');
 
     const props = {
-      history: history,
-      yourGroupTasks: yourGroupTasks,
-      kc : {
+      history,
+      yourGroupTasks,
+      kc: {
         tokenParsed: {
-          email: "test@test.com"
-        }
-      }
+          email: 'test@test.com',
+        },
+      },
     };
     const wrapper = await mount(<Provider store={store}><Router history={history}><YourGroupTasksContainer
       store={store}
@@ -110,19 +109,18 @@ describe('YourGroupTasksContainer Page', () => {
     expect(firstRowColumns[0]).toEqual('test');
     expect(firstRowColumns[1]).toEqual('due a few seconds ago');
     expect(firstRowColumns[2]).toEqual('Assigned to you');
-
   });
-  it('renders your group tasks on filter value', async() => {
-    const history = createMemoryHistory("/your-tasks");
+  it('renders your group tasks on filter value', async () => {
+    const history = createMemoryHistory('/your-tasks');
 
     const props = {
-      history: history,
-      yourGroupTasks: yourGroupTasks,
-      kc : {
+      history,
+      yourGroupTasks,
+      kc: {
         tokenParsed: {
-          email: "test@test.com"
-        }
-      }
+          email: 'test@test.com',
+        },
+      },
     };
     const wrapper = await mount(<Provider store={store}><Router history={history}><YourGroupTasksContainer
       store={store}
@@ -131,29 +129,27 @@ describe('YourGroupTasksContainer Page', () => {
     /></Router></Provider>);
 
 
-
     expect(fetchYourGroupTasks).toBeCalled();
     const filterInput = wrapper.find('#filterTaskName');
 
-    filterInput.simulate('change', {target: { value : 'ABC'}});
+    filterInput.simulate('change', { target: { value: 'ABC' } });
     jest.advanceTimersByTime(600);
     expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', 'ABC', true);
 
-    filterInput.simulate('change', {target: { value : 'APPLES'}});
+    filterInput.simulate('change', { target: { value: 'APPLES' } });
     jest.advanceTimersByTime(600);
     expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', 'APPLES', true);
-
   });
 
-  it('executes timer', async() => {
-    const history = createMemoryHistory("/your-tasks");
+  it('executes timer', async () => {
+    const history = createMemoryHistory('/your-tasks');
 
     const props = {
-      history: history,
-      kc : {
+      history,
+      kc: {
         tokenParsed: {
-          email: "email"
-        }
+          email: 'email',
+        },
       },
       yourGroupTasks: Immutable.fromJS({
         isFetchingTasksAssignedToYou: false,
@@ -167,10 +163,10 @@ describe('YourGroupTasksContainer Page', () => {
             priority: 1000,
             due: date,
             created: date,
-          }
+          },
 
-        }]
-      })
+        }],
+      }),
     };
 
     const wrapper = await mount(<Provider store={store}><Router history={history}><YourGroupTasksContainer
@@ -182,7 +178,7 @@ describe('YourGroupTasksContainer Page', () => {
 
     expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', null, false);
 
-    //kick off timer
+    // kick off timer
     jest.advanceTimersByTime(AppConstants.ONE_MINUTE);
     expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', 'TEST', true);
 
@@ -190,16 +186,16 @@ describe('YourGroupTasksContainer Page', () => {
     wrapper.unmount();
     expect(clearTimeout).toBeCalled();
   });
-  it ('displays claim button if assignee not user', async() => {
-    const history = createMemoryHistory("/your-tasks");
+  it('displays claim button if assignee not user', async () => {
+    const history = createMemoryHistory('/your-tasks');
 
     const props = {
-      kc : {
+      kc: {
         tokenParsed: {
-          email: "email"
-        }
+          email: 'email',
+        },
       },
-      history: history,
+      history,
       claimSuccessful: true,
       yourGroupTasks: Immutable.fromJS({
         isFetchingTasksAssignedToYou: false,
@@ -213,10 +209,10 @@ describe('YourGroupTasksContainer Page', () => {
             priority: 1000,
             due: date,
             created: date,
-          }
+          },
 
-        }]
-      })
+        }],
+      }),
     };
 
     const wrapper = await mount(<Provider store={store}><Router history={history}><YourGroupTasksContainer
@@ -229,6 +225,5 @@ describe('YourGroupTasksContainer Page', () => {
 
     const unclaimButton = wrapper.find('input').first();
     expect(unclaimButton.exists()).toEqual(true);
-
   });
 });

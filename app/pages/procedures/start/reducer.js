@@ -9,7 +9,7 @@ const initialState = new Map({
   processDefinition: Map({}),
   loadingForm: true,
   form: null,
-  submissionStatus: NOT_SUBMITTED
+  submissionStatus: NOT_SUBMITTED,
 });
 
 function reducer(state = initialState, action) {

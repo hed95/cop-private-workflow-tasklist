@@ -1,4 +1,4 @@
-import {NAME} from "./constants";
+import { NAME } from './constants';
 
 export const isFetchingTask = state => state[NAME].get('isFetchingTask');
 export const isFetchingComments = state => state[NAME].get('isFetchingComments');

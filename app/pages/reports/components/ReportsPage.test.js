@@ -1,18 +1,18 @@
 import React from 'react';
-import { mount,shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import { ReportsPage } from './ReportsPage';
 import Spinner from 'react-spinkit';
 
-const { Map,List} = Immutable;
+const { Map, List } = Immutable;
 
 describe('Reports Page', () => {
   const initialState = {
     'reports-page': new Map({
       loadingReports: false,
-      reports: List([])
-    })
+      reports: List([]),
+    }),
   };
   const mockStore = configureStore();
   let store;
@@ -24,7 +24,7 @@ describe('Reports Page', () => {
     const fetchReportsList = jest.fn();
     const props = {
       loadingReports: true,
-      reports: List([])
+      reports: List([]),
     };
     const wrapper = await shallow(<ReportsPage
       store={store}
@@ -36,7 +36,7 @@ describe('Reports Page', () => {
     expect(wrapper.find('#reportsCountLabel').text()).toEqual('0 reports');
     expect(wrapper.containsMatchingElement(Spinner)).toEqual(true);
   });
-  it ('renders list of reports', async() => {
+  it('renders list of reports', async () => {
     const fetchReportsList = jest.fn();
     const props = {
       loadingReports: false,
@@ -44,9 +44,9 @@ describe('Reports Page', () => {
         {
           name: 'reportname',
           description: 'reportdescription',
-          htmlName: 'reportHtmlName'
-        }
-      ])
+          htmlName: 'reportHtmlName',
+        },
+      ]),
     };
     const wrapper = await mount(<ReportsPage
       store={store}
@@ -67,5 +67,5 @@ describe('Reports Page', () => {
     expect(firstRowColumns.length).toEqual(2);
     expect(firstRowColumns[0]).toEqual('reportname');
     expect(firstRowColumns[1]).toEqual('reportdescription');
-   });
+  });
 });

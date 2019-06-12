@@ -1,6 +1,6 @@
 import * as actions from './actions';
 import reducer from './shift.reducer';
-import {shiftInitialState} from './shift.reducer'
+import { shiftInitialState } from './shift.reducer';
 import Immutable from 'immutable';
 
 describe('shift reducer', () => {
@@ -15,22 +15,22 @@ describe('shift reducer', () => {
       name: 'testForm',
       components: [
         {
-          key: 'key'
-        }
-      ]
+          key: 'key',
+        },
+      ],
     };
     const state = reducer(initialState, actions.fetchShiftFormSuccess({
-      entity: formObject
+      entity: formObject,
     }));
     expect(state.get('loadingShiftForm')).toEqual(false);
     expect(state.get('shiftForm')).toEqual(formObject);
   });
   it('handles fetchActiveShiftSuccess', () => {
     const shiftDetails = {
-      'staffid': 'staffid'
+      staffid: 'staffid',
     };
     const state = reducer(initialState, actions.fetchActiveShiftSuccess({
-      entity: [shiftDetails]
+      entity: [shiftDetails],
     }));
     expect(state.get('isFetchingShift')).toEqual(false);
     expect(state.get('hasActiveShift')).toEqual(true);

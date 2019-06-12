@@ -14,14 +14,12 @@ const fetchNotifications = (action$, store, { client }) =>
         method: 'GET',
         path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/notifications?countOnly=false`,
         headers: {
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${store.getState().keycloak.token}`
-        }
+          Accept: 'application/json',
+          Authorization: `Bearer ${store.getState().keycloak.token}`,
+        },
       }).retryWhen(retry)
         .map(payload => actions.fetchNotificationsSuccess(payload))
-        .catch(error => {
-            return errorObservable(actions.fetchNotificationsFailure(), error);
-          }
+        .catch(error => errorObservable(actions.fetchNotificationsFailure(), error),
         ));
 
 const fetchNotificationsNextPage = (action$, store, { client }) =>
@@ -31,14 +29,12 @@ const fetchNotificationsNextPage = (action$, store, { client }) =>
         method: 'GET',
         path: `${action.url}`,
         headers: {
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${store.getState().keycloak.token}`
-        }
+          Accept: 'application/json',
+          Authorization: `Bearer ${store.getState().keycloak.token}`,
+        },
       }).retryWhen(retry)
         .map(payload => actions.fetchNotificationsNextPageSuccess(payload))
-        .catch(error => {
-            return errorObservable(actions.fetchNotificationsNextPageFailure(), error);
-          }
+        .catch(error => errorObservable(actions.fetchNotificationsNextPageFailure(), error),
         ));
 
 
@@ -49,17 +45,13 @@ const acknowledgeNotification = (action$, store, { client }) =>
         method: 'DELETE',
         path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/notifications/task/${action.taskId}`,
         headers: {
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${store.getState().keycloak.token}`
-        }
+          Accept: 'application/json',
+          Authorization: `Bearer ${store.getState().keycloak.token}`,
+        },
       })
         .retryWhen(retry)
-        .map(payload => {
-          return actions.acknowledgeNotificationSuccess(payload);
-        })
-        .catch(error => {
-            return errorObservable(actions.acknowledgeNotificationFailure(action.taskId), error);
-          }
+        .map(payload => actions.acknowledgeNotificationSuccess(payload))
+        .catch(error => errorObservable(actions.acknowledgeNotificationFailure(action.taskId), error),
         ));
 
 export default combineEpics(fetchNotifications, acknowledgeNotification, fetchNotificationsNextPage);

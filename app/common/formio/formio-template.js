@@ -1,14 +1,14 @@
 const classes = {
-    'has-error': 'govuk-form-group--error',
-    'form-control ui fluid selection dropdown': 'form-control ui fluid selection dropdown govuk-select',
-    'formio-day-component-month': 'formio-day-component-month govuk-date-input__input govuk-input--width-2',
-    'formio-day-component-day': 'ormio-day-component-day govuk-date-input__input govuk-input--width-2',
-    'formio-day-component-year': 'formio-day-component-year govuk-date-input__input govuk-input--width-4',
-    'alert alert-danger': 'govuk-form-group--error'
+  'has-error': 'govuk-form-group--error',
+  'form-control ui fluid selection dropdown': 'form-control ui fluid selection dropdown govuk-select',
+  'formio-day-component-month': 'formio-day-component-month govuk-date-input__input govuk-input--width-2',
+  'formio-day-component-day': 'ormio-day-component-day govuk-date-input__input govuk-input--width-2',
+  'formio-day-component-year': 'formio-day-component-year govuk-date-input__input govuk-input--width-4',
+  'alert alert-danger': 'govuk-form-group--error',
 };
 const templates = {
-    button: {
-        form: `
+  button: {
+    form: `
                   <{{input.type}}
                     ref="button"
                     {% for (var attr in input.attr) { %}
@@ -22,10 +22,10 @@ const templates = {
                   <div ref="buttonMessageContainer">
                     <span class="help-block" ref="buttonMessage"></span>
                   </div>
-                  `
-    },
-    checkbox: {
-        form: `
+                  `,
+  },
+  checkbox: {
+    form: `
                     <div class="form-check govuk-checkboxes__item">
                       <{{input.type}}
                         ref="input"
@@ -46,10 +46,10 @@ const templates = {
                       </label>
 
                     </div>
-                    `
-    },
-    field: {
-        form: `
+                    `,
+  },
+  field: {
+    form: `
                     {% if (!label.hidden && label.labelPosition !== 'bottom') { %}
                       <label class="col-form-label {{label.className}} govuk-label">
                         {{ t(component.label) }}
@@ -75,10 +75,10 @@ const templates = {
                       <label class="{{label.className}}">{{t(component.label)}}
                       </label>
                     {% } %}
-                  `
-    },
-    input: {
-        form: `
+                  `,
+  },
+  input: {
+    form: `
                     {% if (component.prefix || component.suffix) { %}
                     <div class="input-group">
                     {% } %}
@@ -108,10 +108,10 @@ const templates = {
                     {% if (component.prefix || component.suffix) { %}
                     </div>
                     {% } %}
-                  `
-    },
-    radio: {
-        form: `
+                  `,
+  },
+  radio: {
+    form: `
                     {%
                       var govukType;
                       switch (input.attr.type) {
@@ -143,20 +143,20 @@ const templates = {
                       </div>
                       {% }) %}
                     </div>
-                  `
-    },
-    component: {
-        form: `
+                  `,
+  },
+  component: {
+    form: `
                     <div id="{{id}}" class="{{classes}} form-group govuk-form-group"{% if (styles) { %} styles="{{styles}}"{% } %} ref="component">
                       {% if (visible) { %}
                       {{children}}
                       <div ref="messageContainer" class="formio-errors invalid-feedback govuk-error-message"></div>
                       {% } %}
                     </div>
-                  `
-    },
-    panel: {
-        form: `
+                  `,
+  },
+  panel: {
+    form: `
                     <div class="govuk-card--borderless">
                       <div>
                         <span class="mb-0 card-title govuk-body govuk-!-font-size-19 govuk-!-font-weight-bold" ref="header">
@@ -175,10 +175,10 @@ const templates = {
                       </div>
                       {% } %}
                     </div>
-                  `
-    },
-    tab: {
-        form: `
+                  `,
+  },
+  tab: {
+    form: `
                     <ul class="govuk-tabs__list">
                       {% component.components.forEach(function(tab, index) { %}
                       <li class="nav-item{{ currentTab === index ? ' active' : ''}} govuk-tabs__list-item" role="presentation" ref="{{tabLikey}}">
@@ -191,10 +191,10 @@ const templates = {
                       <div role="tabpanel" class="tab-pane{{ currentTab === index ? ' active' : ''}}" ref="{{tabKey}}"">{{tabComponents[index]}}</div>
                       {% }) %}
                     </div>
-                  `
-    },
-    select: {
-        form: `
+                  `,
+  },
+  select: {
+    form: `
                     <select
                       ref="{{input.ref ? input.ref : 'selectContainer'}}"
                       {{ input.multiple ? 'multiple' : '' }}
@@ -202,10 +202,10 @@ const templates = {
                       {{attr}}="{{input.attr[attr]}}{% if (attr==='class') { %} govuk-select {% } %}"
                       {% } %}
                     >{{selectOptions}}</select>
-                  `
-    },
-    day: {
-        form: `
+                  `,
+  },
+  day: {
+    form: `
                     <div class="govuk-date-input">
                       {% if (dayFirst && showDay) { %}
                       <div class="govuk-date-input__item">
@@ -233,10 +233,10 @@ const templates = {
                       {% } %}
                     </div>
                     <input name="data[day]" type="hidden" class="form-control" lang="en" value="" ref="input">
-                  `
-    },
-    wizard: {
-        form: `
+                  `,
+  },
+  wizard: {
+    form: `
                     <div style="position: relative;">
                       <nav class="govuk-breadcrumbs" aria-label="navigation">
                         <ul class="govuk-breadcrumbs__list">
@@ -267,9 +267,9 @@ const templates = {
                         <button class="govuk-button btn btn-primary btn-wizard-nav-submit" ref="{{wizardKey}}-submit">{{t('submit')}}</button>
                       {% } %}
                     </div>
-                  `
-    },
-    cssClasses: classes
+                  `,
+  },
+  cssClasses: classes,
 };
 
 export default templates;

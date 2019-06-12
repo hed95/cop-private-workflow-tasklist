@@ -3,15 +3,14 @@ import { ReportPage } from './ReportPage';
 import React from 'react';
 
 
-
 describe('Report Page', () => {
   it('renders iframe for report', () => {
     const props = {
       location: {
-        search: '?reportName=myReport.html'
+        search: '?reportName=myReport.html',
       },
       appConfig: {
-        reportServiceUrl: 'http://localhost:9000'
+        reportServiceUrl: 'http://localhost:9000',
       },
     };
     const wrapper = shallow(<ReportPage

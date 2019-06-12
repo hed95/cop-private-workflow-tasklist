@@ -5,9 +5,7 @@ import Immutable from 'immutable';
 import { MessagesPage } from './MessagesPage';
 import moment from 'moment';
 
-const { Map,List, Set} = Immutable;
-
-
+const { Map, List, Set } = Immutable;
 
 
 describe('MessagesPage', () => {
@@ -19,8 +17,8 @@ describe('MessagesPage', () => {
       nextPage: null,
       hasMoreItems: false,
       pageSize: null,
-      acknowledgingTaskIds: Set([])
-    })
+      acknowledgingTaskIds: Set([]),
+    }),
   };
   const mockStore = configureStore();
   let store;
@@ -37,8 +35,8 @@ describe('MessagesPage', () => {
     const clearNotifications = jest.fn();
 
     const props = {
-      isFetching : true,
-      notifications: new List([])
+      isFetching: true,
+      notifications: new List([]),
     };
     const wrapper = await mount(<MessagesPage
       store={store}
@@ -56,27 +54,27 @@ describe('MessagesPage', () => {
     wrapper.unmount();
     expect(clearNotifications).toBeCalled();
   });
-  it('renders notifications', async() => {
+  it('renders notifications', async () => {
     const fetchNotifications = jest.fn();
     const fetchNotificationsNextPage = jest.fn();
     const acknowledgeNotification = jest.fn();
     const clearNotifications = jest.fn();
 
     const props = {
-      isFetching : false,
+      isFetching: false,
       notifications: Immutable.fromJS([{
         task: {
-          'id' : 'id',
-          'description': 'description',
-          'priority': 1000,
-          'name' : 'name',
-          'created': moment()
-        }
+          id: 'id',
+          description: 'description',
+          priority: 1000,
+          name: 'name',
+          created: moment(),
+        },
 
       }]),
       hasMoreItems: false,
       total: 1,
-      acknowledgingTaskIds: new List([])
+      acknowledgingTaskIds: new List([]),
     };
     const wrapper = await mount(<MessagesPage
       store={store}

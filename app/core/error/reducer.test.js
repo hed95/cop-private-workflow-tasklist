@@ -15,48 +15,48 @@ describe('error reducer', () => {
   });
   it('handle reset errors', () => {
     const state = reducer(Immutable.fromJS({
-       hasError: true,
-       unauthorised: true,
+      hasError: true,
+      unauthorised: true,
     }), actions.resetErrors());
     expect(state.get('unauthorised')).toEqual(false);
     expect(state.get('hasError')).toEqual(false);
   });
-  it ('handle error', () => {
+  it('handle error', () => {
     const action = actions.handleError({
       status: {
-        code: 401
+        code: 401,
       },
       request: {
-        method : 'GET',
-        path: '/api/test'
+        method: 'GET',
+        path: '/api/test',
       },
       entity: {
-        message: 'Failed'
-      }
+        message: 'Failed',
+      },
     });
     const updatedState = reducer(initialState, action);
     expect(updatedState.get('hasError')).toEqual(true);
     expect(updatedState.get('errors').size).toEqual(1);
   });
-  it ('handles duplicate errors', () => {
+  it('handles duplicate errors', () => {
     const error = {
       status: {
-        code: 401
+        code: 401,
       },
       request: {
-        method : 'GET',
-        path: '/api/test'
+        method: 'GET',
+        path: '/api/test',
       },
       entity: {
-        message: 'Failed'
-      }
+        message: 'Failed',
+      },
     };
 
     const action = actions.handleError(error);
     const updatedState = reducer(Immutable.fromJS({
       hasError: true,
       errors: [{
-        message: 'Failed'
+        message: 'Failed',
       }],
       unauthorised: true,
     }), action);

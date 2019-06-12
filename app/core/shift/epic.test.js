@@ -12,10 +12,10 @@ import PubSub from 'pubsub-js';
 
 jest.setTimeout(50000);
 
-jest.mock('pubsub-js', ()=>({
-  subscribe:jest.fn(),
+jest.mock('pubsub-js', () => ({
+  subscribe: jest.fn(),
   unsubscribe: jest.fn(),
-  publish: jest.fn()
+  publish: jest.fn(),
 }));
 
 
@@ -24,22 +24,22 @@ describe('shift epic', () => {
     keycloak: {
       token: 'test',
       tokenParsed: {
-        email : 'testEmail@email.com'
-      }
+        email: 'testEmail@email.com',
+      },
     },
     appConfig: {
       workflowServiceUrl: 'http://localhost:9000',
     },
   });
   store.replaceReducer(reducer);
-  it ('can perform endShift', (done) => {
+  it('can perform endShift', (done) => {
     const action$ = ActionsObservable.of(
-      { type: 'END_SHIFT', payload: {}}
+      { type: 'END_SHIFT', payload: {} },
     );
 
     const client = () => Observable.of({});
     const expectedOutput = {
-      type: types.END_SHIFT_SUCCESS, payload: {}
+      type: types.END_SHIFT_SUCCESS, payload: {},
     };
 
     epic(action$, store, { client })
@@ -49,15 +49,15 @@ describe('shift epic', () => {
         done();
       });
   });
-  it ('can hand endShift failure', (done) => {
+  it('can hand endShift failure', (done) => {
     const action$ = ActionsObservable.of(
-      { type: 'END_SHIFT', payload: {}}
+      { type: 'END_SHIFT', payload: {} },
     );
 
     const client = () => Observable.throw({
       status: {
-        code: 400
-      }
+        code: 400,
+      },
     });
 
     Observable.concat(epic(action$, store, { client }))
@@ -67,30 +67,30 @@ describe('shift epic', () => {
         const error = data[1];
         expect(submitFailure)
           .toEqual({
-            type: types.END_SHIFT_FAILURE
+            type: types.END_SHIFT_FAILURE,
           });
         expect(error)
           .toEqual({
             type: 'HANDLE_ERROR',
             payload: {
               status: {
-                code: 400
-              }
-            }
+                code: 400,
+              },
+            },
           });
         done();
       });
   });
   it('can fetchStaffDetails', (done) => {
     const action$ = ActionsObservable.of(
-      { type: types.FETCH_STAFF_DETAILS, payload: {}}
+      { type: types.FETCH_STAFF_DETAILS, payload: {} },
     );
     const payload = {
-      'staffid' : 'staffid'
+      staffid: 'staffid',
     };
     const client = () => Observable.of(payload);
     const expectedOutput = {
-      type: types.FETCH_STAFF_DETAILS_SUCCESS, payload: payload
+      type: types.FETCH_STAFF_DETAILS_SUCCESS, payload,
     };
 
     epic(action$, store, { client })
@@ -100,16 +100,16 @@ describe('shift epic', () => {
         done();
       });
   });
-  it('can fetchShiftForm', (done)=> {
+  it('can fetchShiftForm', (done) => {
     const action$ = ActionsObservable.of(
-      { type: types.FETCH_SHIFT_FORM, payload: {}}
+      { type: types.FETCH_SHIFT_FORM, payload: {} },
     );
     const payload = {
-      'name' : 'startShift'
+      name: 'startShift',
     };
     const client = () => Observable.of(payload);
     const expectedOutput = {
-      type: types.FETCH_SHIFT_FORM_SUCCESS, payload: payload
+      type: types.FETCH_SHIFT_FORM_SUCCESS, payload,
     };
 
     epic(action$, store, { client })
@@ -119,22 +119,22 @@ describe('shift epic', () => {
         done();
       });
   });
-  it('can fetchActiveShift', (done)=> {
+  it('can fetchActiveShift', (done) => {
     const action$ = ActionsObservable.of(
-      { type: types.FETCH_ACTIVE_SHIFT, payload: {}}
+      { type: types.FETCH_ACTIVE_SHIFT, payload: {} },
     );
     const payload = {
       status: {
-        code: 200
+        code: 200,
       },
       entity: {
-        'shiftid' : 'shiftid'
-      }
+        shiftid: 'shiftid',
+      },
 
     };
     const client = () => Observable.of(payload);
     const expectedOutput = {
-      type: types.FETCH_ACTIVE_SHIFT_SUCCESS, payload: payload
+      type: types.FETCH_ACTIVE_SHIFT_SUCCESS, payload,
     };
 
     epic(action$, store, { client })
@@ -144,15 +144,15 @@ describe('shift epic', () => {
         done();
       });
   });
-  it('can fetchActiveShift throws 403 if no data returned', (done)=> {
+  it('can fetchActiveShift throws 403 if no data returned', (done) => {
     const action$ = ActionsObservable.of(
-      { type: types.FETCH_ACTIVE_SHIFT, payload: {}}
+      { type: types.FETCH_ACTIVE_SHIFT, payload: {} },
     );
     const payload = {
       status: {
-        code: 200
+        code: 200,
       },
-      entity: []
+      entity: [],
     };
     const client = () => Observable.of(payload);
 
@@ -163,29 +163,29 @@ describe('shift epic', () => {
         const error = data[1];
         expect(submitFailure)
           .toEqual({
-            type: 'HANDLE_UNAUTHORISED'
+            type: 'HANDLE_UNAUTHORISED',
           });
         expect(error)
           .toEqual({
-            type: 'FETCH_ACTIVE_SHIFT_FAILURE'
+            type: 'FETCH_ACTIVE_SHIFT_FAILURE',
           });
         done();
       });
   });
-  it('can fetchActiveShift retry if 503', (done)=> {
+  it('can fetchActiveShift retry if 503', (done) => {
     const action$ = ActionsObservable.of(
-      { type: types.FETCH_ACTIVE_SHIFT, payload: {}}
+      { type: types.FETCH_ACTIVE_SHIFT, payload: {} },
     );
     const payload = {
       status: {
-        code: 503
-      }
+        code: 503,
+      },
     };
     const client = () => Observable.from(Promise.reject(payload));
 
-   Observable.concat(epic(action$, store, { client }))
+    Observable.concat(epic(action$, store, { client }))
       .toArray()
-      .subscribe( (data) => {
+      .subscribe((data) => {
         const fetchFailure = data[0];
         const error = data[1];
         expect(fetchFailure.type)
@@ -195,17 +195,17 @@ describe('shift epic', () => {
         done();
       });
   });
-  it ('can fetchActiveShiftAfterCreation', (done) => {
+  it('can fetchActiveShiftAfterCreation', (done) => {
     const action$ = ActionsObservable.of(
-      { type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE, payload: {}}
+      { type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE, payload: {} },
     );
     const payload = {
       status: {
-        code: 200
+        code: 200,
       },
       entity: [{
-        staffid: 'staffid'
-      }]
+        staffid: 'staffid',
+      }],
     };
     const client = () => Observable.of(payload);
 
@@ -220,19 +220,19 @@ describe('shift epic', () => {
         done();
       });
   });
-  it ('can retry and fail for fetchActiveShiftAfterCreation if no data returned', (done) => {
+  it('can retry and fail for fetchActiveShiftAfterCreation if no data returned', (done) => {
     const action$ = ActionsObservable.of(
-      { type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE, payload: {}}
+      { type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE, payload: {} },
     );
     const response = {
       status: {
-        code: 200
+        code: 200,
       },
-      entity: []
+      entity: [],
     };
     const client = () => Observable.defer(() => Observable.from(Promise.resolve(response)));
 
-    Observable.concat(epic(action$, store, {client}))
+    Observable.concat(epic(action$, store, { client }))
       .toArray()
       .subscribe((actualOutput) => {
         expect(actualOutput[0].type).toEqual('HANDLE_UNAUTHORISED');
@@ -240,32 +240,31 @@ describe('shift epic', () => {
         done();
       });
   });
-  it ('can retry and succeed for fetchActiveShiftAfterCreation', (done) => {
+  it('can retry and succeed for fetchActiveShiftAfterCreation', (done) => {
     const action$ = ActionsObservable.of(
-      { type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE, payload: {}}
+      { type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE, payload: {} },
     );
     const response = {
       status: {
-        code: 200
+        code: 200,
       },
-      entity: []
+      entity: [],
     };
     let counter = 0;
     const client = () => Observable.defer(() => {
       counter++;
-      console.log('counter ' + counter);
+      console.log(`counter ${counter}`);
       if (counter === 5) {
         return Observable.from(Promise.resolve({
           status: {
-            code: 200
+            code: 200,
           },
           entity: [{
-            staffid: 'staffid'
-          }]
+            staffid: 'staffid',
+          }],
         }));
-      } else {
-        return Observable.from(Promise.resolve(response));
       }
+      return Observable.from(Promise.resolve(response));
     });
 
     epic(action$, store, { client })
