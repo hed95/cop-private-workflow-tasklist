@@ -10,7 +10,8 @@
     "test:coverage": "jest --coverage",
     "dev": "webpack-dev-server --open --config webpack.dev.js --watch --colors",
     "prebuild": "npm-audit-check && rebuild-node-sass",
-    "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js"
+    "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js",
+    "linter": "eslint app"
   },
   "jest": {
     "transform": {
