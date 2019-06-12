@@ -46,16 +46,17 @@ const xmlStr = `<?xml version="1.0" encoding="UTF-8"?>
 
 describe('Process viewer', () => {
   it('renders a process', async () => {
-    const wrapper = await mount(<ProcessViewer xml={xmlStr}
+    const wrapper = await mount(<ProcessViewer
+      xml={xmlStr}
       processDefinition={Immutable.fromJS({
         'process-definition': {
-          name: 'processName'
-        }
+          name: 'processName',
+        },
       })}
     />, { attachTo: document.body });
     console.log(wrapper.html());
     const bjsContainer = document.querySelector('.bjs-container');
-    const zoomContainer =  document.querySelector('.io-zoom-controls');
+    const zoomContainer = document.querySelector('.io-zoom-controls');
     expect(bjsContainer).toBeDefined();
     expect(zoomContainer).toBeDefined();
 

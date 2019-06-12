@@ -23,5 +23,5 @@ const halRest = rest
     .wrap(defaultRequest, { headers: { Accept: 'application/hal+json' } });
 
 export default function () {
-    return Observable.defer(() => Observable.fromPromise(halRest(...arguments)));
+  return Observable.defer(() => Observable.fromPromise(halRest(...arguments)));
 }

@@ -1,18 +1,18 @@
 import * as types from './actionTypes';
 
-const fetchTaskForm = (task) => ({
+const fetchTaskForm = task => ({
   type: types.FETCH_TASK_FORM,
-  task
+  task,
 });
 
 
 const fetchTaskFormSuccess = payload => ({
   type: types.FETCH_TASK_FORM_SUCCESS,
-  payload
+  payload,
 });
 
 const fetchTaskFormFailure = () => ({
-  type: types.FETCH_TASK_FROM_FAILURE
+  type: types.FETCH_TASK_FROM_FAILURE,
 });
 
 
@@ -21,35 +21,35 @@ const submitTaskForm = (formId, taskId, submission, variableName) => ({
   formId,
   taskId,
   submission,
-  variableName
+  variableName,
 });
 
-const submitTaskFormSuccess = (payload) => ({
+const submitTaskFormSuccess = payload => ({
   type: types.SUBMIT_TASK_FORM_SUCCESS,
-  payload
+  payload,
 });
 
 const submitTaskFormFailure = () => ({
-  type: types.SUBMIT_TASK_FORM_FAILURE
+  type: types.SUBMIT_TASK_FORM_FAILURE,
 });
 
 const completeTask = (taskId, data) => ({
   type: types.COMPLETE_TASK_FORM,
   taskId,
-  data
+  data,
 });
 
-const completeTaskSuccess = (payload) => ({
+const completeTaskSuccess = payload => ({
   type: types.COMPLETE_TASK_FORM_SUCCESS,
-  payload
+  payload,
 });
 
 const completeTaskFailure = () => ({
-  type: types.COMPLETE_TASK_FORM_FAILURE
+  type: types.COMPLETE_TASK_FORM_FAILURE,
 });
 
 const resetForm = () => ({
-  type: types.RESET_FORM
+  type: types.RESET_FORM,
 });
 
 
@@ -57,18 +57,18 @@ const customEvent = (event, task, variableName) => ({
   type: types.TASK_CUSTOM_EVENT,
   event,
   task,
-  variableName
+  variableName,
 });
 
-const customEventSuccess = (payload) => ({
+const customEventSuccess = payload => ({
   type: types.TASK_CUSTOM_EVENT_SUCCESS,
-  payload
+  payload,
 });
 
 const customEventFailure = (error, event) => ({
   type: types.TASK_CUSTOM_EVENT_FAILURE,
   error,
-  event
+  event,
 });
 
 export {
@@ -84,5 +84,5 @@ export {
   resetForm,
   customEvent,
   customEventFailure,
-  customEventSuccess
+  customEventSuccess,
 };

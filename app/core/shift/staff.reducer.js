@@ -1,11 +1,11 @@
 import Immutable from 'immutable';
 import * as actions from './actionTypes';
 
-const {Map} = Immutable;
+const { Map } = Immutable;
 
 export const staffInitialState = new Map({
   staffDetails: null,
-  isFetchingStaffDetails: true
+  isFetchingStaffDetails: true,
 });
 
 

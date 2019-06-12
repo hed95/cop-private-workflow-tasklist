@@ -5,13 +5,13 @@ const { Map } = Immutable;
 
 const initialState = new Map({
   taskCounts: new Map({
-    'tasksAssignedToUser': 0,
-    'tasksUnassigned': 0,
-    'totalTasksAllocatedToTeam': 0
+    tasksAssignedToUser: 0,
+    tasksUnassigned: 0,
+    totalTasksAllocatedToTeam: 0,
   }),
   isFetchingTaskCounts: true,
   messageCounts: 0,
-  isFetchingMessageCounts: true
+  isFetchingMessageCounts: true,
 });
 
 function reducer(state = initialState, action) {

@@ -15,8 +15,8 @@ describe('Shift Scoped Route', () => {
   it('Displays data spinner while checking shift', () => {
     const initialState = {
       'shift-page': new Map({
-        isFetchingShift: true
-      })
+        isFetchingShift: true,
+      }),
     };
     const mockStore = configureStore();
     const store = mockStore(initialState);
@@ -24,17 +24,16 @@ describe('Shift Scoped Route', () => {
     const wrapper = shallow(
       <ShiftScopedRoute store={store}>
         <div>Hello</div>
-      </ShiftScopedRoute>
+      </ShiftScopedRoute>,
     );
     expect(wrapper.containsMatchingElement(DataSpinner)).toEqual(true);
-
   });
   it('Redirects to dashboard if no shift', () => {
     const initialState = {
       'shift-page': new Map({
         isFetchingShift: false,
-        hasActiveShift: false
-      })
+        hasActiveShift: false,
+      }),
     };
     const mockStore = configureStore();
     const store = mockStore(initialState);
@@ -42,7 +41,7 @@ describe('Shift Scoped Route', () => {
     const wrapper = shallow(
       <ShiftScopedRoute store={store}>
         <div>Hello</div>
-      </ShiftScopedRoute>
+      </ShiftScopedRoute>,
     );
     expect(wrapper.containsMatchingElement(Redirect)).toEqual(true);
   });
@@ -50,8 +49,8 @@ describe('Shift Scoped Route', () => {
     const initialState = {
       'shift-page': new Map({
         isFetchingShift: false,
-        hasActiveShift: true
-      })
+        hasActiveShift: true,
+      }),
     };
     const mockStore = configureStore();
     const store = mockStore(initialState);
@@ -59,10 +58,9 @@ describe('Shift Scoped Route', () => {
     const wrapper = shallow(
       <ShiftScopedRoute store={store}>
         <div>Hello</div>
-      </ShiftScopedRoute>
+      </ShiftScopedRoute>,
     );
     expect(wrapper.containsMatchingElement(Route)).toEqual(true);
     expect(wrapper.containsMatchingElement(ErrorHandlingComponent)).toEqual(true);
-
   });
 });

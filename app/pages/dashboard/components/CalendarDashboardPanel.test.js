@@ -1,24 +1,24 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import {CalendarDashboardPanel} from './CalendarDashboardPanel';
-import { Router} from "react-router-dom";
-import { createMemoryHistory } from 'history'
+import { CalendarDashboardPanel } from './CalendarDashboardPanel';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
 
 describe('Calendar Dashboard Panel', () => {
   const mockStore = configureStore();
   let store;
   const initialState = {
-    'calendar-page': {}
+    'calendar-page': {},
   };
   beforeEach(() => {
     store = mockStore(initialState);
   });
 
-  it('renders calendar dashboard panel', async() => {
+  it('renders calendar dashboard panel', async () => {
     const props = {
-      hasActiveShift: true
+      hasActiveShift: true,
     };
     const wrapper = await mount(<CalendarDashboardPanel
       store={store}
@@ -27,12 +27,12 @@ describe('Calendar Dashboard Panel', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('navigates to calendar page on click', async() => {
-    const history = createMemoryHistory("/calendar");
+  it('navigates to calendar page on click', async () => {
+    const history = createMemoryHistory('/calendar');
 
     const props = {
-      history: history,
-      hasActiveShift: true
+      history,
+      hasActiveShift: true,
     };
     const wrapper = await mount(<Router history={history}><CalendarDashboardPanel
       store={store}

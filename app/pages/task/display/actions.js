@@ -1,171 +1,121 @@
-import * as types from "./actionTypes";
+import * as types from './actionTypes';
 
-const fetchComments = (url) => {
-    return {
-        type: types.FETCH_COMMENTS,
-        url
-    }
-};
+const fetchComments = url => ({
+  type: types.FETCH_COMMENTS,
+  url,
+});
 
-const fetchCommentsSuccess = (payload) => {
-    return {
-        type: types.FETCH_COMMENTS_SUCCESS,
-        payload
-    }
-};
+const fetchCommentsSuccess = payload => ({
+  type: types.FETCH_COMMENTS_SUCCESS,
+  payload,
+});
 
-const fetchCommentsFailure =  () => {
-    return {
-        type: types.FETCH_COMMENTS_FAILURE
-    }
-};
+const fetchCommentsFailure = () => ({
+  type: types.FETCH_COMMENTS_FAILURE,
+});
 
-const createComment = ({taskId, comment}) => {
-    return {
-        type: types.CREATE_COMMENT,
-        taskId: taskId,
-        comment: comment
-    }
-};
+const createComment = ({ taskId, comment }) => ({
+  type: types.CREATE_COMMENT,
+  taskId,
+  comment,
+});
 
-const updateDueDate = ({taskId, dueDate}) => {
-    return {
-        type: types.UPDATE_DUE_DATE,
-        taskId: taskId,
-        dueDate: dueDate
-    }
-};
+const updateDueDate = ({ taskId, dueDate }) => ({
+  type: types.UPDATE_DUE_DATE,
+  taskId,
+  dueDate,
+});
 
-const updateDueDateSuccess = ()=> {
-    return {
-        type: types.UPDATE_DUE_DATE_SUCCESS
-    }
-};
-const updateDueDateFailure = ()=> {
-  return {
-    type: types.UPDATE_DUE_DATE_FAILURE
-  }
-};
-const createCommentSuccess = (payload) => {
-    return {
-        type: types.CREATE_COMMENT_SUCCESS,
-        payload
-    }
-};
+const updateDueDateSuccess = () => ({
+  type: types.UPDATE_DUE_DATE_SUCCESS,
+});
+const updateDueDateFailure = () => ({
+  type: types.UPDATE_DUE_DATE_FAILURE,
+});
+const createCommentSuccess = payload => ({
+  type: types.CREATE_COMMENT_SUCCESS,
+  payload,
+});
 
-const createCommentFailure = () => {
-    return {
-        type: types.CREATE_COMMENT_FAILURE
-    }
-};
+const createCommentFailure = () => ({
+  type: types.CREATE_COMMENT_FAILURE,
+});
 
-const fetchTask = (taskId) => {
-    return {
-        type: types.FETCH_TASK,
-        taskId
-    }
-};
+const fetchTask = taskId => ({
+  type: types.FETCH_TASK,
+  taskId,
+});
 
-const fetchTaskSuccess = (payload) => {
-    return {
-        type: types.FETCH_TASK_SUCCESS,
-        payload
-    }
-};
+const fetchTaskSuccess = payload => ({
+  type: types.FETCH_TASK_SUCCESS,
+  payload,
+});
 
-const fetchTaskFailure = () => {
-    return {
-        type: types.FETCH_TASK_FAILURE
-    }
-};
+const fetchTaskFailure = () => ({
+  type: types.FETCH_TASK_FAILURE,
+});
 
 
-const fetchCreateCommentForm = () => {
-    return {
-        type: types.FETCH_CREATE_COMMENT_FORM
-    }
-};
+const fetchCreateCommentForm = () => ({
+  type: types.FETCH_CREATE_COMMENT_FORM,
+});
 
 
-const fetchCreateCommentFormSuccess = (payload) => {
-    return {
-        type: types.FETCH_CREATE_COMMENT_FORM_SUCCESS,
-        payload
-    }
-};
+const fetchCreateCommentFormSuccess = payload => ({
+  type: types.FETCH_CREATE_COMMENT_FORM_SUCCESS,
+  payload,
+});
 
-const  fetchCreateCommentFormFailure = () => {
-    return {
-        type: types.FETCH_CREATE_COMMENT_FORM_FAILURE
-    }
-};
+const fetchCreateCommentFormFailure = () => ({
+  type: types.FETCH_CREATE_COMMENT_FORM_FAILURE,
+});
 
 
-const claimTask = (taskId) => {
-    return {
-        type: types.CLAIM_TASK,
-        taskId
-    }
-};
+const claimTask = taskId => ({
+  type: types.CLAIM_TASK,
+  taskId,
+});
 
-const claimTaskSuccess = (payload) => {
-    return {
-        type: types.CLAIM_TASK_SUCCESS,
-        payload
-    }
-};
+const claimTaskSuccess = payload => ({
+  type: types.CLAIM_TASK_SUCCESS,
+  payload,
+});
 
-const claimTaskFailure = () => {
-    return {
-        type: types.CLAIM_TASK_FAILURE
-    }
-};
+const claimTaskFailure = () => ({
+  type: types.CLAIM_TASK_FAILURE,
+});
 
-const unclaimTask = (taskId) => {
-    return {
-        type: types.UNCLAIM_TASK,
-        taskId
-    }
-};
+const unclaimTask = taskId => ({
+  type: types.UNCLAIM_TASK,
+  taskId,
+});
 
-const unclaimTaskSuccess = (payload) => {
-    return {
-        type: types.UNCLAIM_TASK_SUCCESS,
-        payload
-    }
-};
+const unclaimTaskSuccess = payload => ({
+  type: types.UNCLAIM_TASK_SUCCESS,
+  payload,
+});
 
-const unclaimTaskFailure = () => {
-    return {
-        type: types.UNCLAIM_TASK_FAILURE
-    }
-};
+const unclaimTaskFailure = () => ({
+  type: types.UNCLAIM_TASK_FAILURE,
+});
 
 
-const completeTask = (taskId) => {
-    return {
-        type: types.COMPLETE_TASK,
-        taskId
-    }
-};
+const completeTask = taskId => ({
+  type: types.COMPLETE_TASK,
+  taskId,
+});
 
-const completeTaskSuccess = () => {
-    return {
-        type: types.COMPLETE_TASK_SUCCESS,
-    }
-};
+const completeTaskSuccess = () => ({
+  type: types.COMPLETE_TASK_SUCCESS,
+});
 
-const completeTaskFailure = () => {
-    return {
-        type: types.COMPLETE_TASK_FAILURE
-    }
-};
+const completeTaskFailure = () => ({
+  type: types.COMPLETE_TASK_FAILURE,
+});
 
-const clearTask = () => {
-    return {
-        type: types.CLEAR_TASK
-    }
-};
+const clearTask = () => ({
+  type: types.CLEAR_TASK,
+});
 
 export {
     fetchComments,
@@ -192,5 +142,5 @@ export {
     clearTask,
     updateDueDate,
     updateDueDateSuccess,
-    updateDueDateFailure
-}
+    updateDueDateFailure,
+};

@@ -1,7 +1,7 @@
 import Immutable from 'immutable';
 import * as actions from './actionTypes';
 
-const {Map} = Immutable;
+const { Map } = Immutable;
 
 export const shiftInitialState = new Map({
   isFetchingShift: true,
@@ -11,7 +11,7 @@ export const shiftInitialState = new Map({
   activeShiftSuccess: null,
   loadingShiftForm: true,
   shiftForm: null,
-  failedToCreateShift: false
+  failedToCreateShift: false,
 });
 
 function shiftReducer(state = shiftInitialState, action) {
@@ -20,7 +20,7 @@ function shiftReducer(state = shiftInitialState, action) {
       return state;
     case actions.FETCH_SHIFT_FORM_SUCCESS:
       const form = action.payload.entity;
-      return state.set('shiftForm', form).set('loadingShiftForm', false)
+      return state.set('shiftForm', form).set('loadingShiftForm', false);
     case actions.FETCH_SHIFT_FORM_FAILURE:
       return state.set('loadingShiftForm', false);
     case actions.FETCH_ACTIVE_SHIFT:
@@ -28,15 +28,15 @@ function shiftReducer(state = shiftInitialState, action) {
     case actions.FETCH_ACTIVE_SHIFT_SUCCESS:
       const data = action.payload.entity;
       const hasShiftInfo = data && data.length !== 0;
-      const shiftInfo = hasShiftInfo? Immutable.fromJS(data[0]) : null;
+      const shiftInfo = hasShiftInfo ? Immutable.fromJS(data[0]) : null;
       return state.set('isFetchingShift', false)
         .set('hasActiveShift', hasShiftInfo)
-        .set('activeShiftSuccess' , false)
+        .set('activeShiftSuccess', false)
         .set('shift', shiftInfo);
     case actions.FETCH_ACTIVE_SHIFT_FAILURE:
       return state.set('isFetchingShift', false)
         .set('shift', null)
-        .set('activeShiftSuccess' , false)
+        .set('activeShiftSuccess', false)
         .set('hasActiveShift', false);
     case actions.SUBMIT_VALIDATION:
       return state.set('submittingActiveShift', true).set('failedToCreateShift', false);

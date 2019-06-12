@@ -1,9 +1,9 @@
 import reducer from './reducer';
-import {initialState} from './reducer';
+import { initialState } from './reducer';
 import * as actions from './actions';
-import Immutable from "immutable";
+import Immutable from 'immutable';
 
-const {Map, List, Set} = Immutable;
+const { Map, List, Set } = Immutable;
 
 describe('Messages reducer', () => {
   const initialStateToTest = initialState;
@@ -16,10 +16,10 @@ describe('Messages reducer', () => {
       nextPage: null,
       hasMoreItems: false,
       pageSize: null,
-      acknowledgingTaskIds: Set([])
-    }))
+      acknowledgingTaskIds: Set([]),
+    }));
   });
-  it ('handles fetchNotifications', () => {
+  it('handles fetchNotifications', () => {
     const expected = reducer(initialStateToTest, actions.fetchNotifications());
     expect(expected.get('isFetching')).toEqual(true);
   });
@@ -28,25 +28,25 @@ describe('Messages reducer', () => {
       entity: {
         page: {
           totalElements: 1,
-          size: 1
+          size: 1,
         },
         _links: {
           next: {
-            href: 'next'
+            href: 'next',
           },
           previous: {
-            href: 'previous'
-          }
+            href: 'previous',
+          },
         },
         _embedded: {
           tasks: [
             {
               id: 'id',
-              name: 'name'
-            }
-          ]
-        }
-      }
+              name: 'name',
+            },
+          ],
+        },
+      },
     }));
     expect(expected.get('notifications').size).toEqual(1);
     expect(expected.get('isFetching')).toEqual(false);
@@ -64,10 +64,9 @@ describe('Messages reducer', () => {
 
     const expected = reducer(initialStateToTest, actions.acknowledgeNotificationSuccess({
       entity: {
-        id: 'taskId'
-      }
+        id: 'taskId',
+      },
     }));
     expect(expected.get('acknowledgingTaskIds').size).toEqual(0);
-
   });
 });

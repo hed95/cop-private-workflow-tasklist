@@ -1,25 +1,23 @@
-import * as types from "./actionTypes";
-import * as actions from "./actions";
-import {combineEpics} from "redux-observable";
-import {errorObservable} from "../../../core/error/epicUtil";
-import {retry} from "../../../core/util/retry";
+import * as types from './actionTypes';
+import * as actions from './actions';
+import { combineEpics } from 'redux-observable';
+import { errorObservable } from '../../../core/error/epicUtil';
+import { retry } from '../../../core/util/retry';
 import PubSub from 'pubsub-js';
 
 
-const fetchProcessDefinition = (action$, store,  {client}) =>
+const fetchProcessDefinition = (action$, store, { client }) =>
     action$.ofType(types.FETCH_PROCESS_DEFINITION)
         .mergeMap(action =>
             client({
-                method: 'GET',
-                path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/process-definitions/${action.processKey}`,
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": `Bearer ${store.getState().keycloak.token}`
-                }
+              method: 'GET',
+              path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/process-definitions/${action.processKey}`,
+              headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${store.getState().keycloak.token}`,
+              },
             }).retryWhen(retry).map(payload => actions.fetchProcessDefinitionSuccess(payload))
-                .catch(error => {
-                        return errorObservable(actions.fetchProcessDefinitionFailure(), error);
-                    }
+                .catch(error => errorObservable(actions.fetchProcessDefinitionFailure(), error),
                 ));
 
 const fetchForm = (action$, store, { client }) =>
@@ -29,15 +27,13 @@ const fetchForm = (action$, store, { client }) =>
         method: 'GET',
         path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/${action.formName}`,
         headers: {
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${store.getState().keycloak.token}`
-        }
+          Accept: 'application/json',
+          Authorization: `Bearer ${store.getState().keycloak.token}`,
+        },
       })
         .retryWhen(retry)
         .map(payload => actions.fetchFormSuccess(payload))
-        .catch(error => {
-            return errorObservable(actions.fetchFormFailure(), error);
-          }
+        .catch(error => errorObservable(actions.fetchFormFailure(), error),
         ));
 
 const fetchFormWithContext = (action$, store, { client }) =>
@@ -47,62 +43,57 @@ const fetchFormWithContext = (action$, store, { client }) =>
         method: 'POST',
         path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form`,
         entity: {
-          'formName': action.formName,
-          'dataContext': action.dataContext
+          formName: action.formName,
+          dataContext: action.dataContext,
         },
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${store.getState().keycloak.token}`
-        }
+          Accept: 'application/json',
+          Authorization: `Bearer ${store.getState().keycloak.token}`,
+        },
       })
         .retryWhen(retry)
         .map(payload => actions.fetchFormSuccess(payload))
-        .catch(error => {
-            return errorObservable(actions.fetchFormFailure(), error);
-          }
+        .catch(error => errorObservable(actions.fetchFormFailure(), error),
         ));
 
 const submit = (action$, store, { client }) =>
   action$.ofType(types.SUBMIT)
-    .mergeMap(action => {
+    .mergeMap((action) => {
       const submissionData = action.submissionData;
-      return  client({
+      return client({
         method: 'POST',
         path: `${store.getState().appConfig.formServiceUrl}/form/${action.formId}/submission`,
         entity: {
-          'data':submissionData
+          data: submissionData,
         },
         headers: {
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${store.getState().keycloak.token}`,
-          'Content-Type': 'application/json'
-        }
+          Accept: 'application/json',
+          Authorization: `Bearer ${store.getState().keycloak.token}`,
+          'Content-Type': 'application/json',
+        },
       })
         .retryWhen(retry)
-        .map(payload => {
+        .map((payload) => {
           if (action.nonShiftApiCall) {
             return {
               type: types.SUBMIT_TO_WORKFLOW_NON_SHIFT,
               processKey: action.processKey,
               variableName: action.variableName,
               data: submissionData,
-              processName: action.processName
-            };
-          } else {
-            return {
-              type: types.SUBMIT_TO_WORKFLOW,
-              processKey: action.processKey,
-              variableName: action.variableName,
-              data: payload.entity.data,
-              processName: action.processName
+              processName: action.processName,
             };
           }
+          return {
+            type: types.SUBMIT_TO_WORKFLOW,
+            processKey: action.processKey,
+            variableName: action.variableName,
+            data: payload.entity.data,
+            processName: action.processName,
+          };
         })
-        .catch(error => {
-            return errorObservable(actions.submitFailure(), error);
-          }
-        )
+        .catch(error => errorObservable(actions.submitFailure(), error),
+        );
     });
 
 
@@ -113,28 +104,26 @@ const submitToWorkflow = (action$, store, { client }) =>
         method: 'POST',
         path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/process-instances`,
         entity: {
-          'data': action.data,
-          'processKey': action.processKey,
-          'variableName': action.variableName
+          data: action.data,
+          processKey: action.processKey,
+          variableName: action.variableName,
         },
         headers: {
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${store.getState().keycloak.token}`,
-          'Content-Type': 'application/json'
-        }
+          Accept: 'application/json',
+          Authorization: `Bearer ${store.getState().keycloak.token}`,
+          'Content-Type': 'application/json',
+        },
       })
         .retryWhen(retry)
-        .map(payload => {
+        .map((payload) => {
           PubSub.publish('submission', {
             submission: true,
             autoDismiss: true,
-            message: `${action.processName} successfully started`
+            message: `${action.processName} successfully started`,
           });
           return actions.submitToWorkflowSuccess(payload);
         })
-        .catch(error => {
-          return errorObservable(actions.submitToWorkflowFailure(), error);
-        })
+        .catch(error => errorObservable(actions.submitToWorkflowFailure(), error)),
     );
 
 const createVariable = (action, email) => {
@@ -142,19 +131,19 @@ const createVariable = (action, email) => {
   const variables = {};
   variables[variableName] = {
     value: JSON.stringify(action.data),
-    type: 'json'
+    type: 'json',
   };
-  variables['initiatedBy'] = {
+  variables.initiatedBy = {
     value: email,
-    type: "String"
+    type: 'String',
   };
 
-  variables['type'] = {
+  variables.type = {
     value: 'non-notifications',
-    type: 'String'
+    type: 'String',
   };
   return {
-    "variables" : variables
+    variables,
   };
 };
 
@@ -166,23 +155,21 @@ const submitToWorkflowUsingNonShiftApi = (action$, store, { client }) =>
         path: `${store.getState().appConfig.workflowServiceUrl}/rest/camunda/process-definition/key/${action.processKey}/start`,
         entity: createVariable(action, store.getState().keycloak.tokenParsed.email),
         headers: {
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${store.getState().keycloak.token}`,
-          'Content-Type': 'application/json'
-        }
+          Accept: 'application/json',
+          Authorization: `Bearer ${store.getState().keycloak.token}`,
+          'Content-Type': 'application/json',
+        },
       }).retryWhen(retry)
-        .map(payload => {
+        .map((payload) => {
           console.log(JSON.stringify(action));
           PubSub.publish('submission', {
             submission: true,
             autoDismiss: true,
-            message: `${action.processName} successfully started`
+            message: `${action.processName} successfully started`,
           });
           return actions.submitToWorkflowSuccess(payload);
         })
-        .catch(error => {
-          return errorObservable(actions.submitToWorkflowFailure(), error);
-        })
+        .catch(error => errorObservable(actions.submitToWorkflowFailure(), error)),
     );
 
 

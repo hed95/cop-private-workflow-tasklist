@@ -1,26 +1,26 @@
 import React from 'react';
-import { shallow} from 'enzyme';
+import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import {DashboardPage} from './DashboardPage';
-import Immutable from 'immutable'
+import { DashboardPage } from './DashboardPage';
+import Immutable from 'immutable';
 
 describe('DashboardPage', () => {
   const mockStore = configureStore();
   let store;
   const initialState = {
-    'calendar-page': {}
+    'calendar-page': {},
   };
   beforeEach(() => {
     store = mockStore(initialState);
   });
 
-  it('renders panels if shift present', async() => {
+  it('renders panels if shift present', async () => {
     const props = {
       isFetchingShift: false,
       hasActiveShift: true,
       shift: Immutable.fromJS({
-        shiftid: 'shiftid'
-      })
+        shiftid: 'shiftid',
+      }),
     };
 
     const wrapper = shallow(<DashboardPage

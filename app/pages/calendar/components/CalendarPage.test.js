@@ -7,12 +7,12 @@ describe('Calendar Page', () => {
   const mockStore = configureStore();
   let store;
   const initialState = {
-    'calendar-page': {}
+    'calendar-page': {},
   };
   beforeEach(() => {
     store = mockStore(initialState);
   });
-  it('renders calendar page', async() => {
+  it('renders calendar page', async () => {
     const props = {};
     const wrapper = await mount(<CalendarPage
       store={store}
@@ -26,7 +26,5 @@ describe('Calendar Page', () => {
 
     const viewContainer = document.querySelector('.fc-view-container');
     expect(viewContainer).toBeDefined();
-
-
   });
 });

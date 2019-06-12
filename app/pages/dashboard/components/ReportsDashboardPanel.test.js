@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import {ReportsDashboardPanel} from './ReportsDashboardPanel';
+import { ReportsDashboardPanel } from './ReportsDashboardPanel';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
@@ -9,12 +9,12 @@ describe('Reports Dashboard Panel', () => {
   const mockStore = configureStore();
   let store;
   const initialState = {
-    'calendar-page': {}
+    'calendar-page': {},
   };
   beforeEach(() => {
     store = mockStore(initialState);
   });
-  it('renders reports dashboard panel', async() => {
+  it('renders reports dashboard panel', async () => {
     const props = {};
     const wrapper = await mount(<ReportsDashboardPanel
       store={store}
@@ -22,12 +22,12 @@ describe('Reports Dashboard Panel', () => {
     />);
     expect(wrapper).toMatchSnapshot();
   });
-  it('navigates to reports page on click', async() => {
-    const history = createMemoryHistory("/reports");
+  it('navigates to reports page on click', async () => {
+    const history = createMemoryHistory('/reports');
 
     const props = {
-      history: history,
-      hasActiveShift: true
+      history,
+      hasActiveShift: true,
     };
     const wrapper = await mount(<Router history={history}><ReportsDashboardPanel
       store={store}

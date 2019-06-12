@@ -1,3 +1,3 @@
 export default function appConfigReducer(appConfig = {}, action) {
-    return appConfig;
+  return appConfig;
 }

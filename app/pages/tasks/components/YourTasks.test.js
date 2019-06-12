@@ -1,12 +1,13 @@
+import moment from 'moment';
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router-dom';
 import React from 'react';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import { YourTasksContainer } from './YourTasksContainer';
-import moment from 'moment';
+
 const { Map } = Immutable;
-import { createMemoryHistory } from 'history';
-import { Router } from 'react-router-dom';
 
 jest.useFakeTimers();
 
@@ -18,10 +19,10 @@ describe('YourTasks Page', () => {
     isFetchingTasksAssignedToYou: false,
     yourTasksSortValue: 'sort=due,desc',
     appConfig: {
-      uiEnvironment: 'local'
+      uiEnvironment: 'local',
     },
     kc: {
-      token: 'token'
+      token: 'token',
     },
     total: 1,
     tasks: [{
@@ -33,70 +34,70 @@ describe('YourTasks Page', () => {
         created: date,
       },
       'process-definition': {
-        category: 'Category A'
-      }
+        category: 'Category A',
+      },
 
     },
-      {
-        task: {
-          id: 'idApples',
-          name: 'test',
-          priority: 1000,
-          due: date,
-          created: date,
-        },
-        'process-definition': {
-          category: 'Apples A'
-        }
-
+    {
+      task: {
+        id: 'idApples',
+        name: 'test',
+        priority: 1000,
+        due: date,
+        created: date,
       },
-      {
-        task: {
-          id: 'idZoo',
-          name: 'test',
-          priority: 1000,
-          due: date,
-          created: date,
-        },
-        'process-definition': {
-          category: 'Zoo'
-        }
-
+      'process-definition': {
+        category: 'Apples A',
       },
-      {
-        task: {
-          id: 'idAC',
-          name: 'test',
-          priority: 1000,
-          due: date,
-          created: date,
-        },
-        'process-definition': {
-          category: 'Other OPS'
-        }
 
+    },
+    {
+      task: {
+        id: 'idZoo',
+        name: 'test',
+        priority: 1000,
+        due: date,
+        created: date,
       },
-      {
-        task: {
-          id: 'idA',
-          name: 'test',
-          priority: 1000,
-          due: date,
-          created: date,
-        },
-        'process-definition': null
+      'process-definition': {
+        category: 'Zoo',
+      },
 
-      }]
+    },
+    {
+      task: {
+        id: 'idAC',
+        name: 'test',
+        priority: 1000,
+        due: date,
+        created: date,
+      },
+      'process-definition': {
+        category: 'Other OPS',
+      },
+
+    },
+    {
+      task: {
+        id: 'idA',
+        name: 'test',
+        priority: 1000,
+        due: date,
+        created: date,
+      },
+      'process-definition': null,
+
+    }],
   });
   beforeEach(() => {
     store = mockStore({
-      'tasks-page' : new Map({})
+      'tasks-page': new Map({}),
     });
-    window.matchMedia = window.matchMedia || function() {
+    window.matchMedia = window.matchMedia || function () {
       return {
-        matches : true,
-        addListener : function() {},
-        removeListener: function() {}
+        matches: true,
+        addListener() {},
+        removeListener() {},
       };
     };
   });
@@ -104,17 +105,17 @@ describe('YourTasks Page', () => {
     window.matchMedia = null;
   });
   const fetchTasksAssignedToYou = jest.fn();
-  it('renders loading when getting your tasks', async()=> {
+  it('renders loading when getting your tasks', async () => {
     const props = {
       appConfig: {
-        uiEnvironment: 'local'
+        uiEnvironment: 'local',
       },
       kc: {
-        token: 'token'
+        token: 'token',
       },
-     yourTasks: Immutable.fromJS({
-       isFetchingTasksAssignedToYou: true
-     })
+      yourTasks: Immutable.fromJS({
+        isFetchingTasksAssignedToYou: true,
+      }),
     };
     const wrapper = await mount(<YourTasksContainer
       store={store}
@@ -125,16 +126,15 @@ describe('YourTasks Page', () => {
     expect(wrapper.find('.loader-message').text()).toEqual('Fetching tasks assigned to you');
   });
 
-  it('renders your tasks', async() => {
-
+  it('renders your tasks', async () => {
     const props = {
       appConfig: {
-        uiEnvironment: 'local'
+        uiEnvironment: 'local',
       },
       kc: {
-        token: 'token'
+        token: 'token',
       },
-      yourTasks: yourTasks
+      yourTasks,
     };
     const wrapper = await mount(<YourTasksContainer
       store={store}
@@ -145,7 +145,6 @@ describe('YourTasks Page', () => {
     expect(fetchTasksAssignedToYou).toBeCalled();
     expect(wrapper.find('.loader-content').exists()).toEqual(false);
     expect(wrapper.find('#yourTasksTotalCount').text()).toEqual('1 task assigned to you');
-    console.log(wrapper.html());
     const tableWrapper = wrapper.find('table');
     expect(tableWrapper.exists()).toEqual(true);
 
@@ -156,18 +155,17 @@ describe('YourTasks Page', () => {
     expect(firstRowColumns.length).toEqual(3);
     expect(firstRowColumns[0]).toEqual('test');
     expect(firstRowColumns[1]).toEqual('due a few seconds ago');
-
   });
 
-  it('renders your tasks on sort change', async() => {
+  it('renders your tasks on sort change', async () => {
     const props = {
       appConfig: {
-        uiEnvironment: 'local'
+        uiEnvironment: 'local',
       },
       kc: {
-        token: 'token'
+        token: 'token',
       },
-      yourTasks: yourTasks
+      yourTasks,
     };
     const wrapper = await mount(<YourTasksContainer
       store={store}
@@ -178,23 +176,22 @@ describe('YourTasks Page', () => {
     expect(fetchTasksAssignedToYou).toBeCalled();
 
     const sortTaskInput = wrapper.find('#sortTask');
-    sortTaskInput.simulate('change', {target: { value : 'sort=created,desc'}});
+    sortTaskInput.simulate('change', { target: { value: 'sort=created,desc' } });
     expect(fetchTasksAssignedToYou).toBeCalledWith('sort=created,desc', undefined, true);
 
-    sortTaskInput.simulate('change', {target: { value : 'sort=test,desc'}});
+    sortTaskInput.simulate('change', { target: { value: 'sort=test,desc' } });
     expect(fetchTasksAssignedToYou).toBeCalledWith('sort=test,desc', undefined, true);
-
   });
 
-  it('renders your tasks on filter value', async() => {
+  it('renders your tasks on filter value', async () => {
     const props = {
       appConfig: {
-        uiEnvironment: 'local'
+        uiEnvironment: 'local',
       },
       kc: {
-        token: 'token'
+        token: 'token',
       },
-      yourTasks: yourTasks
+      yourTasks,
     };
     const wrapper = await mount(<YourTasksContainer
       store={store}
@@ -206,27 +203,26 @@ describe('YourTasks Page', () => {
     expect(fetchTasksAssignedToYou).toBeCalled();
     const yourTaskFilterInput = wrapper.find('#filterTaskName');
 
-    yourTaskFilterInput.simulate('change', {target: { value : 'ABC'}});
+    yourTaskFilterInput.simulate('change', { target: { value: 'ABC' } });
     jest.advanceTimersByTime(600);
     expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,desc', 'ABC', true);
 
-    yourTaskFilterInput.simulate('change', {target: { value : 'APPLES'}});
+    yourTaskFilterInput.simulate('change', { target: { value: 'APPLES' } });
     jest.advanceTimersByTime(600);
     expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,desc', 'APPLES', true);
-
   });
 
-  it ('navigates to task', async() => {
-    const history = createMemoryHistory("/task");
+  it('navigates to task', async () => {
+    const history = createMemoryHistory('/task');
 
     const props = {
       appConfig: {
-        uiEnvironment: 'local'
+        uiEnvironment: 'local',
       },
       kc: {
-        token: 'token'
+        token: 'token',
       },
-      history: history,
+      history,
       yourTasks: Immutable.fromJS({
         isFetchingTasksAssignedToYou: false,
         yourTasksSortValue: 'sort=due,desc',
@@ -239,10 +235,10 @@ describe('YourTasks Page', () => {
             priority: 1000,
             due: date,
             created: date,
-          }
+          },
 
-        }]
-      })
+        }],
+      }),
     };
 
     const wrapper = await mount(<Router history={history}><YourTasksContainer

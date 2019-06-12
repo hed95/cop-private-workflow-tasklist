@@ -1,20 +1,20 @@
-jest.mock('react-device-detect', () => ({
-  isMobile: true
-}));
-
 import React from 'react';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import { ProceduresPage } from './ProceduresPage';
-const { Map,List} = Immutable;
+
+jest.mock('react-device-detect', () => ({
+  isMobile: true,
+}));
+const { Map, List } = Immutable;
 
 describe('ProceduresPage', () => {
   const initialState = {
     'procedures-list-page': new Map({
       isFetchingProcessDefinitions: true,
-      processDefinitions: List([])
-    })
+      processDefinitions: List([]),
+    }),
   };
   const mockStore = configureStore();
   let store;
@@ -25,11 +25,11 @@ describe('ProceduresPage', () => {
   const fetchProcessDefinitions = jest.fn();
 
   it('renders  a list of procedures without procedure view if mobile', async () => {
-    window.matchMedia = window.matchMedia || function() {
+    window.matchMedia = window.matchMedia || function () {
       return {
-        matches : false,
-        addListener : () => {},
-        removeListener:() => {}
+        matches: false,
+        addListener: () => {},
+        removeListener: () => {},
       };
     };
     const props = {
@@ -38,17 +38,17 @@ describe('ProceduresPage', () => {
         'process-definition': {
           key: 'processA',
           name: 'processA',
-          description: 'processADescription'
-        }
-      },{
+          description: 'processADescription',
+        },
+      }, {
         'process-definition': {
           key: 'processB',
           name: 'processB',
-          description: 'processBDescription'
-        }
-      }])
+          description: 'processBDescription',
+        },
+      }]),
     };
-    const wrapper =  await mount(<ProceduresPage
+    const wrapper = await mount(<ProceduresPage
       store={store}
       {...props}
       fetchProcessDefinitions={fetchProcessDefinitions}
@@ -68,7 +68,6 @@ describe('ProceduresPage', () => {
     expect(firstRowColumns[0]).toEqual('processADescription');
 
     const map = rows.first().find('td').map(column => column);
-    expect(map[1].find('button').text()).toEqual("Start");
-
+    expect(map[1].find('button').text()).toEqual('Start');
   });
 });

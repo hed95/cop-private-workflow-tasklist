@@ -30,8 +30,8 @@ class NonExistentStaff {
           submission: true,
           type: 'warning',
           autoDismiss: true,
-          message: `You will need to follow the below onboarding process`
-        }
+          message: 'You will need to follow the below onboarding process',
+        },
       };
     }
     return this.next.performCheck(staffDetails);
@@ -55,8 +55,8 @@ class OnboardingProcessInflight {
           submission: true,
           type: 'warning',
           autoDismiss: false,
-          message: `Waiting for your manager to approve your onboarding request`
-        }
+          message: 'Waiting for your manager to approve your onboarding request',
+        },
       };
     }
     return this.next.performCheck(staffDetails);
@@ -75,7 +75,7 @@ class StaffLeft {
   performCheck(staffDetails) {
     if (staffDetails.get('dateofleaving')) {
       return {
-        redirectPath: '/unauthorized'
+        redirectPath: '/unauthorized',
       };
     }
     return this.next.performCheck(staffDetails);
@@ -85,24 +85,24 @@ class StaffLeft {
 class ChecksPassed {
 
   constructor(location) {
-    this.location = location
+    this.location = location;
   }
 
   performCheck(staffDetails) {
-    if (this.location === "/onboard-user") {
+    if (this.location === '/onboard-user') {
       return {
         redirectPath: '/dashboard',
         data: {
           submission: true,
           type: 'warning',
           autoDismiss: true,
-          message: `You are already onboarded to the platform`
-        }
-      }
+          message: 'You are already onboarded to the platform',
+        },
+      };
     }
     return {
-      redirectPath: null
+      redirectPath: null,
     };
-  };
+  }
 }
 

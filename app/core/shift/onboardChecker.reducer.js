@@ -1,10 +1,10 @@
 import Immutable from 'immutable';
 import * as actions from './actionTypes';
 
-const {Map} = Immutable;
+const { Map } = Immutable;
 
 export const onboardingCheckState = new Map({
-  isCheckingOnBoarding: null
+  isCheckingOnBoarding: null,
 });
 
 

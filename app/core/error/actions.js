@@ -2,27 +2,27 @@ import * as types from './actionTypes';
 
 const handleError = payload => ({
   type: types.HANDLE_ERROR,
-  payload
+  payload,
 });
 
 const handleUnauthorised = () => ({
-  type: types.HANDLE_UNAUTHORISED
+  type: types.HANDLE_UNAUTHORISED,
 });
 
 const resetErrors = () => ({
-  type: types.RESET_ERROR
+  type: types.RESET_ERROR,
 });
-const log = (payload) => ({
+const log = payload => ({
   type: types.LOG,
-  payload
+  payload,
 });
 
 
-const logSuccess =() => ({
-  type: types.LOG_SUCCESS
+const logSuccess = () => ({
+  type: types.LOG_SUCCESS,
 });
-const logFailure =() => ({
-  type: types.LOG_FAILURE
+const logFailure = () => ({
+  type: types.LOG_FAILURE,
 });
 export {
   handleError,
@@ -30,5 +30,5 @@ export {
   resetErrors,
   log,
   logSuccess,
-  logFailure
+  logFailure,
 };

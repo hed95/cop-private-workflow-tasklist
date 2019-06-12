@@ -28,7 +28,7 @@ export const rootEpic = combineEpics(
   taskForm.epic,
   reports.epic,
   dashboard.epic,
-  error.epic
+  error.epic,
 );
 
 export const rootReducer = combineReducers({
@@ -46,5 +46,5 @@ export const rootReducer = combineReducers({
   [tasks.constants.NAME]: tasks.reducer,
   [taskForm.constants.NAME]: taskForm.reducer,
   [reports.constants.NAME]: reports.reducer,
-  [dashboard.constants.NAME]: dashboard.reducer
+  [dashboard.constants.NAME]: dashboard.reducer,
 });

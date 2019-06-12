@@ -10,20 +10,17 @@ const log = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'POST',
-        path: `/log`,
+        path: '/log',
         entity: action.payload,
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${store.getState().keycloak.token}`
-        }
+          Accept: 'application/json',
+          Authorization: `Bearer ${store.getState().keycloak.token}`,
+        },
       })
         .retryWhen(retry)
         .map(payload => actions.logSuccess())
-        .catch(error => {
-            return Rx.Observable.of(actions.logFailure())
-        }));
-
+        .catch(error => Rx.Observable.of(actions.logFailure())));
 
 
 export default combineEpics(log);

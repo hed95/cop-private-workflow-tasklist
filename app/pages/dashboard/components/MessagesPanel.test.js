@@ -6,13 +6,14 @@ import { MessagesPanel } from './MessagesPanel';
 import PubSub from 'pubsub-js';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
-const { Map} = Immutable;
+
+const { Map } = Immutable;
 
 
-jest.mock('pubsub-js', ()=>({
-  subscribe:jest.fn(),
+jest.mock('pubsub-js', () => ({
+  subscribe: jest.fn(),
   unsubscribe: jest.fn(),
-  publish: jest.fn()
+  publish: jest.fn(),
 }));
 
 describe('MessagesPanel', () => {
@@ -29,7 +30,7 @@ describe('MessagesPanel', () => {
     const props = {
       hasActiveShift: false,
       isFetchingMessageCounts: false,
-      messageCounts: 0
+      messageCounts: 0,
     };
     const wrapper = await mount(<MessagesPanel
       store={store}
@@ -43,14 +44,13 @@ describe('MessagesPanel', () => {
     const messagesPanel = wrapper.find('#messagesPanel');
     expect(messagesPanel.exists()).toEqual(true);
     expect(messagesPanel.find('#messageCount').text()).toEqual('0');
-
   });
 
-  it ('renders values', async() => {
+  it('renders values', async () => {
     const props = {
       hasActiveShift: true,
       isFetchingMessageCounts: false,
-      messageCounts: 10
+      messageCounts: 10,
     };
     const wrapper = await mount(<MessagesPanel
       store={store}
@@ -65,24 +65,23 @@ describe('MessagesPanel', () => {
     const messagesPanel = wrapper.find('#messagesPanel');
     expect(messagesPanel.exists()).toEqual(true);
     expect(messagesPanel.find('#messageCount').text()).toEqual('10');
-
   });
-  it('navigates to messages page on click', async() => {
-    const history = createMemoryHistory("/messages");
+  it('navigates to messages page on click', async () => {
+    const history = createMemoryHistory('/messages');
 
     const props = {
-      history: history,
+      history,
       hasActiveShift: true,
       isFetchingMessageCounts: false,
       messageCounts: 10,
       log: (logs) => {
-          console.log('JSON' + JSON.stringify(logs));
+        console.log(`JSON${JSON.stringify(logs)}`);
       },
       kc: {
         tokenParsed: {
-          email: "email"
-        }
-      }
+          email: 'email',
+        },
+      },
     };
     const wrapper = await mount(<Router history={history}><MessagesPanel
       store={store}

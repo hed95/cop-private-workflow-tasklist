@@ -1,5 +1,5 @@
 describe('Tasks epic', () => {
- it('fetches your tasks', async() => {
+  it('fetches your tasks', async () => {
 
- });
+  });
 });

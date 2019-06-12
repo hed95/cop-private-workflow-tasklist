@@ -1,6 +1,6 @@
+import Immutable from 'immutable';
 import reducer, { initialState } from './reducer';
 import * as actions from './actions';
-import Immutable from 'immutable';
 
 const { Map } = Immutable;
 
@@ -19,23 +19,25 @@ describe('Tasks reducer', () => {
       entity: {
         page: {
           totalElements: 1,
-          size: 1
-        }, _links: {
+          size: 1,
+        },
+        _links: {
           next: {
-            href: 'next'
+            href: 'next',
           },
           previous: {
-            href: 'previous'
-          }
-        }, _embedded: {
+            href: 'previous',
+          },
+        },
+        _embedded: {
           tasks: [
             {
               id: 'id',
-              name: 'name'
-            }
-          ]
-        }
-      }
+              name: 'name',
+            },
+          ],
+        },
+      },
     }));
     expect(expected.getIn(['yourTasks', 'isFetchingTasksAssignedToYou']))
       .toEqual(false);
@@ -47,7 +49,6 @@ describe('Tasks reducer', () => {
       .toBeNull();
     expect(expected.getIn(['yourTasks', 'yourTasksSortValue']))
       .toEqual('sort=due,desc');
-
   });
   it('returns isFetchingTasksAssignedToYou false if failed', () => {
     const expected = reducer(initialState, actions.fetchTasksAssignedToYouFailure());
@@ -55,7 +56,6 @@ describe('Tasks reducer', () => {
       .toEqual(false);
   });
   it('updates your group tasks on unclaim success', () => {
-
     const state = Immutable.Map({
       yourGroupTasks: new Map({
         isFetchingYourGroupTasks: false,
@@ -63,33 +63,32 @@ describe('Tasks reducer', () => {
           {
             task: {
               id: 'taskIdX',
-              assignee: 'someoneB'
-            }
+              assignee: 'someoneB',
+            },
           },
           {
             task: {
               id: 'taskId',
-              assignee: 'someoneA'
-            }
+              assignee: 'someoneA',
+            },
           },
           {
             task: {
               id: 'taskId2',
-              assignee: 'someone'
-            }
-          }
+              assignee: 'someone',
+            },
+          },
         ]),
         total: 0,
         yourGroupTasksSortValue: 'sort=due,desc',
-        yourGroupTasksFilterValue: null
-      })
+        yourGroupTasksFilterValue: null,
+      }),
     });
 
-    const expected = reducer(state, actions.handleUnclaim("taskId"));
+    const expected = reducer(state, actions.handleUnclaim('taskId'));
 
-    expect(expected.getIn(['yourGroupTasks', 'tasks']).get(0).getIn(['task', 'assignee'])).toEqual("someoneB");
+    expect(expected.getIn(['yourGroupTasks', 'tasks']).get(0).getIn(['task', 'assignee'])).toEqual('someoneB');
     expect(expected.getIn(['yourGroupTasks', 'tasks']).get(1).getIn(['task', 'assignee'])).toBeNull();
-    expect(expected.getIn(['yourGroupTasks', 'tasks']).get(2).getIn(['task', 'assignee'])).toEqual("someone");
-
+    expect(expected.getIn(['yourGroupTasks', 'tasks']).get(2).getIn(['task', 'assignee'])).toEqual('someone');
   });
 });

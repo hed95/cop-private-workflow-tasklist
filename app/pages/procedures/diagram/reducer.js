@@ -5,7 +5,7 @@ const { Map } = Immutable;
 
 const initialState = new Map({
   isFetchingProcessDefinitionXml: false,
-  processDefinitionXml: null
+  processDefinitionXml: null,
 });
 
 function reducer(state = initialState, action) {
