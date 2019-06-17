@@ -6,10 +6,7 @@ Ensure the following:
 
 * Keycloak instance up and running
 * Define the tasklist as a client within your realm in Keycloak instance
-* Export the following environment variables:
-    * REALM
-    * AUTH_URL
-    * CLIENT_ID 
+* Export the environment variables defined in the [sample.env](sample.env) file.
     
 
 ## Running
