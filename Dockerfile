@@ -1,4 +1,4 @@
-FROM quay.io/ukhomeofficedigital/docker-node:master
+FROM digitalpatterns/node:4
 
 ARG STORAGE_KEY
 
