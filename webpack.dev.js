@@ -34,6 +34,7 @@ module.exports = webpackMerge(common, {
             'STORAGE_KEY' : JSON.stringify(process.env.STORAGE_KEY),
             'UI_VERSION' : JSON.stringify(process.env.UI_VERSION),
             'OPERATIONAL_DATA_URL' : JSON.stringify(process.env.OPERATIONAL_DATA_URL),
+            'REF_DATA_URL' : JSON.stringify(process.env.REF_DATA_URL),
             'WORKFLOW_SERVICE_URL' : JSON.stringify(process.env.WORKFLOW_SERVICE_URL),
             'TRANSLATION_SERVICE_URL' : JSON.stringify(process.env.TRANSLATION_SERVICE_URL),
             'REPORT_SERVICE_URL' : JSON.stringify(process.env.REPORT_SERVICE_URL),

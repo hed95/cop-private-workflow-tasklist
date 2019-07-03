@@ -112,6 +112,8 @@ spec:
           value: {{.REPORTING_SERVER_NAME}}
         - name: PLATFORM_DATA
           value: {{.OPERATIONAL_POSTGREST_NAME}}
+        - name: REF_DATA_URL
+          value: {{.REF_DATA_URL}}
         - name: FORM_IO_NAME
           value: {{.FORMIO_SERVER_NAME}}
         - name: WORKFLOW_NAME

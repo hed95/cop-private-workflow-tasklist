@@ -52,6 +52,7 @@ pipeline:
       - DEV_PROTOCOL
       - DEV_REPORTING_SERVER_NAME
       - DEV_OPERATIONAL_POSTGREST_NAME
+      - DEV_REF_DATA_URL
       - DEV_FORMIO_SERVER_NAME
       - DEV_WORKFLOW_SERVER_NAME
       - DEV_TRANSLATION_SERVER_NAME
@@ -87,6 +88,7 @@ pipeline:
       - export WHITELIST=$${DEV_WHITELIST}
       - export IMAGE_TAG=$${DRONE_BUILD_NUMBER}
       - export UPTIME=$${DEV_UPTIME}
+      - export REF_DATA_URL=$${DEV_REF_DATA_URL}
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/nginx-configmap.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
