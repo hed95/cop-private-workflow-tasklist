@@ -9,8 +9,7 @@ pipeline:
     - npm install
     - npm run test:coverage
     when:
-      event:
-      - push
+      event: push
 
   image_to_quay:
     image: quay.io/ukhomeofficedigital/drone-docker
@@ -26,6 +25,72 @@ pipeline:
       - ${DRONE_BUILD_NUMBER}
       - ${DRONE_COMMIT_SHA}
       - latest
+    when:
+      branch: master
+      event: push
+
+  deploy_to_dev:
+    image: quay.io/ukhomeofficedigital/kd
+    secrets:
+      - DEV_NAME
+      - DEV_KUBE_NAMESPACE
+      - DEV_KUBE_SERVER
+      - DEV_KUBE_TOKEN
+      - DEV_INTERNAL_CA_URL
+      - DEV_NO_LOGGING_URL_PARAMS
+      - DEV_NO_LOGGING_BODY
+      - DEV_NO_LOGGING_RESPONSE
+      - DEV_KEYCLOAK_URL
+      - DEV_KEYCLOAK_REALM
+      - DEV_KEYCLOAK_ROLE
+      - DEV_KEYCLOAK_CONTACT
+      - DEV_INT_DOMAIN
+      - DEV_EXT_DOMAIN
+      - DEV_PROTOCOL
+      - DEV_REPORTING_SERVER_NAME
+      - DEV_OPERATIONAL_POSTGREST_NAME
+      - DEV_REF_DATA_URL
+      - DEV_FORMIO_SERVER_NAME
+      - DEV_WORKFLOW_SERVER_NAME
+      - DEV_TRANSLATION_SERVER_NAME
+      - DEV_FILE_UPLOAD_SERVER_NAME
+      - DEV_UI_ENVIRONMENT
+      - DEV_UI_VERSION
+      - DEV_WHITELIST
+      - DEV_UPTIME
+    commands:
+      - export NAME=$${DEV_NAME}
+      - export KUBE_NAMESPACE=$${DEV_KUBE_NAMESPACE}
+      - export KUBE_SERVER=$${DEV_KUBE_SERVER}
+      - export KUBE_TOKEN=$${DEV_KUBE_TOKEN}
+      - export INTERNAL_CA_URL=$${DEV_INTERNAL_CA_URL}
+      - export NO_LOGGING_URL_PARAMS=$${DEV_NO_LOGGING_URL_PARAMS}
+      - export NO_LOGGING_BODY=$${DEV_NO_LOGGING_BODY}
+      - export NO_LOGGING_RESPONSE=$${DEV_NO_LOGGING_RESPONSE}
+      - export KEYCLOAK_URL=$${DEV_KEYCLOAK_URL}
+      - export KEYCLOAK_REALM=$${DEV_KEYCLOAK_REALM}
+      - export KEYCLOAK_ROLE=$${DEV_KEYCLOAK_ROLE}
+      - export KEYCLOAK_CONTACT=$${DEV_KEYCLOAK_CONTACT}
+      - export INT_DOMAIN=$${DEV_INT_DOMAIN}
+      - export EXT_DOMAIN=$${DEV_EXT_DOMAIN}
+      - export PROTOCOL=$${DEV_PROTOCOL}
+      - export REPORTING_SERVER_NAME=$${DEV_REPORTING_SERVER_NAME}
+      - export OPERATIONAL_POSTGREST_NAME=$${DEV_OPERATIONAL_POSTGREST_NAME}
+      - export FORMIO_SERVER_NAME=$${DEV_FORMIO_SERVER_NAME}
+      - export WORKFLOW_SERVER_NAME=$${DEV_WORKFLOW_SERVER_NAME}
+      - export TRANSLATION_SERVER_NAME=$${DEV_TRANSLATION_SERVER_NAME}
+      - export FILE_UPLOAD_SERVER_NAME=$${DEV_FILE_UPLOAD_SERVER_NAME}
+      - export UI_ENVIRONMENT=$${DEV_UI_ENVIRONMENT}
+      - export UI_VERSION=$${DEV_UI_VERSION}
+      - export WHITELIST=$${DEV_WHITELIST}
+      - export IMAGE_TAG=$${DRONE_BUILD_NUMBER}
+      - export UPTIME=$${DEV_UPTIME}
+      - export REF_DATA_URL=$${DEV_REF_DATA_URL}
+      - kd --insecure-skip-tls-verify -f kube/cert.yml
+      - kd --insecure-skip-tls-verify -f kube/network-policy.yml
+      - kd --insecure-skip-tls-verify -f kube/service.yml
+      - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m
+      - kd --insecure-skip-tls-verify -f kube/ingress.yml
     when:
       branch:
         - master
@@ -89,8 +154,8 @@ pipeline:
       - export IMAGE_TAG=$${DRONE_BUILD_NUMBER}
       - export UPTIME=$${DEV_UPTIME}
       - export REF_DATA_URL=$${DEV_REF_DATA_URL}
+      - kd --insecure-skip-tls-verify -f kube/cert.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
-      - kd --insecure-skip-tls-verify -f kube/nginx-configmap.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m
       - kd --insecure-skip-tls-verify -f kube/ingress.yml
@@ -100,136 +165,70 @@ pipeline:
       event:
         - push
 
-#  deploy_to_test:
-#    image: quay.io/ukhomeofficedigital/kd
-#    secrets:
-#      - TEST_NAME
-#      - TEST_KUBE_NAMESPACE
-#      - TEST_KUBE_SERVER
-#      - TEST_KUBE_TOKEN
-#      - TEST_INTERNAL_CA_URL
-#      - TEST_NO_LOGGING_URL_PARAMS
-#      - TEST_NO_LOGGING_BODY
-#      - TEST_NO_LOGGING_RESPONSE
-#      - TEST_KEYCLOAK_URL
-#      - TEST_KEYCLOAK_REALM
-#      - TEST_KEYCLOAK_ROLE
-#      - TEST_KEYCLOAK_CONTACT
-#      - TEST_INT_DOMAIN
-#      - TEST_EXT_DOMAIN
-#      - TEST_PROTOCOL
-#      - TEST_REPORTING_SERVER_NAME
-#      - TEST_OPERATIONAL_POSTGREST_NAME
-#      - TEST_FORMIO_SERVER_NAME
-#      - TEST_WORKFLOW_SERVER_NAME
-#      - TEST_TRANSLATION_SERVER_NAME
-#      - TEST_FILE_UPLOAD_SERVER_NAME
-#      - TEST_UI_ENVIRONMENT
-#      - TEST_UI_VERSION
-#      - TEST_WHITELIST
-#      - TEST_UPTIME
-#    commands:
-#      - export NAME=$${TEST_NAME}
-#      - export KUBE_NAMESPACE=$${TEST_KUBE_NAMESPACE}
-#      - export KUBE_SERVER=$${TEST_KUBE_SERVER}
-#      - export KUBE_TOKEN=$${TEST_KUBE_TOKEN}
-#      - export INTERNAL_CA_URL=$${TEST_INTERNAL_CA_URL}
-#      - export NO_LOGGING_URL_PARAMS=$${TEST_NO_LOGGING_URL_PARAMS}
-#      - export NO_LOGGING_BODY=$${TEST_NO_LOGGING_BODY}
-#      - export NO_LOGGING_RESPONSE=$${TEST_NO_LOGGING_RESPONSE}
-#      - export KEYCLOAK_URL=$${TEST_KEYCLOAK_URL}
-#      - export KEYCLOAK_REALM=$${TEST_KEYCLOAK_REALM}
-#      - export KEYCLOAK_ROLE=$${TEST_KEYCLOAK_ROLE}
-#      - export KEYCLOAK_CONTACT=$${TEST_KEYCLOAK_CONTACT}
-#      - export INT_DOMAIN=$${TEST_INT_DOMAIN}
-#      - export EXT_DOMAIN=$${TEST_EXT_DOMAIN}
-#      - export PROTOCOL=$${TEST_PROTOCOL}
-#      - export REPORTING_SERVER_NAME=$${TEST_REPORTING_SERVER_NAME}
-#      - export OPERATIONAL_POSTGREST_NAME=$${TEST_OPERATIONAL_POSTGREST_NAME}
-#      - export FORMIO_SERVER_NAME=$${TEST_FORMIO_SERVER_NAME}
-#      - export WORKFLOW_SERVER_NAME=$${TEST_WORKFLOW_SERVER_NAME}
-#      - export TRANSLATION_SERVER_NAME=$${TEST_TRANSLATION_SERVER_NAME}
-#      - export FILE_UPLOAD_SERVER_NAME=$${TEST_FILE_UPLOAD_SERVER_NAME}
-#      - export UI_ENVIRONMENT=$${TEST_UI_ENVIRONMENT}
-#      - export UI_VERSION=$${TEST_UI_VERSION}
-#      - export WHITELIST=$${TEST_WHITELIST}
-#      - export IMAGE_TAG=$${DRONE_BUILD_NUMBER}
-#      - export UPTIME=$${TEST_UPTIME}
-#      - kd --insecure-skip-tls-verify -f kube/network-policy.yml
-#      - kd --insecure-skip-tls-verify -f kube/nginx-configmap.yml
-#      - kd --insecure-skip-tls-verify -f kube/service.yml
-#      - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m
-#      - kd --insecure-skip-tls-verify -f kube/ingress.yml
-#    when:
-#      branch:
-#        - master
-#      event:
-#        - push
-
-  deploy_to_demo:
+  deploy_to_production:
     image: quay.io/ukhomeofficedigital/kd
     secrets:
-      - DEMO_NAME
-      - DEMO_KUBE_NAMESPACE
-      - DEMO_KUBE_SERVER
-      - DEMO_KUBE_TOKEN
-      - DEMO_INTERNAL_CA_URL
-      - DEMO_NO_LOGGING_URL_PARAMS
-      - DEMO_NO_LOGGING_BODY
-      - DEMO_NO_LOGGING_RESPONSE
-      - DEMO_KEYCLOAK_URL
-      - DEMO_KEYCLOAK_REALM
-      - DEMO_KEYCLOAK_ROLE
-      - DEMO_KEYCLOAK_CONTACT
-      - DEMO_INT_DOMAIN
-      - DEMO_EXT_DOMAIN
-      - DEMO_PROTOCOL
-      - DEMO_REPORTING_SERVER_NAME
-      - DEMO_OPERATIONAL_POSTGREST_NAME
-      - DEMO_FORMIO_SERVER_NAME
-      - DEMO_WORKFLOW_SERVER_NAME
-      - DEMO_TRANSLATION_SERVER_NAME
-      - DEMO_FILE_UPLOAD_SERVER_NAME
-      - DEMO_UI_ENVIRONMENT
-      - DEMO_UI_VERSION
-      - DEMO_WHITELIST
-      - DEMO_UPTIME
+      - DEV_NAME
+      - DEV_KUBE_NAMESPACE
+      - DEV_KUBE_SERVER
+      - DEV_KUBE_TOKEN
+      - DEV_INTERNAL_CA_URL
+      - DEV_NO_LOGGING_URL_PARAMS
+      - DEV_NO_LOGGING_BODY
+      - DEV_NO_LOGGING_RESPONSE
+      - DEV_KEYCLOAK_URL
+      - DEV_KEYCLOAK_REALM
+      - DEV_KEYCLOAK_ROLE
+      - DEV_KEYCLOAK_CONTACT
+      - DEV_INT_DOMAIN
+      - DEV_EXT_DOMAIN
+      - DEV_PROTOCOL
+      - DEV_REPORTING_SERVER_NAME
+      - DEV_OPERATIONAL_POSTGREST_NAME
+      - DEV_REF_DATA_URL
+      - DEV_FORMIO_SERVER_NAME
+      - DEV_WORKFLOW_SERVER_NAME
+      - DEV_TRANSLATION_SERVER_NAME
+      - DEV_FILE_UPLOAD_SERVER_NAME
+      - DEV_UI_ENVIRONMENT
+      - DEV_UI_VERSION
+      - DEV_WHITELIST
+      - DEV_UPTIME
     commands:
-      - export NAME=$${DEMO_NAME}
-      - export KUBE_NAMESPACE=$${DEMO_KUBE_NAMESPACE}
-      - export KUBE_SERVER=$${DEMO_KUBE_SERVER}
-      - export KUBE_TOKEN=$${DEMO_KUBE_TOKEN}
-      - export INTERNAL_CA_URL=$${DEMO_INTERNAL_CA_URL}
-      - export NO_LOGGING_URL_PARAMS=$${DEMO_NO_LOGGING_URL_PARAMS}
-      - export NO_LOGGING_BODY=$${DEMO_NO_LOGGING_BODY}
-      - export NO_LOGGING_RESPONSE=$${DEMO_NO_LOGGING_RESPONSE}
-      - export KEYCLOAK_URL=$${DEMO_KEYCLOAK_URL}
-      - export KEYCLOAK_REALM=$${DEMO_KEYCLOAK_REALM}
-      - export KEYCLOAK_ROLE=$${DEMO_KEYCLOAK_ROLE}
-      - export KEYCLOAK_CONTACT=$${DEMO_KEYCLOAK_CONTACT}
-      - export INT_DOMAIN=$${DEMO_INT_DOMAIN}
-      - export EXT_DOMAIN=$${DEMO_EXT_DOMAIN}
-      - export PROTOCOL=$${DEMO_PROTOCOL}
-      - export REPORTING_SERVER_NAME=$${DEMO_REPORTING_SERVER_NAME}
-      - export OPERATIONAL_POSTGREST_NAME=$${DEMO_OPERATIONAL_POSTGREST_NAME}
-      - export FORMIO_SERVER_NAME=$${DEMO_FORMIO_SERVER_NAME}
-      - export WORKFLOW_SERVER_NAME=$${DEMO_WORKFLOW_SERVER_NAME}
-      - export TRANSLATION_SERVER_NAME=$${DEMO_TRANSLATION_SERVER_NAME}
-      - export FILE_UPLOAD_SERVER_NAME=$${DEMO_FILE_UPLOAD_SERVER_NAME}
-      - export UI_ENVIRONMENT=$${DEMO_UI_ENVIRONMENT}
-      - export UI_VERSION=$${DEMO_UI_VERSION}
-      - export WHITELIST=$${DEMO_WHITELIST}
-      - export IMAGE_TAG=$${IMAGE_TAG}
-      - export UPTIME=$${DEMO_UPTIME}
+      - export NAME=$${DEV_NAME}
+      - export KUBE_NAMESPACE=$${DEV_KUBE_NAMESPACE}
+      - export KUBE_SERVER=$${DEV_KUBE_SERVER}
+      - export KUBE_TOKEN=$${DEV_KUBE_TOKEN}
+      - export INTERNAL_CA_URL=$${DEV_INTERNAL_CA_URL}
+      - export NO_LOGGING_URL_PARAMS=$${DEV_NO_LOGGING_URL_PARAMS}
+      - export NO_LOGGING_BODY=$${DEV_NO_LOGGING_BODY}
+      - export NO_LOGGING_RESPONSE=$${DEV_NO_LOGGING_RESPONSE}
+      - export KEYCLOAK_URL=$${DEV_KEYCLOAK_URL}
+      - export KEYCLOAK_REALM=$${DEV_KEYCLOAK_REALM}
+      - export KEYCLOAK_ROLE=$${DEV_KEYCLOAK_ROLE}
+      - export KEYCLOAK_CONTACT=$${DEV_KEYCLOAK_CONTACT}
+      - export INT_DOMAIN=$${DEV_INT_DOMAIN}
+      - export EXT_DOMAIN=$${DEV_EXT_DOMAIN}
+      - export PROTOCOL=$${DEV_PROTOCOL}
+      - export REPORTING_SERVER_NAME=$${DEV_REPORTING_SERVER_NAME}
+      - export OPERATIONAL_POSTGREST_NAME=$${DEV_OPERATIONAL_POSTGREST_NAME}
+      - export FORMIO_SERVER_NAME=$${DEV_FORMIO_SERVER_NAME}
+      - export WORKFLOW_SERVER_NAME=$${DEV_WORKFLOW_SERVER_NAME}
+      - export TRANSLATION_SERVER_NAME=$${DEV_TRANSLATION_SERVER_NAME}
+      - export FILE_UPLOAD_SERVER_NAME=$${DEV_FILE_UPLOAD_SERVER_NAME}
+      - export UI_ENVIRONMENT=$${DEV_UI_ENVIRONMENT}
+      - export UI_VERSION=$${DEV_UI_VERSION}
+      - export WHITELIST=$${DEV_WHITELIST}
+      - export IMAGE_TAG=$${DRONE_BUILD_NUMBER}
+      - export UPTIME=$${DEV_UPTIME}
+      - export REF_DATA_URL=$${DEV_REF_DATA_URL}
+      - kd --insecure-skip-tls-verify -f kube/cert.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
-      - kd --insecure-skip-tls-verify -f kube/nginx-configmap.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m
       - kd --insecure-skip-tls-verify -f kube/ingress.yml
     when:
       branch:
         - master
-      environment:
-        - demo
       event:
-        - deployment
+        - push

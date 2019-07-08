@@ -31,6 +31,7 @@ class Header extends React.Component {
                     <div className="govuk-header__logo">
                         <a href="#" className="govuk-header__link govuk-header__link--homepage"
                            style={{textDecoration: 'none', pointerEvents: 'none'}}>
+/*
         <span className="govuk-header__logotype">
 
           <svg role="presentation" focusable="false" className="govuk-header__logotype-crown"
@@ -45,6 +46,7 @@ class Header extends React.Component {
             GOV.UK
           </span>
         </span>
+*/
                         </a>
                     </div>
 

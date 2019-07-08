@@ -20,24 +20,6 @@ spec:
         runAsUser: 1000
         fsGroup: 1000
       containers:
-      - name: certs
-        image: quay.io/ukhomeofficedigital/borders-cfssl-sidekick:bd4901b5a28c
-        securityContext:
-          runAsNonRoot: true
-          capabilities:
-            drop:
-             - SETUID
-             - SETGID
-        args:
-          - --domain={{.NAME}}.{{.KUBE_NAMESPACE}}.svc.cluster.local
-          - --url={{.INTERNAL_CA_URL}}
-          - --verbose=True
-        volumeMounts:
-          - name: certs
-            mountPath: /certs
-          - name: bundle
-            mountPath: /etc/ssl/certs
-            readOnly: true
       - name: proxy
         image: quay.io/ukhomeofficedigital/nginx-proxy
         imagePullPolicy: Always
@@ -60,9 +42,9 @@ spec:
         - name: PROXY_SERVICE_PORT
           value: "8080"
         - name: SERVER_CERT
-          value: "/certs/tls.pem"
+          value: "/certs/tls.crt"
         - name: SERVER_KEY
-          value: "/certs/tls-key.pem"
+          value: "/certs/tls.key"
         - name: SSL_CIPHERS
           value: "ECDHE-RSA-AES128-GCM-SHA256:AES256+EECDH:AES256+EDH:!aNULL"
         - name: ENABLE_UUID_PARAM
@@ -97,9 +79,6 @@ spec:
         volumeMounts:
           - name: certs
             mountPath: /certs
-          - name: bundle
-            mountPath: /etc/ssl/certs
-            readOnly: true
       - name: {{.NAME}}
         image: "quay.io/ukhomeofficedigital/cop-private-workflow-tasklist:{{.IMAGE_TAG}}"
         imagePullPolicy: Always
@@ -174,13 +153,7 @@ spec:
             scheme: HTTP
           initialDelaySeconds: 20
           periodSeconds: 10
-        volumeMounts:
-          - name: bundle
-            mountPath: /etc/ssl/certs
-            readOnly: true
       volumes:
-      - name: bundle
-        configMap:
-          name: bundle
       - name: certs
-        emptyDir: {}
+        secret:
+          secretName: "{{.NAME}}-pod-tls"
