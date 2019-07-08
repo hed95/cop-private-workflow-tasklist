@@ -83,7 +83,7 @@ pipeline:
       - export UI_ENVIRONMENT=$${DEV_UI_ENVIRONMENT}
       - export UI_VERSION=$${DEV_UI_VERSION}
       - export WHITELIST=$${DEV_WHITELIST}
-      - export IMAGE_TAG=$${DRONE_BUILD_NUMBER}
+      - export IMAGE_TAG=$${DRONE_COMMIT_SHA}
       - export UPTIME=$${DEV_UPTIME}
       - export REF_DATA_URL=$${DEV_REF_DATA_URL}
       - kd --insecure-skip-tls-verify -f kube/cert.yml
@@ -149,7 +149,7 @@ pipeline:
       - export UI_ENVIRONMENT=$${STAGING_UI_ENVIRONMENT}
       - export UI_VERSION=$${STAGING_UI_VERSION}
       - export WHITELIST=$${STAGING_WHITELIST}
-      - export IMAGE_TAG=$${DRONE_BUILD_NUMBER}
+      - export IMAGE_TAG=$${DRONE_COMMIT_SHA}
       - export UPTIME=$${STAGING_UPTIME}
       - export REF_DATA_URL=$${STAGING_REF_DATA_URL}
       - kd --insecure-skip-tls-verify -f kube/cert.yml
@@ -215,7 +215,7 @@ pipeline:
       - export UI_ENVIRONMENT=$${PRODUCTION_UI_ENVIRONMENT}
       - export UI_VERSION=$${PRODUCTION_UI_VERSION}
       - export WHITELIST=$${PRODUCTION_WHITELIST}
-      - export IMAGE_TAG=$${DRONE_BUILD_NUMBER}
+      - export IMAGE_TAG=$${DRONE_COMMIT_SHA}
       - export UPTIME=$${PRODUCTION_UPTIME}
       - export REF_DATA_URL=$${PRODUCTION_REF_DATA_URL}
       - kd --insecure-skip-tls-verify -f kube/cert.yml
