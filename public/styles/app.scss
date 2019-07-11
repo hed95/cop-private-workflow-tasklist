@@ -100,3 +100,13 @@ input:disabled {
   padding-bottom: 5px;
   padding-top: 7px;
 }
+
+.header-nav {
+  font-weight: bold;
+  padding-top: 5px;
+  text-align: right;
+}
+
+.header-nav__link {
+  margin-left: 20px;
+}
