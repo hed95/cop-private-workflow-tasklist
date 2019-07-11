@@ -35,12 +35,14 @@ class Header extends React.Component {
                                     Central Operations Platform
                                 </a>
                             </div>
-                            <div className="govuk-grid-column-one-third">
-                                <a style={{cursor: 'pointer', marginTop: '5px', display: 'flex',
-                                    justifyContent: 'right',
-                                    alignItems: 'center'}} id="logout"
+                            <div className="govuk-grid-column-one-third header-nav">
+                                <a id="support"
+                                    href="https://support.cop.homeoffice.gov.uk/servicedesk/customer/portal/3"
+                                    className="govuk-!-font-size-16 govuk-!-font-weight-bold govuk-header__link header-nav__link">Support</a>
+                                <a id="logout"
+                                    href="#"
                                    onClick={this.logout}
-                                   className="govuk-body govuk-!-font-size-16 govuk-!-font-weight-bold">Sign out</a>
+                                   className="govuk-!-font-size-16 govuk-!-font-weight-bold govuk-header__link header-nav__link">Sign out</a>
                             </div>
                         </div>
                     </div>
