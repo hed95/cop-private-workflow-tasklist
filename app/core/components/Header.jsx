@@ -40,13 +40,13 @@ class Header extends React.Component {
                 <a
                   id="support"
                   href="https://support.cop.homeoffice.gov.uk/servicedesk/customer/portal/3"
-                  className="govuk-!-font-size-16 govuk-!-font-weight-bold govuk-header__link header-nav__link"
+                  className="govuk-header__link header-nav__link"
                 >Support</a>
                 <a
                   id="logout"
                   href="#"
                   onClick={this.logout}
-                  className="govuk-!-font-size-16 govuk-!-font-weight-bold govuk-header__link header-nav__link"
+                  className="govuk-header__link header-nav__link"
                 >Sign out</a>
               </div>
             </div>
