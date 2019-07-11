@@ -1,7 +1,8 @@
 import React from 'react';
-import { connect } from "react-redux";
-import { withRouter } from 'react-router-dom'
-import { bindActionCreators } from "redux";
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 import secureLocalStorage from '../../common/security/SecureLocalStorage';
 
 class Header extends React.Component {
@@ -25,13 +26,13 @@ class Header extends React.Component {
 
   render() {
     return (<div>
-      <header className="govuk-header " role="banner" data-module="header">
+      <header className="govuk-header" role="banner" data-module="header">
         <div className="govuk-header__container govuk-width-container">
           <div className="govuk-header__content" style={{ width: '100%' }}>
             <div className="govuk-grid-row">
               <div className="govuk-grid-column-two-thirds">
                 <a
-                  href="#"
+                  href=""
                   onClick={event => this.dashboard(event)}
                   className="govuk-header__link govuk-header__link--service-name"
                 >Central Operations Platform</a>
@@ -44,7 +45,7 @@ class Header extends React.Component {
                 >Support</a>
                 <a
                   id="logout"
-                  href="#"
+                  href=""
                   onClick={this.logout}
                   className="govuk-header__link header-nav__link"
                 >Sign out</a>
@@ -56,6 +57,15 @@ class Header extends React.Component {
     </div>);
   }
 }
+
+Header.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  kc: PropTypes.shape({
+    logout: PropTypes.func,
+  }).isRequired,
+};
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
