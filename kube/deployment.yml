@@ -22,69 +22,26 @@ spec:
       containers:
       - name: proxy
         image: quay.io/ukhomeofficedigital/nginx-proxy
-        imagePullPolicy: Always
-        securityContext:
-          runAsNonRoot: true
-          capabilities:
-            drop:
-             - SETUID
-             - SETGID
-        resources:
-         limits:
-          memory: "100Mi"
-          cpu: "100m"
-         requests:
-          memory: "50Mi"
-          cpu: "100m"
         env:
         - name: PROXY_SERVICE_HOST
           value: "127.0.0.1"
         - name: PROXY_SERVICE_PORT
           value: "8080"
-        - name: SERVER_CERT
-          value: "/certs/tls.crt"
-        - name: SERVER_KEY
-          value: "/certs/tls.key"
-        - name: SSL_CIPHERS
-          value: "ECDHE-RSA-AES128-GCM-SHA256:AES256+EECDH:AES256+EDH:!aNULL"
         - name: ENABLE_UUID_PARAM
-          value: "HEADER"
+          value: "FALSE"
+        - name: LOG_FORMAT_NAME
+          value: 'json'
         - name: NAXSI_USE_DEFAULT_RULES
           value: "FALSE"
-        - name: PORT_IN_HOST_HEADER
-          value: "FALSE"
-        - name: ERROR_REDIRECT_CODES
-          value: "599"
-        - name: ADD_NGINX_SERVER_CFG
-          value: 'gzip off; location = /reload { allow 127.0.0.1; deny all; content_by_lua_block { os.execute("touch /tmp/nginx-reload-triggered; /usr/local/openresty/nginx/sbin/nginx -s reload; touch /tmp/nginx-reload-complete;") } }'
-        - name: ADD_NGINX_LOCATION_CFG
-          value: |
-            gzip off;
-            proxy_buffer_size         128k;
-            proxy_buffers             4 256k;
-            proxy_busy_buffers_size   256k;
-        - name: LOG_FORMAT_NAME
-          value: "json"
-        - name: NO_LOGGING_URL_PARAMS
-          value: "{{.NO_LOGGING_URL_PARAMS}}"
-        - name: NO_LOGGING_BODY
-          value: "{{.NO_LOGGING_BODY}}"
-        - name: NO_LOGGING_RESPONSE
-          value: "{{.NO_LOGGING_RESPONSE}}"
         - name: STATSD_METRICS
           value: "FALSE"
         ports:
         - name: https
           containerPort: 10443
-        volumeMounts:
-          - name: certs
-            mountPath: /certs
       - name: {{.NAME}}
         image: "quay.io/ukhomeofficedigital/cop-private-workflow-tasklist:{{.IMAGE_TAG}}"
         imagePullPolicy: Always
         env:
-        - name: INT_DOMAIN
-          value: {{.INT_DOMAIN}}
         - name: EXT_DOMAIN
           value: {{.EXT_DOMAIN}}
         - name: REPORTING_SERVICE_NAME
@@ -153,7 +110,3 @@ spec:
             scheme: HTTP
           initialDelaySeconds: 20
           periodSeconds: 10
-      volumes:
-      - name: certs
-        secret:
-          secretName: "{{.NAME}}-pod-tls"
