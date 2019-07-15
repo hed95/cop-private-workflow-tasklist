@@ -14,6 +14,7 @@ import ScrollToTop from './core/components/ScrollToTop';
 import Header from './core/components/Header';
 import Footer from './core/components/Footer';
 import UnauthorizedPage from './core/components/UnauthorizedPage';
+import UnavailablePage from './core/components/UnavailablePage';
 import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 import { Formio } from 'react-formio';
 import url from './common/formio/url';
@@ -100,9 +101,35 @@ const renderApp = (App, authorizedRole) => {
   });
 };
 
+const unavailable = () => {
+  const rootDocument = document.getElementById('root');
+  ReactDOM.render(
+    <Provider store={store}>
+      <div>
+        <AppContainer>
+          <BrowserRouter>
+            <div>
+              <Header />
+              <div className="container" style={{ height: '100vh' }}>
+                      <UnavailablePage />
+                    </div>
+                    <Footer />
+                  </div>
+                </BrowserRouter>
+              </AppContainer>
+            </div>
+    </Provider>,
+        rootDocument);
+}
+
 if (process.env.NODE_ENV === 'production') {
   fetch('/api/config')
-        .then(response => response.json()).then((data) => {
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error(`Application configuration could not be loaded: ${response.status} ${response.statusMessage}`);
+        }).then((data) => {
           kc = Keycloak({
             realm: data.REALM,
             url: data.AUTH_URL,
@@ -118,6 +145,9 @@ if (process.env.NODE_ENV === 'production') {
             reportServiceUrl: data.REPORT_SERVICE_URL,
           };
           renderApp(App, data.AUTH_ACCESS_ROLE);
+        }).catch(err => {
+          console.log("Unable to start application: ", err.message);
+          unavailable();
         });
 } else {
   const authAccessRole = process.env.AUTH_ACCESS_ROLE;

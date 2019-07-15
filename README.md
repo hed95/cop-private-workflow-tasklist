@@ -22,7 +22,7 @@ Running in prod mode:
 ```
 npm run build
 cd dist/
-node index.js
+node server.js
 ```
 
 URL:
