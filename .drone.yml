@@ -76,7 +76,6 @@ pipeline:
       - export IMAGE_TAG=$${DRONE_COMMIT_SHA}
       - export UPTIME=$${DEV_UPTIME}
       - export REF_DATA_URL=$${DEV_REF_DATA_URL}
-      - kd --insecure-skip-tls-verify -f kube/cert.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m
@@ -132,7 +131,6 @@ pipeline:
       - export IMAGE_TAG=$${DRONE_COMMIT_SHA}
       - export UPTIME=$${STAGING_UPTIME}
       - export REF_DATA_URL=$${STAGING_REF_DATA_URL}
-      - kd --insecure-skip-tls-verify -f kube/cert.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m
@@ -188,7 +186,6 @@ pipeline:
       - export IMAGE_TAG=$${DRONE_COMMIT_SHA}
       - export UPTIME=$${PRODUCTION_UPTIME}
       - export REF_DATA_URL=$${PRODUCTION_REF_DATA_URL}
-      - kd --insecure-skip-tls-verify -f kube/cert.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m
