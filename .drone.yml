@@ -43,7 +43,7 @@ pipeline:
       - DEV_EXT_DOMAIN
       - DEV_PROTOCOL
       - DEV_REPORTING_SERVER_NAME
-      - DEV_OPERATIONAL_POSTGREST_NAME
+      - DEV_OPERATIONAL_DATA_URL
       - DEV_REF_DATA_URL
       - DEV_FORMIO_SERVER_NAME
       - DEV_WORKFLOW_SERVER_NAME
@@ -65,7 +65,6 @@ pipeline:
       - export EXT_DOMAIN=$${DEV_EXT_DOMAIN}
       - export PROTOCOL=$${DEV_PROTOCOL}
       - export REPORTING_SERVER_NAME=$${DEV_REPORTING_SERVER_NAME}
-      - export OPERATIONAL_POSTGREST_NAME=$${DEV_OPERATIONAL_POSTGREST_NAME}
       - export FORMIO_SERVER_NAME=$${DEV_FORMIO_SERVER_NAME}
       - export WORKFLOW_SERVER_NAME=$${DEV_WORKFLOW_SERVER_NAME}
       - export TRANSLATION_SERVER_NAME=$${DEV_TRANSLATION_SERVER_NAME}
@@ -76,6 +75,7 @@ pipeline:
       - export IMAGE_TAG=$${DRONE_COMMIT_SHA}
       - export UPTIME=$${DEV_UPTIME}
       - export REF_DATA_URL=$${DEV_REF_DATA_URL}
+      - export OPERATIONAL_DATA_URL=$${DEV_OPERATIONAL_DATA_URL}
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m
@@ -98,8 +98,8 @@ pipeline:
       - STAGING_EXT_DOMAIN
       - STAGING_PROTOCOL
       - STAGING_REPORTING_SERVER_NAME
-      - STAGING_OPERATIONAL_POSTGREST_NAME
       - STAGING_REF_DATA_URL
+      - STAGING_OPERATIONAL_DATA_URL
       - STAGING_FORMIO_SERVER_NAME
       - STAGING_WORKFLOW_SERVER_NAME
       - STAGING_TRANSLATION_SERVER_NAME
@@ -120,7 +120,6 @@ pipeline:
       - export EXT_DOMAIN=$${STAGING_EXT_DOMAIN}
       - export PROTOCOL=$${STAGING_PROTOCOL}
       - export REPORTING_SERVER_NAME=$${STAGING_REPORTING_SERVER_NAME}
-      - export OPERATIONAL_POSTGREST_NAME=$${STAGING_OPERATIONAL_POSTGREST_NAME}
       - export FORMIO_SERVER_NAME=$${STAGING_FORMIO_SERVER_NAME}
       - export WORKFLOW_SERVER_NAME=$${STAGING_WORKFLOW_SERVER_NAME}
       - export TRANSLATION_SERVER_NAME=$${STAGING_TRANSLATION_SERVER_NAME}
@@ -131,6 +130,7 @@ pipeline:
       - export IMAGE_TAG=$${DRONE_COMMIT_SHA}
       - export UPTIME=$${STAGING_UPTIME}
       - export REF_DATA_URL=$${STAGING_REF_DATA_URL}
+      - export OPERATIONAL_DATA_URL=$${STAGING_OPERATIONAL_DATA_URL}
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m
@@ -153,8 +153,8 @@ pipeline:
       - PRODUCTION_EXT_DOMAIN
       - PRODUCTION_PROTOCOL
       - PRODUCTION_REPORTING_SERVER_NAME
-      - PRODUCTION_OPERATIONAL_POSTGREST_NAME
       - PRODUCTION_REF_DATA_URL
+      - PRODUCTION_OPERATIONAL_DATA_URL
       - PRODUCTION_FORMIO_SERVER_NAME
       - PRODUCTION_WORKFLOW_SERVER_NAME
       - PRODUCTION_TRANSLATION_SERVER_NAME
@@ -175,7 +175,6 @@ pipeline:
       - export EXT_DOMAIN=$${PRODUCTION_EXT_DOMAIN}
       - export PROTOCOL=$${PRODUCTION_PROTOCOL}
       - export REPORTING_SERVER_NAME=$${PRODUCTION_REPORTING_SERVER_NAME}
-      - export OPERATIONAL_POSTGREST_NAME=$${PRODUCTION_OPERATIONAL_POSTGREST_NAME}
       - export FORMIO_SERVER_NAME=$${PRODUCTION_FORMIO_SERVER_NAME}
       - export WORKFLOW_SERVER_NAME=$${PRODUCTION_WORKFLOW_SERVER_NAME}
       - export TRANSLATION_SERVER_NAME=$${PRODUCTION_TRANSLATION_SERVER_NAME}
@@ -186,6 +185,7 @@ pipeline:
       - export IMAGE_TAG=$${DRONE_COMMIT_SHA}
       - export UPTIME=$${PRODUCTION_UPTIME}
       - export REF_DATA_URL=$${PRODUCTION_REF_DATA_URL}
+      - export OPERATIONAL_DATA_URL=$${PRODUCTION_OPERATIONAL_DATA_URL}
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m

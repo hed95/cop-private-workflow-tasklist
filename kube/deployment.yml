@@ -74,8 +74,6 @@ spec:
           value: {{.PROTOCOL}}
         - name: FORMIO_SERVER_NAME
           value: {{.FORMIO_SERVER_NAME}}
-        - name: OPERATIONAL_POSTGREST_NAME
-          value: {{.OPERATIONAL_POSTGREST_NAME}}
         - name: REPORTING_SERVER_NAME
           value: {{.REPORTING_SERVER_NAME}}
         - name: TRANSLATION_SERVER_NAME
@@ -85,7 +83,7 @@ spec:
         - name: FORM_SERVICE_URL
           value: {{.PROTOCOL}}{{.FORMIO_SERVER_NAME}}.{{.EXT_DOMAIN}}
         - name: OPERATIONAL_DATA_URL
-          value: {{.OPERATIONAL_POSTGREST_NAME}}
+          value: {{.OPERATIONAL_DATA_URL}}
         - name: REPORT_SERVICE_URL
           value: {{.PROTOCOL}}{{.REPORTING_SERVER_NAME}}.{{.EXT_DOMAIN}}
         - name: TRANSLATION_SERVICE_URL
