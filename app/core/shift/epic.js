@@ -10,7 +10,7 @@ const shift = (email, token, operationalDataUrl, client) => {
   console.log(`Requesting shift details for ${email}`);
   return client({
     method: 'GET',
-    path: `${operationalDataUrl}/shift?email=eq.${encodeURIComponent(email)}`,
+    path: `${operationalDataUrl}/v1/shift?email=eq.${encodeURIComponent(email)}`,
     headers: {
       Accept: 'application/json',
       Authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ const fetchStaffDetails = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'POST',
-        path: `${store.getState().appConfig.operationalDataUrl}/rpc/staffdetails`,
+        path: `${store.getState().appConfig.operationalDataUrl}/v1/rpc/staffdetails`,
         entity: {
           argstaffemail: `${store.getState().keycloak.tokenParsed.email}`,
         },
