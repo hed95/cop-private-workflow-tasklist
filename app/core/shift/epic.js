@@ -10,7 +10,7 @@ const shift = (email, token, operationalDataUrl, client) => {
   console.log(`Requesting shift details for ${email}`);
   return client({
     method: 'GET',
-    path: `${operationalDataUrl}/v1/shift?email=eq.${encodeURIComponent(email)}`,
+    path: `${operationalDataUrl}/v1/shift?email=eq.${email}`,
     headers: {
       Accept: 'application/json',
       Authorization: `Bearer ${token}`,
