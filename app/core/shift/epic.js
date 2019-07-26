@@ -23,7 +23,7 @@ const endShift = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'DELETE',
-        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/shift/${encodeURIComponent(store.getState().keycloak.tokenParsed.email)}?deletedReason=finished`,
+        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/shift/${store.getState().keycloak.tokenParsed.email}?deletedReason=finished`,
         headers: {
           Accept: 'application/json',
           Authorization: `Bearer ${store.getState().keycloak.token}`,
