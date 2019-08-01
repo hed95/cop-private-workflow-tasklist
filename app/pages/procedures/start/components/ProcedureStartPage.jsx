@@ -161,27 +161,30 @@ export class ProcessStartPage extends React.Component {
                                            startForm={form}
                                            formReference={(formLoaded) => {
                                                this.form = formLoaded;
-                                               this.form.createPromise.then(() => {
-                                                   this.form.formio.on('componentError', (error) => {
-                                                       const path = this.props.history.location.pathname;
-                                                       const user = this.props.kc.tokenParsed.email;
-                                                       this.props.log([{
-                                                           user: user,
-                                                           path: path,
-                                                           level: 'error',
-                                                           form: {
-                                                               name: form.name,
-                                                               path: form.path,
-                                                               display: form.display
-                                                           },
-                                                           message: error.message,
-                                                           component: {
-                                                               label: error.component.label,
-                                                               key: error.component.key
-                                                           }
-                                                       }]);
+                                               if (this.form) {
+                                                   this.form.createPromise.then(() => {
+                                                       this.form.formio.on('componentError', (error) => {
+                                                           const path = this.props.history.location.pathname;
+                                                           const user = this.props.kc.tokenParsed.email;
+                                                           this.props.log([{
+                                                               user: user,
+                                                               path: path,
+                                                               level: 'error',
+                                                               form: {
+                                                                   name: form.name,
+                                                                   path: form.path,
+                                                                   display: form.display
+                                                               },
+                                                               message: error.message,
+                                                               component: {
+                                                                   label: error.component.label,
+                                                                   key: error.component.key
+                                                               }
+                                                           }]);
+                                                       })
                                                    })
-                                               })
+                                               }
+
                                            }}
                                            removeAll={this.secureLocalStorage.removeAll()}
                                            submission={this.secureLocalStorage.get(processDefinition.getIn(['process-definition', 'id']))}
