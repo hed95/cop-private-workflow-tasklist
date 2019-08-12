@@ -141,7 +141,6 @@ if (process.env.NODE_ENV === 'production') {
             operationalDataUrl: data.OPERATIONAL_DATA_URL,
             workflowServiceUrl: data.WORKFLOW_SERVICE_URL,
             translationServiceUrl: data.TRANSLATION_SERVICE_URL,
-            formServiceUrl: data.FORM_SERVICE_URL,
             reportServiceUrl: data.REPORT_SERVICE_URL,
           };
           renderApp(App, data.AUTH_ACCESS_ROLE);
@@ -162,7 +161,6 @@ if (process.env.NODE_ENV === 'production') {
     operationalDataUrl: process.env.OPERATIONAL_DATA_URL,
     workflowServiceUrl: process.env.WORKFLOW_SERVICE_URL,
     translationServiceUrl: process.env.TRANSLATION_SERVICE_URL,
-    formServiceUrl: process.env.FORM_SERVICE_URL,
     reportServiceUrl: process.env.REPORT_SERVICE_URL,
   };
   renderApp(App, authAccessRole);

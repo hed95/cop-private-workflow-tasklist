@@ -38,7 +38,6 @@ module.exports = webpackMerge(common, {
             'WORKFLOW_SERVICE_URL' : JSON.stringify(process.env.WORKFLOW_SERVICE_URL),
             'TRANSLATION_SERVICE_URL' : JSON.stringify(process.env.TRANSLATION_SERVICE_URL),
             'REPORT_SERVICE_URL' : JSON.stringify(process.env.REPORT_SERVICE_URL),
-            'FORM_SERVICE_URL' : JSON.stringify(process.env.FORM_SERVICE_URL)
           }
         }
       }),
