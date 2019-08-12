@@ -108,7 +108,7 @@ const submit = (action$, store, { client }) =>
       const shiftData = action.submissionData;
       return client({
         method: 'POST',
-        path: `${store.getState().appConfig.formServiceUrl}/form/${action.formId}/submission`,
+        path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/${action.formId}/submission`,
         entity: {
           data: shiftData,
         },

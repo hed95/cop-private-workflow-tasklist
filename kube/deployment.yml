@@ -80,8 +80,6 @@ spec:
           value: {{.TRANSLATION_SERVER_NAME}}
         - name: WORKFLOW_SERVER_NAME
           value: {{.WORKFLOW_SERVER_NAME}}
-        - name: FORM_SERVICE_URL
-          value: {{.PROTOCOL}}{{.FORMIO_SERVER_NAME}}.{{.EXT_DOMAIN}}
         - name: OPERATIONAL_DATA_URL
           value: {{.OPERATIONAL_DATA_URL}}
         - name: REPORT_SERVICE_URL

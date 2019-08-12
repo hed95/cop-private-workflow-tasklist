@@ -75,7 +75,7 @@ const submitTaskForm = (action$, store, { client }) =>
       const submissionData = Object.assign({}, action.submission);
       return client({
         method: 'POST',
-        path: `${store.getState().appConfig.formServiceUrl}/form/${action.formId}/submission`,
+        path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/${action.formId}/submission`,
         entity: {
           data: JSON.stringify(submissionData),
         },

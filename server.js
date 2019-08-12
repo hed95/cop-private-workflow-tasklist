@@ -92,7 +92,6 @@ app.get('/api/config', (req, res) => {
         "REF_DATA_URL" : process.env.REF_DATA_URL,
         "WORKFLOW_SERVICE_URL" : process.env.WORKFLOW_SERVICE_URL,
         "TRANSLATION_SERVICE_URL" : process.env.TRANSLATION_SERVICE_URL,
-        "FORM_SERVICE_URL" : process.env.FORM_SERVICE_URL,
         "REPORT_SERVICE_URL" : process.env.REPORT_SERVICE_URL,
     })
 });
