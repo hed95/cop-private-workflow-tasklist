@@ -48,8 +48,6 @@ spec:
           value: {{.REPORTING_SERVER_NAME}}
         - name: REF_DATA_URL
           value: {{.REF_DATA_URL}}
-        - name: FORM_IO_NAME
-          value: {{.FORMIO_SERVER_NAME}}
         - name: WORKFLOW_NAME
           value: {{.WORKFLOW_SERVER_NAME}}
         - name: TRANSLATION_SERVICE_NAME
@@ -72,8 +70,6 @@ spec:
           value: {{.KEYCLOAK_CONTACT}}
         - name: PROTOCOL
           value: {{.PROTOCOL}}
-        - name: FORMIO_SERVER_NAME
-          value: {{.FORMIO_SERVER_NAME}}
         - name: REPORTING_SERVER_NAME
           value: {{.REPORTING_SERVER_NAME}}
         - name: TRANSLATION_SERVER_NAME
