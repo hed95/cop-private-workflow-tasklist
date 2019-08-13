@@ -6,6 +6,7 @@ import * as actions from '../actions';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
+import {Formio} from 'react-formio';
 import AppConstants from '../../../../common/AppConstants';
 
 import DataSpinner from '../../../../core/components/DataSpinner';
@@ -69,6 +70,7 @@ export class ProcessStartPage extends React.Component {
                     level: 'info',
                     message: `Procedure ${processKey} successfully started`
                 }]);
+                Formio.clearCache();
                 if (this.props.redirectPath) {
                     this.props.history.replace(this.props.redirectPath);
                 } else {
