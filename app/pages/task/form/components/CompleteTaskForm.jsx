@@ -4,11 +4,9 @@ import { customEventSubmissionStatus, form, loadingTaskForm, submissionStatus } 
 import { bindActionCreators } from 'redux';
 import * as taskFormActions from '../actions';
 import * as taskActions from '../../display/actions';
-
+import {Formio} from 'react-formio';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Form } from 'react-formio';
-import { unclaimSuccessful } from '../../display/selectors';
 import AppConstants from '../../../../common/AppConstants';
 import NotFound from '../../../../core/components/NotFound';
 import { FAILED, SUBMISSION_SUCCESSFUL, SUBMITTING } from '../constants';
@@ -64,6 +62,7 @@ export class CompleteTaskForm extends React.Component {
           level: 'info',
           message: `${taskName} successfully completed`
         }]);
+        Formio.clearCache();
         if (this.props.redirectPath) {
           this.props.history.replace(this.props.redirectPath);
         } else {
