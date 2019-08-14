@@ -13,6 +13,7 @@ import { FAILED, SUBMISSION_SUCCESSFUL, SUBMITTING } from '../constants';
 import TaskForm from './TaskForm';
 import withLog from '../../../../core/error/component/withLog';
 import DataSpinner from '../../../../core/components/DataSpinner';
+import { unclaimSuccessful } from '../../display/selectors';
 
 export class CompleteTaskForm extends React.Component {
   constructor(props) {
