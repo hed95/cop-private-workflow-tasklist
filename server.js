@@ -1,10 +1,10 @@
-'use strict';
-const Keycloak =  require ('keycloak-connect');
+const Keycloak = require('keycloak-connect');
 const winston = require('winston');
-const {createLogger, format, transports} = winston;
-const { combine, timestamp, json, splat} = format;
 
-const port = process.env.PORT || 8080;
+const { createLogger, format, transports } = winston;
+const { combine, timestamp, json, splat } = format;
+
+const port = process.env.WWW_PORT || 8080;
 
 const express = require('express');
 const https = require('https');
@@ -19,7 +19,7 @@ const logger = createLogger({
   format: combine(
     timestamp(),
     splat(),
-    json()
+    json(),
   ),
   transports: [
     new transports.Console(),
@@ -28,24 +28,23 @@ const logger = createLogger({
 });
 
 
-
 if (process.env.NODE_ENV === 'production') {
-    logger.info('Setting ca bundle');
-    const trustedCa = [
-        '/etc/ssl/certs/ca-bundle.crt'
-    ];
+  logger.info('Setting ca bundle');
+  const trustedCa = [
+    '/etc/ssl/certs/ca-bundle.crt',
+  ];
 
-    https.globalAgent.options.ca = [];
-    http.globalAgent.options.ca = [];
-    for (const ca of trustedCa) {
-        https.globalAgent.options.ca.push(fs.readFileSync(ca));
-        http.globalAgent.options.ca.push(fs.readFileSync(ca));
-    }
-    logger.info('ca bundle set...');
+  https.globalAgent.options.ca = [];
+  http.globalAgent.options.ca = [];
+  for (const ca of trustedCa) {
+    https.globalAgent.options.ca.push(fs.readFileSync(ca));
+    http.globalAgent.options.ca.push(fs.readFileSync(ca));
+  }
+  logger.info('ca bundle set...');
 }
 
 const respond = (req, res) => {
-    res.send('OK');
+  res.send('OK');
 };
 
 process.title = 'cop-private-ui';
@@ -53,7 +52,7 @@ process.title = 'cop-private-ui';
 app.set('port', port);
 
 app.use('/assets', express.static(path.join(__dirname, '/assets')));
-app.use(express.static(__dirname + "/"));
+app.use(express.static(`${__dirname}/`));
 
 app.use(cors());
 app.use(express.json());
@@ -62,17 +61,17 @@ app.get('/healthz', respond);
 app.get('/readiness', respond);
 
 const kcConfig = {
-  clientId: process.env.AUTH_CLIENT_ID,
-  serverUrl: process.env.AUTH_URL,
-  realm: process.env.AUTH_REALM,
-  bearerOnly: true
+  clientId: process.env.WWW_KEYCLOAK_CLIENT_ID,
+  serverUrl: process.env.KEYCLOAK_URI,
+  realm: process.env.KEYCLOAK_REALM,
+  bearerOnly: true,
 };
 
 
 const keycloak = new Keycloak({}, kcConfig);
 app.use(keycloak.middleware());
 
-app.post('/log', [keycloak.protect(),(req, res) => {
+app.post('/log', [keycloak.protect(), (req, res) => {
   const logStatements = req.body;
   logStatements.forEach((log) => {
     logger.log(log);
@@ -80,42 +79,44 @@ app.post('/log', [keycloak.protect(),(req, res) => {
   res.sendStatus(200);
 }]);
 
+
 app.get('/api/config', (req, res) => {
-    res.send({
-        'REALM': process.env.AUTH_REALM,
-        'AUTH_URL': process.env.AUTH_URL,
-        'CLIENT_ID': process.env.AUTH_CLIENT_ID,
-        "UI_VERSION": process.env.UI_VERSION,
-        "UI_ENVIRONMENT" : process.env.UI_ENVIRONMENT,
-        "AUTH_ACCESS_ROLE" : process.env.AUTH_ACCESS_ROLE,
-        "OPERATIONAL_DATA_URL" : process.env.OPERATIONAL_DATA_URL,
-        "REF_DATA_URL" : process.env.REF_DATA_URL,
-        "WORKFLOW_SERVICE_URL" : process.env.WORKFLOW_SERVICE_URL,
-        "TRANSLATION_SERVICE_URL" : process.env.TRANSLATION_SERVICE_URL,
-        "REPORT_SERVICE_URL" : process.env.REPORT_SERVICE_URL,
-    })
+  res.send({
+    REALM: process.env.KEYCLOAK_REALM,
+    AUTH_URL: process.env.KEYCLOAK_URI,
+    CLIENT_ID: process.env.WWW_KEYCLOAK_CLIENT_ID,
+    UI_VERSION: process.env.WWW_UI_VERSION,
+    UI_ENVIRONMENT: process.env.WWW_UI_ENVIRONMENT,
+    AUTH_ACCESS_ROLE: process.env.WWW_KEYCLOAK_ACCESS_ROLE,
+    OPERATIONAL_DATA_URL: process.env.API_COP_URI,
+    REF_DATA_URL: process.env.API_REF_URI,
+    WORKFLOW_SERVICE_URL: process.env.ENGINE_URI,
+    TRANSLATION_SERVICE_URL: process.env.TRANSLATION_URI,
+    REPORT_SERVICE_URL: process.env.REPORT_URI,
+  });
 });
 
-app.get('*.js', function(req, res, next) {
-  req.url = req.url + '.gz';
+
+app.get('*.js', (req, res, next) => {
+  req.url += '.gz';
   res.set('Content-Encoding', 'gzip');
   res.set('Content-Type', 'text/javascript');
   next();
 });
 
-app.get('*.css', function(req, res, next) {
-  req.url = req.url + '.gz';
+app.get('*.css', (req, res, next) => {
+  req.url += '.gz';
   res.set('Content-Encoding', 'gzip');
   res.set('Content-Type', 'text/css');
   next();
 });
 
-app.all('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'index.html'));
+app.all('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-const server = http.createServer(app).listen(app.get('port'), function () {
-    logger.info('TaskList Prod server listening on port ' + app.get('port'));
+const server = http.createServer(app).listen(app.get('port'), () => {
+  logger.info(`TaskList Prod server listening on port ${app.get('port')}`);
 });
 
 
@@ -141,9 +142,8 @@ process.on('SIGQUIT', shutDown);
 
 let connections = [];
 
-server.on('connection', connection => {
-    connections.push(connection);
-    connection.on('close', () => connections = connections.filter(curr => curr !== connection));
+server.on('connection', (connection) => {
+  connections.push(connection);
+  connection.on('close', () => connections = connections.filter(curr => curr !== connection));
 });
-
 

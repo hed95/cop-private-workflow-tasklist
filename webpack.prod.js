@@ -7,6 +7,7 @@ const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const path = require('path');
+
 const buildDirectory = path.join(__dirname, './dist');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -17,13 +18,12 @@ const cssnano = require('cssnano');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 
-
 module.exports = webpackMerge(common, {
   mode: 'production',
   devtool: 'source-map',
   entry: [
     require.resolve('react-app-polyfill/ie11'),
-    path.join(process.cwd(), './app/index.js')
+    path.join(process.cwd(), './app/index.js'),
   ],
   optimization: {
     minimize: true,
@@ -74,10 +74,10 @@ module.exports = webpackMerge(common, {
   },
   plugins: [
     new CleanWebpackPlugin([
-      buildDirectory
+      buildDirectory,
     ], {
       verbose: true,
-      dry: false
+      dry: false,
     }),
     new OptimizeCSSAssetsPlugin({
       cssProcessor: cssnano,
@@ -85,9 +85,9 @@ module.exports = webpackMerge(common, {
         discardComments: {
           removeAll: true,
         },
-        safe: true
+        safe: true,
       },
-      canPrint: false
+      canPrint: false,
     }),
     new HtmlWebpackPlugin({
       title: 'Caching',
@@ -117,17 +117,17 @@ module.exports = webpackMerge(common, {
         mangle: true,
         output: {
           comments: false,
-        }
+        },
       },
-      exclude: [/\.min\.js$/gi]
+      exclude: [/\.min\.js$/gi],
     }),
     new ProgressPlugin(true),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
-      debug: false
+      debug: false,
     }),
     new CopyWebpackPlugin([
-      { from: 'server.js', to: '' }
+      { from: 'server.js', to: '' },
     ]),
     new CompressionPlugin({
       algorithm: 'gzip',
@@ -138,16 +138,16 @@ module.exports = webpackMerge(common, {
     new OfflinePlugin({
       autoUpdate: 1000 * 60 * 2,
       ServiceWorker: {
-        events: true
+        events: true,
       },
       relativePaths: false,
       publicPath: '/',
       excludes: ['server.js'],
       caches: {
         main: [':rest:'],
-        additional: ['*.chunk.js']
+        additional: ['*.chunk.js'],
       },
-      safeToUseOptionalCaches: true
+      safeToUseOptionalCaches: true,
     }),
     new WebpackPwaManifest({
       name: 'COP UI',
@@ -160,12 +160,12 @@ module.exports = webpackMerge(common, {
       icons: [
         {
           src: path.join(__dirname, 'node_modules/govuk-frontend/assets/images/govuk-opengraph-image.png'),
-          size: "1200x630",
-          type: "image/png"
-        }
+          size: '1200x630',
+          type: 'image/png',
+        },
       ],
 
-    })
+    }),
   ],
 
   performance: {
