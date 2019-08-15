@@ -42,23 +42,6 @@ module.exports = {
       template: './public/index.html',
       favicon: './public/favicon.ico',
     }),
-
-    new webpack.DefinePlugin({
-      env: {
-        WWW_KEYCLOAK_CLIENT_ID: JSON.stringify(process.env.WWW_KEYCLOAK_CLIENT_ID),
-        KEYCLOAK_REALM: JSON.stringify(process.env.KEYCLOAK_REALM),
-        KEYCLOAK_URI: JSON.stringify(process.env.KEYCLOAK_URI),
-        WWW_KEYCLOAK_ACCESS_ROLE: JSON.stringify(process.env.WWW_KEYCLOAK_ACCESS_ROLE),
-        WWW_UI_ENVIRONMENT: JSON.stringify(process.env.WWW_UI_ENVIRONMENT),
-        WWW_STORAGE_KEY: JSON.stringify(process.env.WWW_STORAGE_KEY),
-        WWW_UI_VERSION: JSON.stringify(process.env.WWW_UI_VERSION),
-        API_COP_URI: JSON.stringify(process.env.API_COP_URI),
-        API_REF_URI: JSON.stringify(process.env.API_REF_URI),
-        ENGINE_URI: JSON.stringify(process.env.ENGINE_URI),
-        TRANSLATION_URI: JSON.stringify(process.env.TRANSLATION_URI),
-        REPORT_URI: JSON.stringify(process.env.REPORT_URI),
-      },
-    }),
     new CopyWebpackPlugin([
       { from: 'node_modules/govuk-frontend/assets', to: 'assets' },
     ]),

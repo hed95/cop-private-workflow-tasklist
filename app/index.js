@@ -122,7 +122,7 @@ const unavailable = () => {
         rootDocument);
 };
 console.log(`keycloak_id is: ${process.env.WWW_KEYCLOAK_CLIENT_ID}`);
-// debugger;
+
 if (process.env.NODE_ENV === 'production') {
   fetch('/api/config')
         .then((response) => {
@@ -152,18 +152,18 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   const authAccessRole = process.env.WWW_KEYCLOAK_ACCESS_ROLE;
   kc = Keycloak({
-  realm: process.env.KEYCLOAK_REALM,
-  url: process.env.KEYCLOAK_URI,
-  clientId: process.env.WWW_KEYCLOAK_CLIENT_ID,
-});
+    realm: process.env.KEYCLOAK_REALM,
+    url: process.env.KEYCLOAK_URI,
+    clientId: process.env.WWW_KEYCLOAK_CLIENT_ID,
+  });
   store.getState().appConfig = {
-  uiVersion: process.env.WWW_UI_VERSION,
-  uiEnvironment: process.env.WWW_UI_ENVIRONMENT,
-  operationalDataUrl: process.env.API_COP_URI,
-  workflowServiceUrl: process.env.ENGINE_URI,
-  translationServiceUrl: process.env.TRANSLATION_URI,
-  reportServiceUrl: process.env.REPORT_URI,
-};
+    uiVersion: process.env.WWW_UI_VERSION,
+    uiEnvironment: process.env.WWW_UI_ENVIRONMENT,
+    operationalDataUrl: process.env.API_COP_URI,
+    workflowServiceUrl: process.env.ENGINE_URI,
+    translationServiceUrl: process.env.TRANSLATION_URI,
+    reportServiceUrl: process.env.REPORT_URI,
+  };
   renderApp(App, authAccessRole);
 }
 // Hot Module Replacement API
