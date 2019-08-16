@@ -200,7 +200,7 @@ export class ProcessStartPage extends React.Component {
                                                    this.form.formio.submitted = true;
                                                    this.form.formio.submitting = true;
                                                }
-                                               this.props.submit(form._id, procedureKey,
+                                               this.props.submit(form.id, procedureKey,
                                                    variableName,
                                                    submission.data, process,
                                                    this.props.nonShiftApiCall);

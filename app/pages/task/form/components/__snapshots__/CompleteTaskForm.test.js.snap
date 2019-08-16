@@ -33,7 +33,7 @@ exports[`CompleteTaskForm Component renders task form 1`] = `
   }
   form={
     Object {
-      "_id": "XXXXX",
+      "id": "XXXXX",
       "access": Array [
         Object {
           "roles": Array [

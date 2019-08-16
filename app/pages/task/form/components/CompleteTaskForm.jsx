@@ -118,7 +118,7 @@ export class CompleteTaskForm extends React.Component {
     }
     return <TaskForm {...this.props}
                 onSubmitTaskForm={(submissionData, variableName) => {
-                  this.props.submitTaskForm(form._id, task.get('id'),
+                  this.props.submitTaskForm(form.id, task.get('id'),
                     submissionData, variableName);
                 }}
                 onCustomEvent={(event) => this.handleCustomEvent(event)}
