@@ -102,7 +102,7 @@ const submitToWorkflow = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'POST',
-        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/process-instances`,
+        path: `${store.getState().appConfig.translationServiceUrl}/api/translation/workflow/process-instances`,
         entity: {
           data: action.data,
           processKey: action.processKey,
