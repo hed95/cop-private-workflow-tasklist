@@ -77,7 +77,7 @@ export default function (ComposedComponent) {
 
   const mapDispatchToProps = dispatch => bindActionCreators(Object.assign(actions, logActions), dispatch);
 
-  return withRouter(connect((state) => {
+  return withRouter(connect(state => {
     return {
       staffDetails: staffDetails(state),
       isFetchingStaffDetails: isFetchingStaffDetails(state),

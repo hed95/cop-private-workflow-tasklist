@@ -1,7 +1,7 @@
 import Promise from 'native-promise-only';
 
 
-const url = (formio) => {
+const url = formio => {
   const xhrRequest = (url, name, query, data, options, onprogress) => new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     const json = (typeof data === 'string');
@@ -64,7 +64,7 @@ const url = (formio) => {
         file,
         name,
         dir,
-      }, options, progressCallback).then((response) => {
+      }, options, progressCallback).then(response => {
         response.data = response.data || {};
         return {
           storage: 'url',

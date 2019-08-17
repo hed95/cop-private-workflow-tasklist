@@ -22,7 +22,7 @@ describe('Messages epic', () => {
     },
   });
   store.replaceReducer(reducer);
-  it('can fetchNotifications', (done) => {
+  it('can fetchNotifications', done => {
     const action$ = ActionsObservable.of(
       { type: 'FETCH_NOTIFICATIONS', payload: {} },
     );
@@ -59,12 +59,12 @@ describe('Messages epic', () => {
       type: types.FETCH_NOTIFICATIONS_SUCCESS, payload,
     };
     epic(action$, store, { client })
-      .subscribe((actualOutput) => {
+      .subscribe(actualOutput => {
         expect(actualOutput).toEqual(expectedOutput);
         done();
       });
   });
-  it('can fetchNotifications after 503 retry', (done) => {
+  it('can fetchNotifications after 503 retry', done => {
     const action$ = ActionsObservable.of(
       { type: 'FETCH_NOTIFICATIONS', payload: {} },
     );
@@ -113,7 +113,7 @@ describe('Messages epic', () => {
       type: types.FETCH_NOTIFICATIONS_SUCCESS, payload,
     };
     epic(action$, store, { client })
-      .subscribe((actualOutput) => {
+      .subscribe(actualOutput => {
         expect(actualOutput).toEqual(expectedOutput);
         done();
       });

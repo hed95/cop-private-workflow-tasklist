@@ -22,7 +22,7 @@ describe('reports epic', () => {
     },
   });
   store.replaceReducer(reducer);
-  it('fetches reports', (done) => {
+  it('fetches reports', done => {
     const action$ = ActionsObservable.of(
       { type: types.FETCH_REPORTS_LIST, payload: {} },
     );
@@ -41,12 +41,12 @@ describe('reports epic', () => {
       type: types.FETCH_REPORTS_LIST_SUCCESS, payload: response,
     };
     epic(action$, store, { client })
-      .subscribe((actualOutput) => {
+      .subscribe(actualOutput => {
         expect(actualOutput).toEqual(expectedOutput);
         done();
       });
   });
-  it('retries if reporting service returns 503', (done) => {
+  it('retries if reporting service returns 503', done => {
     const action$ = ActionsObservable.of(
       { type: types.FETCH_REPORTS_LIST, payload: {} },
     );
@@ -78,7 +78,7 @@ describe('reports epic', () => {
       type: types.FETCH_REPORTS_LIST_SUCCESS, payload: response,
     };
     epic(action$, store, { client })
-      .subscribe((actualOutput) => {
+      .subscribe(actualOutput => {
         expect(actualOutput).toEqual(expectedOutput);
         done();
       });

@@ -1,4 +1,4 @@
-export const priority = (priority) => {
+export const priority = priority => {
   let result = null;
   switch (priority) {
     case 50:

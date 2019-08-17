@@ -31,7 +31,7 @@ function reducer(state = initialState, action) {
       const task = action.payload.entity.task;
       const rawVariables = action.payload.entity.variables ? action.payload.entity.variables : {};
       const variables = {};
-      Object.keys(rawVariables).forEach((key) => {
+      Object.keys(rawVariables).forEach(key => {
         variables[key] = rawVariables[key].value;
       });
       return state.set('isFetchingTask', false)

@@ -8,7 +8,7 @@ import 'rxjs';
 import 'rxjs/add/operator/mergeMap';
 
 describe('epicUtil', () => {
-  it('can handle 403', (done) => {
+  it('can handle 403', done => {
     const action$ = ActionsObservable.of(
       { type: 'ERROR', formName: 'formName' },
     );
@@ -17,17 +17,17 @@ describe('epicUtil', () => {
         code: 403,
       },
     })).toArray()
-      .subscribe((result) => {
+      .subscribe(result => {
         const unauthorised = result[0];
         const failureAction = result[1];
         expect(unauthorised.type).toEqual('HANDLE_UNAUTHORISED');
-        failureAction.subscribe((data) => {
+        failureAction.subscribe(data => {
           expect(data.type).toEqual('ERROR');
           done();
         });
       });
   });
-  it('can handle any other exception', (done) => {
+  it('can handle any other exception', done => {
     const action$ = ActionsObservable.of(
       { type: 'FETCH_FORM_FAILURE', formName: 'formName' },
     );
@@ -36,11 +36,11 @@ describe('epicUtil', () => {
         code: 500,
       },
     })).toArray()
-      .subscribe((result) => {
+      .subscribe(result => {
         const failureAction = result[0];
         const error = result[1];
         expect(error.type).toEqual('HANDLE_ERROR');
-        failureAction.subscribe((data) => {
+        failureAction.subscribe(data => {
           expect(data.type).toEqual('FETCH_FORM_FAILURE');
           done();
         });

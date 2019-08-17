@@ -32,7 +32,7 @@ const renderApp = (App, authorizedRole) => {
   initAll();
   kc.onTokenExpired = () => {
     secureLocalStorage.removeAll();
-    kc.updateToken().success((refreshed) => {
+    kc.updateToken().success(refreshed => {
       if (refreshed) {
         store.getState().keycloak = kc;
       }
@@ -40,7 +40,7 @@ const renderApp = (App, authorizedRole) => {
       kc.logout();
     });
   };
-  kc.init({ onLoad: 'login-required', checkLoginIframe: false }).success((authenticated) => {
+  kc.init({ onLoad: 'login-required', checkLoginIframe: false }).success(authenticated => {
     if (authenticated) {
       store.getState().keycloak = kc;
       const hasPlatformRoleAccess = kc.realmAccess.roles.includes(authorizedRole);
@@ -55,7 +55,7 @@ const renderApp = (App, authorizedRole) => {
           history.go(1);
         };
         setInterval(() => {
-          kc.updateToken().success((refreshed) => {
+          kc.updateToken().success(refreshed => {
             if (refreshed) {
               store.getState().keycloak = kc;
             }
@@ -129,7 +129,7 @@ if (process.env.NODE_ENV === 'production') {
             return response.json();
           }
           throw new Error(`Application configuration could not be loaded: ${response.status} ${response.statusMessage}`);
-        }).then((data) => {
+        }).then(data => {
           kc = Keycloak({
             realm: data.REALM,
             url: data.AUTH_URL,

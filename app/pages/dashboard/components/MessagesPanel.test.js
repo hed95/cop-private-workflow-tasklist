@@ -74,7 +74,7 @@ describe('MessagesPanel', () => {
       hasActiveShift: true,
       isFetchingMessageCounts: false,
       messageCounts: 10,
-      log: (logs) => {
+      log: logs => {
         console.log(`JSON${JSON.stringify(logs)}`);
       },
       kc: {
