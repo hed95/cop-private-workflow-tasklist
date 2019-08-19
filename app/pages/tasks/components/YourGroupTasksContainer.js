@@ -90,7 +90,7 @@ export class YourGroupTasksContainer extends React.Component {
       sortYourGroupTasks={this.sortYourGroupTasks}
       userId={this.props.kc.tokenParsed.email}
       goToTask={this.goToTask}
-      claimTask={(taskId) => {
+      claimTask={taskId => {
         if (this.selectedTask) {
           this.selectedTask = null;
         }
@@ -98,7 +98,7 @@ export class YourGroupTasksContainer extends React.Component {
         this.props.claimTask(taskId);
       }
                            }
-      handleUnclaim={(taskId) => {
+      handleUnclaim={taskId => {
         if (this.selectedTask) {
           this.selectedTask = null;
         }

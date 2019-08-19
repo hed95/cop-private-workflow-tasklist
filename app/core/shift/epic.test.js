@@ -32,7 +32,7 @@ describe('shift epic', () => {
     },
   });
   store.replaceReducer(reducer);
-  it('can perform endShift', (done) => {
+  it('can perform endShift', done => {
     const action$ = ActionsObservable.of(
       { type: 'END_SHIFT', payload: {} },
     );
@@ -43,13 +43,13 @@ describe('shift epic', () => {
     };
 
     epic(action$, store, { client })
-      .subscribe((actualOutput) => {
+      .subscribe(actualOutput => {
         expect(actualOutput)
           .toEqual(expectedOutput);
         done();
       });
   });
-  it('can hand endShift failure', (done) => {
+  it('can hand endShift failure', done => {
     const action$ = ActionsObservable.of(
       { type: 'END_SHIFT', payload: {} },
     );
@@ -62,7 +62,7 @@ describe('shift epic', () => {
 
     Observable.concat(epic(action$, store, { client }))
       .toArray()
-      .subscribe((data) => {
+      .subscribe(data => {
         const submitFailure = data[0];
         const error = data[1];
         expect(submitFailure)
@@ -81,7 +81,7 @@ describe('shift epic', () => {
         done();
       });
   });
-  it('can fetchStaffDetails', (done) => {
+  it('can fetchStaffDetails', done => {
     const action$ = ActionsObservable.of(
       { type: types.FETCH_STAFF_DETAILS, payload: {} },
     );
@@ -94,13 +94,13 @@ describe('shift epic', () => {
     };
 
     epic(action$, store, { client })
-      .subscribe((actualOutput) => {
+      .subscribe(actualOutput => {
         expect(actualOutput)
           .toEqual(expectedOutput);
         done();
       });
   });
-  it('can fetchShiftForm', (done) => {
+  it('can fetchShiftForm', done => {
     const action$ = ActionsObservable.of(
       { type: types.FETCH_SHIFT_FORM, payload: {} },
     );
@@ -113,13 +113,13 @@ describe('shift epic', () => {
     };
 
     epic(action$, store, { client })
-      .subscribe((actualOutput) => {
+      .subscribe(actualOutput => {
         expect(actualOutput)
           .toEqual(expectedOutput);
         done();
       });
   });
-  it('can fetchActiveShift', (done) => {
+  it('can fetchActiveShift', done => {
     const action$ = ActionsObservable.of(
       { type: types.FETCH_ACTIVE_SHIFT, payload: {} },
     );
@@ -138,13 +138,13 @@ describe('shift epic', () => {
     };
 
     epic(action$, store, { client })
-      .subscribe((actualOutput) => {
+      .subscribe(actualOutput => {
         expect(actualOutput)
           .toEqual(expectedOutput);
         done();
       });
   });
-  it('can fetchActiveShift throws 403 if no data returned', (done) => {
+  it('can fetchActiveShift throws 403 if no data returned', done => {
     const action$ = ActionsObservable.of(
       { type: types.FETCH_ACTIVE_SHIFT, payload: {} },
     );
@@ -158,7 +158,7 @@ describe('shift epic', () => {
 
     Observable.concat(epic(action$, store, { client }))
       .toArray()
-      .subscribe((data) => {
+      .subscribe(data => {
         const submitFailure = data[0];
         const error = data[1];
         expect(submitFailure)
@@ -172,7 +172,7 @@ describe('shift epic', () => {
         done();
       });
   });
-  it('can fetchActiveShift retry if 503', (done) => {
+  it('can fetchActiveShift retry if 503', done => {
     const action$ = ActionsObservable.of(
       { type: types.FETCH_ACTIVE_SHIFT, payload: {} },
     );
@@ -185,7 +185,7 @@ describe('shift epic', () => {
 
     Observable.concat(epic(action$, store, { client }))
       .toArray()
-      .subscribe((data) => {
+      .subscribe(data => {
         const fetchFailure = data[0];
         const error = data[1];
         expect(fetchFailure.type)
@@ -195,7 +195,7 @@ describe('shift epic', () => {
         done();
       });
   });
-  it('can fetchActiveShiftAfterCreation', (done) => {
+  it('can fetchActiveShiftAfterCreation', done => {
     const action$ = ActionsObservable.of(
       { type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE, payload: {} },
     );
@@ -211,7 +211,7 @@ describe('shift epic', () => {
 
     Observable.concat(epic(action$, store, { client }))
       .toArray()
-      .subscribe((actualOutput) => {
+      .subscribe(actualOutput => {
         const createActiveShift = actualOutput[0];
         expect(createActiveShift.type).toEqual('CREATE_ACTIVE_SHIFT_SUCCESS');
         const fetchActiveShift = actualOutput[1];
@@ -220,7 +220,7 @@ describe('shift epic', () => {
         done();
       });
   });
-  it('can retry and fail for fetchActiveShiftAfterCreation if no data returned', (done) => {
+  it('can retry and fail for fetchActiveShiftAfterCreation if no data returned', done => {
     const action$ = ActionsObservable.of(
       { type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE, payload: {} },
     );
@@ -234,13 +234,13 @@ describe('shift epic', () => {
 
     Observable.concat(epic(action$, store, { client }))
       .toArray()
-      .subscribe((actualOutput) => {
+      .subscribe(actualOutput => {
         expect(actualOutput[0].type).toEqual('HANDLE_UNAUTHORISED');
         expect(actualOutput[1].type).toEqual('CREATE_ACTIVE_SHIFT_FAILURE');
         done();
       });
   });
-  it('can retry and succeed for fetchActiveShiftAfterCreation', (done) => {
+  it('can retry and succeed for fetchActiveShiftAfterCreation', done => {
     const action$ = ActionsObservable.of(
       { type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE, payload: {} },
     );
@@ -268,7 +268,7 @@ describe('shift epic', () => {
     });
 
     epic(action$, store, { client })
-      .subscribe((actualOutput) => {
+      .subscribe(actualOutput => {
         expect(actualOutput.type)
           .toEqual('CREATE_ACTIVE_SHIFT_SUCCESS');
         done();

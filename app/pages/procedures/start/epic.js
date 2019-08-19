@@ -59,7 +59,7 @@ const fetchFormWithContext = (action$, store, { client }) =>
 
 const submit = (action$, store, { client }) =>
   action$.ofType(types.SUBMIT)
-    .mergeMap((action) => {
+    .mergeMap(action => {
       const submissionData = action.submissionData;
       return client({
         method: 'POST',
@@ -74,7 +74,7 @@ const submit = (action$, store, { client }) =>
         },
       })
         .retryWhen(retry)
-        .map((payload) => {
+        .map(payload => {
           if (action.nonShiftApiCall) {
             return {
               type: types.SUBMIT_TO_WORKFLOW_NON_SHIFT,
@@ -115,7 +115,7 @@ const submitToWorkflow = (action$, store, { client }) =>
         },
       })
         .retryWhen(retry)
-        .map((payload) => {
+        .map(payload => {
           PubSub.publish('submission', {
             submission: true,
             autoDismiss: true,
@@ -160,7 +160,7 @@ const submitToWorkflowUsingNonShiftApi = (action$, store, { client }) =>
           'Content-Type': 'application/json',
         },
       }).retryWhen(retry)
-        .map((payload) => {
+        .map(payload => {
           console.log(JSON.stringify(action));
           PubSub.publish('submission', {
             submission: true,

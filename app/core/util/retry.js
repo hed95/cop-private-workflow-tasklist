@@ -1,6 +1,6 @@
 import * as Rx from 'rxjs/Observable';
 
-export const retry = errors => errors.flatMap((error) => {
+export const retry = errors => errors.flatMap(error => {
   const statusCode = error.status.code;
   if ((statusCode === 403 || statusCode === 401) || (statusCode >= 500)) {
     console.log(`${statusCode}...retrying...`);

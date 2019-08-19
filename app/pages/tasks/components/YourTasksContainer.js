@@ -41,17 +41,17 @@ export class YourTasksContainer extends React.Component {
 
     this.stompClient.connect({
       'Authorization': `Bearer ${this.props.kc.token}`
-    }, (frame) => {
+    }, frame => {
       this.connected = true;
       console.log(`Connected to websocket server`);
-      const userSub = this.stompClient.subscribe(`/user/queue/task`, (msg) => {
+      const userSub = this.stompClient.subscribe(`/user/queue/task`, msg => {
         this.loadYourTasks(true, this.props.yourTasks.get('yourTasksSortValue'),
           this.props.yourTasks.get('yourTasksFilterValue'));
       });
       this.websocketSubscriptions.push(userSub);
       console.log('Number of subscriptions ' + this.websocketSubscriptions.length);
 
-    }, (error) => {
+    }, error => {
       this.retryCount++;
       if (error) {
         this.websocketSubscriptions = [];
@@ -80,7 +80,7 @@ export class YourTasksContainer extends React.Component {
     console.log('Disconnecting websocket');
     if (this.connected) {
       if (this.websocketSubscriptions) {
-        this.websocketSubscriptions.forEach((sub) => {
+        this.websocketSubscriptions.forEach(sub => {
           console.log('Disconnecting sub' + sub.id);
           sub.unsubscribe();
         });
@@ -156,7 +156,7 @@ YourTasksContainer.propTypes = {
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default connect((state) => {
+export default connect(state => {
   return {
     yourTasks: yourTasks(state),
     appConfig: state.appConfig,

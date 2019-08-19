@@ -82,7 +82,7 @@ const fetchActiveShift = (action$, store, { client }) =>
         client,
       )
         .retryWhen(retry)
-        .map((payload) => {
+        .map(payload => {
           if (payload.status.code === 200 && payload.entity.length === 0) {
             console.log('No data');
             throw {
@@ -104,7 +104,7 @@ const fetchActiveShift = (action$, store, { client }) =>
 
 const submit = (action$, store, { client }) =>
   action$.ofType(types.SUBMIT_VALIDATION)
-    .mergeMap((action) => {
+    .mergeMap(action => {
       const shiftData = action.submissionData;
       return client({
         method: 'POST',
@@ -156,7 +156,7 @@ const fetchActiveShiftAfterCreation = (action$, store, { client }) =>
         client,
       )
         .retryWhen(retry)
-        .flatMap((payload) => {
+        .flatMap(payload => {
           if (payload.status.code === 200 && payload.entity.length === 0) {
             console.log('Empty shift details returned...retying as shift creation is asynchronous');
             throw {
@@ -176,7 +176,7 @@ const fetchActiveShiftAfterCreation = (action$, store, { client }) =>
           }
         })
         .retryWhen(errors => errors
-            .takeWhile((error) => {
+            .takeWhile(error => {
               const retryableError = error.status.code === 403;
               console.log('Retryable error while trying to get shift...');
               return retryableError;
@@ -184,7 +184,7 @@ const fetchActiveShiftAfterCreation = (action$, store, { client }) =>
             .delay(1000)
             .take(10)
             .concat(errors.flatMap(s => Rx.Observable.throw(s))))
-        .catch((error) => {
+        .catch(error => {
           console.log(`Failed to create shift information...${JSON.stringify(error)}`);
           return errorObservable(actions.createActiveShiftFailure(), error);
         },

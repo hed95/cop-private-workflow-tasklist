@@ -38,7 +38,7 @@ const customEvent = (action$, store, { client }) =>
           ),
         },
       }).retryWhen(retry)
-        .map((payload) => {
+        .map(payload => {
           const properties = action.event.component.properties;
           const message = properties && properties['success-message']
             ? properties['success-message'] : `${action.event.component.label} successfully actioned`;
@@ -71,7 +71,7 @@ const fetchTaskForm = (action$, store, { client }) =>
 
 const submitTaskForm = (action$, store, { client }) =>
   action$.ofType(types.SUBMIT_TASK_FORM)
-    .mergeMap((action) => {
+    .mergeMap(action => {
       const submissionData = Object.assign({}, action.submission);
       return client({
         method: 'POST',
@@ -86,7 +86,7 @@ const submitTaskForm = (action$, store, { client }) =>
         },
       })
         .take(1)
-        .map((payload) => {
+        .map(payload => {
           const data = {
             variables: {},
           };
@@ -120,7 +120,7 @@ const completeTaskForm = (action$, store, { client }) =>
         },
       })
         .retryWhen(retry)
-        .map((payload) => {
+        .map(payload => {
           PubSub.publish('submission', {
             submission: true,
             autoDismiss: true,

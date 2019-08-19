@@ -4,7 +4,7 @@ import Pagination from './Pagination';
 import Immutable from 'immutable';
 
 describe('Pagination', () => {
-  const buildItems = (number) => {
+  const buildItems = number => {
     const items = [];
     for (let i = 0; i < number; i++) {
       items[i] = {
