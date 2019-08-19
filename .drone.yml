@@ -93,7 +93,7 @@ pipeline:
       - export TRANSLATION_URL=$${DEV_TRANSLATION_URL}
       - export TRANSLATION_PROTOCOL=$${DEV_TRANSLATION_PROTOCOL}
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
-      - kd --insecure-skip-tls-verify -f kube/network-policy.yml --debug --debug-templates
+      - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m
       - kd --insecure-skip-tls-verify -f kube/ingress.yml
