@@ -1,7 +1,6 @@
 import Immutable from 'immutable';
 import * as actions from './actions';
-import { shiftInitialState } from reducer from './shift.reducer';
-
+import reducer, { shiftInitialState } from './shift.reducer';
 
 describe('shift reducer', () => {
   const initialState = shiftInitialState;

@@ -1,9 +1,7 @@
 import Immutable from 'immutable';
-import { staffInitialState } from staffReducer from './staff.reducer';
-import shiftReducer from './shift.reducer';
+import shiftReducer, { shiftInitialState } from './shift.reducer';
+import staffReducer, { staffInitialState } from './staff.reducer';
 import onboardingCheckReducer from './onboardChecker.reducer';
-
-import { shiftInitialState } from './shift.reducer';
 
 import { onboardingCheckState } from './onboardChecker.reducer';
 

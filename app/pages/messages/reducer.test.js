@@ -1,5 +1,5 @@
 import Immutable from 'immutable';
-import { initialState } from reducer from './reducer';
+import reducer, { initialState } from './reducer';
 
 import * as actions from './actions';
 
