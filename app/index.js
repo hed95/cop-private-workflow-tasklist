@@ -111,20 +111,21 @@ const unavailable = () => {
             <div>
               <Header />
               <div className="container" style={{ height: '100vh' }}>
-                      <UnavailablePage />
-                    </div>
-                    <Footer />
-                  </div>
-                </BrowserRouter>
-              </AppContainer>
+                <UnavailablePage />
+              </div>
+              <Footer />
             </div>
+          </BrowserRouter>
+        </AppContainer>
+      </div>
     </Provider>,
         rootDocument);
-}
+};
+console.log(`keycloak_id is: ${process.env.WWW_KEYCLOAK_CLIENT_ID}`);
 
 if (process.env.NODE_ENV === 'production') {
   fetch('/api/config')
-        .then(response => {
+        .then((response) => {
           if (response.ok) {
             return response.json();
           }
@@ -144,24 +145,24 @@ if (process.env.NODE_ENV === 'production') {
             reportServiceUrl: data.REPORT_SERVICE_URL,
           };
           renderApp(App, data.AUTH_ACCESS_ROLE);
-        }).catch(err => {
-          console.log("Unable to start application: ", err.message);
+        }).catch((err) => {
+          console.log('Unable to start application: ', err.message);
           unavailable();
         });
 } else {
-  const authAccessRole = process.env.AUTH_ACCESS_ROLE;
+  const authAccessRole = process.env.WWW_KEYCLOAK_ACCESS_ROLE;
   kc = Keycloak({
-    realm: process.env.REALM,
-    url: process.env.AUTH_URL,
-    clientId: process.env.CLIENT_ID,
+    realm: process.env.KEYCLOAK_REALM,
+    url: process.env.KEYCLOAK_URI,
+    clientId: process.env.WWW_KEYCLOAK_CLIENT_ID,
   });
   store.getState().appConfig = {
-    uiVersion: process.env.UI_VERSION,
-    uiEnvironment: process.env.UI_ENVIRONMENT,
-    operationalDataUrl: process.env.OPERATIONAL_DATA_URL,
-    workflowServiceUrl: process.env.WORKFLOW_SERVICE_URL,
-    translationServiceUrl: process.env.TRANSLATION_SERVICE_URL,
-    reportServiceUrl: process.env.REPORT_SERVICE_URL,
+    uiVersion: process.env.WWW_UI_VERSION,
+    uiEnvironment: process.env.WWW_UI_ENVIRONMENT,
+    operationalDataUrl: process.env.API_COP_URI,
+    workflowServiceUrl: process.env.ENGINE_URI,
+    translationServiceUrl: process.env.TRANSLATION_URI,
+    reportServiceUrl: process.env.REPORT_URI,
   };
   renderApp(App, authAccessRole);
 }

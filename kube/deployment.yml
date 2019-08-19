@@ -2,31 +2,29 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{.NAME}}
-  annotations:
-    downscaler/uptime: {{.UPTIME}}
+  name: "{{.WWW_NAME}}"
 spec:
   selector:
     matchLabels:
-      name: {{.NAME}}
+      name: "{{.WWW_NAME}}"
   replicas: 3
   revisionHistoryLimit: 3
   template:
     metadata:
       labels:
-        name: {{.NAME}}
+        name: "{{.WWW_NAME}}"
     spec:
       securityContext:
         runAsUser: 1000
         fsGroup: 1000
       containers:
       - name: proxy
-        image: quay.io/ukhomeofficedigital/nginx-proxy
+        image: "{{.NGINX_IMAGE}}:{{.NGINX_TAG}}"
         env:
         - name: PROXY_SERVICE_HOST
           value: "127.0.0.1"
         - name: PROXY_SERVICE_PORT
-          value: "8080"
+          value: "{{.WWW_PORT}}"
         - name: ENABLE_UUID_PARAM
           value: "FALSE"
         - name: LOG_FORMAT_NAME
@@ -38,65 +36,51 @@ spec:
         ports:
         - name: https
           containerPort: 10443
-      - name: {{.NAME}}
-        image: "quay.io/ukhomeofficedigital/cop-private-workflow-tasklist:{{.IMAGE_TAG}}"
+      - name: "{{.WWW_NAME}}"
+        image: "{{.WWW_IMAGE}}:{{.WWW_TAG}}"
         imagePullPolicy: Always
         env:
-        - name: EXT_DOMAIN
-          value: {{.EXT_DOMAIN}}
-        - name: REPORTING_SERVICE_NAME
-          value: {{.REPORTING_SERVER_NAME}}
-        - name: REF_DATA_URL
-          value: {{.REF_DATA_URL}}
-        - name: WORKFLOW_NAME
-          value: {{.WORKFLOW_SERVER_NAME}}
-        - name: TRANSLATION_SERVICE_NAME
-          value: {{.TRANSLATION_SERVER_NAME}}
-        - name: FILE_UPLOAD_SERVER_NAME
-          value: {{.FILE_UPLOAD_SERVER_NAME}}
-        - name: UI_ENVIRONMENT
-          value: {{.UI_ENVIRONMENT}}
-        - name: UI_VERSION
-          value: {{.UI_VERSION}}
-        - name: AUTH_REALM
-          value: {{.KEYCLOAK_REALM}}
-        - name: AUTH_URL
-          value: {{.KEYCLOAK_URL}}
-        - name: AUTH_CLIENT_ID
-          value: {{.NAME}}
-        - name: AUTH_ACCESS_ROLE
-          value: {{.KEYCLOAK_ROLE}}
-        - name: AUTH_ACCESS_CONTACT
-          value: {{.KEYCLOAK_CONTACT}}
-        - name: PROTOCOL
-          value: {{.PROTOCOL}}
-        - name: REPORTING_SERVER_NAME
-          value: {{.REPORTING_SERVER_NAME}}
-        - name: TRANSLATION_SERVER_NAME
-          value: {{.TRANSLATION_SERVER_NAME}}
-        - name: WORKFLOW_SERVER_NAME
-          value: {{.WORKFLOW_SERVER_NAME}}
-        - name: OPERATIONAL_DATA_URL
-          value: {{.OPERATIONAL_DATA_URL}}
-        - name: REPORT_SERVICE_URL
-          value: {{.PROTOCOL}}{{.REPORTING_SERVER_NAME}}.{{.EXT_DOMAIN}}
-        - name: TRANSLATION_SERVICE_URL
-          value: {{.PROTOCOL}}{{.TRANSLATION_SERVER_NAME}}.{{.EXT_DOMAIN}}
-        - name: WORKFLOW_SERVICE_URL
-          value: {{.PROTOCOL}}{{.WORKFLOW_SERVER_NAME}}.{{.EXT_DOMAIN}}
+        - name: WWW_NAME
+          value: "{{.WWW_NAME}}"
+        - name: WWW_PORT
+          value: "{{.WWW_PORT}}"
+        - name: WWW_UI_ENVIRONMENT
+          value: "{{.WWW_UI_ENVIRONMENT}}"
+        - name: WWW_UI_VERSION
+          value: "{{.WWW_UI_VERSION}}"
+        - name: WWW_STORAGE_KEY
+          value: "{{.WWW_STORAGE_KEY}}"
+        - name: WWW_KEYCLOAK_CLIENT_ID
+          value: "{{.WWW_KEYCLOAK_CLIENT_ID}}"
+        - name: WWW_KECLOAK_ACCESS_ROLE
+          value: "{{.WWW_KEYCLOAK_ACCESS_ROLE}}"
+        - name: KEYCLOAK_REALM
+          value: "{{.KEYCLOAK_REALM}}"
+        - name: KEYCLOAK_URI
+          value: "{{.KEYCLOAK_PROTOCOL}}{{.KEYCLOAK_URL}}"
+        - name: API_REF_URI
+          value: "{{.API_REF_PROTOCOL}}{{.API_REF_URL}}"
+        - name: API_COP_URI
+          value: "{{.API_COP_PROTOCOL}}{{.API_COP_URL}}"
+        - name: ENGINE_URI
+          value: "{{.ENGINE_PROTOCOL}}{{.ENGINE_URL}}"
+        - name: REPORT_URI
+          value: "{{.REPORT_PROTOCOL}}{{.REPORT_URL}}"
+        - name: TRANSLATION_URI
+          value: "{{.TRANSLATION_PROTOCOL}}{{.TRANSLATION_URL}}"
         securityContext:
           runAsNonRoot: true
         readinessProbe:
           httpGet:
             path: /readiness
-            port: 8080
+            port: {{.WWW_PORT}}
             scheme: HTTP
           initialDelaySeconds: 20
           periodSeconds: 10
         livenessProbe:
           httpGet:
             path: /healthz
-            port: 8080
+            port: {{.WWW_PORT}}
             scheme: HTTP
           initialDelaySeconds: 20
           periodSeconds: 10

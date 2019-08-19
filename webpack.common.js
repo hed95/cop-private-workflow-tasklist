@@ -2,17 +2,17 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+
 const sourcePath = path.join(__dirname, './app');
 const buildDirectory = path.join(__dirname, './dist');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const {HashedModuleIdsPlugin} = require('webpack');
+const { HashedModuleIdsPlugin } = require('webpack');
 
 const hashing = process.env.NODE_ENV === 'production' ? 'chunkhash' : 'hash';
-console.log('content hashing: '+ hashing);
+console.log(`content hashing: ${hashing}`);
 
 module.exports = {
-
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
     modules: [path.resolve(__dirname), 'node_modules', sourcePath],
@@ -32,7 +32,7 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: `[name].[${hashing}].css`,
-      chunkFilename: `[name].[${hashing}].chunk.css`
+      chunkFilename: `[name].[${hashing}].chunk.css`,
     }),
     new MomentLocalesPlugin({
       localesToKeep: ['es-gb'],
@@ -40,16 +40,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Caching',
       template: './public/index.html',
-      favicon: './public/favicon.ico'
-    }),
-
-    new webpack.DefinePlugin({
-      'process.env': {
-        STORAGE_KEY: JSON.stringify(process.env.STORAGE_KEY)
-      }
+      favicon: './public/favicon.ico',
     }),
     new CopyWebpackPlugin([
-      { from: 'node_modules/govuk-frontend/assets', to: 'assets' }
+      { from: 'node_modules/govuk-frontend/assets', to: 'assets' },
     ]),
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -59,8 +53,8 @@ module.exports = {
       Tether: 'tether',
       'window.Tether': 'tether',
       React: 'react',
-      ReactDOM: 'react-dom'
-    })
+      ReactDOM: 'react-dom',
+    }),
   ],
   module: {
 
@@ -68,7 +62,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         use: [{
-          loader: 'babel-loader'
+          loader: 'babel-loader',
         }],
         exclude: /node_modules/,
         include: path.join(__dirname, 'app'),
@@ -78,24 +72,24 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           { loader: 'css-loader', options: { url: false, sourceMap: true } },
           { loader: 'postcss-loader', options: {} },
-        ]
+        ],
       }, {
         test: /\.bpmn$/,
         use: [{
           loader: 'file-loader',
 
           options: {
-            name: 'diagrams/[name].[ext]'
-          }
-        }]
+            name: 'diagrams/[name].[ext]',
+          },
+        }],
       }, {
         test: /\.(png|jpg|gif)(\?v=\d+\.\d+\.\d+)?$/,
         use: [{
           loader: 'url-loader',
 
           options: {
-            name: 'img/[name].[ext]'
-          }
+            name: 'img/[name].[ext]',
+          },
         }],
       }, {
         test: /\.(eot|com|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
@@ -104,8 +98,8 @@ module.exports = {
 
           options: {
             mimetype: 'application/octet-stream',
-            name: 'fonts/[name].[ext]'
-          }
+            name: 'fonts/[name].[ext]',
+          },
         }],
       }, {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
@@ -114,32 +108,32 @@ module.exports = {
 
           options: {
             mimetype: 'image/svg+xml',
-            name: 'img/[name].[ext]'
-          }
+            name: 'img/[name].[ext]',
+          },
         }],
       }, {
         test: /\.less$/,
         use: [{
-          loader: 'style-loader' // creates style nodes from JS strings
+          loader: 'style-loader', // creates style nodes from JS strings
         }, {
-          loader: 'css-loader' // translates CSS into CommonJS
+          loader: 'css-loader', // translates CSS into CommonJS
         }, {
-          loader: 'less-loader' // compiles Less to CSS
-        }]
+          loader: 'less-loader', // compiles Less to CSS
+        }],
 
       }, {
         test: /\.scss$/,
         use: [{
-          loader: 'style-loader'
+          loader: 'style-loader',
         }, {
-          loader: 'css-loader'
+          loader: 'css-loader',
         }, {
           loader: 'sass-loader',
           options: {
-            includePaths: ['node_modules/**/*.scss']
-          }
-        }]
-      }]
+            includePaths: ['node_modules/**/*.scss'],
+          },
+        }],
+      }],
 
-  }
+  },
 };

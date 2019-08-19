@@ -79,7 +79,7 @@ const taskForm = {
       event: 'cancel-operation',
     },
   ],
-  _id: 'XXXXX',
+  id: 'XXXXX',
   display: 'form',
   submissionAccess: [
     {

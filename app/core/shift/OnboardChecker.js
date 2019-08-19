@@ -55,7 +55,7 @@ class OnboardingProcessInflight {
           submission: true,
           type: 'warning',
           autoDismiss: false,
-          message: 'Waiting for your manager to approve your onboarding request',
+          message: 'Creating your system access, please refresh',
         },
       };
     }

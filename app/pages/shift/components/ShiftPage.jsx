@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import {
     activeShiftSuccess,
@@ -15,61 +15,59 @@ import {
     shift,
     shiftForm,
     staffDetails,
-    submittingActiveShift
+    submittingActiveShift,
 } from '../../../core/shift/selectors';
-import {Form} from 'react-formio';
+import { Form } from 'react-formio';
 import * as actions from '../../../core/shift/actions';
 import Loader from 'react-loader-advanced';
 import DataSpinner from '../../../core/components/DataSpinner';
 import ShiftForm from './ShiftForm';
 
 export class ShiftPage extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+      super(props);
     }
 
-    componentDidMount() {
-        this.props.fetchActiveShift();
-        this.props.fetchShiftForm();
-        this.props.fetchStaffDetails();
+  componentDidMount() {
+      this.props.fetchActiveShift();
+      this.props.fetchShiftForm();
+      this.props.fetchStaffDetails();
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.submittingActiveShift !== prevProps.submittingActiveShift && !this.props.submittingActiveShift) {
-            if (this.form && this.form.formio) {
-                if (this.props.activeShiftSuccess) {
-                    this.form.formio.emit('submitDone');
-                    this.props.history.replace('/dashboard');
+  componentDidUpdate(prevProps, prevState, snapshot) {
+      if (this.props.submittingActiveShift !== prevProps.submittingActiveShift && !this.props.submittingActiveShift) {
+          if (this.form && this.form.formio) {
+              if (this.props.activeShiftSuccess) {
+                  this.form.formio.emit('submitDone');
+                  this.props.history.replace('/dashboard');
                 } else {
-                    this.form.formio.emit('error');
-                    this.form.formio.emit('change', this.form.formio.submission);
+                  this.form.formio.emit('error');
+                  this.form.formio.emit('change', this.form.formio.submission);
                 }
             }
-
         }
-
     }
 
-    render() {
-        const {
+  render() {
+      const {
             isFetchingShift,
             submittingActiveShift,
             failedToCreateShift,
             hasActiveShift,
             isFetchingStaffDetails,
             loadingShiftForm,
-            shiftForm
+            shiftForm,
         } = this.props;
 
-        if (loadingShiftForm && isFetchingStaffDetails && isFetchingShift) {
-            return <DataSpinner message="Loading your shift details"/>;
+      if (loadingShiftForm && isFetchingStaffDetails && isFetchingShift) {
+          return <DataSpinner message="Loading your shift details" />;
         }
 
-        if (!shiftForm) {
-            return <DataSpinner message="Getting shift form"/>;
+      if (!shiftForm) {
+          return <DataSpinner message="Getting shift form" />;
         }
-        const spinner = <DataSpinner message="Submitting your shift details..."/>;
-        return <Loader show={submittingActiveShift} message={spinner}
+      const spinner = <DataSpinner message="Submitting your shift details..." />;
+      return (<Loader show={submittingActiveShift} message={spinner}
                     hideContentOnLoad={submittingActiveShift}
                     foregroundStyle={{color: 'black'}}
                     backgroundStyle={{backgroundColor: 'white'}}>
@@ -89,33 +87,31 @@ export class ShiftPage extends React.Component {
 
                         <ShiftForm {...this.props} formReference={(form) => this.form = form}
                                    submit={(shiftForm, submission) => {
-                                       this.props.submit(shiftForm._id, submission.data);
+                                       this.props.submit(shiftForm.id, submission.data);
                                    }}/>
                     </div>
                 </div>
-            </Loader>;
-
+            </Loader>);
     }
 
 }
 
 ShiftPage.propTypes = {
-    fetchShiftForm: PropTypes.func.isRequired,
-    fetchActiveShift: PropTypes.func.isRequired,
-    fetchStaffDetails: PropTypes.func.isRequired,
-    isFetchingShift: PropTypes.bool,
-    hasActiveShift: PropTypes.bool,
-    isFetchingStaffDetails: PropTypes.bool,
-    shift: ImmutablePropTypes.map,
-    staffDetails: ImmutablePropTypes.map,
-    unauthorised: PropTypes.bool
+  fetchShiftForm: PropTypes.func.isRequired,
+  fetchActiveShift: PropTypes.func.isRequired,
+  fetchStaffDetails: PropTypes.func.isRequired,
+  isFetchingShift: PropTypes.bool,
+  hasActiveShift: PropTypes.bool,
+  isFetchingStaffDetails: PropTypes.bool,
+  shift: ImmutablePropTypes.map,
+  staffDetails: ImmutablePropTypes.map,
+  unauthorised: PropTypes.bool,
 };
 
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default withRouter(connect((state) => {
-    return {
+export default withRouter(connect((state) => ({
         hasActiveShift: hasActiveShift(state),
         isFetchingShift: isFetchingShift(state),
         submittingActiveShift: submittingActiveShift(state),
@@ -127,5 +123,4 @@ export default withRouter(connect((state) => {
         staffDetails: staffDetails(state),
         isFetchingStaffDetails: isFetchingStaffDetails(state)
 
-    };
-}, mapDispatchToProps)(ShiftPage));
+    }), mapDispatchToProps)(ShiftPage));

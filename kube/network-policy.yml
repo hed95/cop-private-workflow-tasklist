@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: NetworkPolicy
 metadata:
-  name: {{.NAME}}
+  name: {{.WWW_NAME}}
 spec:
   egress:
     - {}
@@ -16,7 +16,7 @@ spec:
           protocol: TCP
   podSelector:
     matchLabels:
-      name: {{.NAME}}
+      name: {{.WWW_NAME}}
   policyTypes:
     - Ingress
     - Egress
