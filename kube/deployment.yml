@@ -52,7 +52,7 @@ spec:
           value: "{{.WWW_STORAGE_KEY}}"
         - name: WWW_KEYCLOAK_CLIENT_ID
           value: "{{.WWW_KEYCLOAK_CLIENT_ID}}"
-        - name: WWW_KECLOAK_ACCESS_ROLE
+        - name: WWW_KEYCLOAK_ACCESS_ROLE
           value: "{{.WWW_KEYCLOAK_ACCESS_ROLE}}"
         - name: KEYCLOAK_REALM
           value: "{{.KEYCLOAK_REALM}}"
