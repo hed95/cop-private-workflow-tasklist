@@ -16,7 +16,7 @@ const fetchReportsListFailure = () => ({
 
 
 export {
-    fetchReportsList,
-    fetchReportsListSuccess,
-    fetchReportsListFailure,
+  fetchReportsList,
+  fetchReportsListSuccess,
+  fetchReportsListFailure,
 };

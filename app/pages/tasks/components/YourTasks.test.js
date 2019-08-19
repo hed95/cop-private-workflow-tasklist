@@ -241,11 +241,13 @@ describe('YourTasks Page', () => {
       }),
     };
 
-    const wrapper = await mount(<Router history={history}><YourTasksContainer
-      store={store}
-      {...props}
-      fetchTasksAssignedToYou={fetchTasksAssignedToYou}
-    /></Router>);
+    const wrapper = await mount(<Router history={history}>
+      <YourTasksContainer
+        store={store}
+        {...props}
+        fetchTasksAssignedToYou={fetchTasksAssignedToYou}
+      />
+                                </Router>);
 
     const idLink = wrapper.find('#actionButton').first();
     expect(idLink.exists()).toEqual(true);

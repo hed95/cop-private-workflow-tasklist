@@ -83,19 +83,19 @@ const submitToWorkflowFailure = () => ({
 });
 
 export {
-    fetchProcessDefinition,
-    fetchProcessDefinitionSuccess,
-    fetchProcessDefinitionFailure,
-    clearProcessDefinition,
-    fetchForm,
-    fetchFormWithContext,
-    fetchFormSuccess,
-    fetchFormFailure,
-    submit,
-    submitSuccess,
-    submitFailure,
-    submitToWorkflow,
-    submitToWorkflowSuccess,
-    submitToWorkflowFailure,
+  fetchProcessDefinition,
+  fetchProcessDefinitionSuccess,
+  fetchProcessDefinitionFailure,
+  clearProcessDefinition,
+  fetchForm,
+  fetchFormWithContext,
+  fetchFormSuccess,
+  fetchFormFailure,
+  submit,
+  submitSuccess,
+  submitFailure,
+  submitToWorkflow,
+  submitToWorkflowSuccess,
+  submitToWorkflowFailure,
 
 };

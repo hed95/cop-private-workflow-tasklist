@@ -18,7 +18,7 @@ const url = formio => {
 
     xhr.onload = () => {
       if (xhr.status >= 200 && xhr.status < 300) {
-          // Need to test if xhr.response is decoded or not.
+        // Need to test if xhr.response is decoded or not.
         let respData = {};
         try {
           respData = (typeof xhr.response === 'string') ? JSON.parse(xhr.response) : {};
@@ -27,10 +27,10 @@ const url = formio => {
           respData = {};
         }
 
-          // Get the url of the file.
+        // Get the url of the file.
         let respUrl = respData.hasOwnProperty('url') ? respData.url : `${xhr.responseURL}/${name}`;
 
-          // If they provide relative url, then prepend the url.
+        // If they provide relative url, then prepend the url.
         if (respUrl && respUrl[0] === '/') {
           respUrl = `${url}${respUrl}`;
         }
@@ -47,7 +47,7 @@ const url = formio => {
     if (json) {
       xhr.setRequestHeader('Content-Type', 'application/json');
     }
-      // Overrides previous request props
+    // Overrides previous request props
     if (options) {
       const parsedOptions = JSON.parse(options);
       xhr.setRequestHeader('Authorization', parsedOptions.Authorization);

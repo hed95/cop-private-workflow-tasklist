@@ -1,7 +1,7 @@
 import configureMockStore from 'redux-mock-store';
-import reducer from './reducer';
 import { ActionsObservable } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
+import reducer from './reducer';
 import * as types from './actionTypes';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';

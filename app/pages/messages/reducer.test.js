@@ -1,7 +1,7 @@
-import reducer from './reducer';
-import { initialState } from './reducer';
-import * as actions from './actions';
 import Immutable from 'immutable';
+import { initialState } from reducer from './reducer';
+
+import * as actions from './actions';
 
 const { Map, List, Set } = Immutable;
 

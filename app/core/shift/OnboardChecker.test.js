@@ -1,6 +1,6 @@
-import OnboardChecker from './OnboardChecker';
 import moment from 'moment';
 import Immutable from 'immutable';
+import OnboardChecker from './OnboardChecker';
 
 describe('OnboardChecker', () => {
   const onboardChecker = new OnboardChecker();

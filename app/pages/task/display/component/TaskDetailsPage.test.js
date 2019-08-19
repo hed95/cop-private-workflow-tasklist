@@ -2,8 +2,8 @@ import React from 'react';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
-import { TaskDetailsPage } from './TaskDetailsPage';
 import moment from 'moment';
+import { TaskDetailsPage } from './TaskDetailsPage';
 
 const { Map, List } = Immutable;
 
