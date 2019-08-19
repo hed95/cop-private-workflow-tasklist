@@ -121,7 +121,6 @@ const unavailable = () => {
     </Provider>,
         rootDocument);
 };
-console.log(`keycloak_id is: ${process.env.WWW_KEYCLOAK_CLIENT_ID}`);
 
 if (process.env.NODE_ENV === 'production') {
   fetch('/api/config')
@@ -144,7 +143,7 @@ if (process.env.NODE_ENV === 'production') {
             translationServiceUrl: data.TRANSLATION_SERVICE_URL,
             reportServiceUrl: data.REPORT_SERVICE_URL,
           };
-          renderApp(App, data.AUTH_ACCESS_ROLE);
+          renderApp(App, data.WWW_KEYCLOAK_ACCESS_ROLE);
         }).catch((err) => {
           console.log('Unable to start application: ', err.message);
           unavailable();
