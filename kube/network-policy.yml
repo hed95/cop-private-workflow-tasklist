@@ -16,7 +16,7 @@ spec:
           protocol: TCP
   podSelector:
     matchLabels:
-      name: {{.NAWWW_NAMEME}}
+      name: {{.WWW_NAME}}
   policyTypes:
     - Ingress
     - Egress

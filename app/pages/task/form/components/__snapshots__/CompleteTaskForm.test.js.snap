@@ -33,7 +33,6 @@ exports[`CompleteTaskForm Component renders task form 1`] = `
   }
   form={
     Object {
-      "id": "XXXXX",
       "access": Array [
         Object {
           "roles": Array [
@@ -112,6 +111,7 @@ exports[`CompleteTaskForm Component renders task form 1`] = `
       ],
       "created": "2019-02-01T07:13:35.002Z",
       "display": "form",
+      "id": "XXXXX",
       "machineName": "customButtonEvent",
       "modified": "2019-02-01T07:13:35.069Z",
       "name": "customButtonEvent",
