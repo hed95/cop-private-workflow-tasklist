@@ -17,8 +17,8 @@ const log = (action$, store, { client }) => action$.ofType(types.LOG)
     },
   })
     .retryWhen(retry)
-    .map(payload => actions.logSuccess())
-    .catch(error => Rx.Observable.of(actions.logFailure())));
+    .map(() => actions.logSuccess())
+    .catch(() => Rx.Observable.of(actions.logFailure())));
 
 
 export default combineEpics(log);

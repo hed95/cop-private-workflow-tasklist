@@ -6,7 +6,7 @@ import { retry } from '../../core/util/retry';
 
 
 const fetchTaskCounts = (action$, store, { client }) => action$.ofType(types.FETCH_TASK_COUNTS)
-  .mergeMap(action => client({
+  .mergeMap(() => client({
     method: 'GET',
     path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks/_task-counts`,
     headers: {
@@ -18,7 +18,7 @@ const fetchTaskCounts = (action$, store, { client }) => action$.ofType(types.FET
 
 
 const fetchMessageCounts = (action$, store, { client }) => action$.ofType(types.FETCH_NOTIFICATIONS_COUNT)
-  .mergeMap(action => client({
+  .mergeMap(() => client({
     method: 'GET',
     path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/notifications?countOnly=true`,
     headers: {

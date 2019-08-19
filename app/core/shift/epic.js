@@ -19,7 +19,7 @@ const shift = (email, token, operationalDataUrl, client) => {
 };
 
 const endShift = (action$, store, { client }) => action$.ofType(types.END_SHIFT)
-  .mergeMap(action => client({
+  .mergeMap(() => client({
     method: 'DELETE',
     path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/shift/${store.getState().keycloak.tokenParsed.email}?deletedReason=finished`,
     headers: {
@@ -33,7 +33,7 @@ const endShift = (action$, store, { client }) => action$.ofType(types.END_SHIFT)
 
 
 const fetchStaffDetails = (action$, store, { client }) => action$.ofType(types.FETCH_STAFF_DETAILS)
-  .mergeMap(action => client({
+  .mergeMap(() => client({
     method: 'POST',
     path: `${store.getState().appConfig.operationalDataUrl}/v1/rpc/staffdetails`,
     entity: {
@@ -51,7 +51,7 @@ const fetchStaffDetails = (action$, store, { client }) => action$.ofType(types.F
 
 
 const fetchShiftForm = (action$, store, { client }) => action$.ofType(types.FETCH_SHIFT_FORM)
-  .mergeMap(action => client({
+  .mergeMap(() => client({
     method: 'GET',
     path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/startShift`,
     headers: {
@@ -64,7 +64,7 @@ const fetchShiftForm = (action$, store, { client }) => action$.ofType(types.FETC
     .catch(error => errorObservable(actions.fetchShiftFormFailure(), error)));
 
 const fetchActiveShift = (action$, store, { client }) => action$.ofType(types.FETCH_ACTIVE_SHIFT)
-  .mergeMap(action => shift(
+  .mergeMap(() => shift(
     store.getState().keycloak.tokenParsed.email,
     store.getState().keycloak.token,
     store.getState().appConfig.operationalDataUrl,
@@ -131,7 +131,7 @@ const createActiveShift = (action$, store, { client }) => action$.ofType(types.C
 
 
 const fetchActiveShiftAfterCreation = (action$, store, { client }) => action$.ofType(types.FETCH_ACTIVE_SHIFT_AFTER_CREATE)
-  .mergeMap(action => shift(
+  .mergeMap(() => shift(
     store.getState().keycloak.tokenParsed.email,
     store.getState().keycloak.token,
     store.getState().appConfig.operationalDataUrl,

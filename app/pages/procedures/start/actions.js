@@ -41,9 +41,6 @@ const fetchFormFailure = () => ({
   type: types.FETCH_FORM_FAILURE,
 });
 
-const resetForm = () => ({
-  type: types.RESET_FORM,
-});
 
 
 const submit = (formId, processKey, variableName, submissionData, processName, nonShiftApiCall) => ({

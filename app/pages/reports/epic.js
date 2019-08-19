@@ -5,7 +5,7 @@ import * as types from './actionTypes';
 import * as actions from './actions';
 
 const fetchReports = (action$, store, { client }) => action$.ofType(types.FETCH_REPORTS_LIST)
-  .mergeMap(action => client({
+  .mergeMap(() => client({
     method: 'GET',
     path: `${store.getState().appConfig.reportServiceUrl}/api/reports`,
     headers: {

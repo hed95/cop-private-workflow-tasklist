@@ -43,7 +43,7 @@ export class YourGroupTasksContainer extends React.Component {
     clearTimeout(this.timeoutId);
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
+  componentWillReceiveProps(nextProps) {
     if ((this.props.unclaimSuccessful !== nextProps.unclaimSuccessful
       && nextProps.unclaimSuccessful) && this.selectedTask) {
       this.props.handleUnclaim(this.selectedTask);

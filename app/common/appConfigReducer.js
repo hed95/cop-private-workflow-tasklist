@@ -1,3 +1,3 @@
-export default function appConfigReducer(appConfig = {}, action) {
+export default function appConfigReducer(appConfig = {}) {
   return appConfig;
 }

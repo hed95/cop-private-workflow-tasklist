@@ -79,7 +79,7 @@ const submitTaskForm = (action$, store, { client }) => action$.ofType(types.SUBM
       },
     })
       .take(1)
-      .map(payload => {
+      .map(() => {
         const data = {
           variables: {},
         };
