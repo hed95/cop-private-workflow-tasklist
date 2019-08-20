@@ -1,9 +1,9 @@
 import configureStore from 'redux-mock-store';
 import { shallow } from 'enzyme';
-import React from 'react';
-import Immutable from 'immutable';
 import DataSpinner from '../components/DataSpinner';
+import React from 'react';
 import WithOnboardingCheck from './withOnboardingCheck';
+import Immutable from 'immutable';
 
 const { Map } = Immutable;
 

@@ -48,14 +48,14 @@ const clearNotifications = () => ({
 });
 
 export {
-  fetchNotifications,
-  fetchNotificationsSuccess,
-  fetchNotificationsFailure,
-  acknowledgeNotification,
-  acknowledgeNotificationSuccess,
-  acknowledgeNotificationFailure,
-  fetchNotificationsNextPage,
-  fetchNotificationsNextPageSuccess,
-  fetchNotificationsNextPageFailure,
-  clearNotifications,
+    fetchNotifications,
+    fetchNotificationsSuccess,
+    fetchNotificationsFailure,
+    acknowledgeNotification,
+    acknowledgeNotificationSuccess,
+    acknowledgeNotificationFailure,
+    fetchNotificationsNextPage,
+    fetchNotificationsNextPageSuccess,
+    fetchNotificationsNextPageFailure,
+    clearNotifications,
 };

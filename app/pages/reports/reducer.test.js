@@ -1,5 +1,5 @@
-import reducer, { initialState } from './reducer';
-
+import { initialState } from './reducer';
+import reducer from './reducer';
 import * as actions from './actions';
 
 describe('reports reducer', () => {

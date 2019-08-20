@@ -1,3 +1,3 @@
-export default function keycloakReducer(keycloak = {}) {
+export default function keycloakReducer(keycloak = {}, action) {
   return keycloak;
 }

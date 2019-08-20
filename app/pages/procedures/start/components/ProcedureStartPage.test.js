@@ -1,8 +1,9 @@
 
+
 import { mount } from 'enzyme/build';
+import { ProcessStartPage } from './ProcedureStartPage';
 import React from 'react';
 import Immutable from 'immutable';
-import { ProcessStartPage } from './ProcedureStartPage';
 import secureLocalStorage from '../../../../common/security/SecureLocalStorage';
 
 jest.mock('../../../../common/security/SecureLocalStorage', () => ({
@@ -278,7 +279,8 @@ describe('Start a procedure page', () => {
     wrapper.instance().form.formio = {
       emit,
     };
-    wrapper.setProps({ submissionStatus: 'SUBMISSION_SUCCESSFUL' });
+    wrapper.setProps({
+      submissionStatus: 'SUBMISSION_SUCCESSFUL' });
 
     expect(emit).toHaveBeenCalled();
     expect(secureLocalStorage.removeAll).toHaveBeenCalled();
@@ -334,7 +336,8 @@ describe('Start a procedure page', () => {
       emit,
       submission,
     };
-    wrapper.setProps({ submissionStatus: 'FAILED' });
+    wrapper.setProps({
+      submissionStatus: 'FAILED' });
 
     expect(emit).toBeCalledWith('error');
     expect(emit).toBeCalledWith('change', submission);

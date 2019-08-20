@@ -14,6 +14,7 @@ import AppConstants from '../../../common/AppConstants';
 import { claimSuccessful, unclaimSuccessful } from '../../task/display/selectors';
 
 export class YourGroupTasksContainer extends React.Component {
+
   componentWillMount() {
     this.goToTask = this.goToTask.bind(this);
     this.sortYourGroupTasks = this.sortYourGroupTasks.bind(this);
@@ -43,7 +44,7 @@ export class YourGroupTasksContainer extends React.Component {
     clearTimeout(this.timeoutId);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps, nextContext) {
     if ((this.props.unclaimSuccessful !== nextProps.unclaimSuccessful
       && nextProps.unclaimSuccessful) && this.selectedTask) {
       this.props.handleUnclaim(this.selectedTask);
@@ -83,30 +84,29 @@ export class YourGroupTasksContainer extends React.Component {
       return <DataSpinner message="Fetching your group tasks" />;
     }
 
-    return (
-      <YourGroupTasks
-        filterTasksByName={this.filterTasksByName}
-        yourGroupTasks={yourGroupTasks}
-        sortYourGroupTasks={this.sortYourGroupTasks}
-        userId={this.props.kc.tokenParsed.email}
-        goToTask={this.goToTask}
-        claimTask={taskId => {
-          if (this.selectedTask) {
-            this.selectedTask = null;
-          }
-          this.selectedTask = taskId;
-          this.props.claimTask(taskId);
-        }}
-        handleUnclaim={taskId => {
-          if (this.selectedTask) {
-            this.selectedTask = null;
-          }
-          this.selectedTask = taskId;
-          this.props.unclaimTask(taskId);
-        }}
-        startAProcedure={() => this.props.history.replace('/procedures')}
-      />
-    );
+    return (<YourGroupTasks
+      filterTasksByName={this.filterTasksByName}
+      yourGroupTasks={yourGroupTasks}
+      sortYourGroupTasks={this.sortYourGroupTasks}
+      userId={this.props.kc.tokenParsed.email}
+      goToTask={this.goToTask}
+      claimTask={taskId => {
+        if (this.selectedTask) {
+          this.selectedTask = null;
+        }
+        this.selectedTask = taskId;
+        this.props.claimTask(taskId);
+      }
+                           }
+      handleUnclaim={taskId => {
+        if (this.selectedTask) {
+          this.selectedTask = null;
+        }
+        this.selectedTask = taskId;
+        this.props.unclaimTask(taskId);
+      }}
+      startAProcedure={() => this.props.history.replace('/procedures')}
+    />);
   }
 }
 
