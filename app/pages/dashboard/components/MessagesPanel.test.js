@@ -1,13 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import Immutable from 'immutable';
-import { MessagesPanel } from './MessagesPanel';
 import PubSub from 'pubsub-js';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
+import { MessagesPanel } from './MessagesPanel';
 
-const { Map } = Immutable;
 
 
 jest.mock('pubsub-js', () => ({
@@ -83,12 +81,14 @@ describe('MessagesPanel', () => {
         },
       },
     };
-    const wrapper = await mount(<Router history={history}><MessagesPanel
-      store={store}
-      {...props}
-      fetchMessageCounts={fetchMessageCounts}
-      setDefaultCounts={setDefaultCounts}
-    /></Router>);
+    const wrapper = await mount(<Router history={history}>
+      <MessagesPanel
+        store={store}
+        {...props}
+        fetchMessageCounts={fetchMessageCounts}
+        setDefaultCounts={setDefaultCounts}
+      />
+                                </Router>);
 
     const messagesPageLink = wrapper.find('#messagesPageLink');
     expect(messagesPageLink.exists()).toEqual(true);

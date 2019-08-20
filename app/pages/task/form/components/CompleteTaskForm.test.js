@@ -159,7 +159,8 @@ describe('CompleteTaskForm Component', () => {
     };
     const wrapper = await mount(
       <CompleteTaskForm
-        store={store} {...props}
+        store={store}
+        {...props}
         fetchTaskForm={fetchTaskForm}
         resetForm={resetForm}
         submitTaskForm={submitTaskForm}
@@ -190,7 +191,8 @@ describe('CompleteTaskForm Component', () => {
     };
     const wrapper = await shallow(
       <CompleteTaskForm
-        store={store} {...props}
+        store={store}
+        {...props}
         fetchTaskForm={fetchTaskForm}
         resetForm={resetForm}
         submitTaskForm={submitTaskForm}

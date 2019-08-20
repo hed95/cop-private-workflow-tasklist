@@ -1,6 +1,8 @@
 import Immutable from 'immutable';
 import * as actions from './actionTypes';
-import { FAILED, NOT_SUBMITTED, SUBMISSION_SUCCESSFUL, SUBMITTING } from './constants';
+import {
+  FAILED, NOT_SUBMITTED, SUBMISSION_SUCCESSFUL, SUBMITTING,
+} from './constants';
 
 const { Map } = Immutable;
 

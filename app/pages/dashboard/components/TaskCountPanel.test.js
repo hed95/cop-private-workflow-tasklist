@@ -2,8 +2,8 @@ import React from 'react';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
-import { TaskCountPanel } from './TaskCountPanel';
 import PubSub from 'pubsub-js';
+import { TaskCountPanel } from './TaskCountPanel';
 
 const { Map } = Immutable;
 
