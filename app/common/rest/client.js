@@ -17,11 +17,11 @@ registry.register('text/uri-list', uriListConverter);
 registry.register('application/hal+json', halMimeType);
 
 const halRest = rest
-  .wrap(templateUriInterceptor)
-  .wrap(mime, { registry })
-  .wrap(errorCode)
-  .wrap(defaultRequest, { headers: { Accept: 'application/hal+json' } });
+    .wrap(templateUriInterceptor)
+    .wrap(mime, { registry })
+    .wrap(errorCode)
+    .wrap(defaultRequest, { headers: { Accept: 'application/hal+json' } });
 
 export default function () {
-  return Observable.defer((...args) => Observable.fromPromise(halRest(args)));
+  return Observable.defer(() => Observable.fromPromise(halRest(...arguments)));
 }

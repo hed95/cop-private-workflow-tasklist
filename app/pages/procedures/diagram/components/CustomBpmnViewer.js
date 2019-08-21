@@ -6,3 +6,4 @@ export default function CustomBpmnViewer(options) {
 }
 
 inherits(CustomBpmnViewer, NavigatedViewer);
+

@@ -2,17 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { bindActionCreators } from 'redux';
+import { yourTasks } from '../selectors';
 import { connect } from 'react-redux';
+import * as actions from '../actions';
 import { withRouter } from 'react-router';
+import DataSpinner from '../../../core/components/DataSpinner';
 import { debounce, throttle } from 'throttle-debounce';
+import YourTasks from './YourTasks';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import YourTasks from './YourTasks';
-import DataSpinner from '../../../core/components/DataSpinner';
-import * as actions from '../actions';
-import { yourTasks } from '../selectors';
 
 export class YourTasksContainer extends React.Component {
+
+
   constructor(props) {
     super(props);
     this.websocketSubscriptions = [];
@@ -38,16 +40,17 @@ export class YourTasksContainer extends React.Component {
     this.stompClient.heartbeat.incoming = heartBeat;
 
     this.stompClient.connect({
-      Authorization: `Bearer ${this.props.kc.token}`,
-    }, () => {
+      'Authorization': `Bearer ${this.props.kc.token}`
+    }, frame => {
       this.connected = true;
-      console.log('Connected to websocket server');
-      const userSub = this.stompClient.subscribe('/user/queue/task', () => {
+      console.log(`Connected to websocket server`);
+      const userSub = this.stompClient.subscribe(`/user/queue/task`, msg => {
         this.loadYourTasks(true, this.props.yourTasks.get('yourTasksSortValue'),
           this.props.yourTasks.get('yourTasksFilterValue'));
       });
       this.websocketSubscriptions.push(userSub);
-      console.log(`Number of subscriptions ${this.websocketSubscriptions.length}`);
+      console.log('Number of subscriptions ' + this.websocketSubscriptions.length);
+
     }, error => {
       this.retryCount++;
       if (error) {
@@ -57,12 +60,14 @@ export class YourTasksContainer extends React.Component {
       if (this.connected) {
         this.connected = false;
       }
-      const timeout = this.retryCount === 1 ? 6000 : 60000;
+      let timeout = this.retryCount === 1 ? 6000 : 60000;
       if (this._timeoutId) {
         clearTimeout(this._timeoutId);
         this._timeoutId = null;
       }
-      this._timeoutId = setTimeout(() => this.connect(), timeout);
+      this._timeoutId =
+        setTimeout(() => this.connect(), timeout);
+
     });
   };
 
@@ -76,7 +81,7 @@ export class YourTasksContainer extends React.Component {
     if (this.connected) {
       if (this.websocketSubscriptions) {
         this.websocketSubscriptions.forEach(sub => {
-          console.log(`Disconnecting sub${sub.id}`);
+          console.log('Disconnecting sub' + sub.id);
           sub.unsubscribe();
         });
         this.websocketSubscriptions = [];
@@ -115,47 +120,46 @@ export class YourTasksContainer extends React.Component {
         this.props.fetchTasksAssignedToYou(sortValue, filterValue, true);
       })();
     }
-  }
+  };
 
   filterTasksByName(event) {
     event.persist();
     const { yourTasks } = this.props;
     this.debounceSearch(yourTasks.get('yourTasksSortValue'), event.target.value);
-  }
+  };
 
   sortYourTasks(event) {
     this.props.fetchTasksAssignedToYou(event.target.value,
       this.props.yourTasks.get('yourTasksFilterValue'), true);
-  }
+  };
 
   render() {
     const { yourTasks } = this.props;
     if (yourTasks.get('isFetchingTasksAssignedToYou')) {
-      return <DataSpinner message="Fetching tasks assigned to you" />;
-    }
-    return (
-      <YourTasks
+      return <DataSpinner message="Fetching tasks assigned to you"/>;
+    } else {
+      return <YourTasks
         filterTasksByName={this.filterTasksByName}
         sortYourTasks={this.sortYourTasks}
         goToTask={this.goToTask}
-        yourTasks={yourTasks}
-        startAProcedure={() => this.props.history.replace('/procedures')}
-      />
-    );
+        yourTasks={yourTasks} startAProcedure={() => this.props.history.replace('/procedures')}/>;
+    }
   }
 }
 
 YourTasksContainer.propTypes = {
   resetYourTasks: PropTypes.func,
   fetchTasksAssignedToYou: PropTypes.func.isRequired,
-  yourTasks: ImmutablePropTypes.map,
+  yourTasks: ImmutablePropTypes.map
 };
 
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default connect(state => ({
-  yourTasks: yourTasks(state),
-  appConfig: state.appConfig,
-  kc: state.keycloak,
-}), mapDispatchToProps)(withRouter(YourTasksContainer));
+export default connect(state => {
+  return {
+    yourTasks: yourTasks(state),
+    appConfig: state.appConfig,
+    kc: state.keycloak
+  };
+}, mapDispatchToProps)(withRouter(YourTasksContainer));
