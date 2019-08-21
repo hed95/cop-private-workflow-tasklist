@@ -111,7 +111,7 @@ const completeTaskForm = (action$, store, { client }) =>
     .mergeMap(action =>
       client({
         method: 'POST',
-        path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks/${action.taskId}/form/_complete`,
+        path: `${store.getState().appConfig.translationServiceUrl}/api/translation/workflow/tasks/${action.taskId}/form/_complete`,
         entity: action.data,
         headers: {
           Accept: 'application/json',
