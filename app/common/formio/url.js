@@ -59,7 +59,7 @@ const url = formio => {
     title: 'Url',
     name: 'url',
     uploadFile(file, name, dir, progressCallback, url, options) {
-      const uploadRequest = form => xhrRequest(url, name, {
+      const uploadRequest = () => xhrRequest(url, name, {
       }, {
         file,
         name,

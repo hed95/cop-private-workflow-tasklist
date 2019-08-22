@@ -86,7 +86,7 @@ const submitTaskForm = (action$, store, { client }) =>
         },
       })
         .take(1)
-        .map(payload => {
+        .map(() => {
           const data = {
             variables: {},
             formId: action.formId,

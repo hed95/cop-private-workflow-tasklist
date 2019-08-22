@@ -26,7 +26,7 @@ export default function (ComposedComponent) {
       this.props.fetchStaffDetails();
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
       const path = this.props.history.location.pathname;
       const user = this.props.kc.tokenParsed.email;
       if (prevProps.isFetchingStaffDetails !== this.props.isFetchingStaffDetails

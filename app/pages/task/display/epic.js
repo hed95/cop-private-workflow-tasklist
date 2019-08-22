@@ -56,7 +56,7 @@ const fetchTask = (action$, store, { client }) =>
 
 const fetchCreateCommentForm = (action$, store, { client }) =>
     action$.ofType(types.FETCH_CREATE_COMMENT_FORM)
-        .mergeMap(action =>
+        .mergeMap(() =>
             client({
               method: 'GET',
               path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/createAComment`,

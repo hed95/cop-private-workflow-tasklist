@@ -6,7 +6,7 @@ import { combineEpics } from 'redux-observable';
 
 const fetchReports = (action$, store, { client }) =>
     action$.ofType(types.FETCH_REPORTS_LIST)
-        .mergeMap(action =>
+        .mergeMap(() =>
             client({
               method: 'GET',
               path: `${store.getState().appConfig.reportServiceUrl}/api/reports`,

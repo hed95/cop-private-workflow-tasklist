@@ -41,10 +41,10 @@ export class YourTasksContainer extends React.Component {
 
     this.stompClient.connect({
       'Authorization': `Bearer ${this.props.kc.token}`
-    }, frame => {
+    }, () => {
       this.connected = true;
       console.log(`Connected to websocket server`);
-      const userSub = this.stompClient.subscribe(`/user/queue/task`, msg => {
+      const userSub = this.stompClient.subscribe(`/user/queue/task`, () => {
         this.loadYourTasks(true, this.props.yourTasks.get('yourTasksSortValue'),
           this.props.yourTasks.get('yourTasksFilterValue'));
       });

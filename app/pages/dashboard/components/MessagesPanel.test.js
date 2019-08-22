@@ -1,14 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import Immutable from 'immutable';
 import { MessagesPanel } from './MessagesPanel';
 import PubSub from 'pubsub-js';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
-
-const { Map } = Immutable;
-
 
 jest.mock('pubsub-js', () => ({
   subscribe: jest.fn(),

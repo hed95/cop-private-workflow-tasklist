@@ -9,7 +9,7 @@ import { retry } from '../../core/util/retry';
 
 const fetchNotifications = (action$, store, { client }) =>
   action$.ofType(types.FETCH_NOTIFICATIONS)
-    .mergeMap(action =>
+    .mergeMap(() =>
       client({
         method: 'GET',
         path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/notifications?countOnly=false`,

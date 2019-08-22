@@ -20,7 +20,7 @@ const shift = (email, token, operationalDataUrl, client) => {
 
 const endShift = (action$, store, { client }) =>
   action$.ofType(types.END_SHIFT)
-    .mergeMap(action =>
+    .mergeMap(() =>
       client({
         method: 'DELETE',
         path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/shift/${store.getState().keycloak.tokenParsed.email}?deletedReason=finished`,
@@ -37,7 +37,7 @@ const endShift = (action$, store, { client }) =>
 
 const fetchStaffDetails = (action$, store, { client }) =>
   action$.ofType(types.FETCH_STAFF_DETAILS)
-    .mergeMap(action =>
+    .mergeMap(() =>
       client({
         method: 'POST',
         path: `${store.getState().appConfig.operationalDataUrl}/v1/rpc/staffdetails`,
@@ -58,7 +58,7 @@ const fetchStaffDetails = (action$, store, { client }) =>
 
 const fetchShiftForm = (action$, store, { client }) =>
   action$.ofType(types.FETCH_SHIFT_FORM)
-    .mergeMap(action =>
+    .mergeMap(() =>
       client({
         method: 'GET',
         path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/startShift`,
@@ -74,7 +74,7 @@ const fetchShiftForm = (action$, store, { client }) =>
 
 const fetchActiveShift = (action$, store, { client }) =>
   action$.ofType(types.FETCH_ACTIVE_SHIFT)
-    .mergeMap(action =>
+    .mergeMap(() =>
       shift(
         store.getState().keycloak.tokenParsed.email,
         store.getState().keycloak.token,
@@ -148,7 +148,7 @@ const createActiveShift = (action$, store, { client }) =>
 
 const fetchActiveShiftAfterCreation = (action$, store, { client }) =>
   action$.ofType(types.FETCH_ACTIVE_SHIFT_AFTER_CREATE)
-    .mergeMap(action =>
+    .mergeMap(() =>
       shift(
         store.getState().keycloak.tokenParsed.email,
         store.getState().keycloak.token,
