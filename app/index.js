@@ -124,7 +124,7 @@ const unavailable = () => {
 
 if (process.env.NODE_ENV === 'production') {
   fetch('/api/config')
-        .then((response) => {
+        .then(response => {
           if (response.ok) {
             return response.json();
           }
@@ -144,7 +144,7 @@ if (process.env.NODE_ENV === 'production') {
             reportServiceUrl: data.REPORT_SERVICE_URL,
           };
           renderApp(App, data.WWW_KEYCLOAK_ACCESS_ROLE);
-        }).catch((err) => {
+        }).catch(err => {
           console.log('Unable to start application: ', err.message);
           unavailable();
         });
