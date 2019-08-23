@@ -156,10 +156,8 @@ YourTasksContainer.propTypes = {
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default connect(state => {
-  return {
+export default connect(state => ({
     yourTasks: yourTasks(state),
     appConfig: state.appConfig,
     kc: state.keycloak
-  };
-}, mapDispatchToProps)(withRouter(YourTasksContainer));
+  }), mapDispatchToProps)(withRouter(YourTasksContainer));

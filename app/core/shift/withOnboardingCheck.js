@@ -77,12 +77,10 @@ export default function (ComposedComponent) {
 
   const mapDispatchToProps = dispatch => bindActionCreators(Object.assign(actions, logActions), dispatch);
 
-  return withRouter(connect(state => {
-    return {
+  return withRouter(connect(state => ({
       staffDetails: staffDetails(state),
       isFetchingStaffDetails: isFetchingStaffDetails(state),
       isCheckingOnBoarding: isCheckingOnBoarding(state),
       kc: state.keycloak
-    }
-  }, mapDispatchToProps)(withOnboardingCheck));
+    }), mapDispatchToProps)(withOnboardingCheck));
 }
