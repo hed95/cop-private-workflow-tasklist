@@ -77,7 +77,7 @@ const submitTaskForm = (action$, store, { client }) =>
         method: 'POST',
         path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/${action.formId}/submission`,
         entity: {
-          data: JSON.stringify(submissionData),
+          data: submissionData,
         },
         headers: {
           Accept: 'application/json',
