@@ -245,6 +245,7 @@ pipeline:
       environment: production
       event: deployment
 
+
   notify:
     image: plugins/slack
     secrets: [ SLACK_WEBHOOK ]
