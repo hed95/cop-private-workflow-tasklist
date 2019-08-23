@@ -3,12 +3,11 @@ import moment from 'moment';
 import Immutable from 'immutable';
 
 describe('OnboardChecker', () => {
-  const onboardChecker = new OnboardChecker();
 
   it('onboard-user for new user', () => {
     const staffDetails = null;
 
-    const response = onboardChecker.onBoardCheck(staffDetails);
+    const response = OnboardChecker.onBoardCheck(staffDetails);
     expect(response.redirectPath).toEqual('/onboard-user');
   });
 
@@ -16,7 +15,7 @@ describe('OnboardChecker', () => {
     const staffDetails = Immutable.fromJS({
       onboardprocessinstanceid: 'id',
     });
-    const response = onboardChecker.onBoardCheck(staffDetails);
+    const response = OnboardChecker.onBoardCheck(staffDetails);
     expect(response.redirectPath).toEqual('/noop-dashboard');
   });
 
@@ -24,7 +23,7 @@ describe('OnboardChecker', () => {
     const staffDetails = Immutable.fromJS({
       dateofleaving: '01/01/2018',
     });
-    const response = onboardChecker.onBoardCheck(staffDetails);
+    const response = OnboardChecker.onBoardCheck(staffDetails);
     expect(response.redirectPath).toEqual('/unauthorized');
   });
 
@@ -35,7 +34,7 @@ describe('OnboardChecker', () => {
       staffid: 'staffid',
       onboardprocessinstanceid: null,
     });
-    const response = onboardChecker.onBoardCheck(staffDetails);
+    const response = OnboardChecker.onBoardCheck(staffDetails);
     expect(response.redirectPath).toEqual(null);
   });
 });

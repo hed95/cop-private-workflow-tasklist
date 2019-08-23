@@ -32,7 +32,7 @@ export default function (ComposedComponent) {
       if (prevProps.isFetchingStaffDetails !== this.props.isFetchingStaffDetails
         && !this.props.isFetchingStaffDetails) {
         const { staffDetails } = this.props;
-        const { redirectPath, data } = new OnboardChecker().onBoardCheck(staffDetails,
+        const { redirectPath, data } = OnboardChecker.onBoardCheck(staffDetails,
           this.props.location.pathname);
         if (redirectPath) {
           if (data) {

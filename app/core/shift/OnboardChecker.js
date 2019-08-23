@@ -1,6 +1,6 @@
 export default class OnboardChecker {
 
-  onBoardCheck(staffDetails, location) {
+  static onBoardCheck(staffDetails, location) {
     const nonExistentStaff = new NonExistentStaff();
     const onboardingProcessInFlight = new OnboardingProcessInflight();
     const staffLeft = new StaffLeft();
