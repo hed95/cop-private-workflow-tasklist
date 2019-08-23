@@ -90,6 +90,7 @@ const submit = (action$, store, { client }) =>
             variableName: action.variableName,
             data: payload.entity.data,
             processName: action.processName,
+            formId: action.formId,
           };
         })
         .catch(error => errorObservable(actions.submitFailure(), error),
@@ -107,6 +108,7 @@ const submitToWorkflow = (action$, store, { client }) =>
           data: action.data,
           processKey: action.processKey,
           variableName: action.variableName,
+          formId: action.formId,
         },
         headers: {
           Accept: 'application/json',
