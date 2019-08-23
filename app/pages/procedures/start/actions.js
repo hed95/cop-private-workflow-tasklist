@@ -65,12 +65,13 @@ const submitFailure = () => ({
   type: types.SUBMIT_FAILURE,
 });
 
-const submitToWorkflow = (processKey, variableName, data, processName) => ({
+const submitToWorkflow = (processKey, variableName, data, processName, formId) => ({
   type: types.SUBMIT_TO_WORKFLOW,
   processKey,
   variableName,
   data,
   processName,
+  formId
 });
 
 const submitToWorkflowSuccess = payload => ({

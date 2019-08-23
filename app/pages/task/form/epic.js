@@ -89,6 +89,7 @@ const submitTaskForm = (action$, store, { client }) =>
         .map(payload => {
           const data = {
             variables: {},
+            formId: action.formId,
           };
           data.variables[action.variableName] = {
             value: JSON.stringify(submissionData),
