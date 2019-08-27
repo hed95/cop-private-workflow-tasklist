@@ -1,5 +1,5 @@
-import * as selectors from './selectors';
 import Immutable from 'immutable';
+import * as selectors from './selectors';
 
 const { Map, List, Set } = Immutable;
 describe('Messages selector', () => {

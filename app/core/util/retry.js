@@ -8,4 +8,4 @@ export const retry = errors => errors.flatMap(error => {
   }
   return Rx.Observable.throw(error);
 }).take(5)
-    .concat(errors.flatMap(s => Rx.Observable.throw(s)));
+  .concat(errors.flatMap(s => Rx.Observable.throw(s)));

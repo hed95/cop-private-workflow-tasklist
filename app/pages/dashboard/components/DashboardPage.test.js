@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import { DashboardPage } from './DashboardPage';
 import Immutable from 'immutable';
+import { DashboardPage } from './DashboardPage';
 
 describe('DashboardPage', () => {
   const mockStore = configureStore();

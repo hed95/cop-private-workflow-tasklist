@@ -6,10 +6,10 @@
     "react"
   ],
   "plugins": [
+    "transform-object-rest-spread",
     "syntax-dynamic-import",
     [
       "transform-class-properties",
-      "transform-object-rest-spread",
       "add-module-exports",
       "react-html-attrs",
       "transform-imports",

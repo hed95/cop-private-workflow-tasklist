@@ -15,7 +15,7 @@ const fetchProcessDefinitionsFailure = () => ({
 });
 
 export {
-    fetchProcessDefinitions,
-    fetchProcessDefinitionsSuccess,
-    fetchProcessDefinitionsFailure,
+  fetchProcessDefinitions,
+  fetchProcessDefinitionsSuccess,
+  fetchProcessDefinitionsFailure,
 };
