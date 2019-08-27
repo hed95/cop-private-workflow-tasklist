@@ -2,8 +2,8 @@ import React from 'react';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
-import moment from 'moment';
 import { MessagesPage } from './MessagesPage';
+import moment from 'moment';
 
 const { Map, List, Set } = Immutable;
 

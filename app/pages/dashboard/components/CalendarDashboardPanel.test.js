@@ -1,9 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
+import { CalendarDashboardPanel } from './CalendarDashboardPanel';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { CalendarDashboardPanel } from './CalendarDashboardPanel';
 
 
 describe('Calendar Dashboard Panel', () => {
@@ -34,12 +34,10 @@ describe('Calendar Dashboard Panel', () => {
       history,
       hasActiveShift: true,
     };
-    const wrapper = await mount(<Router history={history}>
-      <CalendarDashboardPanel
-        store={store}
-        {...props}
-      />
-                                </Router>);
+    const wrapper = await mount(<Router history={history}><CalendarDashboardPanel
+      store={store}
+      {...props}
+    /></Router>);
 
     const calendarPageLink = wrapper.find('#calendarPageLink');
     expect(calendarPageLink.exists()).toEqual(true);

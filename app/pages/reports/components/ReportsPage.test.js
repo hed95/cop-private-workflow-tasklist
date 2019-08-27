@@ -2,8 +2,8 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
-import Spinner from 'react-spinkit';
 import { ReportsPage } from './ReportsPage';
+import Spinner from 'react-spinkit';
 
 const { Map, List } = Immutable;
 

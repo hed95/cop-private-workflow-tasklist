@@ -11,12 +11,14 @@ const epicMiddleware = createEpicMiddleware(rootEpic, {
 
 export default function configureStore(initialState) {
   const store = createStore(rootReducer, initialState, composeWithDevTools(
-    applyMiddleware(epicMiddleware),
+        applyMiddleware(epicMiddleware),
 
-  ));
+    ));
 
   if (module.hot) {
-    module.hot.accept('../rootReducer', () => store.replaceReducer(require('../rootReducer').rootReducer));
+    module.hot.accept('../rootReducer', () =>
+            store.replaceReducer(require('../rootReducer').rootReducer),
+        );
 
     module.hot.accept('../rootReducer', () => {
       epicMiddleware.replaceEpic(require('../rootReducer').rootEpic);

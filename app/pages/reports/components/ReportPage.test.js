@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme/build/index';
-import React from 'react';
 import { ReportPage } from './ReportPage';
+import React from 'react';
 
 
 describe('Report Page', () => {

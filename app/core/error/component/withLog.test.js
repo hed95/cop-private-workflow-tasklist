@@ -1,7 +1,7 @@
 import { mount } from 'enzyme/build';
 import React from 'react';
-import configureStore from 'redux-mock-store';
 import withLog from './withLog';
+import configureStore from 'redux-mock-store';
 
 let store;
 

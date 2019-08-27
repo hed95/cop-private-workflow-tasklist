@@ -1,5 +1,6 @@
 export default class OnboardChecker {
-  static onBoardCheck(staffDetails, location) {
+
+  onBoardCheck(staffDetails, location) {
     const nonExistentStaff = new NonExistentStaff();
     const onboardingProcessInFlight = new OnboardingProcessInflight();
     const staffLeft = new StaffLeft();
@@ -82,11 +83,12 @@ class StaffLeft {
 }
 
 class ChecksPassed {
+
   constructor(location) {
     this.location = location;
   }
 
-  performCheck() {
+  performCheck(staffDetails) {
     if (this.location === '/onboard-user') {
       return {
         redirectPath: '/dashboard',
@@ -103,3 +105,4 @@ class ChecksPassed {
     };
   }
 }
+
