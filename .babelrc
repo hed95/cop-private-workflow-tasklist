@@ -10,7 +10,6 @@
     "syntax-dynamic-import",
     [
       "transform-class-properties",
-      "transform-object-rest-spread",
       "add-module-exports",
       "react-html-attrs",
       "transform-imports",
