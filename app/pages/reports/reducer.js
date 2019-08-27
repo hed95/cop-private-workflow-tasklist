@@ -15,7 +15,7 @@ function reducer(state = initialState, action) {
     case actions.FETCH_REPORTS_LIST_SUCCESS:
       const data = action.payload.entity;
       return state.set('loadingReports', false)
-                .set('reports', Immutable.fromJS(data));
+        .set('reports', Immutable.fromJS(data));
     case actions.FETCH_REPORTS_LIST_FAILURE:
       return state.set('loadingReports', false);
     default:

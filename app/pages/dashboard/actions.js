@@ -31,11 +31,11 @@ const fetchMessageCountsFailure = () => ({
 
 
 export {
-    fetchTaskCounts,
-    fetchTaskCountsSuccess,
-    fetchTaskCountsFailure,
-    fetchMessageCounts,
-    fetchMessageCountsSuccess,
-    fetchMessageCountsFailure,
-    setDefaultCounts,
+  fetchTaskCounts,
+  fetchTaskCountsSuccess,
+  fetchTaskCountsFailure,
+  fetchMessageCounts,
+  fetchMessageCountsSuccess,
+  fetchMessageCountsFailure,
+  setDefaultCounts,
 };

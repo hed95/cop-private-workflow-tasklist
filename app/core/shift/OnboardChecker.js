@@ -1,5 +1,4 @@
 export default class OnboardChecker {
-
   static onBoardCheck(staffDetails, location) {
     const nonExistentStaff = new NonExistentStaff();
     const onboardingProcessInFlight = new OnboardingProcessInflight();
@@ -83,7 +82,6 @@ class StaffLeft {
 }
 
 class ChecksPassed {
-
   constructor(location) {
     this.location = location;
   }
@@ -105,4 +103,3 @@ class ChecksPassed {
     };
   }
 }
-

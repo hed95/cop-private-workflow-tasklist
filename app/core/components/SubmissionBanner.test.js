@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import SubmissionBanner from './SubmissionBanner';
 import PubSub from 'pubsub-js';
+import SubmissionBanner from './SubmissionBanner';
 
 
 describe('SubmissionBanner', () => {

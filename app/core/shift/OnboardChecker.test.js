@@ -1,9 +1,8 @@
-import OnboardChecker from './OnboardChecker';
 import moment from 'moment';
 import Immutable from 'immutable';
+import OnboardChecker from './OnboardChecker';
 
 describe('OnboardChecker', () => {
-
   it('onboard-user for new user', () => {
     const staffDetails = null;
 

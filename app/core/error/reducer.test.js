@@ -1,6 +1,6 @@
+import Immutable from 'immutable';
 import * as actions from './actions';
 import reducer from './reducer';
-import Immutable from 'immutable';
 
 
 describe('error reducer', () => {
