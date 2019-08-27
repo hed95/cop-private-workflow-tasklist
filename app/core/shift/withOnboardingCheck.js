@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { withRouter } from 'react-router';
-import PubSub from 'pubsub-js';
 import * as actions from './actions';
 import * as logActions from '../error/actions';
 
+import { withRouter } from 'react-router';
 import DataSpinner from '../components/DataSpinner';
 import {
   isCheckingOnBoarding,
   isFetchingStaffDetails,
-  staffDetails,
+  staffDetails
 } from './selectors';
+import PubSub from 'pubsub-js';
 import OnboardChecker from './OnboardChecker';
 
 
@@ -26,24 +26,24 @@ export default function (ComposedComponent) {
       this.props.fetchStaffDetails();
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
       const path = this.props.history.location.pathname;
       const user = this.props.kc.tokenParsed.email;
       if (prevProps.isFetchingStaffDetails !== this.props.isFetchingStaffDetails
         && !this.props.isFetchingStaffDetails) {
         const { staffDetails } = this.props;
-        const { redirectPath, data } = OnboardChecker.onBoardCheck(staffDetails,
+        const { redirectPath, data } = new OnboardChecker().onBoardCheck(staffDetails,
           this.props.location.pathname);
         if (redirectPath) {
           if (data) {
             PubSub.publish('submission', data);
           }
           this.props.log([{
-            user,
-            path,
+            user: user,
+            path: path,
             message: `${user} being redirected to ${redirectPath}`,
             level: 'info',
-            data,
+            data
           }]);
           this.props.history.replace(redirectPath);
         } else {
@@ -54,12 +54,13 @@ export default function (ComposedComponent) {
 
     render() {
       const {
-        isCheckingOnBoarding,
+        isCheckingOnBoarding
       } = this.props;
       if (isCheckingOnBoarding) {
-        return <DataSpinner message="Checking your credentials" />;
+        return <DataSpinner message={`Checking your credentials`}/>;
+      } else {
+        return (<ComposedComponent {...this.props} />);
       }
-      return (<ComposedComponent {...this.props} />);
     }
   }
 
@@ -70,16 +71,18 @@ export default function (ComposedComponent) {
     performOnboardingCheck: PropTypes.func.isRequired,
     onboardingCheckCompete: PropTypes.func.isRequired,
     isCheckingOnBoarding: PropTypes.bool,
-    isFetchingStaffDetails: PropTypes.bool,
+    isFetchingStaffDetails: PropTypes.bool
   };
 
 
   const mapDispatchToProps = dispatch => bindActionCreators(Object.assign(actions, logActions), dispatch);
 
-  return withRouter(connect(state => ({
-    staffDetails: staffDetails(state),
-    isFetchingStaffDetails: isFetchingStaffDetails(state),
-    isCheckingOnBoarding: isCheckingOnBoarding(state),
-    kc: state.keycloak,
-  }), mapDispatchToProps)(withOnboardingCheck));
+  return withRouter(connect(state => {
+    return {
+      staffDetails: staffDetails(state),
+      isFetchingStaffDetails: isFetchingStaffDetails(state),
+      isCheckingOnBoarding: isCheckingOnBoarding(state),
+      kc: state.keycloak
+    }
+  }, mapDispatchToProps)(withOnboardingCheck));
 }

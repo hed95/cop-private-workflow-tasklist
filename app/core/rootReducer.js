@@ -1,19 +1,19 @@
 import { combineReducers } from 'redux';
 import { loadingBarReducer } from 'react-redux-loading-bar';
-import { routerReducer } from 'react-router-redux';
-import { combineEpics } from 'redux-observable';
-import keycloakReducer from '../common/security/keycloakReducer';
+import keycloakReducer from './../common/security/keycloakReducer';
 import notificationPage from '../pages/messages';
-import shift from './shift/index';
+import shift from '../core/shift/index';
 import procedures from '../pages/procedures/list/index';
 import procedureDiagram from '../pages/procedures/diagram/index';
 import procedureStart from '../pages/procedures/start/index';
-import error from './error/index';
+import error from '../core/error/index';
 import task from '../pages/task/display';
 import tasks from '../pages/tasks/index';
 import taskForm from '../pages/task/form';
 import reports from '../pages/reports/index';
 
+import { routerReducer } from 'react-router-redux';
+import { combineEpics } from 'redux-observable';
 import dashboard from '../pages/dashboard';
 import appConfigReducer from '../common/appConfigReducer';
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+import App from './core/App';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import Keycloak from 'keycloak-js';
-import App from './core/App';
 import configureStore from './core/store/configureStore';
+import Keycloak from 'keycloak-js';
 import 'webpack-icons-installer/bootstrap';
 import '../public/styles/app.scss';
 import 'govuk-frontend/core/_typography.scss';
@@ -75,8 +75,8 @@ const renderApp = (App, authorizedRole) => {
               </AppContainer>
             </div>
           </Provider>,
-          rootDocument,
-        );
+              rootDocument,
+            );
       } else {
         ReactDOM.render(
           <Provider store={store}>
@@ -94,8 +94,8 @@ const renderApp = (App, authorizedRole) => {
               </AppContainer>
             </div>
           </Provider>,
-          rootDocument,
-        );
+              rootDocument,
+            );
       }
     }
   });
@@ -119,36 +119,35 @@ const unavailable = () => {
         </AppContainer>
       </div>
     </Provider>,
-    rootDocument,
-  );
+        rootDocument);
 };
 
 if (process.env.NODE_ENV === 'production') {
   fetch('/api/config')
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(`Application configuration could not be loaded: ${response.status} ${response.statusMessage}`);
-    }).then(data => {
-      kc = Keycloak({
-        realm: data.REALM,
-        url: data.AUTH_URL,
-        clientId: data.CLIENT_ID,
-      });
-      store.getState().appConfig = {
-        uiVersion: data.UI_VERSION,
-        uiEnvironment: data.UI_ENVIRONMENT,
-        operationalDataUrl: data.OPERATIONAL_DATA_URL,
-        workflowServiceUrl: data.WORKFLOW_SERVICE_URL,
-        translationServiceUrl: data.TRANSLATION_SERVICE_URL,
-        reportServiceUrl: data.REPORT_SERVICE_URL,
-      };
-      renderApp(App, data.WWW_KEYCLOAK_ACCESS_ROLE);
-    }).catch(err => {
-      console.log('Unable to start application: ', err.message);
-      unavailable();
-    });
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error(`Application configuration could not be loaded: ${response.status} ${response.statusMessage}`);
+        }).then(data => {
+          kc = Keycloak({
+            realm: data.REALM,
+            url: data.AUTH_URL,
+            clientId: data.CLIENT_ID,
+          });
+          store.getState().appConfig = {
+            uiVersion: data.UI_VERSION,
+            uiEnvironment: data.UI_ENVIRONMENT,
+            operationalDataUrl: data.OPERATIONAL_DATA_URL,
+            workflowServiceUrl: data.WORKFLOW_SERVICE_URL,
+            translationServiceUrl: data.TRANSLATION_SERVICE_URL,
+            reportServiceUrl: data.REPORT_SERVICE_URL,
+          };
+          renderApp(App, data.WWW_KEYCLOAK_ACCESS_ROLE);
+        }).catch((err) => {
+          console.log('Unable to start application: ', err.message);
+          unavailable();
+        });
 } else {
   const authAccessRole = process.env.WWW_KEYCLOAK_ACCESS_ROLE;
   kc = Keycloak({

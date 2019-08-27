@@ -59,11 +59,10 @@ function reducer(state = initialState, action) {
 
     case actions.HANDLE_UNCLAIM: {
       let yourGroupTasks = state.getIn(['yourGroupTasks', 'tasks']);
-      const { taskId } = action;
+      const taskId = action.taskId;
       const findIndex = yourGroupTasks.findIndex(item => item.get('task').get('id') === taskId);
       yourGroupTasks = yourGroupTasks.update(
-        findIndex, item => item.setIn(['task', 'assignee'], null),
-      );
+        findIndex, item => item.setIn(['task', 'assignee'], null));
 
       return state.setIn(['yourGroupTasks', 'tasks'], yourGroupTasks);
     }

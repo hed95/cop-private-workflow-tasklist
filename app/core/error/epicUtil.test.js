@@ -1,6 +1,6 @@
 import { ActionsObservable } from 'redux-observable';
-import { Observable } from 'rxjs/Observable';
 import { errorObservable } from './epicUtil';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/concat';
