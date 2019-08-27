@@ -6,4 +6,6 @@ import reducer from './reducer';
 import * as selectors from './selectors';
 
 
-export default { actions, constants, epic, reducer, selectors };
+export default {
+  actions, constants, epic, reducer, selectors,
+};

@@ -1,8 +1,8 @@
 import { mount } from 'enzyme/build';
-import { ShiftPage } from './ShiftPage';
 import React from 'react';
-import { ErrorHandlingComponent } from '../../../core/error/component/ErrorHandlingComponent';
 import Immutable from 'immutable';
+import { ShiftPage } from './ShiftPage';
+import { ErrorHandlingComponent } from '../../../core/error/component/ErrorHandlingComponent';
 
 describe('Shift page', () => {
   const fetchActiveShift = jest.fn();
@@ -43,17 +43,21 @@ describe('Shift page', () => {
       submittingActiveShift: false,
     };
     const wrapper = await mount(<ErrorHandlingComponent
-      skipAuth hasError errors={
+      skipAuth
+      hasError
+      errors={
       Immutable.fromJS([{
         message: 'failed',
       }])
     }
-    ><ShiftPage
-      {...props}
-      fetchActiveShift={fetchActiveShift}
-      fetchShiftForm={fetchShiftForm}
-      fetchStaffDetails={fetchStaffDetails}
-    /></ErrorHandlingComponent>);
+    >
+      <ShiftPage
+        {...props}
+        fetchActiveShift={fetchActiveShift}
+        fetchShiftForm={fetchShiftForm}
+        fetchStaffDetails={fetchStaffDetails}
+      />
+    </ErrorHandlingComponent>);
 
     expect(fetchStaffDetails).toHaveBeenCalled();
     expect(fetchShiftForm).toHaveBeenCalled();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Pagination from './Pagination';
 import Immutable from 'immutable';
+import Pagination from './Pagination';
 
 describe('Pagination', () => {
   const buildItems = number => {
