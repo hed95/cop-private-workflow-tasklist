@@ -44,7 +44,7 @@ describe('ProceduresPage', () => {
   });
 
   it('renders  a list of procedures with procedure view', async () => {
-    window.matchMedia = window.matchMedia || function () {
+    window.matchMedia = window.matchMedia || function matchMedia() {
       return {
         matches: true,
         addListener() {},
