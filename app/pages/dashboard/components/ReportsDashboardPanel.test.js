@@ -1,9 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import { ReportsDashboardPanel } from './ReportsDashboardPanel';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
+import { ReportsDashboardPanel } from './ReportsDashboardPanel';
 
 describe('Reports Dashboard Panel', () => {
   const mockStore = configureStore();
@@ -29,10 +29,12 @@ describe('Reports Dashboard Panel', () => {
       history,
       hasActiveShift: true,
     };
-    const wrapper = await mount(<Router history={history}><ReportsDashboardPanel
-      store={store}
-      {...props}
-    /></Router>);
+    const wrapper = await mount(<Router history={history}>
+      <ReportsDashboardPanel
+        store={store}
+        {...props}
+      />
+                                </Router>);
 
     const reportsPageLink = wrapper.find('#reportsPageLink');
     expect(reportsPageLink.exists()).toEqual(true);

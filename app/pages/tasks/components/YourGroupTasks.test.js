@@ -2,12 +2,12 @@ import React from 'react';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
-import { YourGroupTasksContainer } from './YourGroupTasksContainer';
 import moment from 'moment';
-import AppConstants from '../../../common/AppConstants';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import AppConstants from '../../../common/AppConstants';
+import { YourGroupTasksContainer } from './YourGroupTasksContainer';
 
 const { Map } = Immutable;
 jest.useFakeTimers();
@@ -87,11 +87,15 @@ describe('YourGroupTasksContainer Page', () => {
         },
       },
     };
-    const wrapper = await mount(<Provider store={store}><Router history={history}><YourGroupTasksContainer
-      store={store}
-      {...props}
-      fetchYourGroupTasks={fetchYourGroupTasks}
-    /></Router></Provider>);
+    const wrapper = await mount(<Provider store={store}>
+      <Router history={history}>
+        <YourGroupTasksContainer
+          store={store}
+          {...props}
+          fetchYourGroupTasks={fetchYourGroupTasks}
+        />
+      </Router>
+    </Provider>);
 
     expect(fetchYourGroupTasks).toBeCalled();
     expect(wrapper.find('.loader-content').exists()).toEqual(false);
@@ -122,11 +126,15 @@ describe('YourGroupTasksContainer Page', () => {
         },
       },
     };
-    const wrapper = await mount(<Provider store={store}><Router history={history}><YourGroupTasksContainer
-      store={store}
-      {...props}
-      fetchYourGroupTasks={fetchYourGroupTasks}
-    /></Router></Provider>);
+    const wrapper = await mount(<Provider store={store}>
+      <Router history={history}>
+        <YourGroupTasksContainer
+          store={store}
+          {...props}
+          fetchYourGroupTasks={fetchYourGroupTasks}
+        />
+      </Router>
+                                </Provider>);
 
 
     expect(fetchYourGroupTasks).toBeCalled();
@@ -169,11 +177,15 @@ describe('YourGroupTasksContainer Page', () => {
       }),
     };
 
-    const wrapper = await mount(<Provider store={store}><Router history={history}><YourGroupTasksContainer
-      store={store}
-      {...props}
-      fetchYourGroupTasks={fetchYourGroupTasks}
-    /></Router></Provider>);
+    const wrapper = await mount(<Provider store={store}>
+      <Router history={history}>
+        <YourGroupTasksContainer
+          store={store}
+          {...props}
+          fetchYourGroupTasks={fetchYourGroupTasks}
+        />
+      </Router>
+    </Provider>);
 
 
     expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', null, false);
@@ -215,11 +227,15 @@ describe('YourGroupTasksContainer Page', () => {
       }),
     };
 
-    const wrapper = await mount(<Provider store={store}><Router history={history}><YourGroupTasksContainer
-      store={store}
-      {...props}
-      fetchYourGroupTasks={fetchYourGroupTasks}
-    /></Router></Provider>);
+    const wrapper = await mount(<Provider store={store}>
+      <Router history={history}>
+        <YourGroupTasksContainer
+          store={store}
+          {...props}
+          fetchYourGroupTasks={fetchYourGroupTasks}
+        />
+      </Router>
+    </Provider>);
 
     console.log(wrapper.html());
 

@@ -41,11 +41,6 @@ const fetchFormFailure = () => ({
   type: types.FETCH_FORM_FAILURE,
 });
 
-const resetForm = () => ({
-  type: types.RESET_FORM,
-});
-
-
 const submit = (formId, processKey, variableName, submissionData, processName, nonShiftApiCall) => ({
   type: types.SUBMIT,
   formId,
@@ -71,7 +66,7 @@ const submitToWorkflow = (processKey, variableName, data, processName, formId) =
   variableName,
   data,
   processName,
-  formId
+  formId,
 });
 
 const submitToWorkflowSuccess = payload => ({
@@ -84,19 +79,19 @@ const submitToWorkflowFailure = () => ({
 });
 
 export {
-    fetchProcessDefinition,
-    fetchProcessDefinitionSuccess,
-    fetchProcessDefinitionFailure,
-    clearProcessDefinition,
-    fetchForm,
-    fetchFormWithContext,
-    fetchFormSuccess,
-    fetchFormFailure,
-    submit,
-    submitSuccess,
-    submitFailure,
-    submitToWorkflow,
-    submitToWorkflowSuccess,
-    submitToWorkflowFailure,
+  fetchProcessDefinition,
+  fetchProcessDefinitionSuccess,
+  fetchProcessDefinitionFailure,
+  clearProcessDefinition,
+  fetchForm,
+  fetchFormWithContext,
+  fetchFormSuccess,
+  fetchFormFailure,
+  submit,
+  submitSuccess,
+  submitFailure,
+  submitToWorkflow,
+  submitToWorkflowSuccess,
+  submitToWorkflowFailure,
 
 };

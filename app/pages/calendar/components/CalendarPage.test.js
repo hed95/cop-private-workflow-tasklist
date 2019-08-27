@@ -14,7 +14,7 @@ describe('Calendar Page', () => {
   });
   it('renders calendar page', async () => {
     const props = {};
-    const wrapper = await mount(<CalendarPage
+    await mount(<CalendarPage
       store={store}
       {...props}
     />, { attachTo: document.body });

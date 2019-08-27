@@ -17,7 +17,7 @@ function reducer(state = initialState, action) {
   switch (action.type) {
     case actions.CLEAR_NOTIFICATIONS:
       return initialState;
-        // fetch notifications
+      // fetch notifications
     case actions.FETCH_NOTIFICATIONS:
       return state.set('isFetching', true);
     case actions.FETCH_NOTIFICATIONS_SUCCESS:
@@ -36,11 +36,11 @@ function reducer(state = initialState, action) {
         data.sort((a, b) => a - b);
       }
       return state.set('notifications', Immutable.fromJS(data))
-                .set('isFetching', false)
-                .set('pageSize', pageSize)
-                .set('total', total)
-                .set('nextPage', nextPage)
-                .set('hasMoreItems', hasMoreItems);
+        .set('isFetching', false)
+        .set('pageSize', pageSize)
+        .set('total', total)
+        .set('nextPage', nextPage)
+        .set('hasMoreItems', hasMoreItems);
 
     case actions.FETCH_NOTIFICATIONS_FAILURE:
       return state.set('isFetching', false);
@@ -52,19 +52,19 @@ function reducer(state = initialState, action) {
       let pageNext = null;
       let moreItems = false;
       const pagedNotifications = state.get('notifications');
-      const merged = pagedNotifications.size !== 0 ?
-                pagedNotifications.concat(Immutable.fromJS(action.payload.entity._embedded ? action.payload.entity._embedded.tasks : []))
-                : Immutable.fromJS(data);
+      const merged = pagedNotifications.size !== 0
+        ? pagedNotifications.concat(Immutable.fromJS(action.payload.entity._embedded ? action.payload.entity._embedded.tasks : []))
+        : Immutable.fromJS(data);
       if ('next' in nextLinks) {
         pageNext = nextLinks.next.href;
         moreItems = true;
       }
       return state.set('notifications', merged)
-                .set('isFetching', false)
-                .set('pageSize', action.payload.entity.page ? action.payload.entity.page.size : 20)
-                .set('total', action.payload.entity.page ? action.payload.entity.page.totalElements : 0)
-                .set('nextPage', pageNext)
-                .set('hasMoreItems', moreItems);
+        .set('isFetching', false)
+        .set('pageSize', action.payload.entity.page ? action.payload.entity.page.size : 20)
+        .set('total', action.payload.entity.page ? action.payload.entity.page.totalElements : 0)
+        .set('nextPage', pageNext)
+        .set('hasMoreItems', moreItems);
 
     case actions.FETCH_NOTIFICATIONS_NEXT_PAGE_FAILURE:
       return state.set('isFetching', false);
@@ -77,7 +77,7 @@ function reducer(state = initialState, action) {
       const taskIds = state.get('acknowledgingTaskIds').delete(taskId);
       const totalResult = state.get('total') === 0 ? 0 : state.get('total') - 1;
       state = state.set('acknowledgingTaskIds', taskIds)
-                .set('total', totalResult);
+        .set('total', totalResult);
       const notifications = state.get('notifications').filter(x => x.getIn(['task', 'id']) !== taskId);
       return state.set('notifications', notifications);
     case actions.ACKNOWLEDGE_NOTIFICATION_FAILURE:

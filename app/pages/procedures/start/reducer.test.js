@@ -1,9 +1,9 @@
+import Immutable from 'immutable';
 import * as actions from './actions';
 import reducer from './reducer';
-import Immutable from 'immutable';
 
 describe('Start Form Reducer', () => {
-  const initialState = reducer.initialState;
+  const { initialState } = reducer;
 
   it('captures dispatch to fetch form', () => {
     const state = reducer(initialState, actions.fetchForm('formName'));
