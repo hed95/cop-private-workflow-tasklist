@@ -49,7 +49,7 @@ export class YourTasksContainer extends React.Component {
       this.websocketSubscriptions.push(userSub);
       console.log(`Number of subscriptions ${this.websocketSubscriptions.length}`);
     }, error => {
-      this.retryCount++;
+      this.retryCount += 1;
       if (error) {
         this.websocketSubscriptions = [];
         console.log(`Failed to connect ${error}...will retry to connect in ${this.retryCount === 1 ? 6 : 60} seconds`);

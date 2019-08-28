@@ -63,7 +63,7 @@ describe('reports epic', () => {
     let counter = 0;
 
     const client = () => Observable.defer(() => {
-      counter++;
+      counter += 1;
       console.log(`counter ${counter}`);
       if (counter === 5) {
         return Observable.from(Promise.resolve(response));

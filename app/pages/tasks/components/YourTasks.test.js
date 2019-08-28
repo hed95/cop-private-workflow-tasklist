@@ -93,7 +93,7 @@ describe('YourTasks Page', () => {
     store = mockStore({
       'tasks-page': new Map({}),
     });
-    window.matchMedia = window.matchMedia || function () {
+    window.matchMedia = window.matchMedia || function matchMedia() {
       return {
         matches: true,
         addListener() {},

@@ -41,7 +41,7 @@ describe('YourGroupTasksContainer Page', () => {
         },
       },
     });
-    window.matchMedia = window.matchMedia || function () {
+    window.matchMedia = window.matchMedia || function matchMedia() {
       return {
         matches: true,
         addListener() {
