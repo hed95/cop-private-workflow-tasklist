@@ -1,13 +1,13 @@
 import Immutable from 'immutable';
 import * as actions from './actions';
-import reducer from './reducer';
+import reducer, { initialState as reducerInitialState } from './reducer';
 
 
 describe('error reducer', () => {
   let initialState;
 
   beforeEach(() => {
-    initialState = reducer.initialState;
+    initialState = reducerInitialState;
   });
   it('handles unauthorized', () => {
     const state = reducer(initialState, actions.handleUnauthorised());
