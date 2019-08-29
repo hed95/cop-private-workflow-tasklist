@@ -55,8 +55,8 @@ describe('TaskDetailsPage', () => {
     props.form = {
       components: [{
         key: 'displayCommentForm',
-        defaultValue: 'true'
-      }]
+        defaultValue: 'true',
+      }],
     };
     const wrapper = await mount(<TaskDetailsPage
       store={store}
@@ -71,8 +71,8 @@ describe('TaskDetailsPage', () => {
     props.form = {
       components: [{
         key: 'displayCommentForm',
-        defaultValue: 'false'
-      }]
+        defaultValue: 'false',
+      }],
     };
     const wrapper = await mount(<TaskDetailsPage
       store={store}
@@ -85,7 +85,7 @@ describe('TaskDetailsPage', () => {
 
   it('does not render the comment form if displayCommentForm is undefined', async () => {
     props.form = {
-      components: [{}]
+      components: [{}],
     };
     const wrapper = await mount(<TaskDetailsPage
       store={store}

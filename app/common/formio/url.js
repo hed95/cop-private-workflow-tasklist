@@ -11,9 +11,9 @@ const url = formio => {
     }
 
     if (!json) {
-      for (const key in data) {
+      Object.keys(data).forEach(key => {
         fd.append(key, data[key]);
-      }
+      });
     }
 
     xhr.onload = () => {
