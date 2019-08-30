@@ -68,7 +68,7 @@ const submitTaskForm = (action$, store, { client }) => action$.ofType(types.SUBM
     const submissionData = { ...action.submission };
     return client({
       method: 'POST',
-      path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/${action.formId}/submission`,
+      path: `${store.getState().appConfig.formServiceUrl}/form/${action.formId}/submission`,
       entity: {
         data: submissionData,
       },

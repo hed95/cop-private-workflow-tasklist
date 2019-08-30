@@ -37,6 +37,7 @@ module.exports = webpackMerge(common, {
         WWW_UI_VERSION: JSON.stringify(process.env.WWW_UI_VERSION),
         API_COP_URI: JSON.stringify(process.env.API_COP_URI),
         API_REF_URI: JSON.stringify(process.env.API_REF_URI),
+        API_FORM_URI: JSON.stringify(process.env.API_FORM_URI),
         ENGINE_URI: JSON.stringify(process.env.ENGINE_URI),
         TRANSLATION_URI: JSON.stringify(process.env.TRANSLATION_URI),
         REPORT_URI: JSON.stringify(process.env.REPORT_URI),

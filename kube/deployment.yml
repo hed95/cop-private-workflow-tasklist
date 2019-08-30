@@ -60,6 +60,8 @@ spec:
           value: "{{.KEYCLOAK_PROTOCOL}}{{.KEYCLOAK_URL}}"
         - name: API_REF_URI
           value: "{{.API_REF_PROTOCOL}}{{.API_REF_URL}}"
+        - name: API_FORM_URI
+          value: "{{.API_FORM_PROTOCOL}}{{.API_FORM_URL}}"
         - name: API_COP_URI
           value: "{{.API_COP_PROTOCOL}}{{.API_COP_URL}}"
         - name: ENGINE_URI
