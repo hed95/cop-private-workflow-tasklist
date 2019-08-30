@@ -90,7 +90,6 @@ app.get('/api/config', (req, res) => {
     WWW_KEYCLOAK_ACCESS_ROLE: process.env.WWW_KEYCLOAK_ACCESS_ROLE,
     OPERATIONAL_DATA_URL: process.env.API_COP_URI,
     REF_DATA_URL: process.env.API_REF_URI,
-    FORM_SERVICE_URL: process.env.API_FORM_URI,
     WORKFLOW_SERVICE_URL: process.env.ENGINE_URI,
     TRANSLATION_SERVICE_URL: process.env.TRANSLATION_URI,
     REPORT_SERVICE_URL: process.env.REPORT_URI,
