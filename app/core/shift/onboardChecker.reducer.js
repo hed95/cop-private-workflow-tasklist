@@ -1,7 +1,5 @@
-import Immutable from 'immutable';
+import { Map } from 'immutable';
 import * as actions from './actionTypes';
-
-const { Map } = Immutable;
 
 export const onboardingCheckState = new Map({
   isCheckingOnBoarding: null,

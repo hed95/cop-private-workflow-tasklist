@@ -6,7 +6,7 @@ import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
 import ShiftScopedRoute from './withShiftCheck';
 import DataSpinner from '../components/DataSpinner';
-import ErrorHandlingComponent from '../error/component/ErrorHandlingComponent';
+import ErrorHandlingContainer from '../error/component/ErrorHandlingComponent';
 
 const { Map } = Immutable;
 
@@ -61,6 +61,6 @@ describe('Shift Scoped Route', () => {
       </ShiftScopedRoute>,
     );
     expect(wrapper.containsMatchingElement(Route)).toEqual(true);
-    expect(wrapper.containsMatchingElement(ErrorHandlingComponent)).toEqual(true);
+    expect(wrapper.containsMatchingElement(ErrorHandlingContainer)).toEqual(true);
   });
 });

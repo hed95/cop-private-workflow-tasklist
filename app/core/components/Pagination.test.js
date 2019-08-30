@@ -6,7 +6,7 @@ import Pagination from './Pagination';
 describe('Pagination', () => {
   const buildItems = number => {
     const items = [];
-    for (let i = 0; i < number; i++) {
+    for (let i = 0; i < number; i += 1) {
       items[i] = {
         id: `itemId${i}`,
         name: `itemName${i}`,

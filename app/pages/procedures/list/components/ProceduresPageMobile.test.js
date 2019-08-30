@@ -25,7 +25,7 @@ describe('ProceduresPage', () => {
   const fetchProcessDefinitions = jest.fn();
 
   it('renders  a list of procedures without procedure view if mobile', async () => {
-    window.matchMedia = window.matchMedia || function () {
+    window.matchMedia = window.matchMedia || function matchMedia() {
       return {
         matches: false,
         addListener: () => {},
