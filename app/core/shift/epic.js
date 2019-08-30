@@ -95,7 +95,7 @@ const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT_VALID
     const shiftData = action.submissionData;
     return client({
       method: 'POST',
-      path: `${store.getState().appConfig.formServiceUrl}/form/${action.formId}/submission`,
+      path: `${store.getState().appConfig.translationServiceUrl}/api/translation/form/${action.formId}/submission`,
       entity: {
         data: shiftData,
       },
@@ -116,7 +116,7 @@ const createActiveShift = (action$, store, { client }) => action$.ofType(types.C
   .mergeMap(action => client({
     method: 'POST',
     entity: action.shiftInfo,
-    path: `${store.getState().appConfig.formServiceUrl}/api/workflow/shift`,
+    path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/shift`,
     headers: {
       Authorization: `Bearer ${store.getState().keycloak.token}`,
       Accept: 'application/json',
