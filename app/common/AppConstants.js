@@ -27,4 +27,8 @@ export default class AppConstants {
     static ONBOARD_USER_PATH='/onboard-user';
 
     static ONE_MINUTE = 60000;
+
+    static MATOMO_URLS = {
+      PRODUCTION: 'https://matomo.cop.homeoffice.gov.uk/',
+    }
 }

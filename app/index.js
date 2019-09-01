@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import { BrowserRouter } from 'react-router-dom';
+import { Router, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { createBrowserHistory } from 'history';
+import MatomoTracker from 'piwik-react-router';
 import Keycloak from 'keycloak-js';
 import App from './core/App';
 import configureStore from './core/store/configureStore';
@@ -10,6 +12,7 @@ import 'webpack-icons-installer/bootstrap';
 import '../public/styles/app.scss';
 import 'govuk-frontend/core/_typography.scss';
 import 'rxjs';
+import AppConstants from './common/AppConstants';
 import ScrollToTop from './core/components/ScrollToTop';
 import Header from './core/components/Header';
 import Footer from './core/components/Footer';
@@ -46,11 +49,18 @@ const renderApp = (App, authorizedRole) => {
       const hasPlatformRoleAccess = kc.realmAccess.roles.includes(authorizedRole);
       const rootDocument = document.getElementById('root');
       if (hasPlatformRoleAccess) {
+        const uiEnv = store.getState().appConfig.uiEnvironment;
+        const siteId = /DEVELOPMENT/.test(uiEnv) ? '2' : /STAGING/.test(uiEnv) ? '3' : '4';
+        const history = MatomoTracker({
+          url: AppConstants.MATOMO_URLS.PRODUCTION,
+          siteId,
+          clientTrackerName: 'matomo.js'
+        }).connectToHistory(createBrowserHistory());
         OfflinePluginRuntime.install({
           onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
           onUpdated: () => window.swUpdate = true,
         });
-        history.pushState(null, null, location.href);
+        history.push(location.href);
         window.onpopstate = () => {
           history.go(1);
         };
@@ -67,11 +77,11 @@ const renderApp = (App, authorizedRole) => {
           <Provider store={store}>
             <div>
               <AppContainer>
-                <BrowserRouter>
+                <Router history={history}>
                   <ScrollToTop>
                     <App />
                   </ScrollToTop>
-                </BrowserRouter>
+                </Router>
               </AppContainer>
             </div>
           </Provider>,
@@ -82,7 +92,7 @@ const renderApp = (App, authorizedRole) => {
           <Provider store={store}>
             <div>
               <AppContainer>
-                <BrowserRouter>
+                <Router history={history}>
                   <div>
                     <Header />
                     <div className="container" style={{ height: '100vh' }}>
@@ -90,7 +100,7 @@ const renderApp = (App, authorizedRole) => {
                     </div>
                     <Footer />
                   </div>
-                </BrowserRouter>
+                </Router>
               </AppContainer>
             </div>
           </Provider>,
