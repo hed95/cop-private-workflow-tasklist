@@ -61,6 +61,8 @@ pipeline:
       - DEV_ENGINE_PROTOCOL
       - DEV_TRANSLATION_URL
       - DEV_TRANSLATION_PROTOCOL
+      - DEV_ANALYTICS_URL
+      - DEV_ANALYTICS_SITE_ID
     commands:
       - export KEYCLOAK_PROTOCOL=$${DEV_KEYCLOAK_PROTOCOL}
       - export KEYCLOAK_URL=$${DEV_KEYCLOAK_URL}
@@ -93,6 +95,8 @@ pipeline:
       - export TRANSLATION_URL=$${DEV_TRANSLATION_URL}
       - export TRANSLATION_PROTOCOL=$${DEV_TRANSLATION_PROTOCOL}
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
+      - export ANALYTICS_URL=$${DEV_ANALYTICS_URL}
+      - export ANALYTICS_SITE_ID=$${DEV_ANALYTICS_SITE_ID}
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m
@@ -133,6 +137,8 @@ pipeline:
       - STAGING_ENGINE_PROTOCOL
       - STAGING_TRANSLATION_URL
       - STAGING_TRANSLATION_PROTOCOL
+      - STAGING_ANALYTICS_URL
+      - STAGING_ANALYTICS_SITE_ID
     commands:
       - export KEYCLOAK_PROTOCOL=$${STAGING_KEYCLOAK_PROTOCOL}
       - export KEYCLOAK_URL=$${STAGING_KEYCLOAK_URL}
@@ -165,6 +171,8 @@ pipeline:
       - export TRANSLATION_URL=$${STAGING_TRANSLATION_URL}
       - export TRANSLATION_PROTOCOL=$${STAGING_TRANSLATION_PROTOCOL}
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
+      - export ANALYTICS_URL=$${STAGING_ANALYTICS_URL}
+      - export ANALYTICS_SITE_ID=$${STAGING_ANALYTICS_SITE_ID}
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m
@@ -205,6 +213,8 @@ pipeline:
       - PRODUCTION_ENGINE_PROTOCOL
       - PRODUCTION_TRANSLATION_URL
       - PRODUCTION_TRANSLATION_PROTOCOL
+      - PRODUCTION_ANALYTICS_URL
+      - PRODUCTION_ANALYTICS_SITE_ID
     commands:
       - export KEYCLOAK_PROTOCOL=$${PRODUCTION_KEYCLOAK_PROTOCOL}
       - export KEYCLOAK_URL=$${PRODUCTION_KEYCLOAK_URL}
@@ -237,6 +247,8 @@ pipeline:
       - export TRANSLATION_URL=$${PRODUCTION_TRANSLATION_URL}
       - export TRANSLATION_PROTOCOL=$${PRODUCTION_TRANSLATION_PROTOCOL}
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
+      - export ANALYTICS_URL=$${PRODUCTION_ANALYTICS_URL}
+      - export ANALYTICS_SITE_ID=$${PRODUCTION_ANALYTICS_SITE_ID}
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m

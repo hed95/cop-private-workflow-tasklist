@@ -93,6 +93,8 @@ app.get('/api/config', (req, res) => {
     WORKFLOW_SERVICE_URL: process.env.ENGINE_URI,
     TRANSLATION_SERVICE_URL: process.env.TRANSLATION_URI,
     REPORT_SERVICE_URL: process.env.REPORT_URI,
+    ANALYTICS_URL: process.env.ANALYTICS_URL,
+    ANALYTICS_SITE_ID: process.env.ANALYTICS_SITE_ID,
   });
 });
 

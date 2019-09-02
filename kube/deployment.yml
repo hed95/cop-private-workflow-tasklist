@@ -68,6 +68,10 @@ spec:
           value: "{{.REPORT_PROTOCOL}}{{.REPORT_URL}}"
         - name: TRANSLATION_URI
           value: "{{.TRANSLATION_PROTOCOL}}{{.TRANSLATION_URL}}"
+        - name: ANALYTICS_URL
+          value: "{{.ANALYTICS_URL}}"
+        - name: ANALYTICS_SITE_ID
+          value: "{{.ANALYTICS_SITE_ID}}"
         securityContext:
           runAsNonRoot: true
         readinessProbe:

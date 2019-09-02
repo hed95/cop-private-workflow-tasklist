@@ -49,11 +49,9 @@ const renderApp = (App, authorizedRole) => {
       const hasPlatformRoleAccess = kc.realmAccess.roles.includes(authorizedRole);
       const rootDocument = document.getElementById('root');
       if (hasPlatformRoleAccess) {
-        const uiEnv = store.getState().appConfig.uiEnvironment;
-        const siteId = /DEVELOPMENT/.test(uiEnv) ? '2' : /STAGING/.test(uiEnv) ? '3' : '4';
         const history = MatomoTracker({
-          url: AppConstants.MATOMO_URLS.PRODUCTION,
-          siteId,
+          url: store.getState().appConfig.analyticsUrl,
+          siteId: store.getState().appConfig.analyticsSiteId,
           clientTrackerName: 'matomo.js'
         }).connectToHistory(createBrowserHistory());
         OfflinePluginRuntime.install({
@@ -153,6 +151,8 @@ if (process.env.NODE_ENV === 'production') {
         workflowServiceUrl: data.WORKFLOW_SERVICE_URL,
         translationServiceUrl: data.TRANSLATION_SERVICE_URL,
         reportServiceUrl: data.REPORT_SERVICE_URL,
+        analyticsUrl: data.ANALYTICS_URL,
+        analyticsSiteId: data.ANALYTICS_SITE_ID,
       };
       renderApp(App, data.WWW_KEYCLOAK_ACCESS_ROLE);
     }).catch(err => {
@@ -173,6 +173,8 @@ if (process.env.NODE_ENV === 'production') {
     workflowServiceUrl: process.env.ENGINE_URI,
     translationServiceUrl: process.env.TRANSLATION_URI,
     reportServiceUrl: process.env.REPORT_URI,
+    analyticsUrl: data.ANALYTICS_URL,
+    analyticsSiteId: data.ANALYTICS_SITE_ID,
   };
   renderApp(App, authAccessRole);
 }
