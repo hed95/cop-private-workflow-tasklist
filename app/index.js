@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import { BrowserRouter } from 'react-router-dom';
+import { Router, BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { createBrowserHistory } from 'history';
+import MatomoTracker from 'piwik-react-router';
 import Keycloak from 'keycloak-js';
 import App from './core/App';
 import configureStore from './core/store/configureStore';
@@ -10,6 +12,7 @@ import 'webpack-icons-installer/bootstrap';
 import '../public/styles/app.scss';
 import 'govuk-frontend/core/_typography.scss';
 import 'rxjs';
+import AppConstants from './common/AppConstants';
 import ScrollToTop from './core/components/ScrollToTop';
 import Header from './core/components/Header';
 import Footer from './core/components/Footer';
@@ -46,11 +49,16 @@ const renderApp = (App, authorizedRole) => {
       const hasPlatformRoleAccess = kc.realmAccess.roles.includes(authorizedRole);
       const rootDocument = document.getElementById('root');
       if (hasPlatformRoleAccess) {
+        const history = MatomoTracker({
+          url: store.getState().appConfig.analyticsUrl,
+          siteId: store.getState().appConfig.analyticsSiteId,
+          clientTrackerName: 'matomo.js'
+        }).connectToHistory(createBrowserHistory());
         OfflinePluginRuntime.install({
           onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
           onUpdated: () => window.swUpdate = true,
         });
-        history.pushState(null, null, location.href);
+        history.push(location.href);
         window.onpopstate = () => {
           history.go(1);
         };
@@ -67,11 +75,11 @@ const renderApp = (App, authorizedRole) => {
           <Provider store={store}>
             <div>
               <AppContainer>
-                <BrowserRouter>
+                <Router history={history}>
                   <ScrollToTop>
                     <App />
                   </ScrollToTop>
-                </BrowserRouter>
+                </Router>
               </AppContainer>
             </div>
           </Provider>,
@@ -82,7 +90,7 @@ const renderApp = (App, authorizedRole) => {
           <Provider store={store}>
             <div>
               <AppContainer>
-                <BrowserRouter>
+                <Router history={history}>
                   <div>
                     <Header />
                     <div className="container" style={{ height: '100vh' }}>
@@ -90,7 +98,7 @@ const renderApp = (App, authorizedRole) => {
                     </div>
                     <Footer />
                   </div>
-                </BrowserRouter>
+                </Router>
               </AppContainer>
             </div>
           </Provider>,
@@ -143,6 +151,8 @@ if (process.env.NODE_ENV === 'production') {
         workflowServiceUrl: data.WORKFLOW_SERVICE_URL,
         translationServiceUrl: data.TRANSLATION_SERVICE_URL,
         reportServiceUrl: data.REPORT_SERVICE_URL,
+        analyticsUrl: data.ANALYTICS_URL,
+        analyticsSiteId: data.ANALYTICS_SITE_ID,
       };
       renderApp(App, data.WWW_KEYCLOAK_ACCESS_ROLE);
     }).catch(err => {
@@ -163,6 +173,8 @@ if (process.env.NODE_ENV === 'production') {
     workflowServiceUrl: process.env.ENGINE_URI,
     translationServiceUrl: process.env.TRANSLATION_URI,
     reportServiceUrl: process.env.REPORT_URI,
+    analyticsUrl: data.ANALYTICS_URL,
+    analyticsSiteId: data.ANALYTICS_SITE_ID,
   };
   renderApp(App, authAccessRole);
 }
