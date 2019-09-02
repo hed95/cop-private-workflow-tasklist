@@ -45,6 +45,6 @@ describe('Calendar Dashboard Panel', () => {
     expect(calendarPageLink.exists()).toEqual(true);
 
     calendarPageLink.simulate('click');
-    expect(props.history.location.pathname).toEqual('/calendar');
+    expect(props.history.location.pathname).toEqual('/');
   });
 });
