@@ -25,14 +25,17 @@ exports[`Calendar Dashboard Panel renders calendar dashboard panel 1`] = `
   >
     <a
       className="card__body"
-      href="#"
       id="calendarPageLink"
-      onClick={[Function]}
+      style={
+        Object {
+          "color": "#005ea5",
+        }
+      }
     >
       <span
         className="govuk-!-font-size-36 govuk-!-font-weight-bold"
       >
-        calendar
+        Calendar
       </span>
     </a>
     <div
@@ -41,7 +44,7 @@ exports[`Calendar Dashboard Panel renders calendar dashboard panel 1`] = `
       <span
         className="govuk-!-font-size-19"
       >
-        Operational calendar
+        Coming soon
       </span>
     </div>
   </li>
