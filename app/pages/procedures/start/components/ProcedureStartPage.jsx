@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {Formio} from 'react-formio';
 import AppConstants from '../../../../common/AppConstants';
+import { initAll } from 'govuk-frontend';
 
 import DataSpinner from '../../../../core/components/DataSpinner';
 import Loader from 'react-loader-advanced';
@@ -48,6 +49,7 @@ export class ProcessStartPage extends React.Component {
             const processKey = this.props.processDefinition.getIn(['process-definition', 'key']);
             this.handleSubmission(submissionStatus, user, path, processKey);
         }
+        initAll();
     }
 
     handleSubmission(submissionStatus, user, path, processKey) {
