@@ -8,7 +8,6 @@ import {connect} from "react-redux";
 import {createStructuredSelector} from "reselect";
 import ImmutablePropTypes from "react-immutable-proptypes";
 import {withRouter} from "react-router";
-import { initAll } from 'govuk-frontend';
 import DataSpinner from "../../../../core/components/DataSpinner";
 import TaskDetailsPage from "./TaskDetailsPage";
 import NotFound from "../../../../core/components/NotFound";
@@ -26,7 +25,6 @@ class TaskPage extends React.Component {
         if (prevProps.taskId !== this.props.taskId) {
             this.props.fetchTask(this.props.taskId);
         }
-        initAll();
     }
 
     componentWillUnmount() {
