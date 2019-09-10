@@ -1,6 +1,5 @@
 import React from 'react';
 import {Form} from 'react-formio';
-import { initAll } from 'govuk-frontend';
 import AppConstants from '../../../../common/AppConstants';
 import GovUKFrontEndObserver from '../../../../core/util/GovUKFrontEndObserver';
 
