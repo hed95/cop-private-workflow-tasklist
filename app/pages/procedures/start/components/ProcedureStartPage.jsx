@@ -18,13 +18,13 @@ import secureLocalStorage from '../../../../common/security/SecureLocalStorage';
 import withLog from '../../../../core/error/component/withLog';
 import {FAILED, SUBMISSION_SUCCESSFUL, SUBMITTING} from '../constants';
 
-
 export class ProcessStartPage extends React.Component {
 
     constructor(props) {
         super(props);
         this.secureLocalStorage = secureLocalStorage;
         this.handleSubmission = this.handleSubmission.bind(this);
+        this.formNode = React.createRef();
     }
 
     componentDidMount() {
@@ -33,6 +33,12 @@ export class ProcessStartPage extends React.Component {
         } else {
             const {match: {params}} = this.props;
             this.props.fetchProcessDefinition(params.processKey);
+        }
+        try {
+            this.observer = new MutationObserver(() => initAll());
+            this.observer.observe(this.formNode.element, { childList: true, attributes: false });
+        } catch (error) {
+            console.log(error.message);
         }
     }
 
@@ -102,10 +108,6 @@ export class ProcessStartPage extends React.Component {
         }
     }
 
-    componentWillUnmount() {
-        this.props.clearProcessDefinition();
-    }
-
     handleCustomEvent = (event) => {
         switch (event.type) {
             case 'cancel':
@@ -163,6 +165,7 @@ export class ProcessStartPage extends React.Component {
 
                                 <StartForm {...this.props}
                                            startForm={form}
+                                           ref={form => {this.formNode = form;}}
                                            formReference={(formLoaded) => {
                                                this.form = formLoaded;
                                                if (this.form) {
@@ -216,6 +219,11 @@ export class ProcessStartPage extends React.Component {
         }
 
     };
+
+    componentWillUnmount() {
+        this.props.clearProcessDefinition();
+        this.observer.disconnect();
+    }
 
 }
 

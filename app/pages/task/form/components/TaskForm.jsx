@@ -1,8 +1,19 @@
 import React from 'react';
 import {Form} from 'react-formio';
 import AppConstants from "../../../../common/AppConstants";
+import { initAll } from 'govuk-frontend';
 
 export default class TaskForm extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.formNode = React.createRef();
+    }
+
+    componentDidMount() {
+        this.observer = new MutationObserver(() => initAll());
+        this.observer.observe(this.formNode.element, { childList: true, attributes: false });
+    }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         return false;
@@ -36,18 +47,22 @@ export default class TaskForm extends React.Component {
             this.options.readOnly = true;
         }
         if (submissionData) {
-            return <Form form={form} options={this.options} ref={(form) => formReference(form)}
+            return <Form form={form} options={this.options} ref={form => {this.formNode = form; formReference(form);}}
                          onCustomEvent={(event) => onCustomEvent(event, variableName)}
                          submission={JSON.parse(submissionData)} onSubmit={(submission) => {
                 onSubmitTaskForm(submission.data, variableName);
             }}/>;
         } else {
-            return <Form form={form} ref={(form) => formReference(form)} options={this.options}
+            return <Form form={form} ref={form => {this.formNode = form; formReference(form);}} options={this.options}
                          onCustomEvent={(event) => onCustomEvent(event, variableName)}
                          onSubmit={(submission) => {
                              onSubmitTaskForm(submission.data, variableName);
                          }}/>;
         }
 
+    }
+
+    componentWillUnmount() {
+        this.observer.disconnect();
     }
 }
