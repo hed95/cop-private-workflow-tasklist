@@ -8,7 +8,6 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {Formio} from 'react-formio';
 import AppConstants from '../../../../common/AppConstants';
-import { initAll } from 'govuk-frontend';
 
 import DataSpinner from '../../../../core/components/DataSpinner';
 import Loader from 'react-loader-advanced';
@@ -24,7 +23,6 @@ export class ProcessStartPage extends React.Component {
         super(props);
         this.secureLocalStorage = secureLocalStorage;
         this.handleSubmission = this.handleSubmission.bind(this);
-        this.formNode = React.createRef();
     }
 
     componentDidMount() {
@@ -33,12 +31,6 @@ export class ProcessStartPage extends React.Component {
         } else {
             const {match: {params}} = this.props;
             this.props.fetchProcessDefinition(params.processKey);
-        }
-        try {
-            this.observer = new MutationObserver(() => initAll());
-            this.observer.observe(this.formNode.element, { childList: true, attributes: false });
-        } catch (error) {
-            console.log(error.message);
         }
     }
 
@@ -55,7 +47,6 @@ export class ProcessStartPage extends React.Component {
             const processKey = this.props.processDefinition.getIn(['process-definition', 'key']);
             this.handleSubmission(submissionStatus, user, path, processKey);
         }
-        initAll();
     }
 
     handleSubmission(submissionStatus, user, path, processKey) {
@@ -165,7 +156,6 @@ export class ProcessStartPage extends React.Component {
 
                                 <StartForm {...this.props}
                                            startForm={form}
-                                           ref={form => {this.formNode = form;}}
                                            formReference={(formLoaded) => {
                                                this.form = formLoaded;
                                                if (this.form) {
@@ -222,7 +212,6 @@ export class ProcessStartPage extends React.Component {
 
     componentWillUnmount() {
         this.props.clearProcessDefinition();
-        this.observer.disconnect();
     }
 
 }

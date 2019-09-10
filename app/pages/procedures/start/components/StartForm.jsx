@@ -1,10 +1,17 @@
 import React from 'react';
 import {Form} from 'react-formio';
+import { initAll } from 'govuk-frontend';
 import AppConstants from '../../../../common/AppConstants';
+import GovUKFrontEndObserver from '../../../../core/util/GovUKFrontEndObserver';
 
 class StartForm extends React.Component {
   constructor(props) {
     super(props);
+    this.formNode = React.createRef();
+  }
+
+  componentDidMount() {
+    this.observer = new GovUKFrontEndObserver(this.formNode.element).create();
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -45,18 +52,33 @@ class StartForm extends React.Component {
           data: submission
         }}
         onChange={(instance) => dataChange(instance)}
-        form={startForm} ref={(form) => formReference(form)} options={this.options}
+        form={startForm}
+        ref={form => {
+          this.formNode = form;
+          formReference(form);
+        }}
+        options={this.options}
         onCustomEvent={(event) => onCustomEvent(event)}
         onSubmit={(submission) => handleSubmit(submission)}/>;
     } else {
       return <Form
         onChange={(instance) => dataChange(instance)}
-        form={startForm} ref={(form) => formReference(form)} options={this.options}
+        form={startForm}
+        ref={form => {
+          this.formNode = form;
+          formReference(form);
+        }}
+        options={this.options}
         onCustomEvent={(event) => onCustomEvent(event)}
         onSubmit={(submission) => handleSubmit(submission)}/>;
     }
 
   }
+
+  componentWillUnmount() {
+    this.observer.destroy();
+  }
+
 }
 
 export default StartForm;

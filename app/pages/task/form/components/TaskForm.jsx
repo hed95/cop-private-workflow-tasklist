@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form} from 'react-formio';
 import AppConstants from "../../../../common/AppConstants";
-import { initAll } from 'govuk-frontend';
+import GovUKFrontEndObserver from '../../../../core/util/GovUKFrontEndObserver';
 
 export default class TaskForm extends React.Component {
 
@@ -11,8 +11,7 @@ export default class TaskForm extends React.Component {
     }
 
     componentDidMount() {
-        this.observer = new MutationObserver(() => initAll());
-        this.observer.observe(this.formNode.element, { childList: true, attributes: false });
+        this.observer = new GovUKFrontEndObserver(this.formNode.element).create();
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -63,6 +62,6 @@ export default class TaskForm extends React.Component {
     }
 
     componentWillUnmount() {
-        this.observer.disconnect();
+        this.observer.destroy();
     }
 }
