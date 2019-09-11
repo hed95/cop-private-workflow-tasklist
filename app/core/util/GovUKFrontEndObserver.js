@@ -14,6 +14,7 @@ export default class GovUKFrontEndObserver {
 
   destroy() {
     this.observer.disconnect();
+    this.observer = null;
   }
 
 }
