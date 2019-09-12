@@ -1,7 +1,6 @@
 import { initAll } from 'govuk-frontend';
 
 export default class GovUKFrontEndObserver {
-
   constructor(node) {
     this.node = node;
   }
@@ -14,7 +13,6 @@ export default class GovUKFrontEndObserver {
 
   destroy() {
     this.observer.disconnect();
-    this.observer = null;
   }
 
 }

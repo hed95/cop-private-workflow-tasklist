@@ -9,6 +9,6 @@ global.mount = mount;
 
 global.MutationObserver = class {
   constructor(callback) {}
-  disconnect() {}
-  observe(element, initObject) {}
+  disconnect = jest.fn();
+  observe = jest.fn((target, options) => {});
 };

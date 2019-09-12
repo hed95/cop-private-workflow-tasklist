@@ -2,25 +2,30 @@ import GovUKFrontEndObserver from 'core/util/GovUKFrontEndObserver';
 
 describe('GovUKFrontEndObserver utility', () => {
 
-  let observer;
+  let govUKObserver;
 
   beforeEach(() => {
-    observer = new GovUKFrontEndObserver(document.body);
+    govUKObserver = new GovUKFrontEndObserver(document.body);
   });
 
-  it('should create and return an observer', () => {
-    expect(observer).toBeDefined();
+  it('should create a node property', () => {
+    expect(govUKObserver.node).toBeInstanceOf(HTMLElement);
+  });
+
+  it('should return an observer', () => {
+    expect(govUKObserver).toBeInstanceOf(GovUKFrontEndObserver);
   });
 
   it('should create an internal MutationObserver', () => {
-    observer.create();
-    expect(observer.observer).toBeDefined();
+    govUKObserver.create();
+    expect(govUKObserver.observer).toBeInstanceOf(MutationObserver);
+    expect(govUKObserver.observer.observe).toHaveBeenCalledTimes(1);
   });
 
-  it('should destroy its observer', () => {
-    observer.create();
-    observer.destroy();
-    expect(observer.observer).toBeNull();
+  it('should disconnect its observer', () => {
+    govUKObserver.create();
+    govUKObserver.destroy();
+    expect(govUKObserver.observer.disconnect).toHaveBeenCalledTimes(1);
   });
 
 });
