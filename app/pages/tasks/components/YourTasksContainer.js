@@ -5,8 +5,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { debounce, throttle } from 'throttle-debounce';
-import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
+// import SockJS from 'sockjs-client';
+// import Stomp from 'stompjs';
 import YourTasks from './YourTasks';
 import DataSpinner from '../../../core/components/DataSpinner';
 import * as actions from '../actions';
@@ -15,80 +15,80 @@ import { yourTasks } from '../selectors';
 export class YourTasksContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.websocketSubscriptions = [];
-    this.retryCount = 0;
-    this.connect = this.connect.bind(this);
-    this.disconnect = this.disconnect.bind(this);
+    // this.websocketSubscriptions = [];
+    // this.retryCount = 0;
+    // this.connect = this.connect.bind(this);
+    // this.disconnect = this.disconnect.bind(this);
     this.goToTask = this.goToTask.bind(this);
     this.sortYourTasks = this.sortYourTasks.bind(this);
     this.filterTasksByName = this.filterTasksByName.bind(this);
     this.debounceSearch = this.debounceSearch.bind(this);
   }
 
-  connect = () => {
-    this.socket = new SockJS(`${this.props.appConfig.workflowServiceUrl}/ws/workflow/tasks`);
-    this.stompClient = Stomp.over(this.socket);
-    const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
-    if (uiEnv !== 'development' && uiEnv !== 'local') {
-      this.stompClient.debug = () => {
-      };
-    }
-    const heartBeat = 5000;
-    this.stompClient.heartbeat.outgoing = heartBeat;
-    this.stompClient.heartbeat.incoming = heartBeat;
+  // connect = () => {
+  //   this.socket = new SockJS(`${this.props.appConfig.workflowServiceUrl}/ws/workflow/tasks`);
+  //   this.stompClient = Stomp.over(this.socket);
+  //   const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
+  //   if (uiEnv !== 'development' && uiEnv !== 'local') {
+  //     this.stompClient.debug = () => {
+  //     };
+  //   }
+  //   const heartBeat = 5000;
+  //   this.stompClient.heartbeat.outgoing = heartBeat;
+  //   this.stompClient.heartbeat.incoming = heartBeat;
 
-    this.stompClient.connect({
-      Authorization: `Bearer ${this.props.kc.token}`,
-    }, () => {
-      this.connected = true;
-      console.log('Connected to websocket server');
-      const userSub = this.stompClient.subscribe('/user/queue/task', () => {
-        this.loadYourTasks(true, this.props.yourTasks.get('yourTasksSortValue'),
-          this.props.yourTasks.get('yourTasksFilterValue'));
-      });
-      this.websocketSubscriptions.push(userSub);
-      console.log(`Number of subscriptions ${this.websocketSubscriptions.length}`);
-    }, error => {
-      this.retryCount += 1;
-      if (error) {
-        this.websocketSubscriptions = [];
-        console.log(`Failed to connect ${error}...will retry to connect in ${this.retryCount === 1 ? 6 : 60} seconds`);
-      }
-      if (this.connected) {
-        this.connected = false;
-      }
-      const timeout = this.retryCount === 1 ? 6000 : 60000;
-      if (this._timeoutId) {
-        clearTimeout(this._timeoutId);
-        this._timeoutId = null;
-      }
-      this._timeoutId = setTimeout(() => this.connect(), timeout);
-    });
-  };
+  //   this.stompClient.connect({
+  //     Authorization: `Bearer ${this.props.kc.token}`,
+  //   }, () => {
+  //     this.connected = true;
+  //     console.log('Connected to websocket server');
+  //     const userSub = this.stompClient.subscribe('/user/queue/task', () => {
+  //       this.loadYourTasks(true, this.props.yourTasks.get('yourTasksSortValue'),
+  //         this.props.yourTasks.get('yourTasksFilterValue'));
+  //     });
+  //     this.websocketSubscriptions.push(userSub);
+  //     console.log(`Number of subscriptions ${this.websocketSubscriptions.length}`);
+  //   }, error => {
+  //     this.retryCount += 1;
+  //     if (error) {
+  //       this.websocketSubscriptions = [];
+  //       console.log(`Failed to connect ${error}...will retry to connect in ${this.retryCount === 1 ? 6 : 60} seconds`);
+  //     }
+  //     if (this.connected) {
+  //       this.connected = false;
+  //     }
+  //     const timeout = this.retryCount === 1 ? 6000 : 60000;
+  //     if (this._timeoutId) {
+  //       clearTimeout(this._timeoutId);
+  //       this._timeoutId = null;
+  //     }
+  //     this._timeoutId = setTimeout(() => this.connect(), timeout);
+  //   });
+  // };
 
-  disconnect = () => {
-    if (this._timeoutId) {
-      clearTimeout(this._timeoutId);
-      this._timeoutId = null;
-    }
-    this.retryCount = 0;
-    console.log('Disconnecting websocket');
-    if (this.connected) {
-      if (this.websocketSubscriptions) {
-        this.websocketSubscriptions.forEach(sub => {
-          console.log(`Disconnecting sub${sub.id}`);
-          sub.unsubscribe();
-        });
-        this.websocketSubscriptions = [];
-      }
-      this.connected = null;
-      this.stompClient.disconnect();
-    }
-  };
+  // disconnect = () => {
+  //   if (this._timeoutId) {
+  //     clearTimeout(this._timeoutId);
+  //     this._timeoutId = null;
+  //   }
+  //   this.retryCount = 0;
+  //   console.log('Disconnecting websocket');
+  //   if (this.connected) {
+  //     if (this.websocketSubscriptions) {
+  //       this.websocketSubscriptions.forEach(sub => {
+  //         console.log(`Disconnecting sub${sub.id}`);
+  //         sub.unsubscribe();
+  //       });
+  //       this.websocketSubscriptions = [];
+  //     }
+  //     this.connected = null;
+  //     this.stompClient.disconnect();
+  //   }
+  // };
 
   componentDidMount() {
     this.loadYourTasks(false, 'sort=due,desc');
-    this.connect();
+    // this.connect();
   }
 
   loadYourTasks(skipLoading, yourTasksSortValue, yourTasksFilterValue = null) {
@@ -100,8 +100,8 @@ export class YourTasksContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    this.retryCount = 0;
-    this.disconnect();
+    // this.retryCount = 0;
+    // this.disconnect();
     this.props.resetYourTasks();
   }
 
