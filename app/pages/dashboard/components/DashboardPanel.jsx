@@ -1,8 +1,8 @@
 import React, {Suspense} from 'react';
 
 import {withRouter} from "react-router";
-// import SockJS from 'sockjs-client';
-// import Stomp from 'stompjs';
+import SockJS from 'sockjs-client';
+import { Client, Message } from '@stomp/stompjs';
 import {connect} from "react-redux";
 import PubSub from "pubsub-js";
 import DataSpinner from '../../../core/components/DataSpinner';
@@ -16,123 +16,82 @@ const MessagesPanel = React.lazy(() => import('./MessagesPanel'));
 const TaskCountPanel = React.lazy(() => import('./TaskCountPanel'));
 
 export class DashboardPanel extends React.Component {
-
     constructor(props) {
         super(props);
-    //     this.websocketSubscriptions = [];
-    //     this.retryCount = 0;
-    //     this.connect = this.connect.bind(this);
-    //     this.disconnect = this.disconnect.bind(this);
+        this.websocketSubscriptions = [];
+        this.retryCount = 0;
+        this.connect = this.connect.bind(this);
     }
 
-    // connect = (user) => {
-    //     this.socket = new SockJS(`${this.props.appConfig.workflowServiceUrl}/ws/workflow/tasks`);
-    //     this.stompClient = Stomp.over(this.socket);
-    //     const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
+    connect = (user) => {
+        const uiEnv = this.props.appConfig.uiEnvironment.toLowerCase();
+        this.client = new Client({
+          debug: function (str) {
+            if (uiEnv === 'development' || uiEnv === 'local') {
+                console.log(str);
+            }
+          },
+          reconnectDelay: 5000,
+          heartbeatIncoming: 4000,
+          heartbeatOutgoing: 4000
+        });
 
-    //     if (uiEnv !== 'development' && uiEnv !== 'local') {
-    //         this.stompClient.debug = () => {
-    //         };
-    //     }
+        const self = this;
+        this.client.webSocketFactory = function () {
+            return new SockJS(`${this.props.appConfig.workflowServiceUrl}ws/workflow/tasks?access_token=${self.props.kc.token}`);
+        };
+        this.client.onConnect = function(frame) {
+            self.props.log([{
+                message: 'Connected to websocket',
+                user: user,
+                level: 'info',
+                path: self.props.location.pathname
+            }]);
 
-    //     const heartBeat = 5000;
-    //     this.stompClient.heartbeat.outgoing = heartBeat;
-    //     this.stompClient.heartbeat.incoming = heartBeat;
+            const teamSub = self.client.subscribe(`/topic/task/${self.props.shift.get('teamid')}`, (msg) => {
+                PubSub.publishSync("refreshCount", {});
+            });
+            self.websocketSubscriptions.push(teamSub);
 
-    //     this.stompClient.connect({
-    //         "Authorization": `Bearer ${this.props.kc.token}`
-    //     }, () => {
-    //         this.connected = true;
-    //         this.props.log([{
-    //             message: 'Connected to websocket',
-    //             user: user,
-    //             level: 'info',
-    //             path: this.props.location.pathname
-    //         }]);
-    //         const teamSub = this.stompClient.subscribe(`/topic/task/${this.props.shift.get('teamid')}`, (msg) => {
-    //             PubSub.publishSync("refreshCount", {});
-    //         });
-    //         this.websocketSubscriptions.push(teamSub);
+            const userSub = self.client.subscribe(`/user/queue/task`, (msg) => {
+                PubSub.publishSync("refreshCount", {});
+            });
+            self.websocketSubscriptions.push(userSub);
 
-    //         const userSub = this.stompClient.subscribe(`/user/queue/task`, (msg) => {
-    //             PubSub.publishSync("refreshCount", {});
-    //         });
-    //         this.websocketSubscriptions.push(userSub);
+            self.props.log([{
+                message: 'Number of subscriptions ' + self.websocketSubscriptions.length,
+                user: user,
+                level: 'info',
+                path: self.props.location.pathname
+            }]);
+        };
 
-    //         this.props.log([{
-    //             message: 'Number of subscriptions ' + this.websocketSubscriptions.length,
-    //             user: user,
-    //             level: 'info',
-    //             path: this.props.location.pathname
-    //         }]);
-    //     }, (error) => {
-    //         this.retryCount++;
-    //         if (error) {
-    //             this.websocketSubscriptions = [];
-    //             this.props.log([{
-    //                 message: `Failed to connect ${error}...will retry to connect in ${this.retryCount === 1 ? 6 : 60} seconds`,
-    //                 user: user,
-    //                 level: 'error',
-    //                 path: this.props.location.pathname
-    //             }]);
-    //         }
-    //         if (this.connected) {
-    //             this.connected = false;
-    //         }
-    //         let timeout = this.retryCount === 1 ? 6000 : 60000;
-    //         if (this._timeoutId) {
-    //             clearTimeout(this._timeoutId);
-    //             this._timeoutId = null;
-    //         }
-    //         this._timeoutId =
-    //             setTimeout(() => this.connect(), timeout);
+        this.client.onStompError = function (frame) {
+            self.props.log([{
+                message: `Failed to connect ${frame.headers['message']}`,
+                user: user,
+                level: 'error',
+                path: self.props.location.pathname
+            }]);
+        };
+        this.client.activate();
+    };
 
-    //     })
-    // };
+    componentDidMount() {
+        if (this.props.shift) {
+            const user = this.props.kc.tokenParsed.email;
+            this.connect(user);
+        }
+    }
 
-    // disconnect = (user) => {
-    //     if (this._timeoutId) {
-    //         clearTimeout(this._timeoutId);
-    //         this._timeoutId = null;
-    //     }
-    //     this.retryCount = 0;
-    //     this.props.log([{
-    //         message: `Disconnecting websocket`,
-    //         user: user,
-    //         level: 'info',
-    //         path: this.props.location.pathname
-    //     }]);
-    //     if (this.connected) {
-    //         if (this.websocketSubscriptions) {
-    //             this.websocketSubscriptions.forEach((sub) => {
-    //                 this.props.log([{
-    //                     message: "Disconnecting sub" + sub.id,
-    //                     user: user,
-    //                     level: 'info',
-    //                     path: this.props.location.pathname
-    //                 }]);
-    //                 sub.unsubscribe();
-    //             });
-    //             this.websocketSubscriptions = [];
-    //         }
-    //         this.connected = null;
-    //         this.stompClient.disconnect();
-    //     }
-    // };
-
-
-    // componentDidMount() {
-    //     if (this.props.shift) {
-    //         const user = this.props.kc.tokenParsed.email;
-    //         this.connect(user);
-    //     }
-    // }
-
-    // componentWillUnmount() {
-    //     this.retryCount = 0;
-    //     const user = this.props.kc.tokenParsed.email;
-    //     this.disconnect(user);
-    // }
+    componentWillUnmount() {
+        this.retryCount = 0;
+        const user = this.props.kc.tokenParsed.email;
+        
+        if (this.client) {
+           this.client.deactivate(); 
+        }
+    }
 
     render() {
         return <div>
