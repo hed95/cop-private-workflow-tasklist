@@ -1,16 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import PropTypes from 'prop-types';
+import React from 'react';
+import SockJS from 'sockjs-client';
+
+import { Client, Message } from '@stomp/stompjs';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { debounce, throttle } from 'throttle-debounce';
+import { withRouter } from 'react-router';
 
-import SockJS from 'sockjs-client';
-import { Client, Message } from '@stomp/stompjs';
-import YourTasks from './YourTasks';
-import DataSpinner from '../../../core/components/DataSpinner';
+// local imports
 import * as actions from '../actions';
+import DataSpinner from '../../../core/components/DataSpinner';
+import YourTasks from './YourTasks';
 import { yourTasks } from '../selectors';
 
 export class YourTasksContainer extends React.Component {
@@ -40,7 +42,7 @@ export class YourTasksContainer extends React.Component {
 
     const self = this;
     this.client.webSocketFactory = function () {
-        return new SockJS(`${self.props.appConfig.workflowServiceUrl}ws/workflow/tasks?access_token=${self.props.kc.token}`);
+      return new SockJS(`${self.props.appConfig.workflowServiceUrl}ws/workflow/tasks?access_token=${self.props.kc.token}`);
     };
     this.client.onConnect = function(frame) {
       self.props.log([{
@@ -140,8 +142,6 @@ YourTasksContainer.propTypes = {
   fetchTasksAssignedToYou: PropTypes.func.isRequired,
   yourTasks: ImmutablePropTypes.map,
 };
-
-
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default connect(state => ({
