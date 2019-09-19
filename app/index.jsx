@@ -48,12 +48,12 @@ const renderApp = (App, authorizedRole) => {
       store.getState().keycloak = kc;
       const hasPlatformRoleAccess = kc.realmAccess.roles.includes(authorizedRole);
       const rootDocument = document.getElementById('root');
+      const history = MatomoTracker({
+        url: store.getState().appConfig.analyticsUrl,
+        siteId: store.getState().appConfig.analyticsSiteId,
+        clientTrackerName: 'matomo.js'
+      }).connectToHistory(createBrowserHistory());
       if (hasPlatformRoleAccess) {
-        const history = MatomoTracker({
-          url: store.getState().appConfig.analyticsUrl,
-          siteId: store.getState().appConfig.analyticsSiteId,
-          clientTrackerName: 'matomo.js'
-        }).connectToHistory(createBrowserHistory());
         OfflinePluginRuntime.install({
           onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
           onUpdated: () => window.swUpdate = true,
@@ -86,11 +86,6 @@ const renderApp = (App, authorizedRole) => {
           rootDocument,
         );
       } else {
-        const history = MatomoTracker({
-          url: store.getState().appConfig.analyticsUrl,
-          siteId: store.getState().appConfig.analyticsSiteId,
-          clientTrackerName: 'matomo.js'
-        }).connectToHistory(createBrowserHistory());
         ReactDOM.render(
           <Provider store={store}>
             <div>
