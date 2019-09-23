@@ -36,6 +36,9 @@ spec:
         ports:
         - name: https
           containerPort: 10443
+        volumeMounts:
+          - name: certs
+            mountPath: /certs
       - name: "{{.WWW_NAME}}"
         image: "{{.WWW_IMAGE}}:{{.WWW_TAG}}"
         imagePullPolicy: Always
@@ -88,3 +91,7 @@ spec:
             scheme: HTTP
           initialDelaySeconds: 20
           periodSeconds: 10
+      volumes:
+      - name: certs
+        secret:
+          secretName: "{{.WWW_NAME}}-pod-tls"
