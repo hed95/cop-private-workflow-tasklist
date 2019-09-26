@@ -24,9 +24,12 @@ exports[`Reports Dashboard Panel renders reports dashboard panel 1`] = `
   >
     <a
       className="card__body"
-      href="#"
       id="reportsPageLink"
-      onClick={[Function]}
+      style={
+        Object {
+          "color": "#005ea5",
+        }
+      }
     >
       <span
         className="govuk-!-font-size-36 govuk-!-font-weight-bold"
@@ -40,7 +43,7 @@ exports[`Reports Dashboard Panel renders reports dashboard panel 1`] = `
       <span
         className="govuk-!-font-size-19"
       >
-        Operational reports
+        Coming soon
       </span>
     </div>
   </li>
