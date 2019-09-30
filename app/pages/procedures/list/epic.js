@@ -7,7 +7,7 @@ import { retry } from '../../../core/util/retry';
 const fetchProcessDefinitions = (action$, store, { client }) => action$.ofType(types.FETCH_PROCESS_DEFINITIONS)
   .mergeMap(() => client({
     method: 'GET',
-    path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/process-definitions`,
+    path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/process-definitions?size=100`,
     headers: {
       Accept: 'application/json',
       Authorization: `Bearer ${store.getState().keycloak.token}`,
