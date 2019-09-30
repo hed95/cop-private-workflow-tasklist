@@ -48,11 +48,10 @@ const fetchFormWithContext = (action$, store, { client }) => action$.ofType(type
     .map(payload => actions.fetchFormSuccess(payload))
     .catch(error => errorObservable(actions.fetchFormFailure(), error)));
 
-const createVariable = (action, email) => {
-  const { variableName } = action;
+const createVariable = (submissionData, variableName, email) => {
   const variables = {};
   variables[variableName] = {
-    value: JSON.stringify(action.data),
+    value: JSON.stringify(submissionData),
     type: 'json',
   };
   variables.initiatedBy = {
@@ -79,7 +78,7 @@ const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT)
       method: 'POST',
       path: nonShiftApiCall ? `${store.getState().appConfig.workflowServiceUrl}/rest/camunda/process-definition/key/${action.processKey}/start`
         : `${store.getState().appConfig.workflowServiceUrl}/api/workflow/process-instances`,
-      entity: nonShiftApiCall ? createVariable(action, store.getState().keycloak.tokenParsed.email)
+      entity: nonShiftApiCall ? createVariable(submissionData, variableName, store.getState().keycloak.tokenParsed.email)
         : {
           data: submissionData,
           processKey: processKey,
