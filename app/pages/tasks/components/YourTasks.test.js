@@ -111,6 +111,9 @@ describe('YourTasks Page', () => {
         uiEnvironment: 'local',
       },
       kc: {
+        tokenParsed: {
+          email: 'test@tes.com',
+        },
         token: 'token',
       },
       yourTasks: Immutable.fromJS({
@@ -132,6 +135,9 @@ describe('YourTasks Page', () => {
         uiEnvironment: 'local',
       },
       kc: {
+        tokenParsed: {
+          email: 'test@tes.com',
+        },
         token: 'token',
       },
       yourTasks,
@@ -163,6 +169,9 @@ describe('YourTasks Page', () => {
         uiEnvironment: 'local',
       },
       kc: {
+        tokenParsed: {
+          email: 'test@tes.com',
+        },
         token: 'token',
       },
       yourTasks,
@@ -189,6 +198,9 @@ describe('YourTasks Page', () => {
         uiEnvironment: 'local',
       },
       kc: {
+        tokenParsed: {
+          email: 'test@tes.com',
+        },
         token: 'token',
       },
       yourTasks,
@@ -220,6 +232,9 @@ describe('YourTasks Page', () => {
         uiEnvironment: 'local',
       },
       kc: {
+        tokenParsed: {
+          email: 'test@tes.com',
+        },
         token: 'token',
       },
       history,
