@@ -78,7 +78,7 @@ export class YourTasksContainer extends React.Component {
 
   componentDidMount() {
     this.loadYourTasks(false, 'sort=due,desc');
-    // this.connect();
+     this.connect(this.props.kc.tokenParsed.email);
   }
 
   loadYourTasks(skipLoading, yourTasksSortValue, yourTasksFilterValue = null) {
@@ -89,9 +89,9 @@ export class YourTasksContainer extends React.Component {
     this.props.history.replace(`/task/${taskId}`);
   }
 
-  componentWillUnmount() {    
+  componentWillUnmount() {
     if (this.client) {
-     this.client.deactivate(); 
+     this.client.deactivate();
     }
 
     this.props.resetYourTasks();
