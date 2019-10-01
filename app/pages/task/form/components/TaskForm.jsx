@@ -29,7 +29,12 @@ export default class TaskForm extends React.Component {
             beforeCancel: (...args) => {
                 this.handleCancel(args);
             }
-        }
+        },
+        i18n: {
+            en: {
+                submit: 'Submit',
+            }
+        },
     };
 
     render() {
