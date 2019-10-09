@@ -1,24 +1,17 @@
-import ReactHyperResponsiveTable from 'react-hyper-responsive-table';
-import React from 'react';
-import moment from 'moment';
-import SortTasks from './SortTasks';
-import FilterTaskName from './FilterTaskName';
 import * as types from 'react-device-detect';
 import _ from 'lodash';
+import React from 'react';
+import ReactHyperResponsiveTable from 'react-hyper-responsive-table';
+import moment from 'moment';
+
+// local imports
 import './YourGroupTasks.scss';
+import FilterTaskName from './FilterTaskName';
+import SortTasks from './SortTasks';
 
-const YourGroupTasks = ({ yourGroupTasks,
-                          sortYourGroupTasks,
-                          filterTasksByName,
-                          goToTask,
-                          startAProcedure,
-                          handleUnclaim,
-                          claimTask,
-                          userId}) => {
-
+const YourGroupTasks = ({ yourGroupTasks, sortYourGroupTasks, filterTasksByName, goToTask, startAProcedure, handleUnclaim, claimTask, userId}) => {
   const groupedTasks = yourGroupTasks && yourGroupTasks.get('tasks') ?_.groupBy(yourGroupTasks.get('tasks').toJS(), (data) => {
-    const groupKey = data['process-definition'] ? data['process-definition']['category']
-      : 'Other';
+    const groupKey = data['process-definition'] ? data['process-definition']['category'] : 'Other';
     return groupKey;
   }): [];
   const sortByKeys = object => {
@@ -53,34 +46,45 @@ const YourGroupTasks = ({ yourGroupTasks,
 
       const name = task.name;
       const taskId = task.id;
-
       const assignee = task.assignee === null ? <div className="govuk-!-font-size-19">{'Unassigned'}</div> : (task.assignee === userId ? <div className="govuk-!-font-size-19">{'Assigned to you'}</div> : <div className="govuk-!-font-size-19">{task.assignee}</div>)
 
       const toView= <a href="#" style={{textDecoration: 'underline'}} className="govuk-link govuk-!-font-size-19" onClick={() => goToTask(taskId)}>{name}</a>;
 
-      return types.isMobile ? {
+      // datetime format
+      const utcDateTime = moment.utc(task.due).format();
+      const localDateTime = moment(utcDateTime).local().format();
+      const dueDateTime = moment().to(localDateTime);
+
+      // mobile phone users
+      if (types.isMobile) {
+        return {
+          id: taskId,
+          name: toView,
+          action: task.assignee === null || task.assignee !== userId ? claimButton : unclaimButton,
+        };
+      }
+      // desktop users
+      return {
         id: taskId,
         name: toView,
-        action: task.assignee === null || task.assignee !== userId ? claimButton : unclaimButton
-      } : {
-        id: taskId,
-        name: toView,
-        due: <div className="govuk-!-font-size-19">{"due " + moment().to(moment(task.due))}</div>,
-        assignee: assignee,
-        action: task.assignee === null || task.assignee !== userId ? claimButton : unclaimButton
+        due: <div className="govuk-!-font-size-19">{`due ${dueDateTime}`}</div>,
+        action: task.assignee === null || task.assignee !== userId ? claimButton : unclaimButton,
+        assignee,
       }
     });
-    return <div key={`category::${key}`} className="tasksGrouping">
-      <div style={{paddingBottom: '5px'}} className="data-item govuk-!-font-size-19 govuk-!-font-weight-bold" key={key}>{key} ({value.length} {value.length === 1 ? 'task' : 'tasks'})</div>
-      <ReactHyperResponsiveTable
-        key={`category::${key}`}
-        headers={headers}
-        rows={data}
-        keyGetter={row => row.id}
-        breakpoint={578}
-        tableStyling={({ narrow }) => (narrow ? 'narrowtable-yourgrouptasks' : 'widetable-yourgrouptasks')}
-      />
-    </div>
+    return (
+      <div key={`category::${key}`} className="tasksGrouping">
+        <div style={{paddingBottom: '5px'}} className="data-item govuk-!-font-size-19 govuk-!-font-weight-bold" key={key}>{key} ({value.length} {value.length === 1 ? 'task' : 'tasks'})</div>
+        <ReactHyperResponsiveTable
+          key={`category::${key}`}
+          headers={headers}
+          rows={data}
+          keyGetter={row => row.id}
+          breakpoint={578}
+          tableStyling={({ narrow }) => (narrow ? 'narrowtable-yourgrouptasks' : 'widetable-yourgrouptasks')}
+        />
+      </div>
+    );
   });
   return <div>
     <a href="#" className="govuk-link govuk-!-font-size-19" style={{textDecoration:'underline'}} onClick={startAProcedure}>Submit a form</a>
