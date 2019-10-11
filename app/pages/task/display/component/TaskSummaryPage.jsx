@@ -15,9 +15,6 @@ class TaskSummaryPage extends React.Component {
                     <p>{task.get('description')}</p>
                     <Actions task={task} variables={variables}/>
                 </div>
-                <div className="govuk-column-one-third" style={{paddingTop: '10px'}}>
-                    <Comments taskId={task.get("id")}/>
-                </div>
             </div>
 
 
