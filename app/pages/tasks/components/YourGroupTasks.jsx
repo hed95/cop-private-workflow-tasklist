@@ -1,5 +1,6 @@
 import * as types from 'react-device-detect';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
 import React from 'react';
 import ReactHyperResponsiveTable from 'react-hyper-responsive-table';
 import moment from 'moment';
@@ -9,46 +10,62 @@ import './YourGroupTasks.scss';
 import FilterTaskName from './FilterTaskName';
 import SortTasks from './SortTasks';
 
-const YourGroupTasks = ({ yourGroupTasks, sortYourGroupTasks, filterTasksByName, goToTask, startAProcedure, handleUnclaim, claimTask, userId}) => {
-  const groupedTasks = yourGroupTasks && yourGroupTasks.get('tasks') ?_.groupBy(yourGroupTasks.get('tasks').toJS(), (data) => {
-    const groupKey = data['process-definition'] ? data['process-definition']['category'] : 'Other';
-    return groupKey;
-  }): [];
+const YourGroupTasks = props => {
+  const {
+    claimTask,
+    filterTasksByName,
+    goToTask,
+    handleUnclaim,
+    sortYourGroupTasks,
+    startAProcedure,
+    userId,
+    yourGroupTasks,
+  } = props;
+  let groupedTasks = [];
+  // mobile headers
+  let headers = { name: null, action: null };
+
+  if (yourGroupTasks && yourGroupTasks.get('tasks')) {
+    groupedTasks = _.groupBy(yourGroupTasks.get('tasks').toJS(), data => {
+      const groupKey = data['process-definition'] ? data['process-definition'].category : 'Other';
+      return groupKey;
+    });
+  }
+
   const sortByKeys = object => {
     const keys = Object.keys(object);
     const initialSort = _.sortBy(keys);
-    const sortedKeys = _.sortBy(initialSort, (key) =>  {
-      return key === 'Other'? 1: 0;
-    });
-    return _.fromPairs(
-      _.map(sortedKeys, key => [key, object[key]])
-    )
+    const sortedKeys = _.sortBy(initialSort, key => (key === 'Other' ? 1 : 0));
+    return _.fromPairs(_.map(sortedKeys, key => [key, object[key]]));
   };
   const sortedData = sortByKeys(groupedTasks);
 
-  const headers = types.isMobile ? {
-    name: null,
-    action: null
-  } : {
-    name: null,
-    due: null,
-    assignee: null,
-    action: null
-  };
+  // desktop headers
+  if (!types.isMobile) {
+    headers = {
+      name: null,
+      due: null,
+      assignee: null,
+      action: null,
+    };
+  }
 
   const dataToDisplay = _.map(sortedData, (value, key) => {
-    const data = _.map(value, (val) => {
-      const task = val.task;
-      const claimButton  =  <button id="actionButton" className="govuk-button" onClick={() => claimTask(task.id)} type="submit">Claim</button>;
-      const unclaimButton = <button id="actionButton" className="govuk-button" onClick={() => {
-        handleUnclaim(task.id)
-      }} type="submit" >Unclaim</button>;
+    const data = _.map(value, val => {
+      const { task } = val;
+      const claimButton = <button type="submit" id="actionButton" className="govuk-button" onClick={() => claimTask(task.id)}>Claim</button>;
+      const toView = <button type="submit" className="govuk-link govuk-!-font-size-19" style={{ textDecoration: 'underline' }} onClick={() => goToTask(task.id)}>{task.name}</button>;
+      const unclaimButton = <button type="submit" id="actionButton" className="govuk-button" onClick={() => { handleUnclaim(task.id); }}>Unclaim</button>;
+      let assignee = '';
 
-      const name = task.name;
-      const taskId = task.id;
-      const assignee = task.assignee === null ? <div className="govuk-!-font-size-19">{'Unassigned'}</div> : (task.assignee === userId ? <div className="govuk-!-font-size-19">{'Assigned to you'}</div> : <div className="govuk-!-font-size-19">{task.assignee}</div>)
-
-      const toView= <a href="#" style={{textDecoration: 'underline'}} className="govuk-link govuk-!-font-size-19" onClick={() => goToTask(taskId)}>{name}</a>;
+      // unassigned task
+      if (task.assignee === null) {
+        assignee = <div className="govuk-!-font-size-19">Unassigned</div>;
+      } else if (task.assignee === userId) { // task assigned to current user
+        assignee = <div className="govuk-!-font-size-19">Assigned to you</div>;
+      } else { // task assigned to a user
+        assignee = <div className="govuk-!-font-size-19">{task.assignee}</div>;
+      }
 
       // datetime format
       const utcDateTime = moment.utc(task.due).format();
@@ -58,23 +75,28 @@ const YourGroupTasks = ({ yourGroupTasks, sortYourGroupTasks, filterTasksByName,
       // mobile phone users
       if (types.isMobile) {
         return {
-          id: taskId,
+          id: task.id,
           name: toView,
           action: task.assignee === null || task.assignee !== userId ? claimButton : unclaimButton,
         };
       }
       // desktop users
       return {
-        id: taskId,
+        id: task.id,
         name: toView,
         due: <div className="govuk-!-font-size-19">{`due ${dueDateTime}`}</div>,
         action: task.assignee === null || task.assignee !== userId ? claimButton : unclaimButton,
         assignee,
-      }
+      };
     });
+
+    const tasks = value.length === 1 ? 'task' : 'tasks';
+
     return (
       <div key={`category::${key}`} className="tasksGrouping">
-        <div style={{paddingBottom: '5px'}} className="data-item govuk-!-font-size-19 govuk-!-font-weight-bold" key={key}>{key} ({value.length} {value.length === 1 ? 'task' : 'tasks'})</div>
+        <div style={{ paddingBottom: '5px' }} className="data-item govuk-!-font-size-19 govuk-!-font-weight-bold" key={key}>
+          {key} {tasks}
+        </div>
         <ReactHyperResponsiveTable
           key={`category::${key}`}
           headers={headers}
@@ -86,26 +108,57 @@ const YourGroupTasks = ({ yourGroupTasks, sortYourGroupTasks, filterTasksByName,
       </div>
     );
   });
-  return <div>
-    <a href="#" className="govuk-link govuk-!-font-size-19" style={{textDecoration:'underline'}} onClick={startAProcedure}>Submit a form</a>
-    <div style={{ paddingTop: '10px' }}>
-      <div className="data" id="yourGroupTasksTotalCount">
-          <span
-            className="data-item govuk-!-font-size-24 govuk-!-font-weight-bold">{yourGroupTasks.get('total')} {yourGroupTasks.get('total') === 1 ? 'task' : 'tasks'} allocated to your team</span>
-      </div>
-      <div className="govuk-grid-row" style={{paddingTop: '10px'}}>
-        <div className="govuk-grid-column-one-half">
-          <SortTasks tasks={yourGroupTasks} sortTasks={sortYourGroupTasks}/>
-        </div>
 
-        <div className="govuk-grid-column-one-half">
-          <FilterTaskName tasks={yourGroupTasks} filterTasksByName={filterTasksByName}/>
-        </div>
-      </div>
-      {dataToDisplay}
+  let totalTasks = yourGroupTasks.get('total');
+  // 1 task (singular) example:
+  //   '1 task'
+  // 0 or more than 1 tasks (plural) example:
+  //   '0 tasks'
+  totalTasks = totalTasks === 1 ? `${totalTasks} task` : `${totalTasks} tasks`;
 
+  return (
+    <div>
+      <button type="submit" className="govuk-link govuk-!-font-size-19" style={{ textDecoration: 'underline' }} onClick={startAProcedure}>Submit a form</button>
+      <div style={{ paddingTop: '10px' }}>
+        <div className="data" id="yourGroupTasksTotalCount">
+          <span className="data-item govuk-!-font-size-24 govuk-!-font-weight-bold">
+            {totalTasks} allocated to your team
+          </span>
+        </div>
+        <div className="govuk-grid-row" style={{ paddingTop: '10px' }}>
+          <div className="govuk-grid-column-one-half">
+            <SortTasks tasks={yourGroupTasks} sortTasks={sortYourGroupTasks} />
+          </div>
+          <div className="govuk-grid-column-one-half">
+            <FilterTaskName tasks={yourGroupTasks} filterTasksByName={filterTasksByName} />
+          </div>
+        </div>
+        {dataToDisplay}
+      </div>
     </div>
-  </div>;
+  );
+};
+
+YourGroupTasks.propTypes = {
+  claimTask: PropTypes.func,
+  filterTasksByName: PropTypes.func,
+  goToTask: PropTypes.func,
+  handleUnclaim: PropTypes.func,
+  sortYourGroupTasks: PropTypes.func,
+  startAProcedure: PropTypes.func,
+  userId: PropTypes.string,
+  yourGroupTasks: PropTypes.objectOf(PropTypes.object),
+};
+
+YourGroupTasks.defaultProps = {
+  claimTask: () => {},
+  filterTasksByName: () => {},
+  goToTask: () => {},
+  handleUnclaim: () => {},
+  sortYourGroupTasks: () => {},
+  startAProcedure: () => {},
+  userId: '',
+  yourGroupTasks: {},
 };
 
 export default YourGroupTasks;
