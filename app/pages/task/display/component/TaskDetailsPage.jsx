@@ -4,11 +4,7 @@ import {bindActionCreators} from 'redux';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import TaskTitle from './TaskTitle';
-import Comments from './Comments';
 import CompleteTaskForm from '../../form/components/CompleteTaskForm';
-import 'flatpickr/dist/flatpickr.min.css';
-import flatpickr from 'flatpickr';
-import moment from 'moment';
 import * as actions from '../actions';
 import PropTypes from 'prop-types';
 import {customEventSubmissionStatus, form, submissionStatus} from '../../form/selectors';
@@ -17,33 +13,6 @@ import DataSpinner from '../../../../core/components/DataSpinner';
 import Loader from 'react-loader-advanced';
 
 export class TaskDetailsPage extends React.Component {
-
-    componentDidMount() {
-        if (this.displayCommentForm()) {
-            const {updateDueDate} = this.refs;
-            flatpickr(updateDueDate, {
-                enableTime: true,
-                dateFormat: 'd-m-Y H:i',
-                minDate: 'today',
-                time_24hr: true,
-                onClose: (selectedDates, dateStr, instance) => {
-                    const {task} = this.props;
-                    this.props.updateDueDate({taskId: task.get('id'), dueDate: dateStr});
-                }
-            });
-        }
-    }
-
-    displayCommentForm() {
-        const {form} = this.props;
-        if (form) {
-            const displayCommentForm = form.components.find(c => c.key === 'displayCommentForm');
-            if (displayCommentForm) {
-                return displayCommentForm.defaultValue === 'true';
-            }
-        }
-        return false;
-    }
 
     render() {
         const {task, variables, submissionStatus} = this.props;
@@ -68,23 +37,9 @@ export class TaskDetailsPage extends React.Component {
             <TaskTitle {...this.props} />
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-two-thirds" style={{paddingTop: '10px'}}>
-                    <p className="govuk-body" id="taskDescription">{task.get('description')}</p>
                     {hasFormKey ? <CompleteTaskForm task={task} variables={variables}/> :
                         <Actions task={task} variables={variables}/>}
                 </div>
-                {this.displayCommentForm() ?
-                    <div className="govuk-grid-column-one-third" style={{paddingTop: '10px'}}>
-                        <div className="govuk-form-group">
-                            <label className="govuk-label" htmlFor="updateDueDate">Change due date:</label>
-                            <input className="govuk-input" ref="updateDueDate" id="updateDueDate" type="text"
-                                name="updateDueDate"
-                                defaultValue={moment(task.get('due'))
-                                    .format('DD-MM-YYYY HH:mm')}/>
-
-                        </div>
-                        <Comments taskId={task.get('id')} {...this.props} />
-                    </div>
-                : '' }
             </div>
         </Loader>
         </div>;
