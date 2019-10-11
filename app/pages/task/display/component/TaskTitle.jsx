@@ -7,6 +7,10 @@ export default class TaskTitle extends React.Component {
     render() {
         const {task, candidateGroups} = this.props;
         const taskPriority = priority(task.get('priority'));
+        // datetime format
+        const utcDateTime = moment.utc(task.get('due')).format();
+        const localDateTime = moment(utcDateTime).local().format();
+        const dueDateTime = moment().to(localDateTime);
 
         return <div>
             <div className="govuk-grid-row">
@@ -20,7 +24,7 @@ export default class TaskTitle extends React.Component {
                 <div
                     className="govuk-grid-column-one-third" id="taskDueDate">
                     <span className="govuk-caption-m govuk-!-font-size-19">Due</span>
-                    <h4 className="govuk-heading-m govuk-!-font-size-19">{moment().to(moment(task.get('due')))}</h4>
+                    <h4 className="govuk-heading-m govuk-!-font-size-19">{dueDateTime}</h4>
                 </div>
                 <div
                     className="govuk-grid-column-one-third" id="taskPriority">
