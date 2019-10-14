@@ -51,8 +51,8 @@ const TaskTitle = ({ candidateGroups, kc, task }) => {
 };
 
 TaskTitle.propTypes = {
-  candidateGroups: PropTypes.objectOf(PropTypes.object),
-  kc: PropTypes.objectOf(PropTypes.object),
+  candidateGroups: PropTypes.node,
+  kc: PropTypes.node,
   task: PropTypes.objectOf(PropTypes.object),
 };
 
