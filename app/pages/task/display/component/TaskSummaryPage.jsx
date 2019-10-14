@@ -3,10 +3,8 @@ import Actions from './Actions';
 import TaskTitle from "./TaskTitle";
 import Comments from "./Comments";
 
+const TaskSummaryPage = props => {
 
-class TaskSummaryPage extends React.Component {
-
-    render() {
         const {task, variables} = this.props;
         return <div>
             <TaskTitle {...this.props} />
@@ -19,7 +17,6 @@ class TaskSummaryPage extends React.Component {
 
 
         </div>
-    }
 }
 
 export default TaskSummaryPage;
