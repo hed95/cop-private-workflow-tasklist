@@ -1,22 +1,23 @@
-import React from "react";
+import React from 'react';
+
+// local imports
 import Actions from './Actions';
-import TaskTitle from "./TaskTitle";
-import Comments from "./Comments";
+import TaskTitle from './TaskTitle';
 
 const TaskSummaryPage = props => {
+  const { task, variables } = props;
 
-        const {task, variables} = this.props;
-        return <div>
-            <TaskTitle {...this.props} />
-            <div className="govuk-grid-row">
-                <div className="govuk-column-two-thirds" style={{paddingTop: '10px'}}>
-                    <p>{task.get('description')}</p>
-                    <Actions task={task} variables={variables}/>
-                </div>
-            </div>
-
-
+  return (
+    <div>
+      <TaskTitle {...props} />
+      <div className="govuk-grid-row">
+        <div className="govuk-column-two-thirds" style={{ paddingTop: '10px' }}>
+          <p>{ task.get('description') }</p>
+          <Actions task={task} variables={variables} />
         </div>
-}
+      </div>
+    </div>
+  );
+};
 
 export default TaskSummaryPage;
