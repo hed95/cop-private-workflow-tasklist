@@ -1,5 +1,6 @@
 import * as types from 'react-device-detect';
 import _ from 'lodash';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactHyperResponsiveTable from 'react-hyper-responsive-table';
@@ -140,25 +141,14 @@ const YourGroupTasks = props => {
 };
 
 YourGroupTasks.propTypes = {
-  claimTask: PropTypes.func,
-  filterTasksByName: PropTypes.func,
-  goToTask: PropTypes.func,
-  handleUnclaim: PropTypes.func,
-  sortYourGroupTasks: PropTypes.func,
-  startAProcedure: PropTypes.func,
-  userId: PropTypes.string,
-  yourGroupTasks: PropTypes.objectOf(PropTypes.object),
-};
-
-YourGroupTasks.defaultProps = {
-  claimTask: () => {},
-  filterTasksByName: () => {},
-  goToTask: () => {},
-  handleUnclaim: () => {},
-  sortYourGroupTasks: () => {},
-  startAProcedure: () => {},
-  userId: '',
-  yourGroupTasks: {},
+  claimTask: PropTypes.func.isRequired,
+  filterTasksByName: PropTypes.func.isRequired,
+  goToTask: PropTypes.func.isRequired,
+  handleUnclaim: PropTypes.func.isRequired,
+  sortYourGroupTasks: PropTypes.func.isRequired,
+  startAProcedure: PropTypes.func.isRequired,
+  userId: PropTypes.string.isRequired,
+  yourGroupTasks: ImmutablePropTypes.map.isRequired,
 };
 
 export default YourGroupTasks;
