@@ -5,11 +5,10 @@ import Complete from "./Complete";
 
 const uuidv4 = require('uuid/v4');
 
-export default class Actions extends React.Component {
+const Actions = props => {
 
 
-    render() {
-        const {variables, task} = this.props;
+        const {variables, task} = props;
         if (variables && variables['enabledActions']) {
             const enabledActions = JSON.parse(variables['enabledActions']);
             const actions = enabledActions.map((a) => {
@@ -48,5 +47,6 @@ export default class Actions extends React.Component {
         } else {
             return <div/>
         }
-    }
 }
+
+export default Actions;
