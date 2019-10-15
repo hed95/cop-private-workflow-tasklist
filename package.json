@@ -5,13 +5,15 @@
   "author": "",
   "license": "",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage",
-    "dev": "webpack-dev-server --open --config webpack.dev.js --watch --colors",
-    "prebuild": "npm-audit-check && rebuild-node-sass",
     "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js",
-    "linter": "eslint app"
+    "dev": "webpack-dev-server --open --config webpack.dev.js --watch --colors",
+    "linter": "eslint app",
+    "linter:dev": "eslint -f table",
+    "prebuild": "npm-audit-check && rebuild-node-sass",
+    "test": "jest",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watchAll"
   },
   "jest": {
     "transform": {
