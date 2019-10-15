@@ -1,3 +1,5 @@
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import PropTypes from 'prop-types';
 import React from "react";
 import Claim from "./Claim";
 import Unclaim from "./Unclaim";
@@ -48,5 +50,14 @@ const Actions = props => {
             return <div/>
         }
 }
+
+Actions.propTypes = {
+  task: ImmutablePropTypes.map.isRequired,
+  variables: PropTypes.objectOf(PropTypes.object),
+};
+
+Actions.defaultProps = {
+  variables: {},
+};
 
 export default Actions;
