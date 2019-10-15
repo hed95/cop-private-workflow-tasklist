@@ -69,12 +69,12 @@ env_api_ref_url|api.dev.refdata.homeoffice.gov.uk, api.staging.refdata.homeoffic
 env_engine_url|private-workflow-engine.dev.cop.homeoffice.gov.uk, private-workflow-engine.staging.cop.homeoffice.gov.uk, private-workflow-engine.cop.homeoffice.gov.uk
 env_keycloak_realm|cop-dev, cop-staging, cop-prod
 env_keycloak_url|sso-dev.notprod.homeoffice.gov.uk/auth, sso.digital.homeoffice.gov.uk/auth
+env_kube_namespace_private_cop|private-cop-dev, private-cop-staging, private-cop
 env_kube_server|https://kube-api-notprod.notprod.acp.homeoffice.gov.uk, https://kube-api-prod.prod.acp.homeoffice.gov.uk
 env_kube_token|xxx
 env_report_url|reporting.dev.cop.homeoffice.gov.uk, reporting.staging.cop.homeoffice.gov.uk, reporting.cop.homeoffice.gov.uk
 env_translation_url|translation.dev.cop.homeoffice.gov.uk, translation.staging.cop.homeoffice.gov.uk, translation.cop.homeoffice.gov.uk
 env_whitelist|comma separated x.x.x.x/x list
-env_www_kube_namespace_private_cop|private-cop-dev, private-cop-staging, private-cop
 env_www_storage_key|xxx
 env_www_ui_environment|DEVELOPMENT, STAGING, PRODUCTION
 env_www_url|www.dev.cop.homeoffice.gov.uk, www.staging.cop.homeoffice.gov.uk, www.cop.homeoffice.gov.uk
