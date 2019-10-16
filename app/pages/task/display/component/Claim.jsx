@@ -9,8 +9,8 @@ import {claimSuccessful} from "../selectors";
 export class Claim extends React.Component {
 
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.claimSuccessful) {
+    componentDidUpdate(prevProps) {
+        if (prevProps.claimSuccessful) {
             this.props.history.push(`/task/${this.props.task.get('id')}`);
         }
     }
