@@ -1,3 +1,4 @@
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
@@ -51,15 +52,13 @@ const TaskTitle = ({ candidateGroups, kc, task }) => {
 };
 
 TaskTitle.propTypes = {
-  candidateGroups: PropTypes.node,
-  kc: PropTypes.node,
-  task: PropTypes.objectOf(PropTypes.object),
-};
-
-TaskTitle.defaultProps = {
-  candidateGroups: {},
-  kc: {},
-  task: {},
+  candidateGroups: ImmutablePropTypes.list.isRequired,
+  kc: PropTypes.shape({
+    tokenParsed: PropTypes.shape({
+      email: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  task: ImmutablePropTypes.map.isRequired,
 };
 
 export default TaskTitle;
