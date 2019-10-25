@@ -38,6 +38,7 @@ export default class ShiftForm extends React.Component {
             en: {
                 cancel: 'Cancel',
                 previous: 'Back',
+                submit: 'Submit',
                 next: 'Next'
             }
         },
@@ -61,7 +62,6 @@ export default class ShiftForm extends React.Component {
                     phone: shift.get('phone')
                 }
             };
-            this.options.i18n.en.submit = 'Amend shift';
 
             return <Form form={shiftForm} submission={shiftSubmission} options={this.options}
                          ref={form => {
@@ -72,7 +72,6 @@ export default class ShiftForm extends React.Component {
                              submit(shiftForm, submission);
                          }}/>;
         } else {
-            this.options.i18n.en.submit = 'Start shift';
             if (staffDetails) {
                 const shiftSubmission = {
                     data: {
