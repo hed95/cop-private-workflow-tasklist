@@ -38,21 +38,8 @@ export class Claim extends React.Component {
 }
 
 Claim.propTypes = {
-  claimTask: PropTypes.func.isRequired,
   claimSuccessful: PropTypes.bool,
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-  kc: PropTypes.shape({
-    tokenParsed: PropTypes.shape({
-      email: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-  task: ImmutablePropTypes.map.isRequired,
-};
-
-Claim.defaultProps = {
-  claimSuccessful: false,
+  claimTask: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
