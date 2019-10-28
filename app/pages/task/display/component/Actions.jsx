@@ -28,7 +28,7 @@ export default class Actions extends React.Component {
                 <div className="btn-group btn-block" role="group">
                     {actions}
                 </div>
-                {actions && actions.length >= 1 ?
+                {actions && actions.length >= 1 && !task.get('name').includes('declaration') ?
                     <details className="govuk-details">
                         <summary className="govuk-details__summary">
                             <span className="govuk-details__summary-text">
