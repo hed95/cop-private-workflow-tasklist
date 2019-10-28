@@ -6,7 +6,7 @@ import {withRouter} from "react-router-dom";
 import * as actions from "../actions";
 import {claimSuccessful} from "../selectors";
 
-export class Claim extends React.Component {
+class Claim extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.claimSuccessful) {

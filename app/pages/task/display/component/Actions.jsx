@@ -19,9 +19,13 @@ const Actions = props => {
 
       if (action === 'unclaim') {
         return <Unclaim key={uuidv4()} task={task} />;
-      } else if (action === 'claim') {
+      }
+
+      if (action === 'claim') {
         return <Claim key={uuidv4()} task={task} />;
-      } else if (action === 'complete') {
+      }
+
+      if (action === 'complete') {
         return <Complete key={uuidv4()} task={task} />;
       }
       return enabledActionComponent;
