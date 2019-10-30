@@ -6,7 +6,8 @@ import moment from 'moment';
 // local imports
 import { priority } from '../../../../core/util/priority';
 
-const TaskTitle = ({ candidateGroups, kc, task }) => {
+const TaskTitle = props => {
+  const { kc, task } = props;
   const taskPriority = priority(task.get('priority'));
   // datetime format
   const utcDateTime = moment.utc(task.get('due')).format();
@@ -36,10 +37,6 @@ const TaskTitle = ({ candidateGroups, kc, task }) => {
           <span className="govuk-caption-m govuk-!-font-size-19">Priority</span>
           <h4 className="govuk-heading-m govuk-!-font-size-19">{taskPriority}</h4>
         </div>
-        <div className="govuk-grid-column-one-third" id="taskTeams">
-          <span className="govuk-caption-m govuk-!-font-size-19">Team</span>
-          <h4 className="govuk-heading-m govuk-!-font-size-19">{candidateGroups.toJS().toString()}</h4>
-        </div>
       </div>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-third" id="taskAssignee">
@@ -52,7 +49,6 @@ const TaskTitle = ({ candidateGroups, kc, task }) => {
 };
 
 TaskTitle.propTypes = {
-  candidateGroups: ImmutablePropTypes.list.isRequired,
   kc: PropTypes.shape({
     tokenParsed: PropTypes.shape({
       email: PropTypes.string.isRequired,
