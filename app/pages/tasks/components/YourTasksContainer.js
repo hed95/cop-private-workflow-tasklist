@@ -131,7 +131,6 @@ export class YourTasksContainer extends React.Component {
         sortYourTasks={this.sortYourTasks}
         goToTask={this.goToTask}
         yourTasks={yourTasks}
-        startAProcedure={() => this.props.history.replace('/procedures')}
       />
     );
   }

@@ -18,7 +18,6 @@ const YourGroupTasks = props => {
     goToTask,
     handleUnclaim,
     sortYourGroupTasks,
-    startAProcedure,
     userId,
     yourGroupTasks,
   } = props;
@@ -119,7 +118,6 @@ const YourGroupTasks = props => {
 
   return (
     <div>
-      <button type="submit" className="govuk-link govuk-!-font-size-19" style={{ textDecoration: 'underline' }} onClick={startAProcedure}>Submit a form</button>
       <div style={{ paddingTop: '10px' }}>
         <div className="data" id="yourGroupTasksTotalCount">
           <span className="data-item govuk-!-font-size-24 govuk-!-font-weight-bold">
@@ -146,7 +144,6 @@ YourGroupTasks.propTypes = {
   goToTask: PropTypes.func.isRequired,
   handleUnclaim: PropTypes.func.isRequired,
   sortYourGroupTasks: PropTypes.func.isRequired,
-  startAProcedure: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
   yourGroupTasks: ImmutablePropTypes.map.isRequired,
 };
