@@ -12,9 +12,6 @@ describe('TaskDetailsPage', () => {
   const updateDueDate = jest.fn();
   const dueDate = moment();
   const props = {
-    candidateGroups: Immutable.fromJS([
-      'teamA',
-    ]),
     task: Immutable.fromJS({
       name: 'test',
       formKey: null,
@@ -47,6 +44,5 @@ describe('TaskDetailsPage', () => {
     expect(wrapper.find('#taskName').text()).toEqual('test');
     expect(wrapper.find('#taskAssignee').text()).toEqual('AssigneeUnassigned');
     expect(wrapper.find('#taskPriority').text()).toEqual('PriorityHigh');
-    expect(wrapper.find('#taskTeams').text()).toEqual('TeamteamA');
   });
 });
