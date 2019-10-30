@@ -104,7 +104,6 @@ export class YourGroupTasksContainer extends React.Component {
           this.selectedTask = taskId;
           this.props.unclaimTask(taskId);
         }}
-        startAProcedure={() => this.props.history.replace('/procedures')}
       />
     );
   }

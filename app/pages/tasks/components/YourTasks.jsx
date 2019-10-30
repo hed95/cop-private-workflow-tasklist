@@ -74,7 +74,6 @@ const YourTasks = ({ yourTasks, sortYourTasks, filterTasksByName, goToTask, star
     );
   });
   return <div>
-    <a href="#" className="govuk-link govuk-!-font-size-19" style={{textDecoration:'underline'}} onClick={startAProcedure}>Submit a form</a>
     <div style={{ paddingTop: '10px' }}>
       <div className="data" id="yourTasksTotalCount">
           <span
