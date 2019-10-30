@@ -18,7 +18,6 @@ const YourGroupTasks = props => {
     goToTask,
     handleUnclaim,
     sortYourGroupTasks,
-    startAProcedure,
     userId,
     yourGroupTasks,
   } = props;
@@ -145,7 +144,6 @@ YourGroupTasks.propTypes = {
   goToTask: PropTypes.func.isRequired,
   handleUnclaim: PropTypes.func.isRequired,
   sortYourGroupTasks: PropTypes.func.isRequired,
-  startAProcedure: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
   yourGroupTasks: ImmutablePropTypes.map.isRequired,
 };
