@@ -34,7 +34,7 @@ let kc = null;
 Formio.providers.storage.url = url;
 Formio.Templates.current = formioTemplate;
 
-const renderApp = (App, config, authorizedRole) => {
+const renderApp = (App, config) => {
   initAll();
   kc.onTokenExpired = () => {
     secureLocalStorage.removeAll();
@@ -54,41 +54,42 @@ const renderApp = (App, config, authorizedRole) => {
       Formio.formsUrl = `${config.formApi.url}/form`;
       Formio.formUrl = `${config.formApi.url}/form`;
       Formio.projectUrl = `${config.formApi.url}`;
-      Formio.plugins = [{
-        priority: 0,
-        preRequest: async function (requestArgs) {
+      Formio.plugins = [
+        {
+          priority: 0,
+          preRequest: async function (requestArgs) {
             if (!requestArgs.opts) {
-                requestArgs.opts = {};
+              requestArgs.opts = {};
             }
             if (!requestArgs.opts.header) {
-                requestArgs.opts.header = new Headers();
-                if (requestArgs.method !== 'upload') {
-                    requestArgs.opts.header.set('Accept', 'application/json');
-                    requestArgs.opts.header.set('Content-type', 'application/json; charset=UTF-8');
-                } else {
-                    requestArgs.opts.header.set('Content-type', requestArgs.file.type);
-                }
+              requestArgs.opts.header = new Headers();
+              if (requestArgs.method !== 'upload') {
+                requestArgs.opts.header.set('Accept', 'application/json');
+                requestArgs.opts.header.set('Content-type', 'application/json; charset=UTF-8');
+              } else {
+                requestArgs.opts.header.set('Content-type', requestArgs.file.type);
+              }
             }
             let token = store.getState().keycloak.token;
             const isExpired = jwt_decode(token).exp < new Date().getTime() / 1000;
             if (isExpired) {
-                try {
-                    const response = await axios({
-                        method: 'POST',
-                        url: `${kc.authServerUrl}/realms/${kc.realm}/protocol/openid-connect/token`,
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        },
-                        data: qs.stringify({
-                            grant_type: 'refresh_token',
-                            client_id: kc.clientId,
-                            refresh_token: kc.refreshToken
-                        })
-                    });
-                    token = response.data.access_token;
-                } catch (e) {
-                    console.error(e);
-                }
+              try {
+                const response = await axios({
+                  method: 'POST',
+                  url: `${kc.authServerUrl}/realms/${kc.realm}/protocol/openid-connect/token`,
+                  headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                  },
+                  data: qs.stringify({
+                    grant_type: 'refresh_token',
+                    client_id: kc.clientId,
+                    refresh_token: kc.refreshToken
+                  })
+                });
+                token = response.data.access_token;
+              } catch (e) {
+                console.error(e);
+              }
             }
 
             requestArgs.opts.header.set('Authorization', `Bearer ${token}`);
@@ -98,83 +99,59 @@ const renderApp = (App, config, authorizedRole) => {
             requestArgs.url = requestArgs.url.replace("_id", "id");
             return Promise.resolve(requestArgs);
         },
-    }, {
-        priority: 0,
-        requestResponse: function (response) {
+        },
+        {
+          priority: 0,
+          requestResponse: function (response) {
             return {
-                ok: response.ok,
-                json: () => response.json().then((result) => {
-                    if (result.forms) {
-                        return result.forms.map((form) => {
-                            form['_id'] = form.id;
-                            return form;
-                        });
-                    }
-                    result['_id'] = result.id;
-                    return result;
-                }),
-                status: response.status,
-                headers: response.headers
+              ok: response.ok,
+              json: () => response.json().then((result) => {
+                if (result.forms) {
+                  return result.forms.map((form) => {
+                    form['_id'] = form.id;
+                    return form;
+                  });
+                }
+                result['_id'] = result.id;
+                return result;
+              }),
+              status: response.status,
+              headers: response.headers
             };
-
+          }
         }
-    }];
-      const hasPlatformRoleAccess = kc.realmAccess.roles.includes(authorizedRole);
+      ];
       const rootDocument = document.getElementById('root');
       const history = MatomoTracker({
         url: store.getState().appConfig.analyticsUrl,
         siteId: store.getState().appConfig.analyticsSiteId,
         clientTrackerName: 'matomo.js'
       }).connectToHistory(createBrowserHistory());
-      if (hasPlatformRoleAccess) {
-        OfflinePluginRuntime.install({
-          onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
-          onUpdated: () => window.swUpdate = true,
+
+      setInterval(() => {
+        kc.updateToken().success(refreshed => {
+          if (refreshed) {
+            store.getState().keycloak = kc;
+          }
+        }).error(() => {
+          kc.logout();
         });
-      
-        setInterval(() => {
-          kc.updateToken().success(refreshed => {
-            if (refreshed) {
-              store.getState().keycloak = kc;
-            }
-          }).error(() => {
-            kc.logout();
-          });
-        }, 3 * 60000);
-        ReactDOM.render(
-          <Provider store={store}>
-            <div>
-              <AppContainer>
-                <Router history={history}>
-                  <ScrollToTop>
-                    <App />
-                  </ScrollToTop>
-                </Router>
-              </AppContainer>
-            </div>
-          </Provider>,
-          rootDocument,
-        );
-      } else {
-        ReactDOM.render(
-          <Provider store={store}>
-            <div>
-              <AppContainer>
-                <Router history={history}>
-                  <div>
-                    <Header />
-                    <div className="container" style={{ height: '100vh' }}>
-                      <UnauthorizedPage />
-                    </div>
-                    <Footer />
-                  </div>
-                </Router>
-              </AppContainer>
-            </div>
-          </Provider>,
-          rootDocument,
-        );
-      }
+      }, 3 * 60000);
+
+      ReactDOM.render(
+        <Provider store={store}>
+          <div>
+            <AppContainer>
+              <Router history={history}>
+                <ScrollToTop>
+                  <App />
+                </ScrollToTop>
+              </Router>
+            </AppContainer>
+          </div>
+        </Provider>,
+        rootDocument,
+      );  
     }
   });
 };
@@ -224,11 +201,7 @@ if (process.env.NODE_ENV === 'production') {
         analyticsUrl: data.ANALYTICS_URL,
         analyticsSiteId: data.ANALYTICS_SITE_ID,
       };
-      renderApp(App, {
-        formApi: {
-          url: data.TRANSLATION_SERVICE_URL
-        }
-      }, data.WWW_KEYCLOAK_ACCESS_ROLE);
+      renderApp(App, { formApi: { url: data.TRANSLATION_SERVICE_URL }});
     }).catch(err => {
       console.log('Unable to start application: ', err.message);
       unavailable();
@@ -248,11 +221,7 @@ if (process.env.NODE_ENV === 'production') {
     translationServiceUrl: process.env.TRANSLATION_URI,
     reportServiceUrl: process.env.REPORT_URI
   };
-  renderApp(App, {
-    formApi: {
-      url: process.env.TRANSLATION_URI
-    }
-  }, authAccessRole);
+  renderApp(App, { formApi: { url: process.env.TRANSLATION_URI }});
 }
 // Hot Module Replacement API
 if (module.hot) {
