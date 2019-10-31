@@ -73,9 +73,9 @@ describe('ProceduresPage', () => {
       fetchProcessDefinitions={fetchProcessDefinitions}
     />);
 
-    console.log(wrapper.html());
     expect(fetchProcessDefinitions).toBeCalled();
     expect(wrapper.find('#proceduresCountLabel').text()).toEqual('2 forms');
+
     const tableWrapper = wrapper.find('table');
     expect(tableWrapper.exists()).toEqual(true);
 
@@ -83,14 +83,11 @@ describe('ProceduresPage', () => {
     expect(rows.length).toEqual(1);
 
     const firstRowColumns = rows.first().find('td').map(column => column.text());
-    expect(firstRowColumns.length).toEqual(6);
+    expect(firstRowColumns.length).toEqual(4);
     expect(firstRowColumns[0]).toEqual('processADescription');
 
     const map = rows.first().find('td').map(column => column);
-    const viewProcessColumn = map[1];
-    const actionButton = map[2];
-
-    expect(viewProcessColumn.find('#procedureView').text()).toEqual('View procedure');
+    const actionButton = map[1];
     expect(actionButton.find('button').text()).toEqual('Start');
 
     window.matchMedia = null;

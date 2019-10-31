@@ -39,13 +39,11 @@ export class ProceduresPage extends React.Component {
           name: description,
           description: <p className="process-description govuk-body govuk-!-font-size-19">{p.getIn(['process-definition', 'description'])}</p>,
           action: <button id="actionButton" className="govuk-button" onClick={() => this.process(p)} type="submit">Start</button>,
-          diagram:  <a href="#" id="procedureView" className="govuk-link govuk-link--no-visited-state" onClick={() => this.viewProcessDiagram(p)}><div className="govuk-!-font-size-19">View procedure</div></a>
         }
     }).toArray() : [];
 
     const headers = !types.isMobile ? {
       description: <div className="govuk-!-font-size-19 govuk-!-font-weight-bold" style={{paddingBottom: '5px'}}>Description</div>,
-      diagram: null,
       action: null,
     } : {
       name: null,
