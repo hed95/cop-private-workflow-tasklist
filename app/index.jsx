@@ -143,13 +143,9 @@ const renderApp = (App, config) => {
           <div>
             <AppContainer>
               <Router history={history}>
-                <div>
-                  <Header />
-                  <div className="container" style={{ height: '100vh' }}>
-                    <UnauthorizedPage />
-                  </div>
-                  <Footer />
-                </div>
+                <ScrollToTop>
+                  <App />
+                </ScrollToTop>
               </Router>
             </AppContainer>
           </div>
