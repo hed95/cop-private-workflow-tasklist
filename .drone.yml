@@ -59,9 +59,23 @@ pipeline:
       environment: secrets
       event: deployment
 
-  # The build and vulnerability steps have been placed after deployment as
-  # they take so long. Once we fail builds when vulnerabilities are found
-  # they will need to be moved here
+  build:
+    image: quay.io/ukhomeofficedigital/drone-docker
+    commands:
+      - docker build -t cop-private-workflow-tasklist:$${DRONE_COMMIT_SHA} .
+    when:
+      event: push
+
+  vulnerability-scan:
+    image: quay.io/ukhomeofficedigital/anchore-submission:latest
+    dockerfile: Dockerfile
+    image_name: cop-private-workflow-tasklist:${DRONE_COMMIT_SHA}
+    local_image: true
+    tolerate: low
+    fail_on_detection: false
+    when:
+      branch: master
+      event: push
 
   image_to_quay:
     image: quay.io/ukhomeofficedigital/drone-docker
@@ -308,26 +322,6 @@ pipeline:
     when:
       environment: production
       event: deployment
-
-  # The build and vulnerability steps have been added here after deployment as
-  # they take so long. Once we fail builds when vulnerabilities are found
-  # they will need to be moved to before the push to ECR
-  build:
-    image: quay.io/ukhomeofficedigital/drone-docker
-    commands:
-      - docker build -t cop-private-workflow-tasklist:$${DRONE_COMMIT_SHA} .
-    when:
-      event: push
-
-  vulnerability-scan:
-    image: quay.io/ukhomeofficedigital/anchore-submission:latest
-    dockerfile: Dockerfile
-    image_name: cop-private-workflow-tasklist:${DRONE_COMMIT_SHA}
-    local_image: true
-    tolerate: low
-    fail_on_detection: false
-    when:
-      event: push
 
   notify:
     image: plugins/slack
