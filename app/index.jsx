@@ -128,6 +128,16 @@ const renderApp = (App, config) => {
         clientTrackerName: 'matomo.js'
       }).connectToHistory(createBrowserHistory());
 
+      setInterval(() => {
+        kc.updateToken().success(refreshed => {
+          if (refreshed) {
+            store.getState().keycloak = kc;
+          }
+        }).error(() => {
+          kc.logout();
+        });
+      }, 3 * 60000);
+
       ReactDOM.render(
         <Provider store={store}>
           <div>
