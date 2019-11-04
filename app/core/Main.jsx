@@ -21,17 +21,14 @@ const YourGroupTasksContainer = withOnboardingCheck(withShiftCheck(lazy(() => im
 const ReportPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/reports/components/ReportPage'))));
 const MessagesPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/messages/components/MessagesPage'))));
 const CalendarPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/calendar/components/CalendarPage'))));
-
-const StartProcedurePage = lazy(() => import('../pages/procedures/start/components/ProcedureStartPage'));
+const StartProcedurePage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/procedures/start/components/ProcedureStartPage'))));
 const ProcessStartPage = withOnboardingCheck(withShiftCheck(StartProcedurePage));
 const ProcessDiagramPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/procedures/diagram/components/ProcessDiagramPage'))));
 const TaskPage =  withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/task/display/component/TaskPage'))));
 
-
 //no checks required
 const UnauthorizedPage = lazy(() => import('../core/components/UnauthorizedPage'));
 const NoOpDashboardPage = lazy(() => import ('../pages/dashboard/components/NoOpDashboardPage'));
-
 
 const Main = () => (
   <main style={{paddingTop: '10px'}}>
@@ -55,7 +52,6 @@ const Main = () => (
         <Route name="No-Op Dashboard" exact path={"/noop-dashboard"} component={() => <NoOpDashboardPage/>} />
         <Redirect to={AppConstants.DASHBOARD_PATH}/>
       </Switch>
-
     </Suspense>
   </main>
 );
