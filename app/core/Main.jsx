@@ -22,7 +22,7 @@ const ReportPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../page
 const MessagesPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/messages/components/MessagesPage'))));
 const CalendarPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/calendar/components/CalendarPage'))));
 
-const StartProcedurePage = lazy(() => import('../pages/procedures/start/components/ProcedureStartPage'));
+const StartProcedurePage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/procedures/start/components/ProcedureStartPage'))));
 const ProcessStartPage = withOnboardingCheck(withShiftCheck(StartProcedurePage));
 const ProcessDiagramPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/procedures/diagram/components/ProcessDiagramPage'))));
 const TaskPage =  withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/task/display/component/TaskPage'))));
