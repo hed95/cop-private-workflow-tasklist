@@ -1,11 +1,5 @@
-import React from "react";
+import React from 'react';
 
-class Audit extends React.Component {
-
-    render() {
-        return <div>Audit</div>
-    }
-
-}
+const Audit = () => <div>Audit</div>;
 
 export default Audit;
