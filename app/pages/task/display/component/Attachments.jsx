@@ -1,12 +1,11 @@
-import React from "react";
+import React from 'react';
 
-export default class Attachments extends React.Component {
+const Attachments = () => (
+  <div>
+    <div className="data">
+      <span className="data-item bold-medium">0 attachments</span>
+    </div>
+  </div>
+);
 
-    render() {
-        return <div>
-            <div className="data">
-                <span className="data-item bold-medium">0 attachments</span>
-            </div>
-        </div>
-    }
-}
+export default Attachments;
