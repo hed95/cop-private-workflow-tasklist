@@ -95,7 +95,7 @@ const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT)
         PubSub.publish('submission', {
           submission: true,
           autoDismiss: true,
-          message: `${action.processName} successfully started`,
+          message: `${action.processName} successfully submitted`,
         });
         return actions.submitToWorkflowSuccess(payload);
       })
