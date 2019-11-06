@@ -34,7 +34,7 @@ class SubmissionBanner extends React.Component {
         this.setState({
           submission: false, message: null, type: null, autoDismiss: true
         });
-      }, 5000);
+      }, 10000);
     }
   }
 
