@@ -73,18 +73,6 @@ export class ShiftPage extends React.Component {
                     backgroundStyle={{backgroundColor: 'white'}}>
                 <div className="govuk-grid-row" style={{padding: '10px 10px'}}>
                     <div className="govuk-grid-row-column-full" id="shiftWizardForm">
-                        {!isFetchingShift && !hasActiveShift && !failedToCreateShift  ?
-                            <div style={{display: 'flex', justifyContent: 'center', paddingTop: '15px'}}>
-                                <div className="govuk-warning-text">
-                                    <span className="govuk-warning-text__icon" aria-hidden="true"
-                                          style={{width: '40px', height: '40px'}}>!</span>
-                                    <strong className="govuk-warning-text__text">
-                                        <span className="govuk-warning-text__assistive">Warning</span>
-                                        Please start your shift before proceeding
-                                    </strong>
-                                </div>
-                            </div> : null}
-
                         <ShiftForm {...this.props} formReference={(form) => this.form = form}
                                    submit={(shiftForm, submission) => {
                                        this.props.submit(shiftForm.id, submission.data);
