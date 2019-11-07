@@ -7,8 +7,6 @@ import { bindActionCreators } from 'redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import {
     activeShiftSuccess,
-    failedToCreateShift,
-    hasActiveShift,
     isFetchingShift,
     isFetchingStaffDetails,
     loadingShiftForm,
@@ -52,8 +50,6 @@ export class ShiftPage extends React.Component {
       const {
             isFetchingShift,
             submittingActiveShift,
-            failedToCreateShift,
-            hasActiveShift,
             isFetchingStaffDetails,
             loadingShiftForm,
             shiftForm,
@@ -89,7 +85,6 @@ ShiftPage.propTypes = {
   fetchActiveShift: PropTypes.func.isRequired,
   fetchStaffDetails: PropTypes.func.isRequired,
   isFetchingShift: PropTypes.bool,
-  hasActiveShift: PropTypes.bool,
   isFetchingStaffDetails: PropTypes.bool,
   shift: ImmutablePropTypes.map,
   staffDetails: ImmutablePropTypes.map,
@@ -100,12 +95,10 @@ ShiftPage.propTypes = {
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 export default withRouter(connect((state) => ({
-        hasActiveShift: hasActiveShift(state),
         isFetchingShift: isFetchingShift(state),
         submittingActiveShift: submittingActiveShift(state),
         activeShiftSuccess: activeShiftSuccess(state),
         shift: shift(state),
-        failedToCreateShift: failedToCreateShift(state),
         shiftForm: shiftForm(state),
         loadingShiftForm: loadingShiftForm(state),
         staffDetails: staffDetails(state),
