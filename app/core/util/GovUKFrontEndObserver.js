@@ -7,7 +7,7 @@ export default class GovUKFrontEndObserver {
 
   create() {
     this.observer = new MutationObserver(() => {
-        
+
     });
     this.observer.observe(this.node, { childList: true, attributes: false });
     return this;
