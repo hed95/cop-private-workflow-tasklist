@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import secureLocalStorage from '../../common/security/SecureLocalStorage';
 
-class Header extends React.Component {
+export class Header extends React.Component {
 
   componentWillMount() {
     this.secureLocalStorage = secureLocalStorage;
@@ -38,6 +38,11 @@ class Header extends React.Component {
                 >Central Operations Platform</a>
               </div>
               <div className="govuk-grid-column-one-third header-nav">
+              <a
+                  id="profile"
+                  href="/start-a-procedure/edit-your-profile"
+                  className="govuk-header__link header-nav__link"
+                >My profile</a>
                 <a
                   id="support"
                   href="https://support.cop.homeoffice.gov.uk/servicedesk/customer/portal/3"
