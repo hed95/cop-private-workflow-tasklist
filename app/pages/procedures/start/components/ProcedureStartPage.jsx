@@ -16,14 +16,20 @@ import NotFound from '../../../../core/components/NotFound';
 import secureLocalStorage from '../../../../common/security/SecureLocalStorage';
 import withLog from '../../../../core/error/component/withLog';
 import {FAILED, SUBMISSION_SUCCESSFUL, SUBMITTING} from '../constants';
+import PubSub from 'pubsub-js';
+import FormErrorPanel from '../../../../core/error/component/FormErrorPanel';
 
 export class ProcessStartPage extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            formErrors: []
+        }
         this.secureLocalStorage = secureLocalStorage;
         this.handleSubmission = this.handleSubmission.bind(this);
     }
+
 
     componentDidMount() {
         if (this.props.processKey) {
@@ -32,6 +38,28 @@ export class ProcessStartPage extends React.Component {
             const {match: {params}} = this.props;
             this.props.fetchProcessDefinition(params.processKey);
         }
+        PubSub.subscribe('formSubmissionError', (msg, errors) => {
+            this.setState({
+                formErrors: errors
+            })
+        });
+        PubSub.subscribe('formSubmissionSuccessful', (msg) => {
+            this.setState({
+                formErrors: []
+            })
+        });
+        PubSub.subscribe('clear', (msg) => {
+            this.setState({
+                formErrors: []
+            })
+        });
+        PubSub.subscribe('formChange', (msg, value) => {
+            this.setState({
+                formErrors: _.filter(this.state.formErrors, error => {
+                    return error.component.key !== value.changed.component.key;
+                })
+            })
+        });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -133,6 +161,8 @@ export class ProcessStartPage extends React.Component {
                                                    this.props.history.replace('/procedures')
                                                }}>Back to procedures</a> : null}
 
+                <FormErrorPanel errors={this.state.formErrors}/>
+
                 <Loader show={submissionStatus === SUBMITTING}
                         message={<div style={{
                             justifyContent: 'center',
@@ -160,6 +190,19 @@ export class ProcessStartPage extends React.Component {
                                                this.form = formLoaded;
                                                if (this.form) {
                                                    this.form.createPromise.then(() => {
+                                                       this.form.formio.on('error', errors => {
+                                                           PubSub.publish("formSubmissionError", errors);
+                                                       });
+                                                       this.form.formio.on('submit', () => {
+                                                           PubSub.publish("formSubmissionSuccessful");
+                                                       });
+                                                       this.form.formio.on('change', (value) => {
+                                                           PubSub.publish("formChange", value);
+                                                       });
+                                                       this.form.formio.on('prevPage', () => {
+                                                           PubSub.publish("clear");
+                                                       })
+
                                                        this.form.formio.on('componentError', (error) => {
                                                            const path = this.props.history.location.pathname;
                                                            const user = this.props.kc.tokenParsed.email;

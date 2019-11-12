@@ -36,6 +36,9 @@ class StartForm extends React.Component {
           this.handleCancel(args);
         }
       },
+      breadcrumbSettings: {
+        clickable: false
+      },
       buttonSettings: {
         showCancel: true
       },

@@ -2,14 +2,14 @@
 @import "../../node_modules/bootstrap/dist/css/bootstrap-reboot.css";
 @import "../../node_modules/formiojs/dist/formio.full.css";
 @import "../../node_modules/flatpickr/dist/themes/material_blue.css";
-@import "../../node_modules/govuk-frontend/all";
+@import "../../node_modules/govuk-frontend/govuk/all";
 @import "./card";
 @import "./buttons";
 @import "base/colors";
 @import "components/footer";
 
 html {
-  background-color: $light-grey;
+  background-color: govuk-colour("light-grey");
 }
 
 .govuk-button {
@@ -61,7 +61,7 @@ iframe {
 }
 
 input:disabled {
-  background: govuk-colour("grey-4");
+  background: govuk-colour("light-grey");
 }
 
 .govuk-caption-s {
