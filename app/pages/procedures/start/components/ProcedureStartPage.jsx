@@ -26,6 +26,7 @@ export class ProcessStartPage extends React.Component {
     }
 
     componentDidMount() {
+
         if (this.props.processKey) {
             this.props.fetchProcessDefinition(this.props.processKey);
         } else {
@@ -124,7 +125,7 @@ export class ProcessStartPage extends React.Component {
             const variableName = variableInput ? variableInput.defaultValue : form.name;
             const process = processDefinition.getIn(['process-definition', 'name']) ?
                 processDefinition.getIn(['process-definition', 'name']) : procedureKey;
-
+            const submission = this.secureLocalStorage.get(processDefinition.getIn(['process-definition', 'id']));
             return <div>
                 {!this.props.noBackLink ? <a href="#" className="govuk-back-link govuk-!-font-size-19"
                                                style={{textDecoration: 'none'}}
@@ -184,7 +185,7 @@ export class ProcessStartPage extends React.Component {
 
                                            }}
                                            removeAll={this.secureLocalStorage.removeAll()}
-                                           submission={this.secureLocalStorage.get(processDefinition.getIn(['process-definition', 'id']))}
+                                           submission={submission}
                                            dataChange={(instance) => {
                                                this.secureLocalStorage.set(processDefinition.getIn(['process-definition', 'id']), instance.data)
                                            }
