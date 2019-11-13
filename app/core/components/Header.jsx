@@ -30,14 +30,14 @@ export class Header extends React.Component {
         <div className="govuk-header__container govuk-width-container">
           <div className="govuk-header__content" style={{ width: '100%' }}>
             <div className="govuk-grid-row">
-              <div className="govuk-grid-column-two-thirds">
+              <div className="govuk-grid-column-one-half">
                 <a
                   href=""
                   onClick={event => this.dashboard(event)}
                   className="govuk-header__link govuk-header__link--service-name"
                 >Central Operations Platform</a>
               </div>
-              <div className="govuk-grid-column-one-third header-nav">
+              <div className="govuk-grid-column-one-half header-nav">
               <a
                   id="profile"
                   href="/start-a-procedure/edit-your-profile"
