@@ -22,7 +22,7 @@ exports[`Header matches snapshot 1`] = `
           className="govuk-grid-row"
         >
           <div
-            className="govuk-grid-column-two-thirds"
+            className="govuk-grid-column-one-half"
           >
             <a
               className="govuk-header__link govuk-header__link--service-name"
@@ -33,7 +33,7 @@ exports[`Header matches snapshot 1`] = `
             </a>
           </div>
           <div
-            className="govuk-grid-column-one-third header-nav"
+            className="govuk-grid-column-one-half header-nav"
           >
             <a
               className="govuk-header__link header-nav__link"
