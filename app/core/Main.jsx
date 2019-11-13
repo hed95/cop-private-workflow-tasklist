@@ -21,7 +21,7 @@ const YourGroupTasksContainer = withOnboardingCheck(withShiftCheck(lazy(() => im
 const ReportPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/reports/components/ReportPage'))));
 const MessagesPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/messages/components/MessagesPage'))));
 const CalendarPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/calendar/components/CalendarPage'))));
-const StartProcedurePage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/procedures/start/components/ProcedureStartPage'))));
+const StartProcedurePage = withOnboardingCheck(lazy(() => import('../pages/procedures/start/components/ProcedureStartPage')));
 const ProcessStartPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/procedures/start/components/ProcedureStartPage'))));
 const ProcessDiagramPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/procedures/diagram/components/ProcessDiagramPage'))));
 const TaskPage =  withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/task/display/component/TaskPage'))));
