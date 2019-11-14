@@ -159,7 +159,7 @@ module.exports = webpackMerge(common, {
       ios: true,
       icons: [
         {
-          src: path.join(__dirname, 'node_modules/govuk-frontend/assets/images/govuk-opengraph-image.png'),
+          src: path.join(__dirname, 'node_modules/govuk-frontend/govuk/assets/images/govuk-opengraph-image.png'),
           size: '1200x630',
           type: 'image/png',
         },

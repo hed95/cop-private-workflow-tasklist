@@ -10,7 +10,7 @@ import App from './core/App';
 import configureStore from './core/store/configureStore';
 import 'webpack-icons-installer/bootstrap';
 import '../public/styles/app.scss';
-import 'govuk-frontend/core/_typography.scss';
+import 'govuk-frontend/govuk/core/_typography.scss';
 import 'rxjs';
 import AppConstants from './common/AppConstants';
 import ScrollToTop from './core/components/ScrollToTop';
@@ -20,10 +20,8 @@ import UnauthorizedPage from './core/components/UnauthorizedPage';
 import UnavailablePage from './core/components/UnavailablePage';
 import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 import { Formio } from 'react-formio';
-import url from './common/formio/url';
+import gds from '@digitalpatterns/formio-gds-template';
 import secureLocalStorage from './common/security/SecureLocalStorage';
-import { initAll } from 'govuk-frontend';
-import formioTemplate from './common/formio/formio-template';
 import qs from "querystring";
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
@@ -31,11 +29,11 @@ import jwt_decode from "jwt-decode";
 const store = configureStore();
 let kc = null;
 
-Formio.providers.storage.url = url;
-Formio.Templates.current = formioTemplate;
+Formio.use(gds);
+Formio.use(gds);
+
 
 const renderApp = (App, config) => {
-  initAll();
   kc.onTokenExpired = () => {
     secureLocalStorage.removeAll();
     kc.updateToken().success(refreshed => {
@@ -50,6 +48,7 @@ const renderApp = (App, config) => {
   kc.init({ onLoad: 'login-required', checkLoginIframe: false }).success(authenticated => {
     if (authenticated) {
       store.getState().keycloak = kc;
+
       Formio.baseUrl = `${config.formApi.url}`;
       Formio.formsUrl = `${config.formApi.url}/form`;
       Formio.formUrl = `${config.formApi.url}/form`;
@@ -151,7 +150,7 @@ const renderApp = (App, config) => {
           </div>
         </Provider>,
         rootDocument,
-      );  
+      );
     }
   });
 };

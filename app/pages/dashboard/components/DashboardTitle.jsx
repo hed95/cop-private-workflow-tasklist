@@ -45,7 +45,7 @@ class DashboardTitle extends React.Component {
                 <div className="govuk-grid-column-one-half" style={{margin: '2% auto', textAlign: 'right'}}>
                     <div className="shift-button-ul">
                         <ul>
-                            <li><button id="editShift" className="govuk-button button--secondary" style={{margin: '0'}} type="submit"
+                            <li><button id="editShift" className="govuk-button govuk-button--secondaryy" style={{margin: '0'}} type="submit"
                                  onClick={this.viewShift} disabled={this.props.endingShift}>Edit shift</button></li>
                             <li>
                                 <button id="endShift" className="govuk-button" type="submit"
