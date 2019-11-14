@@ -64,6 +64,7 @@ pipeline:
     commands:
       - docker build -t cop-private-workflow-tasklist:$${DRONE_COMMIT_SHA} .
     when:
+      branch: master
       event: push
 
   image_to_quay:
