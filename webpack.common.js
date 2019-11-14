@@ -43,7 +43,7 @@ module.exports = {
       favicon: './public/favicon.ico',
     }),
     new CopyWebpackPlugin([
-      { from: 'node_modules/govuk-frontend/assets', to: 'assets' },
+      { from: 'node_modules/govuk-frontend/govuk/assets', to: 'assets' },
     ]),
     new webpack.ProvidePlugin({
       $: 'jquery',
