@@ -32,8 +32,12 @@ export default function (ComposedComponent) {
       if (prevProps.isFetchingStaffDetails !== this.props.isFetchingStaffDetails
         && !this.props.isFetchingStaffDetails) {
         const { staffDetails } = this.props;
-        const { redirectPath, data } = OnboardChecker.onBoardCheck(staffDetails,
-          this.props.location.pathname);
+        let { redirectPath, data } = OnboardChecker.onBoardCheck(staffDetails, this.props.location.pathname);
+
+        if (path === '/onboard-user' && redirectPath === '/onboard-user') {
+          redirectPath = null;
+        }
+
         if (redirectPath) {
           if (data) {
             PubSub.publish('submission', data);
@@ -53,9 +57,8 @@ export default function (ComposedComponent) {
     }
 
     render() {
-      const {
-        isCheckingOnBoarding,
-      } = this.props;
+      const { isCheckingOnBoarding } = this.props;
+
       if (isCheckingOnBoarding) {
         return <DataSpinner message="Checking your credentials" />;
       }
