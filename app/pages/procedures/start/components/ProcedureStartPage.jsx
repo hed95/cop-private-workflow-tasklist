@@ -193,6 +193,7 @@ export class ProcessStartPage extends React.Component {
                                                    this.form.createPromise.then(() => {
                                                        this.form.formio.on('error', errors => {
                                                            PubSub.publish("formSubmissionError", errors);
+                                                           window.scrollTo(0, 0);
                                                        });
                                                        this.form.formio.on('submit', () => {
                                                            PubSub.publish("formSubmissionSuccessful");
