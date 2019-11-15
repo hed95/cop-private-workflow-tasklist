@@ -26,7 +26,7 @@ describe('Error Handling Component', () => {
       </ErrorHandlingComponent>,
     );
 
-    expect(wrapper.html()).toEqual('<div><div>Hello</div></div>');
+    expect(wrapper.html()).toEqual('<div>Hello</div>');
   });
   it('renders errors', async () => {
     const initialState = {
@@ -55,7 +55,7 @@ describe('Error Handling Component', () => {
         <div>Hello</div>
       </ErrorHandlingComponent>,
     );
-    expect(wrapper.html()).toEqual('<div><div class="govuk-error-summary" role="alert" aria-labelledby="error-summary-title" tabindex="-1"><h2 class="govuk-error-summary__title" id="error-summary-title">We are experiencing technical problems</h2><h4 class="govuk-heading-s">The technical issue has been logged for support to investigate.</h4><details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text">Error details</span></summary><div class="govuk-details__text"><div class="govuk-error-summary__body"><ul class="govuk-list govuk-list--bullet govuk-error-summary__list"><li>/api/test - [400 ] - </li></ul></div></div></details></div><div>Hello</div></div>');
+    expect(wrapper.html()).toEqual('<div class=\"govuk-error-summary\" role=\"alert\" aria-labelledby=\"error-summary-title\" tabindex=\"-1\"><h2 class=\"govuk-error-summary__title\" id=\"error-summary-title\">We are experiencing technical problems</h2><h4 class=\"govuk-heading-s\">The technical issue has been logged for support to investigate.</h4><details class=\"govuk-details\"><summary class=\"govuk-details__summary\"><span class=\"govuk-details__summary-text\">Error details</span></summary><div class=\"govuk-details__text\"><div class=\"govuk-error-summary__body\"><ul class=\"govuk-list govuk-list--bullet govuk-error-summary__list\"><li>/api/test - [400 ] - </li></ul></div></div></details></div><div>Hello</div>');
   });
   it('redirect to dashboard if unauthorised', () => {
     const initialState = {

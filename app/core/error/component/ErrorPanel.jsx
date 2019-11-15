@@ -6,6 +6,9 @@ export default class ErrorPanel extends React.Component {
 
     render() {
         const {hasError, errors} = this.props;
+        if (!errors) {
+            return null;
+        }
         const items = [];
         const buildMessageFrom = (err) => {
             if (!err.get('url')) {
