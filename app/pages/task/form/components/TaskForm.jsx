@@ -37,8 +37,13 @@ export default class TaskForm extends React.Component {
   render() {
     const { onCustomEvent, variables, task, onSubmitTaskForm, formReference, form } = this.props;
     const formVariableSubmissionName = `${form.name}::submissionData`;
-    const submissionData = variables['submissionData'] ? variables['submissionData'] : (variables[formVariableSubmissionName]
-      ? variables[formVariableSubmissionName] : {});
+    let submissionData = {};
+
+    if (variables['submissionData']) {
+      submissionData = variables['submissionData']
+    } else if (variables[formVariableSubmissionName]) {
+      submissionData = variables[formVariableSubmissionName];
+    }
 
     const variableInput = form.components.find(c => c.key === 'submitVariableName');
     const variableName = variableInput ? variableInput.defaultValue : form.name;
