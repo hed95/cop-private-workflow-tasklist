@@ -39,6 +39,11 @@ iframe {
   }
 }
 
+.govuk-accordion-no-bottom {
+  border-bottom: none !important;
+}
+
+
 @media only screen and (max-width: 600px) {
   .sk-spinner {
     transform: scale(0.85);

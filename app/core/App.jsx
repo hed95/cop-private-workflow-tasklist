@@ -82,7 +82,7 @@ const AppBanner = (props) => {
     </div>
 }
 
-ErrorHandlingComponent.propTypes = {
+App.propTypes = {
     log: PropTypes.func,
     location: PropTypes.object
 };

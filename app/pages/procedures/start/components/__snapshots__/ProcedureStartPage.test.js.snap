@@ -14,9 +14,6 @@ exports[`Submit a form page renders the form and process definition 1`] = `
   >
     Back to procedures
   </a>
-  <FormErrorPanel
-    errors={Array []}
-  />
   <Loader
     backgroundStyle={
       Object {
