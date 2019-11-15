@@ -13,12 +13,14 @@ class FormErrorPanel extends React.Component {
           </h2>
           <div className="govuk-error-summary__body">
             <ul className="govuk-list govuk-error-summary__list">
-              {this.props.errors.map(e => {
+              {this.props.errors.map(({message,instance}) => {
                 return <li key={uuid()}>
-                  <a>{e.message}</a>
+                  <a href="" onClick={(e) => {
+                    e.preventDefault();
+                    instance.focus();
+                  }}>{message}</a>
                 </li>
               })}
-
             </ul>
           </div>
         </div>

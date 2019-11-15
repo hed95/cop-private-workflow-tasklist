@@ -17,15 +17,12 @@ import secureLocalStorage from '../../../../common/security/SecureLocalStorage';
 import withLog from '../../../../core/error/component/withLog';
 import {FAILED, SUBMISSION_SUCCESSFUL, SUBMITTING} from '../constants';
 import PubSub from 'pubsub-js';
-import FormErrorPanel from '../../../../core/error/component/FormErrorPanel';
+import {Details} from 'govuk-frontend';
 
 export class ProcessStartPage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            formErrors: []
-        }
         this.secureLocalStorage = secureLocalStorage;
         this.handleSubmission = this.handleSubmission.bind(this);
     }
@@ -39,28 +36,6 @@ export class ProcessStartPage extends React.Component {
             const {match: {params}} = this.props;
             this.props.fetchProcessDefinition(params.processKey);
         }
-        PubSub.subscribe('formSubmissionError', (msg, errors) => {
-            this.setState({
-                formErrors: errors
-            })
-        });
-        PubSub.subscribe('formSubmissionSuccessful', (msg) => {
-            this.setState({
-                formErrors: []
-            })
-        });
-        PubSub.subscribe('clear', (msg) => {
-            this.setState({
-                formErrors: []
-            })
-        });
-        PubSub.subscribe('formChange', (msg, value) => {
-            this.setState({
-                formErrors: _.filter(this.state.formErrors, error => {
-                    return error.component.key !== value.changed.component.key;
-                })
-            })
-        });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -162,7 +137,6 @@ export class ProcessStartPage extends React.Component {
                                                    this.props.history.replace('/procedures')
                                                }}>Back to procedures</a> : null}
 
-                <FormErrorPanel errors={this.state.formErrors}/>
 
                 <Loader show={submissionStatus === SUBMITTING}
                         message={<div style={{
@@ -191,8 +165,14 @@ export class ProcessStartPage extends React.Component {
                                                this.form = formLoaded;
                                                if (this.form) {
                                                    this.form.createPromise.then(() => {
+                                                       this.form.formio.on('render', () => {
+                                                           const details = document.querySelectorAll('[data-module="govuk-details"]');
+                                                           details.forEach(  (detail) => {
+                                                               new Details(detail).init();
+                                                           });
+                                                       });
                                                        this.form.formio.on('error', errors => {
-                                                           PubSub.publish("formSubmissionError", errors);
+                                                           PubSub.publish("formSubmissionError", {errors: errors, form: this.form});
                                                            window.scrollTo(0, 0);
                                                        });
                                                        this.form.formio.on('submit', () => {

@@ -7,8 +7,45 @@ import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Redirect, withRouter } from 'react-router';
 import ErrorPanel from './ErrorPanel';
+import PubSub from 'pubsub-js';
+import FormErrorPanel from './FormErrorPanel';
 
 export class ErrorHandlingComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      formErrors: []
+    }
+  }
+  componentDidMount() {
+    PubSub.subscribe('formSubmissionError', (msg,  payload) => {
+      const errors = payload.errors;
+      const form = payload.form;
+      const updated = errors.map(error => {
+        return {message: error.message, instance: form.formio.getComponent(error.component.key)};
+      });
+      this.setState({
+        formErrors: updated
+      })
+    });
+    PubSub.subscribe('formSubmissionSuccessful', (msg) => {
+      this.setState({
+        formErrors: []
+      })
+    });
+    PubSub.subscribe('clear', (msg) => {
+      this.setState({
+        formErrors: []
+      })
+    });
+    PubSub.subscribe('formChange', (msg, value) => {
+      this.setState({
+        formErrors: _.filter(this.state.formErrors, (error) => {
+          return error.instance.component.key !== value.changed.component.key;
+        })
+      })
+    });
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.hasError) {
@@ -41,19 +78,11 @@ export class ErrorHandlingComponent extends React.Component {
   }
 
   render() {
-    const { hasError, unauthorised, skipAuthError } = this.props;
-    if (!unauthorised && !hasError) {
-      return <div>{this.props.children}</div>;
-    }
-
-    if (unauthorised && !skipAuthError) {
-      return <Redirect push to="/dashboard"/>;
-    } else {
-      return <div>
-        <ErrorPanel {...this.props} />
-        {this.props.children}
-      </div>;
-    }
+    return <React.Fragment>
+            <ErrorPanel {...this.props} />
+            <FormErrorPanel errors={this.state.formErrors} />
+            {this.props.children}
+    </React.Fragment>;
   }
 }
 
