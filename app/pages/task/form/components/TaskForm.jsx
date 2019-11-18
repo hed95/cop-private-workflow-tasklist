@@ -37,13 +37,15 @@ export default class TaskForm extends React.Component {
   render() {
     const { onCustomEvent, variables, task, onSubmitTaskForm, formReference, form } = this.props;
     const formVariableSubmissionName = `${form.name}::submissionData`;
-    let submissionData = {};
+    let submissionData = null;
 
     if (variables['submissionData']) {
       submissionData = variables['submissionData']
     } else if (variables[formVariableSubmissionName]) {
       submissionData = variables[formVariableSubmissionName];
     }
+
+
 
     const variableInput = form.components.find(c => c.key === 'submitVariableName');
     const variableName = variableInput ? variableInput.defaultValue : form.name;
@@ -105,7 +107,7 @@ export default class TaskForm extends React.Component {
                  }
                  }
                  onCustomEvent={(event) => onCustomEvent(event, variableName)}
-                 submission={JSON.parse(submissionData)} onSubmit={(submission) => {
+                 submission={ JSON.parse(submissionData)} onSubmit={(submission) => {
                 onSubmitTaskForm(submission.data, variableName);
     }}/>;
   }
