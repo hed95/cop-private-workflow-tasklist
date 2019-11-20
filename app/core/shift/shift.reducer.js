@@ -27,8 +27,8 @@ function shiftReducer(state = shiftInitialState, action) {
       return state.set('isFetchingShift', true);
     case actions.FETCH_ACTIVE_SHIFT_SUCCESS:
       const data = action.payload.entity;
-      const hasShiftInfo = data && data.length !== 0;
-      const shiftInfo = hasShiftInfo ? Immutable.fromJS(data[0]) : null;
+      const hasShiftInfo = !!data;
+      const shiftInfo = hasShiftInfo ? Immutable.fromJS(data) : null;
       return state.set('isFetchingShift', false)
         .set('hasActiveShift', hasShiftInfo)
         .set('activeShiftSuccess', false)

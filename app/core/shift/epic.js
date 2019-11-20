@@ -6,11 +6,10 @@ import * as actions from './actions';
 import { errorObservable } from '../error/epicUtil';
 import { retry } from '../util/retry';
 
-const shift = (email, token, operationalDataUrl, client) => {
-  console.log(`Requesting shift details for ${email}`);
+const shift = (email, token, workflowUrl, client) => {
   return client({
     method: 'GET',
-    path: `${operationalDataUrl}/v1/shift?email=eq.${email}`,
+    path: `${workflowUrl}/api/workflow/shift/${email}`,
     headers: {
       Accept: 'application/json',
       Authorization: `Bearer ${token}`,
@@ -67,7 +66,7 @@ const fetchActiveShift = (action$, store, { client }) => action$.ofType(types.FE
   .mergeMap(() => shift(
     store.getState().keycloak.tokenParsed.email,
     store.getState().keycloak.token,
-    store.getState().appConfig.operationalDataUrl,
+    store.getState().appConfig.workflowServiceUrl,
     client,
   )
     .retryWhen(retry)

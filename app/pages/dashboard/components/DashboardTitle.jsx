@@ -6,12 +6,15 @@ import {connect} from "react-redux";
 import * as actions from "../../../core/shift/actions";
 import {endingShift, hasActiveShift} from "../../../core/shift/selectors";
 import "./DashboardTitle.css";
+import secureLocalStorage from '../../../common/security/SecureLocalStorage';
+
 class DashboardTitle extends React.Component {
 
     constructor(props) {
         super(props);
         this.endShift = this.endShift.bind(this);
         this.viewShift = this.viewShift.bind(this);
+        this.secureLocalStorage = secureLocalStorage;
     }
 
     viewShift(e) {
@@ -21,6 +24,7 @@ class DashboardTitle extends React.Component {
 
     endShift(e) {
         e.preventDefault();
+        this.secureLocalStorage.remove("shift");
         this.props.endShift();
     }
 

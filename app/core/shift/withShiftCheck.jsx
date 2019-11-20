@@ -65,7 +65,7 @@ export default function (ComposedComponent) {
                     return <ErrorHandlingComponent><BackButton {...this.props}><ComposedComponent {...this.props}
                                                                                                   key={uuidv4()}/></BackButton></ErrorHandlingComponent>;
                 } else {
-                    return <DataSpinner message={`Checking if you have an active shift`}/>;
+                    return <Redirect to={"/shift"}/>;
                 }
             }
         }
