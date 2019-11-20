@@ -54,7 +54,7 @@ const YourGroupTasks = props => {
     const data = _.map(value, val => {
       const { task } = val;
       const claimButton = <button type="submit" id="actionButton" className="govuk-button" onClick={() => claimTask(task.id)}>Claim</button>;
-      const toView = <button type="submit" className="govuk-link govuk-!-font-size-19" style={{ textDecoration: 'underline' }} onClick={() => goToTask(task.id)}>{task.name}</button>;
+      const toView =<a href="#" style={{textDecoration: 'underline'}} className="govuk-link govuk-!-font-size-19" onClick={() => goToTask(task.id)}>{task.name}</a>;
       const unclaimButton = <button type="submit" id="actionButton" className="govuk-button" onClick={() => { handleUnclaim(task.id); }}>Unclaim</button>;
       let assignee = '';
 

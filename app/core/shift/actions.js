@@ -82,8 +82,9 @@ const endShiftFailure = () => ({
   type: types.END_SHIFT_FAILURE,
 });
 
-const setHasActiveShift = () => ({
+const setHasActiveShift = (hasShift) => ({
   type: types.SET_HAS_ACTIVE_SHIFT,
+  hasShift
 });
 
 const performOnboardingCheck = () => ({

@@ -7,19 +7,11 @@ import {withRouter} from 'react-router';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {ErrorHandlingComponent} from './error/component/ErrorHandlingComponent';
 import withLog from './error/component/withLog';
-import secureLocalStorage from '../common/security/SecureLocalStorage';
-
 
 const SubmissionBanner = lazy(() => import('../core/components/SubmissionBanner'));
 
 export class App extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.secureLocalStorage = secureLocalStorage;
-    }
 
     componentDidMount() {
         const user = this.props.kc.tokenParsed.email;
@@ -35,7 +27,6 @@ export class App extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         const user = this.props.kc.tokenParsed.email;
         if (this.props.location !== prevProps.location) {
-            this.secureLocalStorage.removeAll();
             this.props.log([{
                 level: 'debug',
                 user: user,
@@ -80,7 +71,7 @@ const AppBanner = (props) => {
                 </strong></span>
         </p>
     </div>
-}
+};
 
 App.propTypes = {
     log: PropTypes.func,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import SockJS from 'sockjs-client';
 
-import { Client, Message } from '@stomp/stompjs';
+import { Client } from '@stomp/stompjs';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { debounce, throttle } from 'throttle-debounce';

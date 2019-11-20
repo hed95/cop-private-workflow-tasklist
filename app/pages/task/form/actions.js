@@ -71,6 +71,13 @@ const customEventFailure = (error, event) => ({
   event,
 });
 
+const setNextTask = (task, variables) => ({
+  type: types.SET_NEXT_TASK,
+  task,
+  variables
+
+});
+
 export {
   fetchTaskForm,
   fetchTaskFormSuccess,
@@ -85,4 +92,5 @@ export {
   customEvent,
   customEventFailure,
   customEventSuccess,
+    setNextTask
 };

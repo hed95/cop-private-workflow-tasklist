@@ -11,9 +11,9 @@ import moment from "moment";
 import Pagination from "../../../../core/components/Pagination";
 import ShowMore from 'react-show-more';
 import Collapsible from 'react-collapsible';
-import { withRouter } from 'react-router';
-import { customEventSubmissionStatus, form, submissionStatus } from '../../form/selectors';
-import { TaskDetailsPage } from './TaskDetailsPage';
+import {withRouter} from 'react-router';
+import {customEventSubmissionStatus, form, submissionStatus} from '../../form/selectors';
+import {TaskDetailsPage} from './TaskDetailsPage';
 
 const uuidv4 = require('uuid/v4');
 
@@ -43,10 +43,11 @@ export class Comments extends React.Component {
         this.setState({pageOfItems: []});
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.taskId !== this.props.taskId) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.taskId !== prevProps.taskId) {
             this.setState({pageOfItems: []});
             this.props.fetchComments(`${this.props.appConfig.workflowServiceUrl}/api/workflow/tasks/${nextProps.taskId}/comments`);
+
         }
     }
 
@@ -55,7 +56,9 @@ export class Comments extends React.Component {
         const {isFetchingComments, comments} = this.props;
         const pointerStyle = {cursor: 'pointer', textDecoration: 'underline'};
 
-        const commentsView = <Collapsible triggerStyle={pointerStyle} trigger={this.state.isOpen ? 'Hide all comments' : 'Show all comments'} open={true} onOpen={() =>{
+        const commentsView = <Collapsible triggerStyle={pointerStyle}
+                                          trigger={this.state.isOpen ? 'Hide all comments' : 'Show all comments'}
+                                          open={true} onOpen={() => {
             this.setState({isOpen: true});
         }} onClose={() => {
             this.setState({isOpen: false});

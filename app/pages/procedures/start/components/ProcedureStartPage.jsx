@@ -1,6 +1,13 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {form, isFetchingProcessDefinition, loadingForm, processDefinition, submissionStatus,} from '../selectors';
+import {
+    form,
+    isFetchingProcessDefinition,
+    loadingForm,
+    processDefinition,
+    submissionResponse,
+    submissionStatus,
+} from '../selectors';
 import {bindActionCreators} from 'redux';
 import * as actions from '../actions';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -17,7 +24,11 @@ import secureLocalStorage from '../../../../common/security/SecureLocalStorage';
 import withLog from '../../../../core/error/component/withLog';
 import {FAILED, SUBMISSION_SUCCESSFUL, SUBMITTING} from '../constants';
 import PubSub from 'pubsub-js';
-import {Details} from 'govuk-frontend';
+import CompleteTaskForm from "../../../task/form/components/CompleteTaskForm";
+import Immutable from 'immutable';
+import FormioSubmissionListener from "../../../../core/util/FormioSubmissionListener";
+
+const {Map} = Immutable;
 
 export class ProcessStartPage extends React.Component {
 
@@ -29,7 +40,6 @@ export class ProcessStartPage extends React.Component {
 
 
     componentDidMount() {
-
         if (this.props.processKey) {
             this.props.fetchProcessDefinition(this.props.processKey);
         } else {
@@ -66,7 +76,7 @@ export class ProcessStartPage extends React.Component {
             case SUBMISSION_SUCCESSFUL :
                 window.scrollTo(0, 0);
                 this.form.formio.emit('submitDone');
-                this.secureLocalStorage.removeAll();
+                this.secureLocalStorage.remove(this.props.processDefinition.getIn(['process-definition', 'id']));
                 this.props.log([{
                     user: user,
                     path: path,
@@ -74,10 +84,17 @@ export class ProcessStartPage extends React.Component {
                     message: `Procedure ${processKey} successfully started`
                 }]);
                 Formio.clearCache();
-                if (this.props.redirectPath) {
-                    this.props.history.replace(this.props.redirectPath);
-                } else {
-                    this.props.history.replace(AppConstants.YOUR_TASKS_PATH);
+                if (this.props.submissionResponse.tasks.length === 0) {
+                    PubSub.publish('submission', {
+                        submission: true,
+                        autoDismiss: true,
+                        message: `${processKey} successfully submitted`,
+                    });
+                    if (this.props.redirectPath) {
+                        this.props.history.replace(this.props.redirectPath);
+                    } else {
+                        this.props.history.replace(AppConstants.YOUR_TASKS_PATH);
+                    }
                 }
                 break;
             case FAILED :
@@ -106,7 +123,7 @@ export class ProcessStartPage extends React.Component {
     handleCustomEvent = (event) => {
         switch (event.type) {
             case 'cancel':
-                this.secureLocalStorage.removeAll();
+                this.secureLocalStorage.remove(this.props.processDefinition.getIn(['process-definition', 'id']));
                 this.props.history.replace(AppConstants.DASHBOARD_PATH);
                 break;
             case 'save-draft':
@@ -118,7 +135,7 @@ export class ProcessStartPage extends React.Component {
     render() {
         const {processDefinition, submissionStatus, form, loadingForm} = this.props;
         if (loadingForm) {
-            return <DataSpinner message="Loading procedure..."/>;
+            return <DataSpinner message="Loading form..."/>;
         } else {
             if (!form) {
                 return <NotFound resource="Form" id={processDefinition.get('formKey')}/>;
@@ -128,14 +145,15 @@ export class ProcessStartPage extends React.Component {
             const variableName = variableInput ? variableInput.defaultValue : form.name;
             const process = processDefinition.getIn(['process-definition', 'name']) ?
                 processDefinition.getIn(['process-definition', 'name']) : procedureKey;
-            const submission = this.secureLocalStorage.get(processDefinition.getIn(['process-definition', 'id']));
+
+            const submission = this.secureLocalStorage.get(this.props.processDefinition.getIn(['process-definition', 'id']));
             return <div>
                 {!this.props.noBackLink ? <a href="#" className="govuk-back-link govuk-!-font-size-19"
-                                               style={{textDecoration: 'none'}}
-                                               onClick={(event) => {
-                                                   event.preventDefault();
-                                                   this.props.history.replace('/procedures')
-                                               }}>Back to procedures</a> : null}
+                                             style={{textDecoration: 'none'}}
+                                             onClick={(event) => {
+                                                 event.preventDefault();
+                                                 this.props.history.replace('/procedures')
+                                             }}>Back to forms</a> : null}
 
 
                 <Loader show={submissionStatus === SUBMITTING}
@@ -149,83 +167,57 @@ export class ProcessStartPage extends React.Component {
                             top: '-20px',
                             margin: 'auto'
                         }}><DataSpinner
-                            message="Starting procedure..."/></div>}
+                            message="Submitting form..."/></div>}
                         hideContentOnLoad={submissionStatus === SUBMITTING}
                         foregroundStyle={{color: 'black'}}
                         backgroundStyle={{backgroundColor: 'white'}}>
                     <div className="govuk-grid-row">
                         <div className="govuk-grid-column-full">
                             <div>
-                                <span className="govuk-caption-l">Operational procedure</span>
+                                <span className="govuk-caption-l">Operational form</span>
                                 <h2 className="govuk-heading-l">{processDefinition.getIn(['process-definition', 'name'])}</h2>
+                                {
+                                    this.props.submissionResponse && this.props.submissionResponse.tasks.length !== 0 ?
+                                        <CompleteTaskForm
+                                            variables={this.props.submissionResponse.variables}
+                                            fromProcedure={true}
+                                            task={new Map({
+                                                fromProcedure: true,
+                                                processName: processDefinition.getIn(['process-definition', 'name']),
+                                                formKey: this.props.submissionResponse.tasks[0].formKey,
+                                                id: this.props.submissionResponse.tasks[0].id,
+                                                assignee: this.props.submissionResponse.tasks[0].assignee,
+                                                processInstanceId: this.props.submissionResponse.tasks[0].processInstanceId
+                                            })}/>
+                                        : <StartForm {...this.props}
+                                                     startForm={form}
+                                                     formReference={(formLoaded) => {
+                                                         this.form = formLoaded;
+                                                         if (this.form) {
+                                                             this.form.createPromise.then(() => {
+                                                                 new FormioSubmissionListener(this.form, this.props)
+                                                                     .initialize();
+                                                             });
+                                                         }
+                                                     }}
+                                                     submission={submission}
+                                                     dataChange={(instance) => {
+                                                         this.secureLocalStorage.set(processDefinition.getIn(['process-definition', 'id']), instance.data)
+                                                     }}
+                                                     onCustomEvent={(event) => this.handleCustomEvent(event)}
+                                                     handleSubmit={(submission) => {
+                                                         if (this.form && this.form.formio) {
+                                                             this.form.formio.submitted = true;
+                                                             this.form.formio.submitting = true;
+                                                         }
+                                                         this.props.submit(form.id, procedureKey,
+                                                             variableName,
+                                                             submission.data, process,
+                                                             this.props.nonShiftApiCall);
+                                                     }}
+                                        />
+                                }
 
-                                <StartForm {...this.props}
-                                           startForm={form}
-                                           formReference={(formLoaded) => {
-                                               this.form = formLoaded;
-                                               if (this.form) {
-                                                   this.form.createPromise.then(() => {
-                                                       this.form.formio.on('render', () => {
-                                                           const details = document.querySelectorAll('[data-module="govuk-details"]');
-                                                           details.forEach(  (detail) => {
-                                                               new Details(detail).init();
-                                                           });
-                                                       });
-                                                       this.form.formio.on('error', errors => {
-                                                           PubSub.publish("formSubmissionError", {errors: errors, form: this.form});
-                                                           window.scrollTo(0, 0);
-                                                       });
-                                                       this.form.formio.on('submit', () => {
-                                                           PubSub.publish("formSubmissionSuccessful");
-                                                       });
-                                                       this.form.formio.on('change', (value) => {
-                                                           PubSub.publish("formChange", value);
-                                                       });
-                                                       this.form.formio.on('prevPage', () => {
-                                                           PubSub.publish("clear");
-                                                       })
-
-                                                       this.form.formio.on('componentError', (error) => {
-                                                           const path = this.props.history.location.pathname;
-                                                           const user = this.props.kc.tokenParsed.email;
-                                                           this.props.log([{
-                                                               user: user,
-                                                               path: path,
-                                                               level: 'error',
-                                                               form: {
-                                                                   name: form.name,
-                                                                   path: form.path,
-                                                                   display: form.display
-                                                               },
-                                                               message: error.message,
-                                                               component: {
-                                                                   label: error.component.label,
-                                                                   key: error.component.key
-                                                               }
-                                                           }]);
-                                                       })
-                                                   })
-                                               }
-
-                                           }}
-                                           removeAll={this.secureLocalStorage.removeAll()}
-                                           submission={submission}
-                                           dataChange={(instance) => {
-                                               this.secureLocalStorage.set(processDefinition.getIn(['process-definition', 'id']), instance.data)
-                                           }
-                                           }
-                                           onCustomEvent={(event) => this.handleCustomEvent(event)}
-                                           handleSubmit={(submission) => {
-                                               if (this.form && this.form.formio) {
-                                                   this.form.formio.submitted = true;
-                                                   this.form.formio.submitting = true;
-                                               }
-                                               this.props.submit(form.id, procedureKey,
-                                                   variableName,
-                                                   submission.data, process,
-                                                   this.props.nonShiftApiCall);
-                                           }}
-                                />
                             </div>
                         </div>
                     </div>
@@ -237,6 +229,7 @@ export class ProcessStartPage extends React.Component {
 
     componentWillUnmount() {
         this.props.clearProcessDefinition();
+        this.secureLocalStorage.remove(this.props.processDefinition.getIn(['process-definition', 'id']))
     }
 
 }
@@ -258,6 +251,7 @@ export default withRouter(connect((state) => {
     return {
         processDefinition: processDefinition(state),
         submissionStatus: submissionStatus(state),
+        submissionResponse: submissionResponse(state),
         form: form(state),
         loadingForm: loadingForm(state),
         isFetchingProcessDefinition: isFetchingProcessDefinition(state),

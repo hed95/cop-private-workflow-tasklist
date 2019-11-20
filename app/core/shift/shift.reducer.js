@@ -58,7 +58,7 @@ function shiftReducer(state = shiftInitialState, action) {
     case actions.END_SHIFT_FAILURE:
       return state.set('endingShift', false);
     case actions.SET_HAS_ACTIVE_SHIFT:
-      return state.set('hasActiveShift', true);
+      return state.set('hasActiveShift', action.hasShift).set('isFetchingShift', false);
     default:
       return state;
   }

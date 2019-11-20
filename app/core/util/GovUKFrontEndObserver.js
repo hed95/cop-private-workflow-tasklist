@@ -1,20 +1,28 @@
-import { initAll } from 'govuk-frontend';
+import {Details} from 'govuk-frontend';
+import * as types from "react-device-detect";
 
 export default class GovUKFrontEndObserver {
-  constructor(node) {
-    this.node = node;
-  }
+    constructor(node) {
+        this.node = node;
+    }
 
-  create() {
-    this.observer = new MutationObserver(() => {
+    create() {
+        if (types.isEdge) {
+            this.observer = new MutationObserver(() => {
+                const details = this.node.querySelectorAll('[data-module="govuk-details"]');
+                details.forEach((detail) => {
+                    new Details(detail).init();
+                });
+            });
+            this.observer.observe(this.node, {childList: true, attributes: false});
+        }
+        return this;
+    }
 
-    });
-    this.observer.observe(this.node, { childList: true, attributes: false });
-    return this;
-  }
-
-  destroy() {
-    this.observer.disconnect();
-  }
+    destroy() {
+        if (this.observer) {
+            this.observer.disconnect();
+        }
+    }
 
 }

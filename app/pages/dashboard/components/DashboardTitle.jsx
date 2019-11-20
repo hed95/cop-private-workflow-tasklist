@@ -8,7 +8,8 @@ import {endingShift, hasActiveShift} from "../../../core/shift/selectors";
 import "./DashboardTitle.css";
 class DashboardTitle extends React.Component {
 
-    componentWillMount() {
+    constructor(props) {
+        super(props);
         this.endShift = this.endShift.bind(this);
         this.viewShift = this.viewShift.bind(this);
     }
@@ -24,12 +25,11 @@ class DashboardTitle extends React.Component {
     }
 
 
-    componentWillReceiveProps(nextProps) {
-        if (!nextProps.hasActiveShift) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (!this.props.hasActiveShift) {
             window.location.reload();
         }
     }
-
 
     render() {
         return <div className="govuk-grid-row" style={{paddingTop: '10px'}}>

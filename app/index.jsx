@@ -30,12 +30,10 @@ const store = configureStore();
 let kc = null;
 
 Formio.use(gds);
-Formio.use(gds);
 
 
 const renderApp = (App, config) => {
   kc.onTokenExpired = () => {
-    secureLocalStorage.removeAll();
     kc.updateToken().success(refreshed => {
       if (refreshed) {
         store.getState().keycloak = kc;

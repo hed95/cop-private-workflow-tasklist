@@ -12,8 +12,8 @@ export class Complete extends React.Component {
         this.complete = this.complete.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.completeSuccessful) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.completeSuccessful) {
             this.props.history.push("/tasks");
         }
     }
