@@ -148,12 +148,13 @@ export class ProcessStartPage extends React.Component {
 
             const submission = this.secureLocalStorage.get(this.props.processDefinition.getIn(['process-definition', 'id']));
             return <div>
-                {!this.props.noBackLink ? <a href="#" className="govuk-back-link govuk-!-font-size-19"
-                                             style={{textDecoration: 'none'}}
-                                             onClick={(event) => {
-                                                 event.preventDefault();
-                                                 this.props.history.replace('/procedures')
-                                             }}>Back to forms</a> : null}
+                {!this.props.noBackLink ?
+                    <a href={AppConstants.FORMS_PATH} className="govuk-back-link govuk-!-font-size-19"
+                       style={{textDecoration: 'none'}}
+                       onClick={(event) => {
+                           event.preventDefault();
+                           this.props.history.replace('/procedures')
+                       }}>Back to forms</a> : null}
 
 
                 <Loader show={submissionStatus === SUBMITTING}
@@ -229,7 +230,10 @@ export class ProcessStartPage extends React.Component {
 
     componentWillUnmount() {
         this.props.clearProcessDefinition();
-        this.secureLocalStorage.remove(this.props.processDefinition.getIn(['process-definition', 'id']))
+        if (this.props.processDefinition.getIn(['process-definition', 'id'])) {
+            this.secureLocalStorage.remove(this.props.processDefinition.getIn(['process-definition', 'id']))
+        }
+
     }
 
 }

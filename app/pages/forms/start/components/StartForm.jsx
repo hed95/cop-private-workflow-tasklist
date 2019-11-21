@@ -19,7 +19,7 @@ class StartForm extends React.Component {
   }
 
   handleCancel = (resetForm) => {
-    this.props.history.replace(AppConstants.PROCEDURES_PATH);
+    this.props.history.replace(AppConstants.FORMS_PATH);
     resetForm(false);
   };
 

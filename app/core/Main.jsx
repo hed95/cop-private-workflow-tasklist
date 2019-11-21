@@ -15,15 +15,15 @@ const ShiftPage = withOnboardingCheck(lazy(() => import ('../pages/shift/compone
 
 const DashboardPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/dashboard/components/DashboardPage'))));
 const YourTasksPage = withOnboardingCheck(withShiftCheck(lazy(() => import ('../pages/tasks/components/YourTasksContainer'))));
-const ProceduresPage = withOnboardingCheck(withShiftCheck(lazy(() => import ('../pages/procedures/list/components/ProceduresPage'))));
+const ProceduresPage = withOnboardingCheck(withShiftCheck(lazy(() => import ('../pages/forms/list/components/FormsListPage'))));
 const ReportsPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/reports/components/ReportsPage'))));
 const YourGroupTaskPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/tasks/components/YourGroupTasksContainer'))));
 const ReportPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/reports/components/ReportPage'))));
 const MessagesPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/messages/components/MessagesPage'))));
 const CalendarPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/calendar/components/CalendarPage'))));
-const NonShiftCheckProcedurePage = withOnboardingCheck(lazy(() => import('../pages/procedures/start/components/ProcedureStartPage')));
-const ProcessStartPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/procedures/start/components/ProcedureStartPage'))));
-const ProcessDiagramPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/procedures/diagram/components/ProcessDiagramPage'))));
+const NonShiftCheckProcedurePage = withOnboardingCheck(lazy(() => import('../pages/forms/start/components/FormsStartPage')));
+const ProcessStartPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/forms/start/components/FormsStartPage'))));
+const ProcessDiagramPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/forms/diagram/components/ProcessDiagramPage'))));
 const TaskPage =  withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/task/display/component/TaskPage'))));
 
 
@@ -39,12 +39,12 @@ const Main = () => (
         <Route name="Shift" exact path={AppConstants.SHIFT_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><ShiftPage/></ErrorHandlingComponent>}/>
         <Route name="Your tasks" exact path={AppConstants.YOUR_TASKS_PATH} component={() => <YourTasksPage />}/>
         <Route name="Your group tasks" exact path={AppConstants.YOUR_GROUP_TASKS_PATH} component={() => <YourGroupTaskPage/>}/>
-        <Route name="Procedures" exact path={AppConstants.PROCEDURES_PATH} component={() =><ProceduresPage/>}/>
+        <Route name="Procedures" exact path={AppConstants.FORMS_PATH} component={() =><ProceduresPage/>}/>
         <Route name="Reports" exact path={AppConstants.REPORTS_PATH} component={() =><ReportsPage/>} />
         <Route exact path={AppConstants.REPORT_PATH} component={() => <ReportPage/>}/>
         <Route name="Messages" exact path={AppConstants.MESSAGES_PATH} component={() => <MessagesPage/>}/>
         <Route name="Calendar" exact path={AppConstants.CALENDAR_PATH} component={() => <CalendarPage/>}/>
-        <Route name="Procedure Start Page" exact path={AppConstants.START_A_PROCEDURE + "/:processKey"} component={() =><ProcessStartPage/>}/>
+        <Route name="Procedure Start Page" exact path={AppConstants.SUBMIT_A_FORM + "/:processKey"} component={() =><ProcessStartPage/>}/>
         <Route name="Procedure Diagram Page" exact path={AppConstants.PROCEDURE_DIAGRAM_PATH + "/:processKey"} component={() =><ProcessDiagramPage/>}/>
         <Route name="Task Details Page" exact path={AppConstants.TASK_PATH + "/:taskId"} component={() =><TaskPage/>}/>
         <Route name="Unauthorized path" exact path={"/unauthorized"} component={() => <UnauthorizedPage/> }/>

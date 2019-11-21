@@ -2,7 +2,7 @@
 import { mount } from 'enzyme/build';
 import React from 'react';
 import Immutable from 'immutable';
-import { ProcessStartPage } from './ProcedureStartPage';
+import { ProcessStartPage } from './FormsStartPage';
 import secureLocalStorage from '../../../../common/security/SecureLocalStorage';
 
 jest.mock('../../../../common/security/SecureLocalStorage', () => ({

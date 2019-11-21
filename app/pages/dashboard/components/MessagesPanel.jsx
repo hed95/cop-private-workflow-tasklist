@@ -70,7 +70,7 @@ export class MessagesPanel extends React.Component {
         const {isFetchingMessageCounts, messageCounts} = this.props;
 
         return  <li className="__card govuk-grid-column-one-third" id="messagesPanel">
-            <a href="#" onClick={this.messages} className="card__body" id="messagesPageLink">
+            <a href={AppConstants.MESSAGES_PATH} onClick={this.messages} className="card__body" id="messagesPageLink">
                 {
                     isFetchingMessageCounts ?   <span
                     className="govuk-!-font-size-19 govuk-!-font-weight-bold">Loading</span>: <span

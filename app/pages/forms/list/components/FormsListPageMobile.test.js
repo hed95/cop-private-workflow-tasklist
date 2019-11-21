@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
-import { ProceduresPage } from './ProceduresPage';
+import { FormsListPage } from './FormsListPage';
 
 jest.mock('react-device-detect', () => ({
   isMobile: true,
@@ -24,7 +24,7 @@ describe('ProceduresPage', () => {
   });
   const fetchProcessDefinitions = jest.fn();
 
-  it('renders  a list of procedures without procedure view if mobile', async () => {
+  it('renders  a list of forms without procedure view if mobile', async () => {
     window.matchMedia = window.matchMedia || function matchMedia() {
       return {
         matches: false,
@@ -48,7 +48,7 @@ describe('ProceduresPage', () => {
         },
       }]),
     };
-    const wrapper = await mount(<ProceduresPage
+    const wrapper = await mount(<FormsListPage
       store={store}
       {...props}
       fetchProcessDefinitions={fetchProcessDefinitions}

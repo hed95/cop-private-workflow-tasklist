@@ -12,6 +12,7 @@ import DataSpinner from '../components/DataSpinner';
 import secureLocalStorage from "../../common/security/SecureLocalStorage";
 import moment from 'moment';
 import Immutable from 'immutable';
+import AppConstants from "../../common/AppConstants";
 
 const uuidv4 = require('uuid/v4');
 
@@ -39,10 +40,11 @@ export default function (ComposedComponent) {
 
 
         componentDidUpdate(prevProps, prevState, snapshot) {
-            if (!this.props.isFetchingShift && this.props.shift && this.shiftValid(this.props.shift)) {
+            if (this.props.shift && this.shiftValid(this.props.shift)) {
                 this.props.setHasActiveShift(true);
                 this.secureLocalStorage.set("shift", this.props.shift);
             } else {
+                console.error("Shift not found");
                 this.props.history.replace('/shift')
             }
         }
@@ -74,10 +76,13 @@ export default function (ComposedComponent) {
 
     class BackButton extends React.Component {
         render() {
-            if (this.props.location.pathname !== '/dashboard') {
+            if (this.props.location.pathname !== AppConstants.DASHBOARD_PATH) {
                 return <div>
-                    <a href="#" style={{textDecoration: 'none'}} className="govuk-back-link govuk-!-font-size-19"
-                       onClick={() => this.props.history.replace('/dashboard')}>Back to
+                    <a href={AppConstants.DASHBOARD_PATH} style={{textDecoration: 'none'}} className="govuk-back-link govuk-!-font-size-19"
+                       onClick={(event) => {
+                           event.preventDefault();
+                           this.props.history.replace(AppConstants.DASHBOARD_PATH)
+                       }}>Back to
                         dashboard
                     </a>
                     {this.props.children}

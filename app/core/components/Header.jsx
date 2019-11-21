@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import secureLocalStorage from '../../common/security/SecureLocalStorage';
+import AppConstants from "../../common/AppConstants";
 
 export class Header extends React.Component {
 
@@ -16,12 +17,12 @@ export class Header extends React.Component {
 
     dashboard(event) {
         event.preventDefault();
-        this.props.history.push('/');
+        this.props.history.push(AppConstants.DASHBOARD_PATH);
     }
 
     logout(event) {
-        this.secureLocalStorage.removeAll();
         event.preventDefault();
+        this.secureLocalStorage.removeAll();
         this.props.kc.logout();
     }
 
@@ -33,7 +34,8 @@ export class Header extends React.Component {
                         <div className="govuk-grid-row">
                             <div className="govuk-grid-column-one-half">
                                 <a
-                                    href=""
+                                    id="dashboard"
+                                    href={AppConstants.DASHBOARD_PATH}
                                     onClick={event => this.dashboard(event)}
                                     className="govuk-header__link govuk-header__link--service-name"
                                 >Central Operations Platform</a>
@@ -41,7 +43,11 @@ export class Header extends React.Component {
                             <div className="govuk-grid-column-one-half header-nav">
                                 <a
                                     id="profile"
-                                    href="/start-a-procedure/edit-your-profile"
+                                    href={`${AppConstants.SUBMIT_A_FORM}/edit-your-profile`}
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        this.props.history.replace(`${AppConstants.SUBMIT_A_FORM}/edit-your-profile`)
+                                    }}
                                     className="govuk-header__link header-nav__link"
                                 >My profile</a>
                                 <a
@@ -51,7 +57,7 @@ export class Header extends React.Component {
                                 >Support</a>
                                 <a
                                     id="logout"
-                                    href=""
+                                    href="/logout"
                                     onClick={this.logout}
                                     className="govuk-header__link header-nav__link"
                                 >Sign out</a>

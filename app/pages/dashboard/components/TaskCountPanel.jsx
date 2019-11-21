@@ -80,7 +80,7 @@ export class TaskCountPanel extends React.Component {
         const {taskCounts, isFetchingTaskCounts} = this.props;
         return <div>
             <li className="__card govuk-grid-column-one-third" id="yourTasksPanel">
-                <a href="#" onClick={this.yourTasks} className="card__body" id="yourTasksPageLink">
+                <a href={AppConstants.YOUR_TASKS_PATH} onClick={this.yourTasks} className="card__body" id="yourTasksPageLink">
                     {isFetchingTaskCounts ? <span
                       className="govuk-!-font-size-19 govuk-!-font-weight-bold">Loading</span> :<span
                       className="govuk-!-font-size-48 govuk-!-font-weight-bold" id="yourTaskCount">{taskCounts.get('tasksAssignedToUser')}</span>
@@ -92,7 +92,7 @@ export class TaskCountPanel extends React.Component {
                 </div>
             </li>
             <li className="__card govuk-grid-column-one-third" id="youTeamTasks">
-                <a href="#" onClick={this.yourTeamTotalTasks} className="card__body" id="yourTeamTasksPageLink">
+                <a href={AppConstants.YOUR_GROUP_TASKS_PATH} onClick={this.yourTeamTotalTasks} className="card__body" id="yourTeamTasksPageLink">
 
                     {
                         isFetchingTaskCounts ? <span
