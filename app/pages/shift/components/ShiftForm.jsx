@@ -2,7 +2,7 @@ import React from 'react';
 import {Form} from 'react-formio';
 import moment from 'moment';
 import AppConstants from "../../../common/AppConstants";
-import GovUKFrontEndObserver from '../../../core/util/GovUKFrontEndObserver';
+import GovUKDetailsObserver from '../../../core/util/GovUKDetailsObserver';
 
 export default class ShiftForm extends React.Component {
 
@@ -12,7 +12,7 @@ export default class ShiftForm extends React.Component {
     }
 
     componentDidMount() {
-        this.observer = new GovUKFrontEndObserver(this.formNode.element).create();
+        this.observer = new GovUKDetailsObserver(this.formNode.element).create();
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {

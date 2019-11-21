@@ -17,7 +17,6 @@ import secureLocalStorage from '../../../../common/security/SecureLocalStorage';
 import withLog from '../../../../core/error/component/withLog';
 import {FAILED, SUBMISSION_SUCCESSFUL, SUBMITTING} from '../constants';
 import PubSub from 'pubsub-js';
-import {Details} from 'govuk-frontend';
 
 export class ProcessStartPage extends React.Component {
 
@@ -29,7 +28,6 @@ export class ProcessStartPage extends React.Component {
 
 
     componentDidMount() {
-
         if (this.props.processKey) {
             this.props.fetchProcessDefinition(this.props.processKey);
         } else {
@@ -165,12 +163,6 @@ export class ProcessStartPage extends React.Component {
                                                this.form = formLoaded;
                                                if (this.form) {
                                                    this.form.createPromise.then(() => {
-                                                       this.form.formio.on('render', () => {
-                                                           const details = document.querySelectorAll('[data-module="govuk-details"]');
-                                                           details.forEach(  (detail) => {
-                                                               new Details(detail).init();
-                                                           });
-                                                       });
                                                        this.form.formio.on('error', errors => {
                                                            PubSub.publish("formSubmissionError", {errors: errors, form: this.form});
                                                            window.scrollTo(0, 0);
