@@ -41,10 +41,12 @@ function shiftReducer(state = shiftInitialState, action) {
     case actions.SUBMIT_VALIDATION:
       return state.set('submittingActiveShift', true).set('failedToCreateShift', false);
     case actions.CREATE_ACTIVE_SHIFT_SUCCESS:
+      const shift = JSON.parse(action.payload.entity.variables['shiftInfo'].value);
       return state
         .set('submittingActiveShift', false)
         .set('activeShiftSuccess', true)
-        .set('hasActiveShift', true);
+        .set('hasActiveShift', true)
+        .set('shift',  Immutable.fromJS(shift));
     case actions.CREATE_ACTIVE_SHIFT_FAILURE:
       return state
         .set('activeShiftSuccess', false).set('submittingActiveShift', false)

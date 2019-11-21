@@ -101,53 +101,11 @@ const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT_VALID
         Authorization: `Bearer ${store.getState().keycloak.token}`,
         'Content-Type': 'application/json',
       },
-    }).map(payload => ({
-      type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE
-    })).retryWhen(retry)
+    }).map(payload => {
+        return actions.createActiveShiftSuccess(payload);
+    }).retryWhen(retry)
       .catch(error => errorObservable(actions.submitFailure(), error));
   });
 
 
-const fetchActiveShiftAfterCreation = (action$, store, { client }) => action$.ofType(types.FETCH_ACTIVE_SHIFT_AFTER_CREATE)
-  .mergeMap(() => shift(
-    store.getState().keycloak.tokenParsed.email,
-    store.getState().keycloak.token,
-    store.getState().appConfig.operationalDataUrl,
-    client,
-  )
-    .retryWhen(retry)
-    .flatMap(payload => {
-      if (payload.status.code === 200 && payload.entity.length === 0) {
-        console.log('Empty shift details returned...retying as shift creation is asynchronous');
-        throw {
-          status: {
-            code: 403,
-          },
-        };
-      } else {
-        console.log('Shift details located...');
-        PubSub.publish('submission', {
-          submission: true,
-          autoDismiss: true,
-          message: 'Shift successfully started',
-        });
-        return ([actions.createActiveShiftSuccess(),
-          actions.fetchActiveShiftSuccess(payload)]);
-      }
-    })
-    .retryWhen(errors => errors
-      .takeWhile(error => {
-        const retryableError = error.status.code === 403;
-        console.log('Retryable error while trying to get shift...');
-        return retryableError;
-      })
-      .delay(1000)
-      .take(10)
-      .concat(errors.flatMap(s => Rx.Observable.throw(s))))
-    .catch(error => {
-      console.log(`Failed to create shift information...${JSON.stringify(error)}`);
-      return errorObservable(actions.createActiveShiftFailure(), error);
-    }));
-
-export default combineEpics(fetchActiveShift, submit, fetchShiftForm,
-  fetchActiveShiftAfterCreation, fetchStaffDetails, endShift);
+export default combineEpics(fetchActiveShift, submit, fetchShiftForm, fetchStaffDetails, endShift);
