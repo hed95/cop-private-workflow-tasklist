@@ -112,7 +112,7 @@ const fetchActiveShiftAfterCreation = (action$, store, { client }) => action$.of
   .mergeMap(() => shift(
     store.getState().keycloak.tokenParsed.email,
     store.getState().keycloak.token,
-    store.getState().appConfig.operationalDataUrl,
+    store.getState().appConfig.workflowServiceUrl,
     client,
   )
     .retryWhen(retry)

@@ -26,6 +26,7 @@ class DashboardTitle extends React.Component {
         e.preventDefault();
         this.secureLocalStorage.remove("shift");
         this.props.endShift();
+        this.props.kc.logout();
     }
 
 
@@ -68,7 +69,10 @@ class DashboardTitle extends React.Component {
 
 
 DashboardTitle.propTypes = {
-    endShift: PropTypes.func.isRequired
+    endShift: PropTypes.func.isRequired,
+    kc: PropTypes.shape({
+        logout: PropTypes.func,
+    }).isRequired,
 };
 
 
