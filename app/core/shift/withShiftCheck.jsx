@@ -34,18 +34,16 @@ export default function (ComposedComponent) {
                 this.props.setHasActiveShift(true);
             } else {
                 this.props.setHasActiveShift(false);
-                this.secureLocalStorage.remove("shift");
             }
         }
 
 
         componentDidUpdate(prevProps, prevState, snapshot) {
-            if (this.props.shift && this.shiftValid(this.props.shift)) {
-                this.props.setHasActiveShift(true);
+            if (this.props.hasActiveShift && this.shiftValid(this.props.shift)) {
                 this.secureLocalStorage.set("shift", this.props.shift);
             } else {
-                console.error("Shift not found");
-                this.props.history.replace('/shift')
+                this.secureLocalStorage.remove("shift");
+                this.props.history.replace(AppConstants.SHIFT_PATH)
             }
         }
 
@@ -67,7 +65,8 @@ export default function (ComposedComponent) {
                     return <ErrorHandlingComponent><BackButton {...this.props}><ComposedComponent {...this.props}
                                                                                                   key={uuidv4()}/></BackButton></ErrorHandlingComponent>;
                 } else {
-                    return <Redirect to={"/shift"}/>;
+                    console.error("here");
+                    return <Redirect to={AppConstants.SHIFT_PATH}/>;
                 }
             }
         }
@@ -77,18 +76,16 @@ export default function (ComposedComponent) {
     class BackButton extends React.Component {
         render() {
             if (this.props.location.pathname !== AppConstants.DASHBOARD_PATH) {
-                return <div>
+                return <React.Fragment>
                     <a href={AppConstants.DASHBOARD_PATH} style={{textDecoration: 'none'}} className="govuk-back-link govuk-!-font-size-19"
                        onClick={(event) => {
                            event.preventDefault();
                            this.props.history.replace(AppConstants.DASHBOARD_PATH)
-                       }}>Back to
-                        dashboard
-                    </a>
+                       }}>Back to dashboard</a>
                     {this.props.children}
-                </div>;
+                </React.Fragment>;
             }
-            return <div>{this.props.children}</div>;
+            return <React.Fragment>{this.props.children}</React.Fragment>;
         }
     }
 

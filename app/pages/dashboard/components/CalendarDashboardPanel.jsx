@@ -14,7 +14,7 @@ export class CalendarDashboardPanel extends React.Component {
     }
     render() {
         return <li className="__card govuk-grid-column-one-third" id="calendarPanel" style={{marginBottom: '30px'}}>
-            <a href={ AppConstants.CALENDAR_PATH} className="card__body" id="calendarPageLink" style={{color: '#005ea5'}}>
+            <a href={AppConstants.CALENDAR_PATH} className="card__body" id="calendarPageLink" style={{color: '#005ea5'}} onClick={this.calendar.bind(this)}>
                 <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">Calendar</span>
             </a>
             <div className="card__footer">

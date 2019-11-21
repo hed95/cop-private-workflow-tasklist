@@ -57,7 +57,7 @@ export class Header extends React.Component {
                                 >Support</a>
                                 <a
                                     id="logout"
-                                    href="/logout"
+                                    href={"/logout"}
                                     onClick={this.logout}
                                     className="govuk-header__link header-nav__link"
                                 >Sign out</a>

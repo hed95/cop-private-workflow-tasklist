@@ -7,6 +7,7 @@ import * as actions from "../../../core/shift/actions";
 import {endingShift, hasActiveShift} from "../../../core/shift/selectors";
 import "./DashboardTitle.css";
 import secureLocalStorage from '../../../common/security/SecureLocalStorage';
+import AppConstants from "../../../common/AppConstants";
 
 class DashboardTitle extends React.Component {
 
@@ -19,7 +20,7 @@ class DashboardTitle extends React.Component {
 
     viewShift(e) {
         e.preventDefault();
-        this.props.history.replace("/shift");
+        this.props.history.replace(AppConstants.SHIFT_PATH);
     }
 
     endShift(e) {
