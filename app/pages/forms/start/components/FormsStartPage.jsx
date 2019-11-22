@@ -84,7 +84,7 @@ export class ProcessStartPage extends React.Component {
                     message: `Procedure ${processKey} successfully started`
                 }]);
                 Formio.clearCache();
-                if (this.props.submissionResponse.tasks && this.props.submissionResponse.tasks.length === 0) {
+                if (!this.props.submissionResponse.tasks || this.props.submissionResponse.tasks.length === 0) {
                     PubSub.publish('submission', {
                         submission: true,
                         autoDismiss: true,

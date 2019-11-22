@@ -65,7 +65,6 @@ export default function (ComposedComponent) {
                     return <ErrorHandlingComponent><BackButton {...this.props}><ComposedComponent {...this.props}
                                                                                                   key={uuidv4()}/></BackButton></ErrorHandlingComponent>;
                 } else {
-                    console.error("here");
                     return <Redirect to={AppConstants.SHIFT_PATH}/>;
                 }
             }

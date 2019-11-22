@@ -23,7 +23,7 @@ export class Header extends React.Component {
     logout(event) {
         event.preventDefault();
         this.secureLocalStorage.removeAll();
-        this.props.kc.logout();
+       this.props.kc.logout();
     }
 
     render() {

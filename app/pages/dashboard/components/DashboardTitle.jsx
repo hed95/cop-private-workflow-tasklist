@@ -27,7 +27,6 @@ class DashboardTitle extends React.Component {
         e.preventDefault();
         this.secureLocalStorage.remove("shift");
         this.props.endShift();
-        this.props.kc.logout();
     }
 
 
