@@ -32,9 +32,9 @@ class FormioSubmissionListener {
                 path: path,
                 level: 'error',
                 form: {
-                    name: form.name,
-                    path: form.path,
-                    display: form.display
+                    name: this.form.name,
+                    path: this.form.path,
+                    display: this.form.display
                 },
                 message: error.message,
                 component: {

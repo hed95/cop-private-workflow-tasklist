@@ -84,7 +84,7 @@ export class ProcessStartPage extends React.Component {
                     message: `Procedure ${processKey} successfully started`
                 }]);
                 Formio.clearCache();
-                if (this.props.submissionResponse.tasks.length === 0) {
+                if (this.props.submissionResponse.tasks && this.props.submissionResponse.tasks.length === 0) {
                     PubSub.publish('submission', {
                         submission: true,
                         autoDismiss: true,
@@ -178,7 +178,7 @@ export class ProcessStartPage extends React.Component {
                                 <span className="govuk-caption-l">Operational form</span>
                                 <h2 className="govuk-heading-l">{processDefinition.getIn(['process-definition', 'name'])}</h2>
                                 {
-                                    this.props.submissionResponse && this.props.submissionResponse.tasks.length !== 0 ?
+                                    this.props.submissionResponse && (this.props.submissionResponse.tasks &&this.props.submissionResponse.tasks.length !== 0) ?
                                         <CompleteTaskForm
                                             variables={this.props.submissionResponse.variables}
                                             fromProcedure={true}
