@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
-  return (
-    <footer className="govuk-footer " role="contentinfo">
+  return <footer className="govuk-footer " role="contentinfo">
       <div className="govuk-width-container ">
         <div className="govuk-footer__meta">
           <div className="govuk-footer__meta-item govuk-footer__meta-item--grow">
@@ -22,8 +21,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  )
+    </footer>;
 };
 
 export default Footer;

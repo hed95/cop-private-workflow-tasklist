@@ -27,8 +27,7 @@ export class Header extends React.Component {
     }
 
     render() {
-        return (<div>
-            <header className="govuk-header" role="banner" data-module="header">
+        return <header className="govuk-header" role="banner" data-module="header">
                 <div className="govuk-header__container govuk-width-container">
                     <div className="govuk-header__content" style={{width: '100%'}}>
                         <div className="govuk-grid-row">
@@ -65,8 +64,7 @@ export class Header extends React.Component {
                         </div>
                     </div>
                 </div>
-            </header>
-        </div>);
+            </header>;
     }
 }
 

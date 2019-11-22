@@ -31,7 +31,7 @@ const UnauthorizedPage = lazy(() => import('../core/components/UnauthorizedPage'
 const NoOpDashboardPage = lazy(() => import ('../pages/dashboard/components/NoOpDashboardPage'));
 
 const Main = () => (
-  <main style={{paddingTop: '10px'}}>
+  <main style={{paddingTop: '10px'}} className="govuk-main-wrapper" id="main-content" role="main">
     <Suspense fallback={<div style={{ justifyContent: 'center'}}><DataSpinner message="Loading routes"/></div>}>
       <Switch>
         <Route name="Privacy Policy" exact path={"/privacy-policy"} component={PrivacyPolicy}/>
