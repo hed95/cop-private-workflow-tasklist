@@ -2,7 +2,7 @@ import React from 'react';
 import { Form } from 'react-formio';
 import AppConstants from '../../../../common/AppConstants';
 import PubSub from 'pubsub-js';
-import {Details} from 'govuk-frontend';
+import GovUKDetailsObserver from '../../../../core/util/GovUKDetailsObserver';
 
 export default class TaskForm extends React.Component {
 
@@ -10,6 +10,9 @@ export default class TaskForm extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    this.observer = new GovUKDetailsObserver(this.form.element).create();
+  }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
     return false;
@@ -60,12 +63,6 @@ export default class TaskForm extends React.Component {
                    formReference(form);
                    if (this.form) {
                      this.form.createPromise.then(() => {
-                       this.form.formio.on('render', () => {
-                         const details = document.querySelectorAll('[data-module="govuk-details"]');
-                         details.forEach(  (detail) => {
-                           new Details(detail).init();
-                         });
-                       });
                        this.form.formio.on('error', errors => {
                          PubSub.publish('formSubmissionError', {
                            errors: errors,
