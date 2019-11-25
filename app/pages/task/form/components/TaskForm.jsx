@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form} from 'react-formio';
 import AppConstants from '../../../../common/AppConstants';
-import GovUKFrontEndObserver from "../../../../core/util/GovUKFrontEndObserver";
+import GovUKDetailsObserver from "../../../../core/util/GovUKDetailsObserver";
 import FormioSubmissionListener from "../../../../core/util/FormioSubmissionListener";
 
 export default class TaskForm extends React.Component {
@@ -12,7 +12,7 @@ export default class TaskForm extends React.Component {
     }
 
     componentDidMount() {
-        this.observer = new GovUKFrontEndObserver(this.formNode.element).create();
+        this.observer = new GovUKDetailsObserver(this.formNode.element).create();
     }
 
     componentWillUnmount() {

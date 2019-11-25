@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form} from 'react-formio';
 import AppConstants from '../../../../common/AppConstants';
-import GovUKFrontEndObserver from '../../../../core/util/GovUKFrontEndObserver';
+import GovUKDetailsObserver from '../../../../core/util/GovUKDetailsObserver';
 import FileService from '../../../../core/FileService';
 
 class StartForm extends React.Component {
@@ -11,7 +11,7 @@ class StartForm extends React.Component {
   }
 
   componentDidMount() {
-    this.observer = new GovUKFrontEndObserver(this.formNode.element).create();
+    this.observer = new GovUKDetailsObserver(this.formNode.element).create();
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
