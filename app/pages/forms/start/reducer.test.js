@@ -14,6 +14,7 @@ describe('Start Form Reducer', () => {
         loadingForm: true,
         form: null,
         submissionStatus: 'NOT_SUBMITTED',
+        submissionResponse: null
       }));
   });
   it('captures successful form fetch', () => {
