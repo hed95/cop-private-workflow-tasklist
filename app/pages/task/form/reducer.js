@@ -12,8 +12,8 @@ const initialState = new Map({
   submissionStatus: NOT_SUBMITTED,
   customEventSubmissionStatus: NOT_SUBMITTED,
   submissionResponse: null,
-  task: null,
-  variables: null
+  nextTask: null,
+  nextVariables: null
 });
 
 function reducer(state = initialState, action) {
@@ -44,10 +44,8 @@ function reducer(state = initialState, action) {
       return state.set('submissionStatus', FAILED);
     case actions.SET_NEXT_TASK:
       const task = action.task;
-      return state.set('task', new Map({
-          id: task.id,
-          assignee: task.assignee
-      })).set('variables', action.variables);
+      return state.set('nextTask', Immutable.fromJS(task))
+          .set('nextVariables', action.variables);
     case actions.TASK_CUSTOM_EVENT:
       return state.set('customEventSubmissionStatus', SUBMITTING);
     case actions.TASK_CUSTOM_EVENT_SUCCESS:
