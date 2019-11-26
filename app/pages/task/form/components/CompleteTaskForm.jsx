@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {customEventSubmissionStatus, form, loadingTaskForm, submissionResponse, submissionStatus} from '../selectors';
+import {
+    customEventSubmissionStatus,
+    form,
+    loadingTaskForm, nextTask, nextVariables,
+    submissionResponse,
+    submissionStatus
+} from '../selectors';
 import {bindActionCreators} from 'redux';
 import * as taskFormActions from '../actions';
 import * as taskActions from '../../display/actions';
@@ -130,9 +136,10 @@ export class CompleteTaskForm extends React.Component {
         this.props.resetForm();
     }
 
-
     render() {
-        const {loadingTaskForm, form, task, fromProcedure, submissionStatus} = this.props;
+        const {loadingTaskForm, form, fromProcedure, submissionStatus, nextTask, nextVariables} = this.props;
+        const task = nextTask ? nextTask: this.props.task;
+        const variables = nextVariables? nextVariables: this.props.variables;
         if (loadingTaskForm) {
             return <DataSpinner
                 message={fromProcedure ? "Loading next form to complete" : "Loading form for task..."}/>;
@@ -140,6 +147,7 @@ export class CompleteTaskForm extends React.Component {
         if (!form) {
             return <NotFound resource="Form" id={task.get('name')}/>;
         }
+
         return <Loader show={submissionStatus === SUBMITTING}
                        message={<div style={{
                            justifyContent: 'center',
@@ -155,9 +163,9 @@ export class CompleteTaskForm extends React.Component {
                        hideContentOnLoad={submissionStatus === SUBMITTING}
                        foregroundStyle={{color: 'black'}}
                        backgroundStyle={{backgroundColor: 'white'}}><TaskForm
-            task={this.props.task}
-            variables={this.props.variables}
-            form={this.props.form}
+            task={task}
+            variables={variables}
+            form={form}
             onSubmitTaskForm={(submissionData, variableName) => {
                 this.props.submitTaskForm(form.id, task.get('id'),
                     submissionData, variableName);
@@ -191,6 +199,8 @@ export default withRouter(connect((state) => {
         submissionStatus: submissionStatus(state),
         customEventSubmissionStatus: customEventSubmissionStatus(state),
         submissionResponse: submissionResponse(state),
+        nextTask: nextTask(state),
+        nextVariables: nextVariables(state),
         kc: state.keycloak
     };
 }, mapDispatchToProps)(withLog(CompleteTaskForm)));
