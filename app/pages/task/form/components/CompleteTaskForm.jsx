@@ -5,8 +5,7 @@ import {
     form,
     loadingTaskForm, nextTask, nextVariables,
     submissionResponse,
-    submissionStatus,
-    task, variables
+    submissionStatus
 } from '../selectors';
 import {bindActionCreators} from 'redux';
 import * as taskFormActions from '../actions';
