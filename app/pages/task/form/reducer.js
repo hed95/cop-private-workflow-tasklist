@@ -11,6 +11,9 @@ const initialState = new Map({
   form: null,
   submissionStatus: NOT_SUBMITTED,
   customEventSubmissionStatus: NOT_SUBMITTED,
+  submissionResponse: null,
+  task: null,
+  variables: null
 });
 
 function reducer(state = initialState, action) {
@@ -35,10 +38,16 @@ function reducer(state = initialState, action) {
     case actions.COMPLETE_TASK_FORM:
       return state.set('submissionStatus', SUBMITTING);
     case actions.COMPLETE_TASK_FORM_SUCCESS:
-      return state.set('submissionStatus', SUBMISSION_SUCCESSFUL);
+      return state.set('submissionStatus', SUBMISSION_SUCCESSFUL)
+          .set('submissionResponse', action.payload.entity);
     case actions.COMPLETE_TASK_FORM_FAILURE:
       return state.set('submissionStatus', FAILED);
-
+    case actions.SET_NEXT_TASK:
+      const task = action.task;
+      return state.set('task', new Map({
+          id: task.id,
+          assignee: task.assignee
+      })).set('variables', action.variables);
     case actions.TASK_CUSTOM_EVENT:
       return state.set('customEventSubmissionStatus', SUBMITTING);
     case actions.TASK_CUSTOM_EVENT_SUCCESS:

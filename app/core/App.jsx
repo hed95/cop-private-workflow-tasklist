@@ -7,19 +7,12 @@ import {withRouter} from 'react-router';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {ErrorHandlingComponent} from './error/component/ErrorHandlingComponent';
 import withLog from './error/component/withLog';
-import secureLocalStorage from '../common/security/SecureLocalStorage';
-
+import {clearAllExceptShift} from "../common/security/SecureLocalStorage";
 
 const SubmissionBanner = lazy(() => import('../core/components/SubmissionBanner'));
 
 export class App extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.secureLocalStorage = secureLocalStorage;
-    }
 
     componentDidMount() {
         const user = this.props.kc.tokenParsed.email;
@@ -35,7 +28,7 @@ export class App extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         const user = this.props.kc.tokenParsed.email;
         if (this.props.location !== prevProps.location) {
-            this.secureLocalStorage.removeAll();
+            clearAllExceptShift();
             this.props.log([{
                 level: 'debug',
                 user: user,
@@ -52,9 +45,9 @@ export class App extends React.Component {
     }
 
     render() {
-        return <div>
+        return <React.Fragment>
             <Header/>
-            <div className="container" style={{height: '100%'}}>
+            <div className="govuk-width-container" style={{height: '100%'}}>
                 <AppBanner {...this.props}/>
                 <Suspense
                     fallback={<div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}>
@@ -64,12 +57,12 @@ export class App extends React.Component {
                 <Main/>
             </div>
             <Footer/>
-        </div>;
+        </React.Fragment>;
     }
 }
 
-const AppBanner = (props) => {
-    return <div className="govuk-phase-banner">
+const AppBanner = (props) => (
+    <div className="govuk-phase-banner">
         <p className="govuk-phase-banner__content"><strong
             className="govuk-tag govuk-phase-banner__content__tag ">
             {props.appConfig.uiVersion}
@@ -79,8 +72,8 @@ const AppBanner = (props) => {
                       {props.appConfig.uiEnvironment}
                 </strong></span>
         </p>
-    </div>
-}
+    </div>);
+
 
 App.propTypes = {
     log: PropTypes.func,

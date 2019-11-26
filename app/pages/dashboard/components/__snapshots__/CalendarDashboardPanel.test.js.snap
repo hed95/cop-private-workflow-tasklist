@@ -25,7 +25,9 @@ exports[`Calendar Dashboard Panel renders calendar dashboard panel 1`] = `
   >
     <a
       className="card__body"
+      href="/calendar"
       id="calendarPageLink"
+      onClick={[Function]}
       style={
         Object {
           "color": "#005ea5",

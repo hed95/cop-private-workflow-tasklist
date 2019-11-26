@@ -8,12 +8,8 @@ class SubmissionBanner extends React.Component {
     super();
     this.state = { submission: false, message: null, visibility: 'hidden' };
     this.handleSubmission = this.handleSubmission.bind(this);
-  }
-
-  componentWillMount() {
     this.token = PubSub.subscribe('submission', this.handleSubmission);
   }
-
 
   componentWillUnmount() {
     if (this.token) {

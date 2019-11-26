@@ -2,7 +2,7 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import Immutable from 'immutable';
-import { ProceduresPage } from './ProceduresPage';
+import { FormsListPage } from './FormsListPage';
 
 jest.mock('react-device-detect', () => ({
   isMobile: false,
@@ -30,7 +30,7 @@ describe('ProceduresPage', () => {
       isFetchingProcessDefinitions: true,
       processDefinitions: List([]),
     };
-    const wrapper = shallow(<ProceduresPage
+    const wrapper = shallow(<FormsListPage
       store={store}
       {...props}
       fetchProcessDefinitions={fetchProcessDefinitions}
@@ -67,7 +67,7 @@ describe('ProceduresPage', () => {
         },
       }]),
     };
-    const wrapper = await mount(<ProceduresPage
+    const wrapper = await mount(<FormsListPage
       store={store}
       {...props}
       fetchProcessDefinitions={fetchProcessDefinitions}

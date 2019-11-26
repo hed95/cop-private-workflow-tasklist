@@ -30,7 +30,7 @@ describe('shift reducer', () => {
       staffid: 'staffid',
     };
     const state = reducer(initialState, actions.fetchActiveShiftSuccess({
-      entity: [shiftDetails],
+      entity: shiftDetails,
     }));
     expect(state.get('isFetchingShift')).toEqual(false);
     expect(state.get('hasActiveShift')).toEqual(true);

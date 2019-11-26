@@ -12,6 +12,7 @@ const initialState = new Map({
   loadingForm: true,
   form: null,
   submissionStatus: NOT_SUBMITTED,
+  submissionResponse: null,
 });
 
 function reducer(state = initialState, action) {
@@ -42,7 +43,8 @@ function reducer(state = initialState, action) {
     case actions.SUBMIT_TO_WORKFLOW || actions.SUBMIT_TO_WORKFLOW_NON_SHIFT:
       return state.set('submissionStatus', SUBMITTING);
     case actions.SUBMIT_TO_WORKFLOW_SUCCESS:
-      return state.set('submissionStatus', SUBMISSION_SUCCESSFUL);
+      return state.set('submissionStatus', SUBMISSION_SUCCESSFUL)
+          .set('submissionResponse', action.payload.entity);
     case actions.SUBMIT_TO_WORKFLOW_FAILURE:
       return state.set('submissionStatus', FAILED);
     default:

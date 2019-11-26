@@ -6,6 +6,9 @@
 @import "base/colors";
 @import "components/footer";
 
+a {
+  cursor: pointer;
+}
 html {
   background-color: govuk-colour("light-grey");
 }

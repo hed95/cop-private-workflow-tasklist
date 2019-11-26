@@ -12,9 +12,10 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 import ReactHyperResponsiveTable from 'react-hyper-responsive-table';
 import * as types  from "react-device-detect";
-import './ProceduresPage.css';
+import './FormsListPage.css';
+import AppConstants from "../../../../common/AppConstants";
 
-export class ProceduresPage extends React.Component {
+export class FormsListPage extends React.Component {
 
   componentDidMount() {
     this.props.fetchProcessDefinitions();
@@ -23,7 +24,7 @@ export class ProceduresPage extends React.Component {
   }
 
   process = (process) => {
-    this.props.history.replace('/start-a-procedure/' + process.getIn(['process-definition', 'key']));
+    this.props.history.replace(`${AppConstants.SUBMIT_A_FORM}/${process.getIn(['process-definition', 'key'])}`);
   };
 
   viewProcessDiagram = (process) => {
@@ -72,7 +73,7 @@ export class ProceduresPage extends React.Component {
   }
 }
 
-ProceduresPage.propTypes = {
+FormsListPage.propTypes = {
   fetchProcessDefinitions: PropTypes.func.isRequired,
   processDefinitions: ImmutablePropTypes.list.isRequired,
   isFetchingProcessDefinitions: PropTypes.bool
@@ -85,4 +86,4 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ProceduresPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(FormsListPage));

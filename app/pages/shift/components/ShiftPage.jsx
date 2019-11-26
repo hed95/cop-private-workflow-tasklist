@@ -15,15 +15,16 @@ import {
     staffDetails,
     submittingActiveShift,
 } from '../../../core/shift/selectors';
-import { Form } from 'react-formio';
 import * as actions from '../../../core/shift/actions';
 import Loader from 'react-loader-advanced';
 import DataSpinner from '../../../core/components/DataSpinner';
 import ShiftForm from './ShiftForm';
+import secureLocalStorage from "../../../common/security/SecureLocalStorage";
 
 export class ShiftPage extends React.Component {
   constructor(props) {
       super(props);
+      this.secureLocalStorage = secureLocalStorage;
     }
 
   componentDidMount() {
@@ -36,6 +37,7 @@ export class ShiftPage extends React.Component {
       if (this.props.submittingActiveShift !== prevProps.submittingActiveShift && !this.props.submittingActiveShift) {
           if (this.form && this.form.formio) {
               if (this.props.activeShiftSuccess) {
+                  this.secureLocalStorage.set('shift', this.props.shift);
                   this.form.formio.emit('submitDone');
                   this.props.history.replace('/dashboard');
                 } else {

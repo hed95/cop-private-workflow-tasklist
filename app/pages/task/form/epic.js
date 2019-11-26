@@ -83,11 +83,6 @@ const submitTaskForm = (action$, store, { client }) => action$.ofType(types.SUBM
         'Content-Type': 'application/json',
       },
     }).map(payload => {
-      PubSub.publish('submission', {
-        submission: true,
-        autoDismiss: true,
-        message: 'Task successfully completed',
-      });
       return actions.completeTaskSuccess(payload);
     }).catch(error => errorObservable(actions.completeTaskFailure(), error))
   });

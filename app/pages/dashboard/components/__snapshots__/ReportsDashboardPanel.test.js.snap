@@ -24,7 +24,7 @@ exports[`Reports Dashboard Panel renders reports dashboard panel 1`] = `
   >
     <a
       className="card__body"
-      href="#"
+      href="/reports"
       id="reportsPageLink"
       onClick={[Function]}
     >

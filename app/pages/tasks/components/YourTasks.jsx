@@ -6,7 +6,7 @@ import React from 'react';
 import ReactHyperResponsiveTable from 'react-hyper-responsive-table';
 import moment from 'moment';
 
-// local imports
+
 import './YourTasks.scss';
 import FilterTaskName from './FilterTaskName';
 import SortTasks from './SortTasks';
@@ -19,7 +19,6 @@ const YourTasks = props => {
     goToTask,
   } = props;
   let groupedTasks = [];
-  // mobile headers
   let headers = { name: null, action: null };
 
   if (yourTasks && yourTasks.get('tasks')) {
@@ -37,7 +36,6 @@ const YourTasks = props => {
   };
   const sortedData = sortByKeys(groupedTasks);
 
-  // desktop headers
   if (!types.isMobile) {
     headers = {
       name: null,
@@ -56,11 +54,10 @@ const YourTasks = props => {
       const localDateTime = moment(utcDateTime).local().format();
       const dueDateTime = moment().to(localDateTime);
 
-      // mobile phone users
       if (types.isMobile) {
         return { id: task.id, action: actionButton, name: task.name };
       }
-      // desktop users
+
       return {
         id: task.id,
         name: <div className="govuk-!-font-size-19">{task.name}</div>,
@@ -89,10 +86,6 @@ const YourTasks = props => {
   });
 
   let totalTasks = yourTasks.get('total');
-  // 1 task (singular) example:
-  //   '1 task'
-  // 0 or more than 1 tasks (plural) example:
-  //   '0 tasks'
   totalTasks = totalTasks === 1 ? `${totalTasks} task` : `${totalTasks} tasks`;
 
   return (

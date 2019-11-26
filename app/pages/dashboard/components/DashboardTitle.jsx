@@ -6,30 +6,35 @@ import {connect} from "react-redux";
 import * as actions from "../../../core/shift/actions";
 import {endingShift, hasActiveShift} from "../../../core/shift/selectors";
 import "./DashboardTitle.css";
+import secureLocalStorage from '../../../common/security/SecureLocalStorage';
+import AppConstants from "../../../common/AppConstants";
+
 class DashboardTitle extends React.Component {
 
-    componentWillMount() {
+    constructor(props) {
+        super(props);
         this.endShift = this.endShift.bind(this);
         this.viewShift = this.viewShift.bind(this);
+        this.secureLocalStorage = secureLocalStorage;
     }
 
     viewShift(e) {
         e.preventDefault();
-        this.props.history.replace("/shift");
+        this.props.history.replace(AppConstants.SHIFT_PATH);
     }
 
     endShift(e) {
         e.preventDefault();
+        this.secureLocalStorage.remove("shift");
         this.props.endShift();
     }
 
 
-    componentWillReceiveProps(nextProps) {
-        if (!nextProps.hasActiveShift) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (!this.props.hasActiveShift) {
             window.location.reload();
         }
     }
-
 
     render() {
         return <div className="govuk-grid-row" style={{paddingTop: '10px'}}>
@@ -64,7 +69,10 @@ class DashboardTitle extends React.Component {
 
 
 DashboardTitle.propTypes = {
-    endShift: PropTypes.func.isRequired
+    endShift: PropTypes.func.isRequired,
+    kc: PropTypes.shape({
+        logout: PropTypes.func,
+    }).isRequired,
 };
 
 

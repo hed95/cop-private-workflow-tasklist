@@ -6,7 +6,7 @@ export default class AppConstants {
 
     static YOUR_GROUP_TASKS_PATH = '/your-group-tasks';
 
-    static PROCEDURES_PATH = '/procedures';
+    static FORMS_PATH = '/forms';
 
     static REPORTS_PATH = '/reports';
 
@@ -16,7 +16,7 @@ export default class AppConstants {
 
     static CALENDAR_PATH = '/calendar';
 
-    static START_A_PROCEDURE = '/start-a-procedure';
+    static SUBMIT_A_FORM = '/submit-a-form';
 
     static TASK_PATH='/task';
 

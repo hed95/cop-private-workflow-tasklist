@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import Spinner from 'react-spinkit';
 import { isMobile } from 'react-device-detect';
 import { isFetchingProcessDefinitionXml, processDefinitionXml } from '../selectors';
+import AppConstants from "../../../../common/AppConstants";
 
 class ProcessDiagramPage extends React.Component {
 
@@ -42,7 +43,7 @@ class ProcessDiagramPage extends React.Component {
         procedures
       </a>
       <div id="startProcedure" style={{ position: 'absolute', right: '2px', width: '200px'}}>
-        <button id="actionButton" className="govuk-button app-button--inverse" onClick={(event) => this.props.history.replace('/start-a-procedure/'
+        <button id="actionButton" className="govuk-button app-button--inverse" onClick={(event) => this.props.history.replace(AppConstants.SUBMIT_A_FORM + '/'
           + processDefinition.getIn(['process-definition', 'key']))} type="submit"
         >Start</button>
       </div>

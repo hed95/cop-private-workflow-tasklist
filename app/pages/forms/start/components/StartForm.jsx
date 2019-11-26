@@ -19,11 +19,9 @@ class StartForm extends React.Component {
   }
 
   handleCancel = (resetForm) => {
-    this.props.history.replace(AppConstants.PROCEDURES_PATH);
+    this.props.history.replace(AppConstants.FORMS_PATH);
     resetForm(false);
   };
-
-
 
   render() {
     const { dataChange, submission, formReference, handleSubmit, onCustomEvent, startForm, kc} = this.props;
@@ -51,8 +49,8 @@ class StartForm extends React.Component {
         }
       }
     };
-    if (submission) {
-      return <Form
+
+    return <Form
         submission={{
           data: submission
         }}
@@ -65,19 +63,6 @@ class StartForm extends React.Component {
         options={options}
         onCustomEvent={(event) => onCustomEvent(event)}
         onSubmit={(submission) => handleSubmit(submission)}/>;
-    } else {
-      return <Form
-        onChange={(instance) => dataChange(instance)}
-        form={startForm}
-        ref={form => {
-          this.formNode = form;
-          formReference(form);
-        }}
-        options={options}
-        onCustomEvent={(event) => onCustomEvent(event)}
-        onSubmit={(submission) => handleSubmit(submission)}/>;
-    }
-
   }
 
   componentWillUnmount() {

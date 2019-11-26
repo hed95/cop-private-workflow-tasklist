@@ -4,17 +4,15 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import * as actions from "../actions";
-import { submittingUnclaim, unclaimSuccessful } from '../selectors';
+import {submittingUnclaim, unclaimSuccessful} from '../selectors';
 
 class Unclaim extends React.Component {
 
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.unclaimSuccessful) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.unclaimSuccessful) {
             this.props.history.replace("/your-group-tasks");
         }
     }
-
 
     render() {
         const {task, kc, submittingUnclaim} = this.props;
@@ -24,12 +22,12 @@ class Unclaim extends React.Component {
         const displayButton = taskAssignee && taskAssignee === userId;
 
         return displayButton ?
-          <button id={'claimTask'+ taskId}
-                 className="govuk-button"
-                 disabled={submittingUnclaim}
-                 onClick={() => {
-                     this.props.unclaimTask(this.props.task.get('id'));
-                 }} type="submit">Unclaim</button> : <div/>;
+            <button id={'claimTask' + taskId}
+                    className="govuk-button"
+                    disabled={submittingUnclaim}
+                    onClick={() => {
+                        this.props.unclaimTask(this.props.task.get('id'));
+                    }} type="submit">Unclaim</button> : <div/>;
     }
 
 }

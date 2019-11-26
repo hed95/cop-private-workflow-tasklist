@@ -33,8 +33,9 @@ const createActiveShift = shiftInfo => ({
   shiftInfo,
 });
 
-const createActiveShiftSuccess = () => ({
+const createActiveShiftSuccess = (payload) => ({
   type: types.CREATE_ACTIVE_SHIFT_SUCCESS,
+  payload
 });
 
 const createActiveShiftFailure = () => ({
@@ -82,8 +83,9 @@ const endShiftFailure = () => ({
   type: types.END_SHIFT_FAILURE,
 });
 
-const setHasActiveShift = () => ({
+const setHasActiveShift = (hasShift) => ({
   type: types.SET_HAS_ACTIVE_SHIFT,
+  hasShift
 });
 
 const performOnboardingCheck = () => ({

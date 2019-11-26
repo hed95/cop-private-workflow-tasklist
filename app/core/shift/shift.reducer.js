@@ -27,8 +27,8 @@ function shiftReducer(state = shiftInitialState, action) {
       return state.set('isFetchingShift', true);
     case actions.FETCH_ACTIVE_SHIFT_SUCCESS:
       const data = action.payload.entity;
-      const hasShiftInfo = data && data.length !== 0;
-      const shiftInfo = hasShiftInfo ? Immutable.fromJS(data[0]) : null;
+      const hasShiftInfo = !!data;
+      const shiftInfo = hasShiftInfo ? Immutable.fromJS(data) : null;
       return state.set('isFetchingShift', false)
         .set('hasActiveShift', hasShiftInfo)
         .set('activeShiftSuccess', false)
@@ -41,10 +41,12 @@ function shiftReducer(state = shiftInitialState, action) {
     case actions.SUBMIT_VALIDATION:
       return state.set('submittingActiveShift', true).set('failedToCreateShift', false);
     case actions.CREATE_ACTIVE_SHIFT_SUCCESS:
+      const shift = JSON.parse(action.payload.entity.variables['shiftInfo'].value);
       return state
         .set('submittingActiveShift', false)
         .set('activeShiftSuccess', true)
-        .set('hasActiveShift', true);
+        .set('hasActiveShift', true)
+        .set('shift',  Immutable.fromJS(shift));
     case actions.CREATE_ACTIVE_SHIFT_FAILURE:
       return state
         .set('activeShiftSuccess', false).set('submittingActiveShift', false)
@@ -58,7 +60,7 @@ function shiftReducer(state = shiftInitialState, action) {
     case actions.END_SHIFT_FAILURE:
       return state.set('endingShift', false);
     case actions.SET_HAS_ACTIVE_SHIFT:
-      return state.set('hasActiveShift', true);
+      return state.set('hasActiveShift', action.hasShift).set('isFetchingShift', false);
     default:
       return state;
   }

@@ -2,13 +2,14 @@
 import { mount } from 'enzyme/build';
 import React from 'react';
 import Immutable from 'immutable';
-import { ProcessStartPage } from './ProcedureStartPage';
+import { ProcessStartPage } from './FormsStartPage';
 import secureLocalStorage from '../../../../common/security/SecureLocalStorage';
 
 jest.mock('../../../../common/security/SecureLocalStorage', () => ({
   get: jest.fn(),
   set: jest.fn(),
   removeAll: jest.fn(),
+  remove: jest.fn()
 }));
 
 const form = {
@@ -79,7 +80,7 @@ describe('Submit a form page', () => {
 
     expect(fetchProcessDefinition).toHaveBeenCalled();
     expect(wrapper.find('#dataSpinner').exists()).toEqual(true);
-    expect(wrapper.find('.loader-message').text()).toEqual('Loading procedure...');
+    expect(wrapper.find('.loader-message').text()).toEqual('Loading form...');
   });
 
   it('displays resource not found if form is missing', async () => {
@@ -243,6 +244,7 @@ describe('Submit a form page', () => {
           pathname: '/path',
         },
       },
+      submissionResponse: {},
       kc: {
         tokenParsed: {
           email: 'email',
@@ -281,7 +283,7 @@ describe('Submit a form page', () => {
     wrapper.setProps({ submissionStatus: 'SUBMISSION_SUCCESSFUL' });
 
     expect(emit).toHaveBeenCalled();
-    expect(secureLocalStorage.removeAll).toHaveBeenCalled();
+    expect(secureLocalStorage.remove).toHaveBeenCalled();
     expect(props.history.replace).toHaveBeenCalled();
   });
 
@@ -289,6 +291,7 @@ describe('Submit a form page', () => {
     const props = {
       loadingForm: false,
       submissionStatus: 'SUBMITTING',
+      submissionResponse: {},
       form,
       log: jest.fn(),
       processDefinition: Immutable.fromJS({

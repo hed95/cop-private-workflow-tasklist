@@ -5,12 +5,13 @@ import * as actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { Redirect, withRouter } from 'react-router';
+import {  withRouter } from 'react-router';
 import ErrorPanel from './ErrorPanel';
 import PubSub from 'pubsub-js';
 import FormErrorPanel from './FormErrorPanel';
 
 export class ErrorHandlingComponent extends React.Component {
+  mounted = false;
   constructor(props) {
     super(props);
     this.state = {
@@ -18,6 +19,7 @@ export class ErrorHandlingComponent extends React.Component {
     }
   }
   componentDidMount() {
+    this.mounted = true;
     PubSub.subscribe('formSubmissionError', (msg,  payload) => {
       const errors = payload.errors;
       const form = payload.form;
@@ -29,24 +31,34 @@ export class ErrorHandlingComponent extends React.Component {
       })
     });
     PubSub.subscribe('formSubmissionSuccessful', (msg) => {
-      this.setState({
-        formErrors: []
-      })
+      if (this.mounted) {
+        this.setState({
+          formErrors: []
+        });
+      }
     });
     PubSub.subscribe('clear', (msg) => {
-      this.setState({
-        formErrors: []
-      })
+      if (this.mounted) {
+        this.setState({
+          formErrors: []
+        });
+      }
+
     });
     PubSub.subscribe('formChange', (msg, value) => {
-      this.setState({
-        formErrors: _.filter(this.state.formErrors, (error) => {
-          return error.instance.component.key !== value.changed.component.key;
-        })
-      })
+      if (this.mounted) {
+        this.setState({
+          formErrors: _.filter(this.state.formErrors, (error) => {
+            return error.instance.component.key !== value.changed.component.key;
+          })
+        });
+      }
     });
   }
 
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.hasError) {
       const path = this.props.history.location.pathname;

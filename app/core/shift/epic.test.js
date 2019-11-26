@@ -195,9 +195,9 @@ describe('shift epic', () => {
         done();
       });
   });
-  it('can fetchActiveShiftAfterCreation', done => {
+  it('can submit shift', done => {
     const action$ = ActionsObservable.of(
-      { type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE, payload: {} },
+      { type: types.SUBMIT_VALIDATION, payload: {} },
     );
     const payload = {
       status: {
@@ -214,64 +214,8 @@ describe('shift epic', () => {
       .subscribe(actualOutput => {
         const createActiveShift = actualOutput[0];
         expect(createActiveShift.type).toEqual('CREATE_ACTIVE_SHIFT_SUCCESS');
-        const fetchActiveShift = actualOutput[1];
-        expect(fetchActiveShift.type).toEqual('FETCH_ACTIVE_SHIFT_SUCCESS');
-        expect(PubSub.publish).toHaveBeenCalled();
         done();
       });
   });
-  it('can retry and fail for fetchActiveShiftAfterCreation if no data returned', done => {
-    const action$ = ActionsObservable.of(
-      { type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE, payload: {} },
-    );
-    const response = {
-      status: {
-        code: 200,
-      },
-      entity: [],
-    };
-    const client = () => Observable.defer(() => Observable.from(Promise.resolve(response)));
 
-    Observable.concat(epic(action$, store, { client }))
-      .toArray()
-      .subscribe(actualOutput => {
-        expect(actualOutput[0].type).toEqual('HANDLE_UNAUTHORISED');
-        expect(actualOutput[1].type).toEqual('CREATE_ACTIVE_SHIFT_FAILURE');
-        done();
-      });
-  });
-  it('can retry and succeed for fetchActiveShiftAfterCreation', done => {
-    const action$ = ActionsObservable.of(
-      { type: types.FETCH_ACTIVE_SHIFT_AFTER_CREATE, payload: {} },
-    );
-    const response = {
-      status: {
-        code: 200,
-      },
-      entity: [],
-    };
-    let counter = 0;
-    const client = () => Observable.defer(() => {
-      counter += 1;
-      console.log(`counter ${counter}`);
-      if (counter === 5) {
-        return Observable.from(Promise.resolve({
-          status: {
-            code: 200,
-          },
-          entity: [{
-            staffid: 'staffid',
-          }],
-        }));
-      }
-      return Observable.from(Promise.resolve(response));
-    });
-
-    epic(action$, store, { client })
-      .subscribe(actualOutput => {
-        expect(actualOutput.type)
-          .toEqual('CREATE_ACTIVE_SHIFT_SUCCESS');
-        done();
-      });
-  });
 });

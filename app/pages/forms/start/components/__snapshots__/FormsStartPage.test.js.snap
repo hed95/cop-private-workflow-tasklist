@@ -4,7 +4,7 @@ exports[`Submit a form page renders the form and process definition 1`] = `
 <div>
   <a
     className="govuk-back-link govuk-!-font-size-19"
-    href="#"
+    href="/forms"
     onClick={[Function]}
     style={
       Object {
@@ -12,7 +12,7 @@ exports[`Submit a form page renders the form and process definition 1`] = `
       }
     }
   >
-    Back to procedures
+    Back to forms
   </a>
   <Loader
     backgroundStyle={
@@ -42,7 +42,7 @@ exports[`Submit a form page renders the form and process definition 1`] = `
         }
       >
         <DataSpinner
-          message="Starting procedure..."
+          message="Submitting form..."
         />
       </div>
     }
@@ -59,7 +59,7 @@ exports[`Submit a form page renders the form and process definition 1`] = `
           <span
             className="govuk-caption-l"
           >
-            Operational procedure
+            Operational form
           </span>
           <h2
             className="govuk-heading-l"

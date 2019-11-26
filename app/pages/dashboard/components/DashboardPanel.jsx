@@ -13,7 +13,7 @@ import withLog from '../../../core/error/component/withLog';
 
 const CalendarDashboardPanel = React.lazy(() => import('./CalendarDashboardPanel'));
 const MessagesPanel = React.lazy(() => import('./MessagesPanel'));
-const ProceduresDashboardPanel = React.lazy(() => import('./ProceduresDashboardPanel'));
+const ProceduresDashboardPanel = React.lazy(() => import('./FormsDashboardPanel'));
 const ReportsDashboardPanel = React.lazy(() => import('./ReportsDashboardPanel'));
 const TaskCountPanel = React.lazy(() => import('./TaskCountPanel'));
 

@@ -92,11 +92,6 @@ const submit = (action$, store, { client }) => action$.ofType(types.SUBMIT)
       },
     }).retryWhen(retry)
       .map(payload => {
-        PubSub.publish('submission', {
-          submission: true,
-          autoDismiss: true,
-          message: `${action.processName} successfully submitted`,
-        });
         return actions.submitToWorkflowSuccess(payload);
       })
       .catch(error => errorObservable(actions.submitToWorkflowFailure(), error));
