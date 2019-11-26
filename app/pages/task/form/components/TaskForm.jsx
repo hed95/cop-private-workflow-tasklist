@@ -65,6 +65,7 @@ export default class TaskForm extends React.Component {
                      ref={form => {
                          this.form = form;
                          formReference(form);
+                         this.formNode = form;
                          if (this.form) {
                              this.form.createPromise.then(() => {
                                  new FormioSubmissionListener(this.form, this.props).initialize();
