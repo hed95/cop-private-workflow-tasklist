@@ -1,26 +1,26 @@
-const webpack = require('webpack');
+const CompressionPlugin = require('compression-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const common = require('./webpack.common.js');
-const webpackMerge = require('webpack-merge');
-const ProgressPlugin = require('progress-webpack-plugin');
-const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
+
+const cssnano = require('cssnano');
 const path = require('path');
+const webpack = require('webpack');
+const webpackMerge = require('webpack-merge');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
+// local imports
+const common = require('./webpack.common.js');
 
 const buildDirectory = path.join(__dirname, './dist');
-const TerserPlugin = require('terser-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-const WebpackPwaManifest = require('webpack-pwa-manifest');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const cssnano = require('cssnano');
-const CompressionPlugin = require('compression-webpack-plugin');
-
 
 module.exports = webpackMerge(common, {
   mode: 'production',
-  devtool: 'source-map',
+  devtool: false,
   entry: [
     require.resolve('react-app-polyfill/ie11'),
     path.join(process.cwd(), './app/index.jsx'),
@@ -28,22 +28,34 @@ module.exports = webpackMerge(common, {
   optimization: {
     minimize: true,
     minimizer: [
+      new OptimizeCSSAssetsPlugin({
+        cssProcessor: cssnano,
+        cssProcessorPluginOptions: {
+          preset: ['default', { discardComments: { removeAll: true }}],
+        },
+        canPrint: false,
+      }),
       new TerserPlugin({
         terserOptions: {
-          warnings: false,
           compress: {
             comparisons: false,
           },
-          parse: {},
-          mangle: true,
           output: {
             comments: false,
             ascii_only: true,
           },
         },
-        parallel: true,
+      }),
+      new UglifyJsPlugin({
         cache: true,
-        sourceMap: true,
+        parallel: true,
+        uglifyOptions: {
+          mangle: true,
+          output: {
+            comments: false,
+          },
+        },
+        exclude: [/\.min\.js$/gi],
       }),
     ],
     nodeEnv: 'production',
@@ -73,22 +85,16 @@ module.exports = webpackMerge(common, {
     runtimeChunk: true,
   },
   plugins: [
-    new CleanWebpackPlugin([
-      buildDirectory,
-    ], {
+    new CleanWebpackPlugin({
       verbose: true,
-      dry: false,
     }),
-    new OptimizeCSSAssetsPlugin({
-      cssProcessor: cssnano,
-      cssProcessorOptions: {
-        discardComments: {
-          removeAll: true,
-        },
-        safe: true,
-      },
-      canPrint: false,
+    new CompressionPlugin({
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
     }),
+    new CopyWebpackPlugin([
+      { from: 'server.js', to: '' },
+    ]),
     new HtmlWebpackPlugin({
       title: 'Caching',
       template: './public/index.html',
@@ -107,34 +113,6 @@ module.exports = webpackMerge(common, {
       },
       inject: true,
     }),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.AggressiveMergingPlugin(),
-    new UglifyWebpackPlugin({
-      sourceMap: true,
-      cache: true,
-      parallel: true,
-      uglifyOptions: {
-        mangle: true,
-        output: {
-          comments: false,
-        },
-      },
-      exclude: [/\.min\.js$/gi],
-    }),
-    new ProgressPlugin(true),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false,
-    }),
-    new CopyWebpackPlugin([
-      { from: 'server.js', to: '' },
-    ]),
-    new CompressionPlugin({
-      algorithm: 'gzip',
-      test: /\.js$|\.css$|\.html$/,
-      threshold: 10240,
-      minRatio: 0.8,
-    }),
     new OfflinePlugin({
       autoUpdate: 1000 * 60 * 2,
       ServiceWorker: {
@@ -149,6 +127,9 @@ module.exports = webpackMerge(common, {
       },
       safeToUseOptionalCaches: true,
     }),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.ProgressPlugin(),
     new WebpackPwaManifest({
       name: 'COP UI',
       short_name: 'cop-private-ui',
@@ -164,13 +145,10 @@ module.exports = webpackMerge(common, {
           type: 'image/png',
         },
       ],
-
     }),
   ],
-
   performance: {
     assetFilter: assetFilename =>
       !/(\.map$)|(^(main\.|favicon\.))/.test(assetFilename),
   },
-
 });
