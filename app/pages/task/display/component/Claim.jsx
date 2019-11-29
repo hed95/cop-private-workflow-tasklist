@@ -11,9 +11,7 @@ import { claimSuccessful } from '../selectors';
 
 
 export class Claim extends React.Component {
-  // for linting purposes, unused parameters should start with
-  // an underscore '_', this is the convention
-  componentDidUpdate(_prevProps, _prevState) {
+  componentDidUpdate() {
     const { claimSuccessful: successfulClaim } = this.props;
 
     if (successfulClaim) {
