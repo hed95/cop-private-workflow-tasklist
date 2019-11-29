@@ -10,6 +10,7 @@
     "arrow-parens": [2, "as-needed"],
     "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "react/jsx-fragments": 0,
+    "react/forbid-prop-types": 0,
     "react/jsx-one-expression-per-line": 0
   }
 }

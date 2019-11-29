@@ -9,6 +9,7 @@ import { withRouter } from 'react-router-dom';
 import * as actions from '../actions';
 import { claimSuccessful } from '../selectors';
 
+
 export class Claim extends React.Component {
   // for linting purposes, unused parameters should start with
   // an underscore '_', this is the convention
