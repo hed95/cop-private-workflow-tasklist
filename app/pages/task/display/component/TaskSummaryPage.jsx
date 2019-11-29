@@ -25,11 +25,11 @@ const TaskSummaryPage = props => {
 TaskSummaryPage.propTypes = {
   candidateGroups: ImmutablePropTypes.list.isRequired,
   task: ImmutablePropTypes.map.isRequired,
-  variables: PropTypes.objectOf(PropTypes.object),
+  variables: PropTypes.any,
 };
 
 TaskSummaryPage.defaultProps = {
-  variables: {},
+  variables: '',
 };
 
 export default TaskSummaryPage;
