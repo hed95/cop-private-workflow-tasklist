@@ -1,16 +1,12 @@
-
+const compression = require('compression');
 const express = require('express');
-
 const webpack = require('webpack');
-const common = require('./webpack.common.js');
 const webpackMerge = require('webpack-merge');
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const compression = require('compression')
-;
+// local imports
+const common = require('./webpack.common.js');
 
 const port = process.env.PORT || 8080;
-
 
 module.exports = webpackMerge(common, {
   devtool: 'cheap-eval-source-map',
@@ -24,7 +20,6 @@ module.exports = webpackMerge(common, {
     ],
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         WWW_KEYCLOAK_CLIENT_ID: JSON.stringify(process.env.WWW_KEYCLOAK_CLIENT_ID),
@@ -41,14 +36,15 @@ module.exports = webpackMerge(common, {
         REPORT_URI: JSON.stringify(process.env.REPORT_URI),
       },
     }),
+    new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
     compress: true,
     contentBase: 'public/',
+    historyApiFallback: true,
     hot: true,
     open: true,
     port: `${port}`,
-    historyApiFallback: true,
     publicPath: common.output.publicPath,
     stats: { colors: true },
     before(app) {
