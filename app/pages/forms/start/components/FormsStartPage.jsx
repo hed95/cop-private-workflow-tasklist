@@ -132,8 +132,18 @@ export class ProcessStartPage extends React.Component {
         }
     };
 
+
     render() {
-        const {processDefinition, submissionStatus, form, loadingForm} = this.props;
+        const { form, loadingForm, noBackLink, processDefinition, submissionStatus } = this.props;
+        const backToFormsLink = () => {
+          let link = null;
+
+          if (!noBackLink) {
+            link = <a href={AppConstants.FORMS_PATH} className="govuk-back-link govuk-!-font-size-19">Back to forms</a>;
+          }
+          return link;
+        };
+
         if (loadingForm) {
             return <DataSpinner message="Loading form..."/>;
         } else {
@@ -147,16 +157,9 @@ export class ProcessStartPage extends React.Component {
                 processDefinition.getIn(['process-definition', 'name']) : procedureKey;
 
             const submission = this.secureLocalStorage.get(this.props.processDefinition.getIn(['process-definition', 'id']));
+
             return <div>
-                {!this.props.noBackLink ?
-                    <a href={AppConstants.FORMS_PATH} className="govuk-back-link govuk-!-font-size-19"
-                       style={{textDecoration: 'none'}}
-                       onClick={(event) => {
-                           event.preventDefault();
-                           this.props.history.replace('/procedures')
-                       }}>Back to forms</a> : null}
-
-
+                {backToFormsLink()}
                 <Loader show={submissionStatus === SUBMITTING}
                         message={<div style={{
                             justifyContent: 'center',
