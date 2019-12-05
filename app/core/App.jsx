@@ -10,7 +10,10 @@ import PropTypes from 'prop-types';
 import withLog from './error/component/withLog';
 import {clearAllExceptShift} from "../common/security/SecureLocalStorage";
 
+import config from '../config/core';
+
 const SubmissionBanner = lazy(() => import('../core/components/SubmissionBanner'));
+const { serviceDesk } = config;
 
 export class App extends React.Component {
 
@@ -83,7 +86,7 @@ const AppBanner = (props) => {
             </strong>
             {environment()}
             <span className="govuk-phase-banner__text">
-                This is a new service – your <a className="govuk-link" href="#">feedback</a> will help us to improve it.
+                This is a new service – your <a className="govuk-link" href={`${serviceDesk.feedback}`} target="_blank">feedback</a> will help us to improve it.
             </span>
         </p>
     </div>
