@@ -1,13 +1,17 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
-import {bindActionCreators} from 'redux';
-import secureLocalStorage from '../../common/security/SecureLocalStorage';
+import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+// local imports
 import AppConstants from "../../common/AppConstants";
+import config from '../../config/core';
+import secureLocalStorage from '../../common/security/SecureLocalStorage';
+
+const { serviceDesk } = config;
 
 export class Header extends React.Component {
-
     constructor(props) {
         super(props);
         this.secureLocalStorage = secureLocalStorage;
@@ -51,8 +55,10 @@ export class Header extends React.Component {
                                 >My profile</a>
                                 <a
                                     id="support"
-                                    href="https://support.cop.homeoffice.gov.uk/servicedesk/customer/portal/3"
                                     className="govuk-header__link header-nav__link"
+                                    href={`${serviceDesk.support}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                 >Support</a>
                                 <a
                                     id="logout"
