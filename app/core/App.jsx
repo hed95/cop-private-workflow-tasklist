@@ -61,18 +61,34 @@ export class App extends React.Component {
     }
 }
 
-const AppBanner = (props) => (
-    <div className="govuk-phase-banner">
-        <p className="govuk-phase-banner__content"><strong
-            className="govuk-tag govuk-phase-banner__content__tag ">
-            {props.appConfig.uiVersion}
-        </strong>
-            <span><strong
-                className="govuk-tag govuk-phase-banner__content__tag ">
+const AppBanner = (props) => {
+    const environment = () => {
+        if (props.appConfig.uiEnvironment.toLowerCase() !== 'production') {
+            return (
+                <span>
+                    <strong className="govuk-tag govuk-phase-banner__content__tag ">
                       {props.appConfig.uiEnvironment}
-                </strong></span>
+                    </strong>
+                </span>
+            );
+        }
+        return null;
+    };
+
+    return (
+    <div className="govuk-phase-banner">
+        <p className="govuk-phase-banner__content">
+            <strong className="govuk-tag govuk-phase-banner__content__tag ">
+                {props.appConfig.uiVersion}
+            </strong>
+            {environment()}
+            <span className="govuk-phase-banner__text">
+                This is a new service – your <a className="govuk-link" href="#">feedback</a> will help us to improve it.
+            </span>
         </p>
-    </div>);
+    </div>
+    );
+}
 
 
 App.propTypes = {
