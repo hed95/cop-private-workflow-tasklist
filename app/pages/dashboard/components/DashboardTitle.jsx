@@ -53,8 +53,16 @@ class DashboardTitle extends React.Component {
                             <li><button id="editShift" className="govuk-button govuk-button--secondaryy" style={{margin: '0'}} type="submit"
                                  onClick={this.viewShift} disabled={this.props.endingShift}>Edit shift</button></li>
                             <li>
-                                <button id="endShift" className="govuk-button" type="submit"
-                                        onClick={this.endShift} disabled={this.props.endingShift} data-prevent-double-click="true">End shift</button></li>
+                              <button
+                                id="endShift"
+                                className="govuk-button govuk-button--warning"
+                                data-module="govuk-button"
+                                type="submit"
+                                onClick={this.endShift}
+                                disabled={this.props.endingShift}
+                                data-prevent-double-click="true">End shift
+                              </button>
+                            </li>
                         </ul>
                     </div>
 
