@@ -5,12 +5,6 @@ exports[`Submit a form page renders the form and process definition 1`] = `
   <a
     className="govuk-back-link govuk-!-font-size-19"
     href="/forms"
-    onClick={[Function]}
-    style={
-      Object {
-        "textDecoration": "none",
-      }
-    }
   >
     Back to forms
   </a>
