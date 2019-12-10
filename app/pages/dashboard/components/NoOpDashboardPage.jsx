@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 export class NoOpDashboardPage extends React.Component {
 
   render() {
-      return (<div className="govuk-grid-row" style={{ width: '100%', height: '200px' }}>
+      return (<div className="govuk-grid-row" style={{ width: '100%', height: '230px' }}>
             <div className="govuk-grid-column-full">
                 <h2 className="govuk-heading-l">
                     <span className="govuk-caption-l">{this.props.kc.tokenParsed.given_name} {this.props.kc.tokenParsed.family_name}</span>
@@ -16,8 +16,9 @@ export class NoOpDashboardPage extends React.Component {
                 </h2>
             </div>
             <div className="govuk-grid-column-full">
-                <h3 className="govuk-heading-m">Access to the platform will be granted once your staff record has been processed</h3>
-                <h4 className="govuk-heading-s">Please click <a href="#" className="govuk-link govuk-link--no-visited-state"  onClick={(e) => {this.props.history.replace("/dashboard")}}> here </a>once you have received notification of approval.</h4>
+                <p className="govuk-body">Your onboarding onto COP is complete. We have sent you a confirmation email and text.</p>
+                <h2 className="govuk-heading-m">What happens next</h2>
+                <p className="govuk-body">To access the various forms on COP <a href="#" className="govuk-link govuk-link--no-visited-state" onClick={(e) => {this.props.history.replace("/dashboard")}}>click here</a> to continue.</p>
             </div>
         </div>);
     }
