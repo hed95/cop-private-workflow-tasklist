@@ -18,6 +18,9 @@ const Footer = () => {
                 <Link className="govuk-footer__link" to="/privacy-policy">Privacy Policy</Link>
               </li>
               <li className="govuk-footer__inline-list-item">
+                <Link className="govuk-footer__link" to="/accessibility-statement">Accessibility Statement</Link>
+              </li>
+              <li className="govuk-footer__inline-list-item">
                 <a className="govuk-footer__link" href={`${serviceDesk.support}`} target="_blank" rel="noopener noreferrer">Help</a>
               </li>
             </ul>
