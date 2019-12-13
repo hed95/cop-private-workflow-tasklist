@@ -40,7 +40,7 @@ const AccessibilityStatement = () => (
 
           <h2 className="govuk-heading-l">If you are unhappy with how we respond to your report</h2>
           <p className="govuk-body">In England, Wales and Scotland, the Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint, contact the <a href="https://www.equalityadvisoryservice.com/" target="_blank" rel="noopener noreferrer">Equality Advisory and Support Service (EASS)</a>.</p>
-          <p className="govuk-body">In Northern Ireland, the Equality Commission for Northern Ireland is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint, contact the <a href="https://www.equalityni.org/help" target="_blank" rel="noopener noreferrer">Equality Advisory and Support Service (EASS)</a>.</p>
+          <p className="govuk-body">In Northern Ireland, the Equality Commission for Northern Ireland is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint, contact the <a href="https://www.equalityni.org/help" target="_blank" rel="noopener noreferrer">Equality Commission for Northern Ireland</a>.</p>
 
           <h2 className="govuk-heading-l">Technical information about these systems accessibility</h2>
           <p className="govuk-body">Home Office is committed to making our internal systems accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.</p>
@@ -56,6 +56,7 @@ const AccessibilityStatement = () => (
             <li>the design cannot be overridden by personal settings for colours and fonts</li>
             <li>the design does not adapt effectively to changes in the window size or level of zoom</li>
             <li>there are parts that are difficult or impossible to understand or use with a screen reader</li>
+            <li>there are parts that are difficult or impossible to reach or use without a mouse or by touching the screen</li>
             <li>the text is not written in plain English</li>
             <li>the design is confusing or inconsistent</li>
             <li>audio/video elements may not have captions, transcripts, signing or audio description</li>
