@@ -44,7 +44,7 @@ exports[`Accessibility Statement page matches snapshot 1`] = `
         <p
           className="govuk-body"
         >
-          This accessibility statement applies to Home Office internal systems
+          This accessibility statement applies to Home Office internal systems.
         </p>
         <h2
           className="govuk-heading-l"
