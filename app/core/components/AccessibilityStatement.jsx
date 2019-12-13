@@ -13,7 +13,7 @@ const AccessibilityStatement = () => (
             <li>what do if you have a problem</li>
             <li>what we are doing to meet the regulations</li>
           </ul>
-          <p className="govuk-body">This accessibility statement applies to Home Office internal systems</p>
+          <p className="govuk-body">This accessibility statement applies to Home Office internal systems.</p>
 
           <h2 className="govuk-heading-l">Using our internal systems</h2>
           <p className="govuk-body">We want as many people as possible to be able to use our internal systems. For example, on many of our systems you should be able to:</p>
