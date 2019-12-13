@@ -2,6 +2,7 @@ import 'babel-polyfill';
 
 import React, { Suspense, lazy }  from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom';
+import AccessibilityStatement from './components/AccessibilityStatement';
 import AppConstants from '../common/AppConstants';
 import DataSpinner from './components/DataSpinner';
 import withOnboardingCheck from './shift/withOnboardingCheck';
@@ -34,6 +35,7 @@ const Main = () => (
   <main style={{paddingTop: '10px'}} className="govuk-main-wrapper" id="main-content" role="main">
     <Suspense fallback={<div style={{ justifyContent: 'center'}}><DataSpinner message="Loading routes"/></div>}>
       <Switch>
+        <Route name="Accessibility Statement" exact path={"/accessibility-statement"} component={AccessibilityStatement}/>
         <Route name="Privacy Policy" exact path={"/privacy-policy"} component={PrivacyPolicy}/>
         <Route name="Dashboard" exact path={AppConstants.DASHBOARD_PATH} component={() => <DashboardPage />}/>
         <Route name="Shift" exact path={AppConstants.SHIFT_PATH} component={() => <ErrorHandlingComponent skipAuthError={true}><ShiftPage/></ErrorHandlingComponent>}/>
