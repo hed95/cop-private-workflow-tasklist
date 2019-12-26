@@ -4,10 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 
-const cssnano = require('cssnano');
 const path = require('path');
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
@@ -45,18 +43,7 @@ module.exports = webpackMerge(common, {
             ascii_only: true,
           },
         },
-      }),
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        uglifyOptions: {
-          mangle: true,
-          output: {
-            comments: false,
-          },
-        },
-        exclude: [/\.min\.js$/gi],
-      }),
+      })
     ],
     nodeEnv: 'production',
     sideEffects: true,
