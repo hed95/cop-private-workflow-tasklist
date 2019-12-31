@@ -6,6 +6,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 
+const cssnano = require('cssnano');
 const path = require('path');
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
