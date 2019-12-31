@@ -9,6 +9,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="blue"/>
     <meta property="og:image" content="/assets/images/govuk-opengraph-image.png">
+    <script>
+        if (typeof TextEncoder === "undefined") {
+            TextEncoder = function TextEncoder() {}
+            TextEncoder.prototype.encode = function(s) {
+                const e = new Uint8Array(s.length);
+
+                for (let i = 0; i < s.length; i += 1) {
+                    e[i] = s.charCodeAt(i);
+                }
+                return e;
+            }
+            TextDecoder = function TextDecoder() {}
+            TextDecoder.prototype.decode = function(arr) {
+                let d = "";
+
+                for (let i = 0; i < arr.length; i += 1) {
+                    d += String.fromCharCode(arr[i]);
+                }
+                return d;
+            }
+        }
+    </script>
 </head>
 <body>
 <script>
