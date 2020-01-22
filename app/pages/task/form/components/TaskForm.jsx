@@ -1,10 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Form} from 'react-formio';
 import AppConstants from '../../../../common/AppConstants';
 import GovUKDetailsObserver from "../../../../core/util/GovUKDetailsObserver";
 import FormioEventListener from "../../../../core/util/FormioEventListener";
 
 export default class TaskForm extends React.Component {
+
+    static propTypes = {
+        history: PropTypes.shape({
+            replace: PropTypes.func.isRequired,
+        }).isRequired,
+    }
 
     constructor(props) {
         super(props);
