@@ -137,7 +137,7 @@ export class CompleteTaskForm extends React.Component {
     }
 
     render() {
-        const {loadingTaskForm, form, fromProcedure, submissionStatus, nextTask, nextVariables} = this.props;
+        const {loadingTaskForm, form, fromProcedure, history, submissionStatus, nextTask, nextVariables} = this.props;
         const task = nextTask ? nextTask: this.props.task;
         const variables = nextVariables? nextVariables: this.props.variables;
         if (loadingTaskForm) {
@@ -163,9 +163,7 @@ export class CompleteTaskForm extends React.Component {
                        hideContentOnLoad={submissionStatus === SUBMITTING}
                        foregroundStyle={{color: 'black'}}
                        backgroundStyle={{backgroundColor: 'white'}}><TaskForm
-            task={task}
-            variables={variables}
-            form={form}
+            { ...{ form, history, task, variables } }
             onSubmitTaskForm={(submissionData, variableName) => {
                 this.props.submitTaskForm(form.id, task.get('id'),
                     submissionData, variableName);
