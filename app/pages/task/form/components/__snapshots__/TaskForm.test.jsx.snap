@@ -127,6 +127,18 @@ exports[`TaskForm Component matches snapshot 1`] = `
     Object {
       "hooks": Object {
         "beforeCancel": [Function],
+        "beforeSubmit": [Function],
+        "fileService": FileService {
+          "keycloak": Object {
+            "token": "token",
+            "tokenParsed": Object {
+              "email": "yesy",
+              "family_name": "test",
+              "given_name": "name",
+              "session_state": "state",
+            },
+          },
+        },
       },
       "i18n": Object {
         "en": Object {
@@ -137,6 +149,32 @@ exports[`TaskForm Component matches snapshot 1`] = `
       "readOnly": true,
     }
   }
-  submission={null}
+  submission={
+    Object {
+      "data": Object {
+        "environmentContext": Object {
+          "operationalDataUrl": undefined,
+          "privateUiUrl": "http://localhost",
+          "referenceDataUrl": undefined,
+          "workflowUrl": undefined,
+        },
+        "keycloakContext": Object {
+          "accessToken": "token",
+          "email": "yesy",
+          "familyName": "test",
+          "givenName": "name",
+          "refreshToken": undefined,
+          "sessionId": "state",
+        },
+        "processContext": undefined,
+        "shiftDetailsContext": "",
+        "staffDetailsDataContext": "",
+        "taskContext": Object {
+          "assignee": null,
+          "name": "testTask",
+        },
+      },
+    }
+  }
 />
 `;

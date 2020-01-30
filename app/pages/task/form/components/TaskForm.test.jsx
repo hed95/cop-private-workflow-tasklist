@@ -14,6 +14,18 @@ const getWrapper = () =>
   shallow(
     <TaskForm
       {...{
+        appConfig: {
+
+        },
+        kc: {
+          token: "token",
+          tokenParsed: {
+            session_state: "state",
+            given_name: "name",
+            family_name: "test",
+            email: "yesy"
+          }
+        },
         form,
         formReference,
         history,

@@ -32,7 +32,11 @@ function reducer(state = initialState, action) {
       const rawVariables = action.payload.entity.variables ? action.payload.entity.variables : {};
       const variables = {};
       Object.keys(rawVariables).forEach(key => {
-        variables[key] = rawVariables[key].value;
+        if (rawVariables[key].type === 'Json') {
+          variables[key] = JSON.parse(rawVariables[key].value);
+        } else {
+          variables[key] = rawVariables[key].value;
+        }
       });
       return state.set('isFetchingTask', false)
         .set('task', Immutable.fromJS(task))

@@ -56,7 +56,7 @@ export class CompleteTaskForm extends React.Component {
 
 
     handleSubmission(submissionStatus) {
-        const taskName = this.props.task.get('name');
+        const taskName = this.props.task ? this.props.task.get('name') : (this.props.nextTask ? this.props.nextTask.get('name') : '');
         const path = this.props.history.location.pathname;
         const user = this.props.kc.tokenParsed.email;
         switch (submissionStatus) {
@@ -163,6 +163,7 @@ export class CompleteTaskForm extends React.Component {
                        hideContentOnLoad={submissionStatus === SUBMITTING}
                        foregroundStyle={{color: 'black'}}
                        backgroundStyle={{backgroundColor: 'white'}}><TaskForm
+            {...this.props}
             { ...{ form, history, task, variables } }
             onSubmitTaskForm={(submissionData, variableName) => {
                 this.props.submitTaskForm(form.id, task.get('id'),
@@ -199,6 +200,7 @@ export default withRouter(connect((state) => {
         submissionResponse: submissionResponse(state),
         nextTask: nextTask(state),
         nextVariables: nextVariables(state),
-        kc: state.keycloak
+        kc: state.keycloak,
+        appConfig: state.appConfig
     };
 }, mapDispatchToProps)(withLog(CompleteTaskForm)));
