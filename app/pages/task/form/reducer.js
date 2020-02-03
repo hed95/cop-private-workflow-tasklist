@@ -38,16 +38,18 @@ function reducer(state = initialState, action) {
     case actions.COMPLETE_TASK_FORM:
       return state.set('submissionStatus', SUBMITTING);
     case actions.COMPLETE_TASK_FORM_SUCCESS:
-      const rawVariables = action.payload.entity.variables ? action.payload.entity.variables : {};
-      const variables = {};
-      Object.keys(rawVariables).forEach(key => {
-        if (rawVariables[key].type === 'Json') {
-          variables[key] = JSON.parse(rawVariables[key].value);
-        } else {
-          variables[key] = rawVariables[key].value;
-        }
-      });
-      action.payload.entity.variables = variables;
+      if (action.payload.entity !== '') {
+        const rawVariables =  action.payload.entity.variables? action.payload.entity.variables : {};
+        const variables = {};
+        Object.keys(rawVariables).forEach(key => {
+          if (rawVariables[key].type === 'Json') {
+            variables[key] = JSON.parse(rawVariables[key].value);
+          } else {
+            variables[key] = rawVariables[key].value;
+          }
+        });
+        action.payload.entity.variables = variables;
+      }
       return state.set('submissionStatus', SUBMISSION_SUCCESSFUL)
           .set('submissionResponse', action.payload.entity);
     case actions.COMPLETE_TASK_FORM_FAILURE:
