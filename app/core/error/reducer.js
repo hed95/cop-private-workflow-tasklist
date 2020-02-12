@@ -29,7 +29,7 @@ function reducer(state = initialState, action) {
         }
       }
       if (!errorToReturn.message) {
-        errorToReturn.message = 'Failed to execute action';
+        errorToReturn.message = 'Failed to execute action: ' + error.toString();
       }
       errorToReturn.raw = error;
 
