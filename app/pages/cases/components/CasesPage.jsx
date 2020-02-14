@@ -9,9 +9,14 @@ import {connect} from "react-redux";
 import withLog from "../../../core/error/component/withLog";
 import {businessKeyQuery, caseSearchResults, loadingNextSearchResults, searching} from "../selectors";
 import {DebounceInput} from 'react-debounce-input';
+import AppConstants from '../../../common/AppConstants';
 
 
 class CasesPage extends React.Component {
+
+    componentDidMount() {
+        document.title = `Cases | ${AppConstants.APP_NAME}`;
+    }
 
     componentWillUnmount() {
         this.props.reset();
