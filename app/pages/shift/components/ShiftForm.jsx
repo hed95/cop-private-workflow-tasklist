@@ -88,6 +88,7 @@ export default class ShiftForm extends React.Component {
                 shiftminutes: shift.get('shiftminutes'),
                 shifthours: shift.get('shifthours'),
                 startdatetime: moment.utc(shift.get('startdatetime')),
+                team: shift.get('team').toObject(),
                 teamid: shift.get('teamid'),
                 locationid: shift.get('locationid'),
                 phone: shift.get('phone')
@@ -99,7 +100,7 @@ export default class ShiftForm extends React.Component {
                     shiftminutes: 0,
                     shifthours: 8,
                     startdatetime: moment.utc(moment()),
-                    team: staffDetails.get('defaultteam'),
+                    team: staffDetails.get('defaultteam').toObject(),
                     teamid: staffDetails.get('defaultteamid'),
                     locationid: staffDetails.get('defaultlocationid'),
                     phone: staffDetails.get('phone')
