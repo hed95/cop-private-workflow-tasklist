@@ -83,24 +83,26 @@ export default class ShiftForm extends React.Component {
         };
 
         if (shift) {
+            const team = shift.get('team');
             shiftSubmission.data = {
                 ...shiftSubmission.data,
                 shiftminutes: shift.get('shiftminutes'),
                 shifthours: shift.get('shifthours'),
                 startdatetime: moment.utc(shift.get('startdatetime')),
-                team: shift.get('team').toObject(),
+                team: team ? team.toObject() : {},
                 teamid: shift.get('teamid'),
                 locationid: shift.get('locationid'),
                 phone: shift.get('phone')
             };
         } else {
             if (staffDetails) {
+                const defaultTeam = staffDetails.get('defaultteam');
                 shiftSubmission.data = {
                     ...shiftSubmission.data,
                     shiftminutes: 0,
                     shifthours: 8,
                     startdatetime: moment.utc(moment()),
-                    team: staffDetails.get('defaultteam').toObject(),
+                    team: defaultTeam ? defaultTeam.toObject() : {},
                     teamid: staffDetails.get('defaultteamid'),
                     locationid: staffDetails.get('defaultlocationid'),
                     phone: staffDetails.get('phone')
