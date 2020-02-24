@@ -6,6 +6,7 @@ exports[`Header matches snapshot 1`] = `
   data-module="header"
   role="banner"
 >
+  <SkipLink />
   <div
     className="govuk-header__container govuk-width-container"
   >
