@@ -1,3 +1,5 @@
+@import "../../../../node_modules/govuk-frontend/govuk/helpers/colour";
+
 .input-icon {
   position: relative;
 }
@@ -16,4 +18,54 @@
 .input-icon > input {
   padding-left: 30px;
   padding-right: 0;
+}
+
+
+.case-action-navbar .case-action-navbar__list-items {
+  padding-left: 0;
+  li {
+    display: inline-block;
+    margin-bottom: 0;
+    a {
+      color: #0B0C0C;
+      display: inline-block;
+      margin-right: 15px;
+      margin-bottom: 0;
+      font-size: inherit;
+      text-decoration: none;
+      border-bottom: 2px solid #0B0C0C !important;
+      &:hover {
+        color: #0B0C0C;
+        border-bottom: 4px solid #0B0C0C !important;
+      }
+      &:focus {
+        outline: 0;
+      }
+    }
+    &.active a,
+    &.active a:hover {
+      color: #0B0C0C;
+      border-bottom: 4px solid #0B0C0C !important;
+      font-weight: bold;
+    }
+  }
+}
+
+.metrics-card {
+  display: block;
+  float: left;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.metrics-card-body {
+  display: block;
+  background-color: govuk-colour("blue");
+  padding: 1em;
+  color: govuk-colour("white");
+  text-decoration: none;
+
+  span {
+    display: block;
+  }
 }
