@@ -7,6 +7,7 @@ import {withRouter} from 'react-router-dom';
 // local imports
 import AppConstants from "../../common/AppConstants";
 import secureLocalStorage from '../../common/security/SecureLocalStorage';
+import SkipLink from './SkipLink';
 
 
 export class Header extends React.Component {
@@ -30,6 +31,7 @@ export class Header extends React.Component {
 
     render() {
         return <header className="govuk-header" role="banner" data-module="header">
+            <SkipLink />
             <div className="govuk-header__container govuk-width-container">
                 <div className="govuk-header__content" style={{width: '100%'}}>
                     <div className="govuk-grid-row">
