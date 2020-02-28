@@ -85,6 +85,23 @@ pipeline:
       branch: master
       event: push
 
+  open-snow-change-dev:
+    image: quay.io/ukhomeofficedigital/snowtify:latest
+    secrets:
+      - source: DEV_SERVICE_NOW_PASSWORD
+        target: SNOW_TEST_PASS
+      - source: DEV_SERVICE_NOW_USERNAME
+        target: SNOW_TEST_USER
+    environment:
+      - SNOW_DESC=${DRONE_COMMIT_MESSAGE}
+      - SNOW_ENDPOINT=https://cto-change-dev.internal.cto-notprod.homeoffice.gov.uk/create
+      - SNOW_EXTERNAL_ID=COP
+      - SNOW_INT_ID_FILE=./internal-id
+      - SNOW_TITLE=${DRONE_REPO}:${DRONE_COMMIT_SHA}
+    when:
+      environment: dev
+      event: deployment
+
   deploy_to_dev:
     image: quay.io/ukhomeofficedigital/kd
     secrets:
@@ -160,6 +177,42 @@ pipeline:
     when:
       branch: master
       event: push
+
+  complete-snow-change-dev:
+    image: quay.io/ukhomeofficedigital/snowtify:latest
+    secrets:
+      - source: DEV_SERVICE_NOW_PASSWORD
+        target: SNOW_TEST_PASS
+      - source: DEV_SERVICE_NOW_USERNAME
+        target: SNOW_TEST_USER
+    environment:
+      - SNOW_DESC=${DRONE_COMMIT_MESSAGE}
+      - SNOW_ENDPOINT=https://cto-change-dev.internal.cto-notprod.homeoffice.gov.uk/update
+      - SNOW_INT_ID_FILE=./internal-id
+      - SNOW_TITLE=${DRONE_REPO}:${DRONE_COMMIT_SHA}
+    deployment_outcome: success
+    when:
+      environment: dev
+      event: deployment
+      status: success
+
+  cancel-snow-change-dev:
+    image: quay.io/ukhomeofficedigital/snowtify:latest
+    secrets:
+      - source: DEV_SERVICE_NOW_PASSWORD
+        target: SNOW_TEST_PASS
+      - source: DEV_SERVICE_NOW_USERNAME
+        target: SNOW_TEST_USER
+    environment:
+      - SNOW_DESC=${DRONE_COMMIT_MESSAGE}
+      - SNOW_ENDPOINT=https://cto-change-dev.internal.cto-notprod.homeoffice.gov.uk/update
+      - SNOW_INT_ID_FILE=./internal-id
+      - SNOW_TITLE=${DRONE_REPO}:${DRONE_COMMIT_SHA}
+    deployment_outcome: fail
+    when:
+      environment: dev
+      event: deployment
+      status: failure
 
   # CB-936 Moved here whilst we investigate slow build times and timing out vulnerability scans
   vulnerability-scan:
