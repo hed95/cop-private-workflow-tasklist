@@ -16,6 +16,7 @@ export const initialState = new Map({
     loadingFormSubmissionData: false,
     formSubmissionData: null,
     loadingNextSearchResults: false,
+    processStartSort: 'acs'
 });
 
 function reducer(state = initialState, action) {
@@ -34,7 +35,11 @@ function reducer(state = initialState, action) {
             return state.set('businessKey', action.key)
                 .set('loadingCaseDetails', true);
         case actions.GET_CASE_BY_KEY_SUCCESS:
-            return state.set('caseDetails', action.payload.entity)
+            const caseLoaded = action.payload.entity;
+            caseLoaded.processInstances =  _.orderBy(caseLoaded.processInstances, (instance) => {
+                return new Date(instance.startDate);
+            }, [state.get('processStartSort')]);
+            return state.set('caseDetails', caseLoaded)
                 .set('loadingCaseDetails', false);
         case actions.GET_CASE_BY_KEY_FAILURE:
             return state.set('loadingCaseDetails', false);
@@ -74,6 +79,15 @@ function reducer(state = initialState, action) {
         case actions.RESET_FORM:
             return state.set('formSubmissionData', null)
                 .set('formVersionDetails', null);
+
+        case actions.SET_PROCESS_START_DATE_SORT:
+            const processStartSort = action.sort;
+            const caseDetails = state.get('caseDetails');
+
+            caseDetails.processInstances =  _.orderBy(caseDetails.processInstances, (instance) => {
+                return new Date(instance.startDate);
+            }, [processStartSort]);
+            return state.set('caseDetails', caseDetails).set('processStartSort', processStartSort);
         case actions.RESET_CASE:
             return initialState;
         default:
