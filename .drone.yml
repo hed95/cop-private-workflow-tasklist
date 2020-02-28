@@ -99,8 +99,8 @@ pipeline:
       - SNOW_INT_ID_FILE=./internal-id
       - SNOW_TITLE=${DRONE_REPO}:${DRONE_COMMIT_SHA}
     when:
-      environment: dev
-      event: deployment
+      branch: master
+      event: push
 
   deploy_to_dev:
     image: quay.io/ukhomeofficedigital/kd
@@ -192,8 +192,8 @@ pipeline:
       - SNOW_TITLE=${DRONE_REPO}:${DRONE_COMMIT_SHA}
     deployment_outcome: success
     when:
-      environment: dev
-      event: deployment
+      branch: master
+      event: push
       status: success
 
   cancel-snow-change-dev:
@@ -210,8 +210,8 @@ pipeline:
       - SNOW_TITLE=${DRONE_REPO}:${DRONE_COMMIT_SHA}
     deployment_outcome: fail
     when:
-      environment: dev
-      event: deployment
+      branch: master
+      event: push
       status: failure
 
   # CB-936 Moved here whilst we investigate slow build times and timing out vulnerability scans
