@@ -18,10 +18,17 @@ class CaseAction extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchActionForm(this.props.selectedAction.process.formKey);
+        if (this.props.selectedAction) {
+            this.props.fetchActionForm(this.props.selectedAction.process.formKey);
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.selectedAction.process['process-definition'].key !==
+            prevProps.selectedAction.process['process-definition'].key) {
+            this.props.clearActionResponse();
+            this.props.fetchActionForm(this.props.selectedAction.process.formKey);
+        }
         if (this.props.actionResponse) {
             const that = this;
             this.timer = setTimeout(() => {
@@ -44,17 +51,17 @@ class CaseAction extends React.Component {
             executingAction, actionResponse
         } = this.props;
         if (!selectedAction || !caseDetails) {
-            return <div/>
+            return <div id="emptyAction"/>
         }
         if (loadingActionForm) {
-            return <div>Loading</div>
+            return <div id="loadingActionForm">Loading</div>
         }
         if (!actionForm) {
-            return <div/>
+            return <div id="emptyForm"/>
         }
 
         if (executingAction) {
-            return <div>Submitting action...</div>
+            return <div id="submittingAction">Submitting action...</div>
         }
 
         const submission = {
@@ -136,6 +143,7 @@ class CaseAction extends React.Component {
 
 CaseAction.propTypes = {
     clearActionResponse: PropTypes.func,
+    appConfig: PropTypes.object,
     executingAction: PropTypes.bool,
     actionResponse: PropTypes.object,
     executeAction: PropTypes.func,
@@ -143,6 +151,7 @@ CaseAction.propTypes = {
     actionForm: PropTypes.object,
     fetchActionForm: PropTypes.func,
     loadingActionForm: PropTypes.bool,
+    kc: PropTypes.object,
     caseDetails: PropTypes.shape({
         businessKey: PropTypes.string
     }),
