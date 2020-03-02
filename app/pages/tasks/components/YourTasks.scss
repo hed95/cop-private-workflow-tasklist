@@ -31,3 +31,11 @@ table.widetable-yourtasks tr td:nth-child(2) {
   width: 400px;
 }
 
+
+.over-due-date {
+  color: #d4351c !important;
+}
+
+.not-over-due-date {
+  color: #00703c !important;
+}
