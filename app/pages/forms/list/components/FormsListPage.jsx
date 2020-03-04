@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { createStructuredSelector } from 'reselect';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
-import { createStructuredSelector } from 'reselect';
-import { isFetchingProcessDefinitions, processDefinitions } from '../selectors';
 import * as actions from '../actions';
+import {
+  isFetchingProcessDefinitions,
+  processDefinitions,
+} from '../selectors';
 import './FormsListPage.css';
 import AppConstants from '../../../../common/AppConstants';
 

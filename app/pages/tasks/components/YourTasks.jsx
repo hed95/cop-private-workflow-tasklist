@@ -63,7 +63,9 @@ const YourTasks = props => {
                         <span
                           aria-label={`due ${dueLabel}`}
                           className="govuk-!-font-size-19 govuk-!-font-weight-bold not-over-due-date"
-                        >{`Due ${dueLabel}`}</span>
+                        >
+                          {`Due ${dueLabel}`}
+                        </span>
                       ) : (
                         <span
                           aria-label={`Urgent overdue ${dueLabel}`}
