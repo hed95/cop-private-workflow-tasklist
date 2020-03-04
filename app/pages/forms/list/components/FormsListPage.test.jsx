@@ -83,11 +83,20 @@ describe('ProceduresPage', () => {
     expect(mocks.fetchProcessDefinitions).toBeCalled();
     expect(wrapper.find('#proceduresCountLabel').text()).toEqual('2 forms');
 
-
     const rows = wrapper.find('#form');
     expect(rows.length).toEqual(2);
 
-    expect(wrapper.find('#formDescription').first().text()).toEqual('processADescription');
-    expect(wrapper.find('#formDescription').last().text()).toEqual('processBDescription');
+    expect(
+      wrapper
+        .find('#formDescription')
+        .first()
+        .text(),
+    ).toEqual('processADescription');
+    expect(
+      wrapper
+        .find('#formDescription')
+        .last()
+        .text(),
+    ).toEqual('processBDescription');
   });
 });
