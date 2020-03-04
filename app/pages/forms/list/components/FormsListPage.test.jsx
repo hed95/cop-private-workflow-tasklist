@@ -44,7 +44,7 @@ describe('ProceduresPage', () => {
     };
     const wrapper = shallow(<FormsListPage {...props} />);
     expect(mocks.fetchProcessDefinitions).toBeCalled();
-    expect(wrapper.find('#proceduresCountLabel').text()).toEqual('0 forms');
+    expect(wrapper.find('#proceduresCountLabel').text()).toEqual('Operational forms0 forms');
     expect(wrapper.find('#loading').text()).toEqual('Loading forms...');
     expect(mocks.fetchProcessDefinitions).toBeCalled();
   });
@@ -81,7 +81,7 @@ describe('ProceduresPage', () => {
     const wrapper = await mount(<FormsListPage {...props} />);
 
     expect(mocks.fetchProcessDefinitions).toBeCalled();
-    expect(wrapper.find('#proceduresCountLabel').text()).toEqual('2 forms');
+    expect(wrapper.find('#proceduresCountLabel').text()).toEqual('Operational forms2 forms');
 
     const rows = wrapper.find('#form');
     expect(rows.length).toEqual(2);

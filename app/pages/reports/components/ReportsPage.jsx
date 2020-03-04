@@ -14,7 +14,7 @@ const uuidv4 = require('uuid/v4');
 
 export class ReportsPage extends React.Component {
     componentDidMount() {
-        document.title = `Reports | ${AppConstants.APP_NAME}`;
+        document.title = `Operational reports | ${AppConstants.APP_NAME}`;
         this.props.fetchReportsList();
     }
 
@@ -37,8 +37,10 @@ export class ReportsPage extends React.Component {
         return <div>
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-one-half">
-                    <span className="govuk-caption-l">Operational reports</span>
-                    <h2 className="govuk-heading-l" id="reportsCountLabel">{reports.size} {reports.size === 1 ? 'report' : 'reports'}</h2>
+                    <h1 className="govuk-heading-l" id="reportsCountLabel">
+                        <span className="govuk-caption-l">Operational reports</span>
+                        {reports.size} {reports.size === 1 ? 'report' : 'reports'}
+                    </h1>
                 </div>
 
             </div>

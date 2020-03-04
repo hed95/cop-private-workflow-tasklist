@@ -104,10 +104,10 @@ const YourTasks = props => {
       <div className="govuk-grid-column-full">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-one-half" id="yourTasksTotalCount">
-            <span className="govuk-caption-l">Your tasks</span>
-            <span className="data-item govuk-!-font-size-24 govuk-!-font-weight-bold">
+            <h1 className="govuk-heading-l">
+              <span className="govuk-caption-l">Your tasks</span>
               {totalTasks} assigned to you
-            </span>
+            </h1>
           </div>
         </div>
         <div className="govuk-grid-row govuk-!-padding-top-3">

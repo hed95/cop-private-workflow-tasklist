@@ -14,7 +14,7 @@ import AppConstants from '../../../common/AppConstants';
 export class MessagesPage extends React.Component {
 
     componentDidMount() {
-        document.title = `Messages | ${AppConstants.APP_NAME}`;
+        document.title = `Operational messages | ${AppConstants.APP_NAME}`;
         this.props.fetchNotifications();
     }
 
@@ -37,8 +37,10 @@ export class MessagesPage extends React.Component {
                 <h4 className="govuk-heading-s" id="loadingMessages">Loading messages...</h4> :
                 <div className="govuk-grid-row">
                     <div className="govuk-grid-column-one-half">
-                        <span className="govuk-caption-l">Operational messages</span>
-                        <h2 className="govuk-heading-l" id="numberOfMessages">{this.props.total} messages</h2>
+                        <h1 className="govuk-heading-l" id="numberOfMessages">
+                            <span className="govuk-caption-l">Operational messages</span>
+                            {this.props.total} messages
+                        </h1>
                     </div>
 
                 </div>

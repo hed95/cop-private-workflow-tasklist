@@ -5,10 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
-import {
-  isFetchingProcessDefinitions,
-  processDefinitions,
-} from '../selectors';
+import { isFetchingProcessDefinitions, processDefinitions } from '../selectors';
 import * as actions from '../actions';
 import './FormsListPage.css';
 import AppConstants from '../../../../common/AppConstants';
@@ -42,10 +39,10 @@ export class FormsListPage extends React.Component {
       <React.Fragment>
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-one-half">
-            <span className="govuk-caption-l">Operational forms</span>
-            <h2 className="govuk-heading-l" id="proceduresCountLabel">
+            <h1 className="govuk-heading-l" id="proceduresCountLabel">
+              <span className="govuk-caption-l">Operational forms</span>
               {processDefinitions.size} forms
-            </h2>
+            </h1>
           </div>
         </div>
         <div className="govuk-grid-row">
