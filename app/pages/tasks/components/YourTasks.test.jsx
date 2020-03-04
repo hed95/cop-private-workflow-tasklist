@@ -124,7 +124,7 @@ describe('YourTasks Page', () => {
     };
     shallow(<YourTasks {...props} />);
     expect(global.window.document.title).toBe(
-      `Tasks assigned to you | ${AppConstants.APP_NAME}`,
+      `Your tasks | ${AppConstants.APP_NAME}`,
     );
   });
 
@@ -180,7 +180,7 @@ describe('YourTasks Page', () => {
     expect(fetchTasksAssignedToYou).toBeCalled();
     expect(wrapper.find('.loader-content').exists()).toEqual(false);
     expect(wrapper.find('#yourTasksTotalCount').text()).toEqual(
-      '1 task assigned to you',
+      'Your tasks1 task assigned to you',
     );
     const rows = wrapper.find('#taskGroups');
     expect(rows.length).toEqual(5);

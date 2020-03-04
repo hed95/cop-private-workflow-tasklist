@@ -99,7 +99,7 @@ export class TaskCountPanel extends React.Component {
                           className="govuk-!-font-size-19 govuk-!-font-weight-bold">Loading</span>: <span
                           className="govuk-!-font-size-48 govuk-!-font-weight-bold" id="yourGroupTaskCount">{taskCounts.get('totalTasksAllocatedToTeam')}</span>
                     }
-                       <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">tasks allocated to your team</span>
+                       <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">tasks assigned to your team</span>
                 </a>
                 <div className="card__footer">
                     <span className="govuk-!-font-size-19">Overall tasks assigned to your team</span>

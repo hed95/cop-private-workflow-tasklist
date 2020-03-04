@@ -32,7 +32,7 @@ describe('ProceduresPage', () => {
     };
     shallow(<FormsListPage {...props} />);
     expect(global.window.document.title).toBe(
-      `Forms | ${AppConstants.APP_NAME}`,
+      `Operational forms | ${AppConstants.APP_NAME}`,
     );
   });
 

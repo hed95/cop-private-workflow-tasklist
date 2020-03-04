@@ -15,7 +15,7 @@ import AppConstants from '../../../common/AppConstants';
 class CasesPage extends React.Component {
 
     componentDidMount() {
-        document.title = `Cases | ${AppConstants.APP_NAME}`;
+        document.title = `Case view | ${AppConstants.APP_NAME}`;
         const {match: {params}} = this.props;
         const businessKey = params.businessKey;
         if (businessKey) {
@@ -33,6 +33,7 @@ class CasesPage extends React.Component {
         return <React.Fragment>
             <div className="govuk-grid-row">
                 <div className="govuk-grid-column-two-thirds">
+                    <span className="govuk-caption-l">Case view</span>
                     <h3 className="govuk-heading-l">Cases</h3>
                     <div className="govuk-inset-text">
                         Enter a BF number to search for cases. <strong>Please note all actions are audited.</strong>

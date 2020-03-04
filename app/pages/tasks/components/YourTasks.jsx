@@ -11,7 +11,7 @@ import GroupTasks from "./GroupTasks";
 const taskUtils = new TaskUtils();
 const YourTasks = props => {
 
-    document.title = `Tasks assigned to you | ${AppConstants.APP_NAME}`;
+    document.title = `Your tasks | ${AppConstants.APP_NAME}`;
 
     const {
         yourTasks,
@@ -84,6 +84,7 @@ const YourTasks = props => {
             <div className="govuk-grid-column-full">
                 <div className="govuk-grid-row">
                     <div className="govuk-grid-column-one-half" id="yourTasksTotalCount">
+                      <span className="govuk-caption-l">Your tasks</span>
                       <span className="data-item govuk-!-font-size-24 govuk-!-font-weight-bold">
                         {totalTasks} assigned to you
                       </span>
