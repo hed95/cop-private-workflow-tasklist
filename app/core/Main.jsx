@@ -25,14 +25,14 @@ const CalendarPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pa
 const NonShiftCheckProcedurePage = withOnboardingCheck(lazy(() => import('../pages/forms/start/components/FormsStartPage')));
 const ProcessStartPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/forms/start/components/FormsStartPage'))));
 const ProcessDiagramPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/forms/diagram/components/ProcessDiagramPage'))));
-const TaskPage =  withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/task/display/component/TaskPage'))));
-const CasesPage =  withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/cases/components/CasesPage'))));
+const TaskPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/task/display/component/TaskPage'))));
+const CasesPage = withOnboardingCheck(withShiftCheck(lazy(() => import('../pages/cases/components/CasesPage'))));
 
 const UnauthorizedPage = lazy(() => import('../core/components/UnauthorizedPage'));
 const NoOpDashboardPage = lazy(() => import ('../pages/dashboard/components/NoOpDashboardPage'));
 
 const Main = () => (
-  <main style={{paddingTop: '10px'}} className="govuk-main-wrapper" id="main-content" role="main">
+  <main className="govuk-main-wrapper govuk-!-padding-top-3" id="main-content" role="main">
     <Suspense fallback={<div style={{ justifyContent: 'center'}}><DataSpinner message="Loading routes"/></div>}>
       <Switch>
         <Route name="Accessibility Statement" exact path={"/accessibility-statement"} component={AccessibilityStatement}/>

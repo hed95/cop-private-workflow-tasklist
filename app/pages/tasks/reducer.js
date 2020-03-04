@@ -4,20 +4,22 @@ import * as actions from './actionTypes';
 const { Map, List } = Immutable;
 
 export const initialState = new Map({
-  yourTasks: new Map({
-    isFetchingTasksAssignedToYou: false,
-    tasks: new List([]),
-    total: 0,
-    yourTasksSortValue: 'sort=due,desc',
-    yourTasksFilterValue: null,
-  }),
-  yourGroupTasks: new Map({
-    isFetchingYourGroupTasks: false,
-    tasks: new List([]),
-    total: 0,
-    yourGroupTasksSortValue: 'sort=due,desc',
-    yourGroupTasksFilterValue: null,
-  }),
+    yourTasks: new Map({
+        isFetchingTasksAssignedToYou: false,
+        tasks: new List([]),
+        total: 0,
+        yourTasksSortValue: 'sort=due,desc',
+        yourTasksFilterValue: null,
+        groupBy: 'category',
+    }),
+    yourGroupTasks: new Map({
+        isFetchingYourGroupTasks: false,
+        tasks: new List([]),
+        total: 0,
+        yourGroupTasksSortValue: 'sort=due,desc',
+        yourGroupTasksFilterValue: null,
+        groupBy: 'category',
+    }),
 });
 
 function reducer(state = initialState, action) {
@@ -65,16 +67,22 @@ function reducer(state = initialState, action) {
         findIndex, item => item.setIn(['task', 'assignee'], null),
       );
 
-      return state.setIn(['yourGroupTasks', 'tasks'], yourGroupTasks);
+            return state.setIn(['yourGroupTasks', 'tasks'], yourGroupTasks);
+        }
+        case actions.RESET_YOUR_TASKS:
+            return state.setIn(['yourTasks', 'tasks'], new List([]))
+                .setIn(['yourTasks', 'total'], 0)
+                .setIn(['yourTasks', 'yourTasksSortValue'], 'sort=due,desc')
+                .setIn(['yourTasks', 'yourTasksFilterValue'], null);
+
+        case actions.GROUP_YOUR_TASKS :
+            return state.setIn(['yourTasks', 'groupBy'], action.groupBy);
+
+        case actions.GROUP_YOUR_TEAM_TASKS :
+            return state.setIn(['yourGroupTasks', 'groupBy'], action.groupBy);
+        default:
+            return state;
     }
-    case actions.RESET_YOUR_TASKS:
-      return state.setIn(['yourTasks', 'tasks'], new List([]))
-        .setIn(['yourTasks', 'total'], 0)
-        .setIn(['yourTasks', 'yourTasksSortValue'], 'sort=due,desc')
-        .setIn(['yourTasks', 'yourTasksFilterValue'], null);
-    default:
-      return state;
-  }
 }
 
 export default reducer;

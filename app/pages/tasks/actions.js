@@ -40,13 +40,25 @@ const handleUnclaim = taskId => ({
   taskId,
 });
 
+const groupYourTasks = groupBy => ({
+    type: types.GROUP_YOUR_TASKS,
+    groupBy
+});
+
+const groupYourTeamTasks = groupBy => ({
+    type: types.GROUP_YOUR_TEAM_TASKS,
+    groupBy
+});
+
 export {
-  fetchTasksAssignedToYou,
-  fetchTasksAssignedToYouSuccess,
-  fetchTasksAssignedToYouFailure,
-  fetchYourGroupTasks,
-  fetchYourGroupTasksSuccess,
-  fetchYourGroupTasksFailure,
-  handleUnclaim,
-  resetYourTasks,
+    fetchTasksAssignedToYou,
+    fetchTasksAssignedToYouSuccess,
+    fetchTasksAssignedToYouFailure,
+    fetchYourGroupTasks,
+    fetchYourGroupTasksSuccess,
+    fetchYourGroupTasksFailure,
+    handleUnclaim,
+    resetYourTasks,
+    groupYourTasks,
+    groupYourTeamTasks
 };

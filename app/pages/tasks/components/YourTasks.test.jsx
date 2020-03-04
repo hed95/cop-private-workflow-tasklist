@@ -7,6 +7,7 @@ import Immutable, { Map } from 'immutable';
 import AppConstants from '../../../common/AppConstants';
 import { YourTasksContainer } from './YourTasksContainer';
 import YourTasks from './YourTasks';
+import TaskUtils from "./TaskUtils";
 
 jest.useFakeTimers();
 
@@ -103,13 +104,23 @@ describe('YourTasks Page', () => {
   const fetchTasksAssignedToYou = jest.fn();
 
   it('sets document title as expected', () => {
+    const taskUtil = new TaskUtils();
     const props = {
       filterTasksByName: jest.fn(),
       goToTask: jest.fn(),
       sortYourTasks: jest.fn(),
-      yourTasks: Immutable.fromJS({
-        isFetchingTasksAssignedToYou: true,
-      }),
+      yourTasks: taskUtil.applyGrouping('category',
+          [{
+            task: {
+              id: 'idZoo',
+              name: 'test',
+              priority: 1000,
+              due: date,
+              created: date,
+            },
+            'process-definition': {
+              category: 'Zoo'
+            }}])
     };
     shallow(<YourTasks {...props} />);
     expect(global.window.document.title).toBe(
@@ -171,19 +182,8 @@ describe('YourTasks Page', () => {
     expect(wrapper.find('#yourTasksTotalCount').text()).toEqual(
       '1 task assigned to you',
     );
-    const tableWrapper = wrapper.find('table');
-    expect(tableWrapper.exists()).toEqual(true);
-
-    const rows = wrapper.find('.widetable-yourtasks');
+    const rows = wrapper.find('#taskGroups');
     expect(rows.length).toEqual(5);
-
-    const firstRowColumns = rows
-      .first()
-      .find('td')
-      .map(column => column.text());
-    expect(firstRowColumns.length).toEqual(3);
-    expect(firstRowColumns[0]).toEqual('test');
-    expect(firstRowColumns[1]).toEqual('due a few seconds ago');
   });
 
   it('renders your tasks on sort change', async () => {
