@@ -6,14 +6,12 @@ import {comments, isFetchingComments} from "../selectors";
 import {bindActionCreators} from "redux";
 import * as actions from "../actions";
 import {connect} from "react-redux";
-import {createStructuredSelector} from "reselect";
 import moment from "moment";
 import Pagination from "../../../../core/components/Pagination";
 import ShowMore from 'react-show-more';
 import Collapsible from 'react-collapsible';
 import {withRouter} from 'react-router';
-import {customEventSubmissionStatus, form, submissionStatus} from '../../form/selectors';
-import {TaskDetailsPage} from './TaskDetailsPage';
+
 
 const uuidv4 = require('uuid/v4');
 
@@ -67,11 +65,8 @@ export class Comments extends React.Component {
                 {this.state.pageOfItems.map((comment) => {
                     return <div className="govuk-card" key={uuidv4()}>
                         <div className="govuk-card__content">
-                            <h4 className="govuk-heading-s">
-                                <span
-                                    className="govuk-caption-s">{moment(comment.get('createdon')).fromNow(false)}</span>
-                                {comment.get('email')}
-                            </h4>
+                            <span className="govuk-caption-m">{moment(comment.get('createdon')).fromNow(false)}</span>
+                            <h4 className="govuk-heading-s">g{comment.get('email')}</h4>
                             <ShowMore
                                 lines={2}
                                 more='Show more'

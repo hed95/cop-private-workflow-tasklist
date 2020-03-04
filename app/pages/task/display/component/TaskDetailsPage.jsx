@@ -11,14 +11,18 @@ import {customEventSubmissionStatus, form, submissionStatus} from '../../form/se
 import {SUBMITTING} from '../../form/constants';
 import DataSpinner from '../../../../core/components/DataSpinner';
 import Loader from 'react-loader-advanced';
+import Comments from "./Comments";
 
 export class TaskDetailsPage extends React.Component {
 
     render() {
-        const {task, variables, submissionStatus} = this.props;
+        const {task, variables, submissionStatus, extensionData} = this.props;
         const showSubmittingLoader = submissionStatus === SUBMITTING || customEventSubmissionStatus === SUBMITTING;
 
         const hasFormKey = task && task.get('formKey');
+        const allowComments = extensionData ? (typeof extensionData.get('allowComments') === "boolean" ? extensionData.get('allowComments'):
+            extensionData.get('allowComments') === 'true') : false;
+
         return <div><Loader
             show={showSubmittingLoader}
             message={<div style={{
@@ -34,12 +38,21 @@ export class TaskDetailsPage extends React.Component {
             hideContentOnLoad={showSubmittingLoader}
             foregroundStyle={{color: 'black'}}
             backgroundStyle={{backgroundColor: 'white'}}>
+
             <TaskTitle {...this.props} />
-            <div className="govuk-grid-row">
-                <div className="govuk-grid-column-two-thirds" style={{paddingTop: '10px'}}>
+            <div className="govuk-grid-row govuk-!-padding-top-3">
+                <div className={allowComments ? "govuk-grid-column-two-thirds" : 'govuk-grid-column-full'}>
                     {hasFormKey ? <CompleteTaskForm task={task} variables={variables}/> :
-                        <Actions task={task} variables={variables}/>}
+                        <React.Fragment>
+                            <p className="govuk-body-l">{task.get('description')}</p>
+                            <Actions task={task} variables={variables}/>
+                        </React.Fragment>
+                    }
                 </div>
+                {allowComments ? <div className="govuk-grid-column-one-third">
+                    <Comments taskId={task.get('id')} {...this.props} />
+                </div> : null}
+
             </div>
         </Loader>
         </div>;
