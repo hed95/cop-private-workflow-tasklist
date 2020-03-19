@@ -44,7 +44,8 @@ class StartForm extends React.Component {
                 sessionId: kc.tokenParsed.session_state,
                 email: kc.tokenParsed.email,
                 givenName: kc.tokenParsed.given_name,
-                familyName: kc.tokenParsed.family_name
+                familyName: kc.tokenParsed.family_name,
+                subject: kc.subject,
             }
         };
 
