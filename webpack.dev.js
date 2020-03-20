@@ -33,7 +33,9 @@ module.exports = webpackMerge(common, {
         ENGINE_URI: JSON.stringify(process.env.ENGINE_URI),
         API_FORM_URI: JSON.stringify(process.env.API_FORM_URI),
         REPORT_URI: JSON.stringify(process.env.REPORT_URI),
-        API_REF_URI: JSON.stringify(process.env.API_REF_URI)
+        API_REF_URI: JSON.stringify(process.env.API_REF_URI),
+        BROWSER_CONFIG: JSON.stringify(process.env.BROWSER_CONFIG),
+        DETECT_BROWSER: JSON.stringify(process.env.DETECT_BROWSER),
       },
     }),
     new webpack.HotModuleReplacementPlugin(),
