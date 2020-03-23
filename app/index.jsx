@@ -220,12 +220,12 @@ if (process.env.NODE_ENV === 'production') {
         analyticsSiteId: data.ANALYTICS_SITE_ID,
         apiRefUrl: data.API_REF_URI,
         serviceDeskUrls,
-        browserConfig: data.BROWSER_CONFIG,
+        browserVersions: data.BROWSER_VERSIONS,
         detectBrowser: data.DETECT_BROWSER === 'true',
       };
 
-      const { detectBrowser, browserConfig } = store.getState().appConfig;
-      if (detectBrowser && !browserIsSupported(browserConfig)) {
+      const { detectBrowser, browserVersions } = store.getState().appConfig;
+      if (detectBrowser && !browserIsSupported(browserVersions)) {
         unavailable(UnsupportedPage);
       } else {
         renderApp(App);
@@ -251,11 +251,11 @@ if (process.env.NODE_ENV === 'production') {
     reportServiceUrl: process.env.REPORT_URI,
     apiRefUrl: process.env.API_REF_URI,
     serviceDeskUrls,
-    browserConfig: process.env.BROWSER_CONFIG,
+    browserVersions: process.env.BROWSER_VERSIONS,
     detectBrowser: process.env.DETECT_BROWSER === 'true',
   };
-  const { detectBrowser, browserConfig } = store.getState().appConfig;
-  if (detectBrowser && !browserIsSupported(browserConfig)) {
+  const { detectBrowser, browserVersions } = store.getState().appConfig;
+  if (detectBrowser && !browserIsSupported(browserVersions)) {
     unavailable(UnsupportedPage);
   } else {
     renderApp(App);
