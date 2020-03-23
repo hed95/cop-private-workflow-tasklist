@@ -154,6 +154,10 @@ pipeline:
         target: ANALYTICS_URL
       - source: DEV_ANALYTICS_SITE_ID
         target: ANALYTICS_SITE_ID
+      - source: DEV_WWW_BROWSER_VERSIONS
+        target: BROWSER_VERSIONS
+      - source: DEV_WWW_DETECT_BROWSER
+        target: DETECT_BROWSER
     commands:
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/cert.yml
@@ -301,6 +305,10 @@ pipeline:
         target: ANALYTICS_URL
       - source: STAGING_ANALYTICS_SITE_ID
         target: ANALYTICS_SITE_ID
+      - source: STAGING_WWW_BROWSER_VERSIONS
+        target: BROWSER_VERSIONS
+      - source: STAGING_WWW_DETECT_BROWSER
+        target: DETECT_BROWSER
     commands:
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/cert.yml
@@ -381,6 +389,10 @@ pipeline:
         target: ANALYTICS_URL
       - source: PRODUCTION_ANALYTICS_SITE_ID
         target: ANALYTICS_SITE_ID
+      - source: PRODUCTION_WWW_BROWSER_VERSIONS
+        target: BROWSER_VERSIONS
+      - source: PRODUCTION_WWW_DETECT_BROWSER
+        target: DETECT_BROWSER
     commands:
       - export WWW_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/cert.yml

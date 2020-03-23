@@ -1,9 +1,9 @@
 import { detect } from 'detect-browser';
 
-export default (config, agentString) => {
-  if (!config || !(typeof config === 'string' && config.length)) {
+export default (versions, agentString) => {
+  if (!versions || !(typeof versions === 'string' && versions.length)) {
     throw new Error(
-      "detectBrowser expects a comma-delimited config string—e.g. 'Chrome-76.0,Edge-17.17134'",
+      "detectBrowser expects a comma-delimited versions string—e.g. 'Chrome-76.0,Edge-17.17134'",
     );
   }
 
@@ -12,7 +12,7 @@ export default (config, agentString) => {
     name: detectedBrowser.name,
     version: detectedBrowser.version.split('.'),
   };
-  const browsers = config.split(',');
+  const browsers = versions.split(',');
   let isSupported = true;
 
   browsers.forEach(browser => {

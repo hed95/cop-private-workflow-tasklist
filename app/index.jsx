@@ -192,9 +192,6 @@ const serviceDeskUrls = {
   support: `${serviceDeskBaseUrl}/customer/portal/3`,
 };
 
-const detectBrowser = true;
-const browserConfig = 'Chrome-76.0,Edge-17.17134';
-
 if (process.env.NODE_ENV === 'production') {
   fetch('/api/config')
     .then(response => {
@@ -223,8 +220,12 @@ if (process.env.NODE_ENV === 'production') {
         analyticsSiteId: data.ANALYTICS_SITE_ID,
         apiRefUrl: data.API_REF_URI,
         serviceDeskUrls,
+        browserVersions: data.BROWSER_VERSIONS,
+        detectBrowser: data.DETECT_BROWSER === 'true',
       };
-      if (detectBrowser && !browserIsSupported(browserConfig)) {
+
+      const { detectBrowser, browserVersions } = store.getState().appConfig;
+      if (detectBrowser && !browserIsSupported(browserVersions)) {
         unavailable(UnsupportedPage);
       } else {
         renderApp(App);
@@ -250,8 +251,11 @@ if (process.env.NODE_ENV === 'production') {
     reportServiceUrl: process.env.REPORT_URI,
     apiRefUrl: process.env.API_REF_URI,
     serviceDeskUrls,
+    browserVersions: process.env.BROWSER_VERSIONS,
+    detectBrowser: process.env.DETECT_BROWSER === 'true',
   };
-  if (detectBrowser && !browserIsSupported(browserConfig)) {
+  const { detectBrowser, browserVersions } = store.getState().appConfig;
+  if (detectBrowser && !browserIsSupported(browserVersions)) {
     unavailable(UnsupportedPage);
   } else {
     renderApp(App);
