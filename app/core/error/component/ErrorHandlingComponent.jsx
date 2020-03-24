@@ -1,28 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { errors, hasError, unauthorised } from '../selectors';
-import * as actions from '../actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import {  withRouter } from 'react-router';
-import ErrorPanel from './ErrorPanel';
 import PubSub from 'pubsub-js';
+import ErrorPanel from './ErrorPanel';
+import * as actions from '../actions';
+import { errors, hasError, unauthorised } from '../selectors';
 import FormErrorPanel from './FormErrorPanel';
 
 export class ErrorHandlingComponent extends React.Component {
   mounted = false;
+
   constructor(props) {
     super(props);
     this.state = {
       formErrors: []
     }
   }
+
   componentDidMount() {
     this.mounted = true;
     PubSub.subscribe('formSubmissionError', (msg,  payload) => {
-      let errors = payload.errors;
-      const form = payload.form;
+      let {errors} = payload;
+      const {form} = payload;
       if (!errors) {
          errors = []
       }
@@ -33,14 +35,14 @@ export class ErrorHandlingComponent extends React.Component {
         formErrors: updated
       })
     });
-    PubSub.subscribe('formSubmissionSuccessful', (msg) => {
+    PubSub.subscribe('formSubmissionSuccessful', msg => {
       if (this.mounted) {
         this.setState({
           formErrors: []
         });
       }
     });
-    PubSub.subscribe('clear', (msg) => {
+    PubSub.subscribe('clear', msg => {
       if (this.mounted) {
         this.setState({
           formErrors: []
@@ -76,18 +78,19 @@ export class ErrorHandlingComponent extends React.Component {
   componentWillUnmount() {
     this.mounted = false;
   }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.hasError) {
       const path = this.props.history.location.pathname;
       const user = this.props.kc.tokenParsed.email;
-      const errors = this.props.errors ? this.props.errors.map((error) => {
+      const errors = this.props.errors ? this.props.errors.map(error => {
           return {
-            path: path,
+            path,
             level: 'error',
             status: error.get('status'),
             message: error.get('message'),
             url: error.get('url'),
-            user: user,
+            user,
           }
         }) : [];
       this.props.log(errors);
@@ -99,19 +102,21 @@ export class ErrorHandlingComponent extends React.Component {
     const user = this.props.kc.tokenParsed.email;
     this.props.log([{
       level: 'error',
-      user: user,
-      path: path,
+      user,
+      path,
       error,
       errorInfo
     }]);
   }
 
   render() {
-    return <React.Fragment>
-            <ErrorPanel {...this.props} />
-            <FormErrorPanel errors={this.state.formErrors} />
-            {this.props.children}
-    </React.Fragment>;
+    return (
+      <React.Fragment>
+        <ErrorPanel {...this.props} />
+        <FormErrorPanel errors={this.state.formErrors} />
+        {this.props.children}
+      </React.Fragment>
+);
   }
 }
 
@@ -125,7 +130,7 @@ ErrorHandlingComponent.propTypes = {
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default withRouter(connect((state) => {
+export default withRouter(connect(state => {
   return {
     kc: state.keycloak,
     hasError: hasError(state),

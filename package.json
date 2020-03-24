@@ -9,6 +9,7 @@
     "dev": "webpack-dev-server --open --config webpack.dev.js --watch --colors",
     "linter": "eslint app",
     "linter:dev": "eslint -f table",
+    "lint:extra": "eslint \"./app/**/*.{js,jsx}\" --fix",
     "prebuild": "npm-audit-check && rebuild-node-sass",
     "test": "jest",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
