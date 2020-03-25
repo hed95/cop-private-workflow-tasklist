@@ -86,7 +86,7 @@ export class ErrorHandlingComponent extends React.Component {
       const errors = this.props.errors ? this.props.errors.map(error => {
           return {
             path,
-            level: 'error',
+            level: 'debug',
             status: error.get('status'),
             message: error.get('message'),
             url: error.get('url'),
@@ -101,7 +101,7 @@ export class ErrorHandlingComponent extends React.Component {
     const path = this.props.history.location.pathname;
     const user = this.props.kc.tokenParsed.email;
     this.props.log([{
-      level: 'error',
+      level: 'debug',
       user,
       path,
       error,
