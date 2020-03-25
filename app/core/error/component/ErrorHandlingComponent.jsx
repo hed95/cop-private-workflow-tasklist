@@ -11,8 +11,6 @@ import { errors, hasError, unauthorised } from '../selectors';
 import FormErrorPanel from './FormErrorPanel';
 
 export class ErrorHandlingComponent extends React.Component {
-  mounted = false;
-
   constructor(props) {
     super(props);
     this.state = {
@@ -21,69 +19,60 @@ export class ErrorHandlingComponent extends React.Component {
   }
 
   componentDidMount() {
-    this.mounted = true;
-    PubSub.subscribe('formSubmissionError', (msg,  payload) => {
-      let {errors} = payload;
-      const {form} = payload;
-      if (!errors) {
-         errors = []
+    this.formSubmissionError = PubSub.subscribe('formSubmissionError', (message,  payload) => {
+      let { errors: payloadErrors } = payload;
+      const { form } = payload;
+
+      if (!payloadErrors) {
+         payloadErrors = []
       }
-      const updated = errors.map(error => {
+      const updated = payloadErrors.map(error => {
         return {message: error.message, instance: form.formio.getComponent(error.component.key)};
       });
       this.setState({
         formErrors: updated
       })
     });
-    PubSub.subscribe('formSubmissionSuccessful', msg => {
-      if (this.mounted) {
-        this.setState({
-          formErrors: []
-        });
-      }
+    this.formSubmissionSuccessful = PubSub.subscribe('formSubmissionSuccessful', () => {
+      this.setState({
+        formErrors: []
+      });
     });
-    PubSub.subscribe('clear', msg => {
-      if (this.mounted) {
-        this.setState({
-          formErrors: []
-        });
-      }
-
+    this.clear = PubSub.subscribe('clear', () => {
+      this.setState({
+        formErrors: []
+      });
     });
-    PubSub.subscribe('formChange', (msg, {value, form}) => {
-      if (this.mounted) {
-        if (this.state.formErrors.length !== 0) {
-          let instance;
-          if (form.instance._form.display === 'wizard') {
-            instance = form.formio.currentPage;
-          } else {
-            instance = form.formio;
-          }
-          if (instance.isValid(value.data, true)) {
-            this.setState({
-              formErrors: []
-            });
-          } else {
-            this.setState({
-              formErrors: _.filter(this.state.formErrors, ({message, instance}) => {
-                return instance.component.key !== value.changed.component.key;
-              })
+    this.formChange = PubSub.subscribe('formChange', (message, {value, form}) => {
+      if (this.state.formErrors.length !== 0) {
+        let instance;
+        if (form.instance._form.display === 'wizard') {
+          instance = form.formio.currentPage;
+        } else {
+          instance = form.formio;
+        }
+        if (instance.isValid(value.data, true)) {
+          this.setState({
+            formErrors: []
+          });
+        } else {
+          this.setState({
+            formErrors: _.filter(this.state.formErrors, ({message, instance}) => {
+              return instance.component.key !== value.changed.component.key;
             })
-          }
+          })
         }
       }
     });
   }
 
-  componentWillUnmount() {
-    this.mounted = false;
-  }
+  componentDidUpdate() {
+    const { hasError, errors, kc, history, log } = this.props;
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.hasError) {
-      const path = this.props.history.location.pathname;
-      const user = this.props.kc.tokenParsed.email;
-      const errors = this.props.errors ? this.props.errors.map(error => {
+    if (hasError) {
+      const { pathname: path } = history.location;
+      const { email: user } = kc.tokenParsed;
+      const errors = errors ? errors.map(error => {
           return {
             path,
             level: 'debug',
@@ -93,14 +82,24 @@ export class ErrorHandlingComponent extends React.Component {
             user,
           }
         }) : [];
-      this.props.log(errors);
+      log(errors);
     }
   }
 
+  componentWillUnmount() {
+    PubSub.unsubscribe(this.formSubmissionError);
+    PubSub.unsubscribe(this.formSubmissionSuccessful);
+    PubSub.unsubscribe(this.clear);
+    PubSub.unsubscribe(this.formChange);
+  }
+
   componentDidCatch(error, errorInfo) {
-    const path = this.props.history.location.pathname;
-    const user = this.props.kc.tokenParsed.email;
-    this.props.log([{
+    const { history, kc, log } = this.props;
+
+    const { pathname: path } = history.location;
+    const {email: user } = kc.tokenParsed;
+
+    log([{
       level: 'debug',
       user,
       path,
@@ -121,10 +120,12 @@ export class ErrorHandlingComponent extends React.Component {
 }
 
 ErrorHandlingComponent.propTypes = {
-  log: PropTypes.func,
-  hasError: PropTypes.bool,
-  errors: ImmutablePropTypes.list,
-  unauthorised: PropTypes.bool
+  log: PropTypes.func.isRequired,
+  hasError: PropTypes.bool.isRequired,
+  history: PropTypes.object.isRequired,
+  errors: ImmutablePropTypes.list.isRequired,
+  unauthorised: PropTypes.bool.isRequired,
+  kc: PropTypes.object.isRequired,
 };
 
 
