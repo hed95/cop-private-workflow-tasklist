@@ -206,14 +206,15 @@ class CaseDetailsPanel extends React.Component {
                                                                               <dt className="govuk-summary-list__key">
                                                                                 {index === 0 ? (
                                                                                   <span
-          className="govuk-tag"
-        >Latest
-        </span>
+                                                                                    className="govuk-tag"
+                                                                                  >Latest
+                                                                                  </span>
 ) : null}
                                                                               </dt>
                                                                               <dd className="govuk-summary-list__value">
                                                                                 <a
-                                                                                  href="#" onClick={event => {
+                                                                                  href="#"
+                                                                                  onClick={event => {
                                                                                         event.preventDefault();
                                                                                         const keyFromSelectedReference = selectedFormReference ?
                                                                                             `${selectedFormReference.versionId}-${selectedFormReference.submissionDate}` : null;
@@ -224,7 +225,9 @@ class CaseDetailsPanel extends React.Component {
                                                                                             this.props.setSelectedFormReference(null)
                                                                                         }
 
-                                                                                    }} role="button" draggable="false"
+                                                                                    }}
+                                                                                  role="button"
+                                                                                  draggable="false"
                                                                                   className="govuk-button"
                                                                                   data-module="govuk-button"
                                                                                 >
@@ -232,7 +235,7 @@ class CaseDetailsPanel extends React.Component {
                                                                                 </a>
                                                                                 <div>
                                                                                   {selectedVersionAndKey ? (
-          <FormDetailsPanel
+                                                                                    <FormDetailsPanel
                                                                                       key={key}
                                                                                       {...{
                                                                                                     formReference: this.props.selectedFormReference,

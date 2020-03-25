@@ -24,67 +24,67 @@ export default class CaseMetrics extends React.Component {
                       <div className="govuk-grid-column-one-third">
                         <div className="metrics-card">
                           <div className="metrics-card-body ">
-                  <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">
+                            <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">
                               {metrics.noOfRunningProcessInstances}
                             </span>
-                  <span className="govuk-!-font-size-19">
+                            <span className="govuk-!-font-size-19">
                                                 Open processes
                             </span>
-                </div>
+                          </div>
 
                         </div>
                       </div>
                       <div className="govuk-grid-column-one-third">
                         <div className="metrics-card">
                           <div className="metrics-card-body">
-                  <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">
+                            <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">
                               {metrics.noOfCompletedProcessInstances}
                             </span>
-                  <span className="govuk-!-font-size-19">
+                            <span className="govuk-!-font-size-19">
                                                 Completed processes
                             </span>
-                </div>
+                          </div>
 
                         </div>
                       </div>
                       <div className="govuk-grid-column-one-third">
                         <div className="metrics-card">
                           <div className="metrics-card-body ">
-                  <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">
+                            <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">
                               {metrics.noOfCompletedUserTasks}
                             </span> <span className="govuk-!-font-size-19">Completed tasks</span>
-                </div>
+                          </div>
                         </div>
                       </div>
                       <div className="govuk-grid-column-one-third">
                         <div className="metrics-card">
                           <div className="metrics-card-body ">
-                  <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">
+                            <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">
                               {metrics.noOfOpenUserTasks}
                             </span>
-                  <span className="govuk-!-font-size-19">Open tasks</span>
-                </div>
+                            <span className="govuk-!-font-size-19">Open tasks</span>
+                          </div>
                         </div>
                       </div>
 
                       <div className="govuk-grid-column-one-third">
                         <div className="metrics-card">
                           <div className="metrics-card-body ">
-                  <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">
+                            <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">
                               {moment.duration(metrics.overallTimeInSeconds, 'seconds').humanize()}
                             </span>
-                  <span className="govuk-!-font-size-19">Total time</span>
-                </div>
+                            <span className="govuk-!-font-size-19">Total time</span>
+                          </div>
                         </div>
                       </div>
                       <div className="govuk-grid-column-one-third">
                         <div className="metrics-card">
                           <div className="metrics-card-body ">
-                  <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">
+                            <span className="govuk-!-font-size-36 govuk-!-font-weight-bold">
                               {moment.duration(metrics.averageTimeToCompleteProcessInSeconds, 'seconds').humanize()}
                             </span>
-                  <span className="govuk-!-font-size-19">Average process completion</span>
-                </div>
+                            <span className="govuk-!-font-size-19">Average process completion</span>
+                          </div>
                         </div>
                       </div>
                     </div>

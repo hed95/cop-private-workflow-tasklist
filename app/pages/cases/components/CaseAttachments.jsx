@@ -41,22 +41,22 @@ class CaseAttachments extends React.Component {
                         <tr className="govuk-table__row">
                           <th scope="col" className="govuk-table__header">Name</th>
                           <th
-                  scope="col"
-                  className="govuk-table__header"
-                >Uploaded on
-                </th>
+                            scope="col"
+                            className="govuk-table__header"
+                          >Uploaded on
+                          </th>
                           <th
-                  scope="col"
-                  className="govuk-table__header"
-                >Uploaded by
-                </th>
+                            scope="col"
+                            className="govuk-table__header"
+                          >Uploaded by
+                          </th>
                         </tr>
                       </thead>
                       <tbody className="govuk-table__body">
                         {fetchingCaseAttachments ? (
                           <tr className="govuk-table__row">
-                  <td><h4 className="govuk-heading-s">Loading attachments...</h4></td>
-                </tr>
+                            <td><h4 className="govuk-heading-s">Loading attachments...</h4></td>
+                          </tr>
                                ): (attachments && attachments.length !== 0 ? attachments.map(attachment => {
                                     return (
                                       <tr key={attachment.url} className="govuk-table__row">

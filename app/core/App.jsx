@@ -116,7 +116,7 @@ AppBanner.propTypes = {
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 const mapStateToProps = ({ keycloak, appConfig }) => ({
   kc: keycloak,
-  appConfig: appConfig,
+  appConfig,
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withLog(App)));

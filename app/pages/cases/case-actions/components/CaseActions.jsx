@@ -74,12 +74,12 @@ class CaseActions extends React.Component {
 
                         {selectedAction ? (
                           <section
-                  className="govuk-tabs__panel"
-                  id={selectedAction.process['process-definition'].key}
-                >
-                  <CaseAction {...{selectedAction, caseDetails}} />
+                            className="govuk-tabs__panel"
+                            id={selectedAction.process['process-definition'].key}
+                          >
+                            <CaseAction {...{selectedAction, caseDetails}} />
 
-                </section>
+                          </section>
 ) : null }
                       </div>
                               )
