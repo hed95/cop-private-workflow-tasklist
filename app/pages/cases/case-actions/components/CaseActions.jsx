@@ -36,8 +36,7 @@ class CaseActions extends React.Component {
                       <span
                         className="govuk-accordion__section-button"
                         id={`heading-${caseDetails.businessKey}-actions`}
-                      >
-                                        Case actions
+                      >Case actions
                       </span>
                     </h4>
                   </div>

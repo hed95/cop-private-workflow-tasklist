@@ -74,7 +74,7 @@ export class DashboardPanel extends React.Component {
       self.websocketSubscriptions.push(userSub);
 
       self.props.log([{
-        message: `Number of subscriptions ${  self.websocketSubscriptions.length}`,
+        message: `Number of subscriptions ${self.websocketSubscriptions.length}`,
         user,
         level: 'info',
         path: self.props.location.pathname
