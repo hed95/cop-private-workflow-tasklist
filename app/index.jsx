@@ -56,7 +56,7 @@ const renderApp = App => {
         Formio.plugins = [
           {
             priority: 0,
-            preRequest: async function(requestArgs) {
+            async preRequest(requestArgs) {
               if (!requestArgs.opts) {
                 requestArgs.opts = {};
               }
@@ -75,7 +75,7 @@ const renderApp = App => {
                   );
                 }
               }
-              let token = store.getState().keycloak.token;
+              let {token} = store.getState().keycloak;
               const isExpired =
                 jwtDecode(token).exp < new Date().getTime() / 1000;
               if (isExpired) {
@@ -108,18 +108,18 @@ const renderApp = App => {
           },
           {
             priority: 0,
-            requestResponse: function(response) {
+            requestResponse(response) {
               return {
                 ok: response.ok,
                 json: () =>
                   response.json().then(result => {
                     if (result.forms) {
                       return result.forms.map(form => {
-                        form['_id'] = form.id;
+                        form._id = form.id;
                         return form;
                       });
                     }
-                    result['_id'] = result.id;
+                    result._id = result.id;
                     return result;
                   }),
                 status: response.status,
