@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb", "prettier"],
+  "extends": ["airbnb", "plugin:prettier/recommended"],
   "env": {
     "browser": true,
     "jest": true,
@@ -30,13 +30,18 @@
       }
     }
   ],
-  "parser": "babel-eslint",
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error"
+  },
   "rules": {
     "arrow-parens": [2, "as-needed"],
     "no-unused-expressions": [2, { "allowShortCircuit": true }],
     "react/jsx-fragments": 0,
     "react/forbid-prop-types": 0,
     "react/jsx-one-expression-per-line": 0,
-    "react/jsx-props-no-spreading": 0
+    "react/jsx-props-no-spreading": 0,
+    "quotes": ["error", "single"],
+    "prettier/prettier": ["error"]
   }
 }
