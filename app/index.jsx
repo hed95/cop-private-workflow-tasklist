@@ -130,7 +130,7 @@ const renderApp = App => {
         ];
         const history = MatomoTracker({
           trackPageView: true,
-	        enableLinkTracking: true,
+	  enableLinkTracking: true,
           url: store.getState().appConfig.analyticsUrl,
           siteId: store.getState().appConfig.analyticsSiteId,
           injectScript : true,
