@@ -22,7 +22,7 @@ describe('browserIsSupported', () => {
   });
 
   it('reports not supported if user agent major version < versions', () => {
-    expect(browserIsSupported('Chrome-76.0,Edge-79.0', edge)).toBe(
+    expect(browserIsSupported('Chrome-76.0,Edge-179.0', edge)).toBe(
       false,
     );
   });
