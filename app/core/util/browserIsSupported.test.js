@@ -60,4 +60,16 @@ describe('browserIsSupported', () => {
   it('reports supported if user agent major version > versions and user agent minor version > versions', () => {
     expect(browserIsSupported(versions, chrome)).toBe(true);
   });
+
+  it('reports supported if user agent major version > versions but minor version is undefined', () => {
+    expect(browserIsSupported('Chrome-76,Edge-18.17133', chrome)).toBe(true);
+  });
+
+  it('reports supported if user agent major version === versions but minor version is undefined', () => {
+    expect(browserIsSupported('Chrome-76.0,Edge-18', edge)).toBe(true);
+  });
+
+  it('reports not supported if user agent major version < versions but minor version is undefined', () => {
+    expect(browserIsSupported('Chrome-100,Edge-18.17133', chrome)).toBe(false);
+  });
 });
