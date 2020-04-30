@@ -47,8 +47,8 @@ class CasesPage extends React.Component {
               Cases
             </h2>
             <div className="govuk-inset-text">
-              Enter a COP number in quotes to search for cases.{' '}, for example "COP-20200406-24"
-              <strong>Please note all actions are audited.</strong>
+              <p>Enter a COP number in quotes to search for cases—e.g. "COP-20200406-24".</p>
+              <p><strong>Please note all actions are audited.</strong></p>
             </div>
           </div>
           <div className="govuk-grid-column-one-third">
@@ -59,7 +59,7 @@ class CasesPage extends React.Component {
                 spellCheck="false"
                 type="text"
                 className="govuk-input"
-                placeholder="Search using a BF prefixed number"
+                placeholder="Search using a COP prefixed number"
                 id="bfNumber"
                 onChange={event => {
                   const that = this;
