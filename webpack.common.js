@@ -40,7 +40,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Caching',
       template: './public/index.html',
-      favicon: './public/favicon.ico',
     }),
     new CopyWebpackPlugin([
       { from: 'node_modules/govuk-frontend/govuk/assets', to: 'assets' },
