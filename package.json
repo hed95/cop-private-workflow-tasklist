@@ -117,7 +117,7 @@
     "immutable": "^3.8.2",
     "inherits": "^2.0.3",
     "jest": "^23.6.0",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "jwt-decode": "^2.2.0",
     "keycloak-connect": "^5.0.0",
     "keycloak-js": "^4.7.0",
