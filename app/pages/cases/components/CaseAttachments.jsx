@@ -68,7 +68,7 @@ class CaseAttachments extends React.Component {
                                                    e.preventDefault();
                                                    fetch(attachment.url, {
                                                        headers: {
-                                                           'Authorization': this.props.kc.token
+                                                           'Authorization': `Bearer ${this.props.kc.token}`
                                                        }
                                                    }).then(response => response.blob())
                                                        .then(blob => {
