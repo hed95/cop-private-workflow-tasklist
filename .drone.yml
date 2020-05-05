@@ -224,17 +224,17 @@ pipeline:
       event: push
       status: failure
 
-  # CB-936 Moved here whilst we investigate slow build times and timing out vulnerability scans
-  vulnerability-scan:
-    image: quay.io/ukhomeofficedigital/anchore-submission:latest
-    dockerfile: Dockerfile
-    image_name: cop-private-workflow-tasklist:${DRONE_COMMIT_SHA}
-    local_image: true
-    tolerate: low
-    fail_on_detection: false
-    when:
-      branch: master
-      event: push
+#  # CB-936 Moved here whilst we investigate slow build times and timing out vulnerability scans
+#  vulnerability-scan:
+#    image: quay.io/ukhomeofficedigital/anchore-submission:latest
+#    dockerfile: Dockerfile
+#    image_name: cop-private-workflow-tasklist:${DRONE_COMMIT_SHA}
+#    local_image: true
+#    tolerate: low
+#    fail_on_detection: false
+#    when:
+#      branch: master
+#      event: push
 
   deploy_to_staging:
     image: quay.io/ukhomeofficedigital/kd
