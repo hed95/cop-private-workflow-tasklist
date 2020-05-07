@@ -25,4 +25,4 @@ spec:
   tls:
   - hosts:
     - {{.WWW_URL}}
-    secretName: {{.WWW_URL}}-tls
+    secretName: {{.WWW_URL}}-cmio
