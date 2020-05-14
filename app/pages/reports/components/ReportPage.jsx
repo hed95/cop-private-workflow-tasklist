@@ -1,17 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AppConstants from '../../../common/AppConstants';
 import HTMLReport from './HTMLReport';
 import PowerBIReport from './PowerBIReport';
 
 export const ReportPage = ({ appConfig, location }) => {
+  if (!location.state) return <Redirect to={AppConstants.REPORTS_PATH} />;
   const { reportServiceUrl } = appConfig;
-  const params = queryString.parse(location.search);
-  const { accessToken, embedUrl, htmlName, id, name, reportType } = params;
+  const {
+    accessToken,
+    embedUrl,
+    htmlName,
+    id,
+    name,
+    reportType,
+  } = location.state;
   document.title = `${name} | ${AppConstants.APP_NAME}`;
 
   return (
@@ -48,7 +54,14 @@ ReportPage.propTypes = {
     reportServiceUrl: PropTypes.string.isRequired,
   }).isRequired,
   location: PropTypes.shape({
-    search: PropTypes.string.isRequired,
+    state: PropTypes.shape({
+      accessToken: PropTypes.string,
+      embedUrl: PropTypes.string,
+      htmlName: PropTypes.string,
+      id: PropTypes.string,
+      name: PropTypes.string.isRequired,
+      reportType: PropTypes.string,
+    }),
   }).isRequired,
 };
 

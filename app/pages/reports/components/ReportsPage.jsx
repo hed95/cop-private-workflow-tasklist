@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
+import _ from 'lodash';
 import { loadingReports, reports } from '../selectors';
 import DataSpinner from '../../../core/components/DataSpinner';
 import * as actions from '../actions';
@@ -36,17 +37,17 @@ export class ReportsPage extends React.Component {
                     onClick={() => {
                       const { history } = this.props;
                       history.push(
-                        (report.get('reportType') === 'PowerBIReport' &&
-                          `/report?accessToken=${report.get(
-                            'accessToken',
-                          )}&embedUrl=${report.get('embedUrl')}&id=${report.get(
-                            'id',
-                          )}&name=${report.get(
-                            'name',
-                          )}&reportType=PowerBIReport`) ||
-                          `/report?name=${report.get(
-                            'name',
-                          )}&htmlName=${report.get('htmlName')}`,
+                        `/reports/${_.kebabCase(report.get('name'))}`,
+                        (report.get('reportType') === 'PowerBIReport' && {
+                          accessToken: report.get('accessToken'),
+                          embedUrl: report.get('embedUrl'),
+                          id: report.get('id'),
+                          name: report.get('name'),
+                          reportType: report.get('reportType'),
+                        }) || {
+                          name: report.get('name'),
+                          htmlName: report.get('htmlName'),
+                        },
                       );
                     }}
                     type="submit"

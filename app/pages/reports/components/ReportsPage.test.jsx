@@ -79,6 +79,23 @@ describe('Reports Page', () => {
     expect(wrapper.find('#report').length).toEqual(1);
   });
 
+  it('triggers history.push when button is pressed', () => {
+    const props = {
+      ...initialProps,
+      reports: Immutable.fromJS([
+        {
+          name: 'reportname',
+          description: 'reportdescription',
+          htmlName: 'reportHtmlName',
+        },
+      ]),
+    };
+    const wrapper = shallow(<ReportsPage {...props} />);
+    const buttonWrapper = wrapper.find('button').first();
+    buttonWrapper.prop('onClick')();
+    expect(props.history.push).toHaveBeenCalledTimes(1);
+  });
+
   it('matches snapshot', () => {
     const props = {
       ...initialProps,
