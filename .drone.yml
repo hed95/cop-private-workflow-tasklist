@@ -169,6 +169,89 @@ pipeline:
       branch: master
       event: push
 
+  deploy_to_dev_eforms:
+    image: quay.io/ukhomeofficedigital/kd
+    secrets:
+      - source: PROTOCOL_HTTPS
+        target: KEYCLOAK_PROTOCOL
+      - source: DEV_KEYCLOAK_URL
+        target: KEYCLOAK_URL
+      - source: DEV_KEYCLOAK_REALM
+        target: KEYCLOAK_REALM
+      - source: NGINX_IMAGE
+        target: NGINX_IMAGE
+      - source: NGINX_TAG
+        target: NGINX_TAG
+      - source: DEV_KUBE_SERVER
+        target: KUBE_SERVER
+      - source: DEV_EFORMS_KUBE_TOKEN
+        target: KUBE_TOKEN
+      - source: DEV_KUBE_NAMESPACE_COP_EFORMS
+        target: KUBE_NAMESPACE
+      - source: DEV_WHITELIST
+        target: WHITELIST
+      - source: WWW_NAME
+        target: WWW_NAME
+      - source: DEV_WWW_EFORMS_URL
+        target: WWW_URL
+      - source: PROTOCOL_HTTPS
+        target: WWW_PROTOCOL
+      - source: WWW_PORT
+        target: WWW_PORT
+      - source: DEV_WWW_UI_ENVIRONMENT
+        target: WWW_UI_ENVIRONMENT
+      - source: WWW_UI_VERSION
+        target: WWW_UI_VERSION
+      - source: WWW_KEYCLOAK_CLIENT_ID
+        target: WWW_KEYCLOAK_CLIENT_ID
+      - source: WWW_KEYCLOAK_ACCESS_ROLE
+        target: WWW_KEYCLOAK_ACCESS_ROLE
+      - source: DEV_WWW_STORAGE_KEY
+        target: WWW_STORAGE_KEY
+      - source: WWW_IMAGE
+        target: WWW_IMAGE
+      - source: DEV_REPORT_URL
+        target: REPORT_URL
+      - source: PROTOCOL_HTTPS
+        target: REPORT_PROTOCOL
+      - source: DEV_API_REF_URL
+        target: API_REF_URL
+      - source: PROTOCOL_HTTPS
+        target: API_REF_PROTOCOL
+      - source: DEV_API_COP_URL
+        target: API_COP_URL
+      - source: PROTOCOL_HTTPS
+        target: API_COP_PROTOCOL
+      - source: DEV_WORKFLOW_SERVICE_URL
+        target: ENGINE_URL
+      - source: PROTOCOL_HTTPS
+        target: ENGINE_PROTOCOL
+      - source: DEV_API_FORM_URL
+        target: API_FORM_URL
+      - source: PROTOCOL_HTTPS
+        target: API_FORM_PROTOCOL
+      - source: DEV_FILE_UPLOAD_SERVICE_EFORMS_URL
+        target: API_ATTACHMENT_URL
+      - source: DEV_ANALYTICS_URL
+        target: ANALYTICS_URL
+      - source: DEV_ANALYTICS_SITE_ID
+        target: ANALYTICS_SITE_ID
+      - source: DEV_WWW_BROWSER_VERSIONS
+        target: BROWSER_VERSIONS
+      - source: DEV_WWW_DETECT_BROWSER
+        target: DETECT_BROWSER
+    commands:
+      - export WWW_TAG=$${DRONE_COMMIT_SHA}
+      - kd --insecure-skip-tls-verify -f kube/cert.yml
+      - kd --insecure-skip-tls-verify -f kube/network-policy.yml
+      - kd --insecure-skip-tls-verify -f kube/service.yml
+      - kd --insecure-skip-tls-verify -f kube/deployment.yml --timeout=5m
+      - kd --insecure-skip-tls-verify -f kube/ingress.yml
+    when:
+      branch: master
+      deployment: dev
+      event: push
+
   create-change-desc-dev:
     image: docker:git
     commands:
