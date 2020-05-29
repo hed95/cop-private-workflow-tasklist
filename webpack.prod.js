@@ -38,6 +38,7 @@ module.exports = webpackMerge(common, {
         terserOptions: {
           compress: {
             comparisons: false,
+            drop_console: true,
           },
           output: {
             comments: false,
