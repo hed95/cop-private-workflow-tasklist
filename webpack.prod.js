@@ -30,7 +30,7 @@ module.exports = webpackMerge(common, {
       new OptimizeCSSAssetsPlugin({
         cssProcessor: cssnano,
         cssProcessorPluginOptions: {
-          preset: ['default', { discardComments: { removeAll: true }}],
+          preset: ['default', { discardComments: { removeAll: true } }],
         },
         canPrint: false,
       }),
@@ -38,13 +38,14 @@ module.exports = webpackMerge(common, {
         terserOptions: {
           compress: {
             comparisons: false,
+            drop_console: true,
           },
           output: {
             comments: false,
             ascii_only: true,
           },
         },
-      })
+      }),
     ],
     nodeEnv: 'production',
     sideEffects: true,
@@ -80,9 +81,7 @@ module.exports = webpackMerge(common, {
       test: /\.js$|\.css$|\.html$/,
       threshold: 10240,
     }),
-    new CopyWebpackPlugin([
-      { from: 'server.js', to: '' },
-    ]),
+    new CopyWebpackPlugin([{ from: 'server.js', to: '' }]),
     new HtmlWebpackPlugin({
       title: 'Caching',
       template: './public/index.html',
@@ -127,7 +126,10 @@ module.exports = webpackMerge(common, {
       ios: true,
       icons: [
         {
-          src: path.join(__dirname, 'node_modules/govuk-frontend/govuk/assets/images/govuk-opengraph-image.png'),
+          src: path.join(
+            __dirname,
+            'node_modules/govuk-frontend/govuk/assets/images/govuk-opengraph-image.png',
+          ),
           size: '1200x630',
           type: 'image/png',
         },
