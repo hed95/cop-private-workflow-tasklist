@@ -35,7 +35,7 @@ spec:
           value: "FALSE"
         - name: ADD_NGINX_LOCATION_CFG
           value: |
-            client_max_body_size      50m;
+            client_max_body_size      300m;
         ports:
         - name: https
           containerPort: 10443
