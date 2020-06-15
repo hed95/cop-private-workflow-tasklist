@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { list } from 'react-immutable-proptypes';
 import { errors as errorsSelector } from '../error/selectors';
+import AppConstants from '../../common/AppConstants';
 
 export class NotFoundPage extends Component {
   constructor(props) {
@@ -25,8 +26,12 @@ export class NotFoundPage extends Component {
 
   checkErrors() {
     const { errors } = this.props;
+    const is404 = errors.some(error => error.get('status') === 404);
+    document.title = `${is404 ? 'Page not found' : 'Error'} | ${
+      AppConstants.APP_NAME
+    }`;
     this.setState({
-      is404: errors.some(error => error.get('status') === 404),
+      is404,
     });
   }
 

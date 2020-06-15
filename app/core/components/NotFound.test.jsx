@@ -1,6 +1,7 @@
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import { Map, List } from 'immutable';
+import AppConstants from '../../common/AppConstants';
 import NotFound, { NotFoundPage } from './NotFound';
 
 describe('NotFound page', () => {
@@ -23,6 +24,9 @@ describe('NotFound page', () => {
     expect(wrapper.find('h4').text()).toBe(
       'Form with identifier  was not found',
     );
+    expect(global.window.document.title).toBe(
+      `Error | ${AppConstants.APP_NAME}`,
+    );
   });
 
   it('renders 404 page if 404 error', () => {
@@ -37,6 +41,9 @@ describe('NotFound page', () => {
       ]),
     });
     expect(wrapper.find('h2').text()).toBe('Page not found');
+    expect(global.window.document.title).toBe(
+      `Page not found | ${AppConstants.APP_NAME}`,
+    );
   });
 
   it('matches snapshot', () => {
