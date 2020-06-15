@@ -109,7 +109,11 @@ export class ErrorHandlingComponent extends React.Component {
   }
 
   render() {
-    return (
+    const { errors: ers, children } = this.props;
+    const is404 = ers && ers.size ?
+      ers.find(error => error.get('status') === 404) !== undefined
+      : false;
+    return is404 ? children : (
       <React.Fragment>
         <ErrorPanel {...this.props} />
         <FormErrorPanel errors={this.state.formErrors} />
@@ -120,6 +124,10 @@ export class ErrorHandlingComponent extends React.Component {
 }
 
 ErrorHandlingComponent.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
   log: PropTypes.func.isRequired,
   hasError: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,

@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { createMemoryHistory } from 'history';
-import {MemoryRouter, Router, Switch} from 'react-router-dom';
+import { MemoryRouter, Router, Switch } from 'react-router-dom';
 import React from 'react';
 import configureStore from 'redux-mock-store';
 import Immutable, { Map } from 'immutable';
@@ -8,7 +8,7 @@ import AppConstants from '../../../common/AppConstants';
 import { YourTasksContainer } from './YourTasksContainer';
 import YourTasks from './YourTasks';
 import TaskUtils from './TaskUtils';
-import {RouteWithTitle} from "../../../core/Main";
+import { RouteWithTitle } from '../../../core/Main';
 
 jest.useFakeTimers();
 
@@ -90,14 +90,15 @@ describe('YourTasks Page', () => {
     store = configureStore()({
       'tasks-page': new Map({}),
     });
-    window.matchMedia = window.matchMedia
-    || function matchMedia() {
-      return {
-        matches: true,
-        addListener() {},
-        removeListener() {},
+    window.matchMedia =
+      window.matchMedia ||
+      function matchMedia() {
+        return {
+          matches: true,
+          addListener() {},
+          removeListener() {},
+        };
       };
-    };
   });
   afterEach(() => {
     window.matchMedia = null;
@@ -109,6 +110,8 @@ describe('YourTasks Page', () => {
     const props = {
       filterTasksByName: jest.fn(),
       goToTask: jest.fn(),
+      groupYourTasks: jest.fn(),
+      resetYourTasks: jest.fn(),
       sortYourTasks: jest.fn(),
       yourTasks: taskUtil.applyGrouping('category', [
         {
@@ -126,22 +129,21 @@ describe('YourTasks Page', () => {
       ]),
     };
 
-    mount(<MemoryRouter initialEntries={['/your-tasks']}>
-      <Switch>
-        <RouteWithTitle
-          name="Your tasks"
-          title={`Your tasks | ${AppConstants.APP_NAME}`}
-          exact
-          path={AppConstants.YOUR_TASKS_PATH}
-          component={() => <YourTasks {...props} />}
-        />
-
-      </Switch>
-    </MemoryRouter>);
+    mount(
+      <MemoryRouter initialEntries={['/your-tasks']}>
+        <Switch>
+          <RouteWithTitle
+            name="Your tasks"
+            title={`Your tasks | ${AppConstants.APP_NAME}`}
+            exact
+            path={AppConstants.YOUR_TASKS_PATH}
+            component={() => <YourTasks {...props} />}
+          />
+        </Switch>
+      </MemoryRouter>,
+    );
     requestAnimationFrame(() => {
-      expect(document.title).toBe(
-          `Your tasks | ${AppConstants.APP_NAME}`,
-      );
+      expect(document.title).toBe(`Your tasks | ${AppConstants.APP_NAME}`);
       done();
     });
   });
@@ -151,13 +153,16 @@ describe('YourTasks Page', () => {
       appConfig: {
         uiEnvironment: 'local',
       },
+      groupYourTasks: jest.fn(),
+      history: createMemoryHistory('/task'),
       kc: {
         tokenParsed: {
           email: 'test@tes.com',
         },
         token: 'token',
       },
-      isFetchingTasks: true
+      isFetchingTasks: true,
+      resetYourTasks: jest.fn(),
     };
     const wrapper = await mount(
       <YourTasksContainer
@@ -177,13 +182,16 @@ describe('YourTasks Page', () => {
       appConfig: {
         uiEnvironment: 'local',
       },
+      groupYourTasks: jest.fn(),
+      history: createMemoryHistory('/task'),
       kc: {
         tokenParsed: {
           email: 'test@tes.com',
         },
         token: 'token',
       },
-      ...yourTasks
+      resetYourTasks: jest.fn(),
+      ...yourTasks,
     };
     const wrapper = await mount(
       <YourTasksContainer
@@ -207,12 +215,15 @@ describe('YourTasks Page', () => {
       appConfig: {
         uiEnvironment: 'local',
       },
+      groupYourTasks: jest.fn(),
+      history: createMemoryHistory('/task'),
       kc: {
         tokenParsed: {
           email: 'test@tes.com',
         },
         token: 'token',
       },
+      resetYourTasks: jest.fn(),
       ...yourTasks,
     };
     const wrapper = await mount(
@@ -248,12 +259,15 @@ describe('YourTasks Page', () => {
       appConfig: {
         uiEnvironment: 'local',
       },
+      groupYourTasks: jest.fn(),
+      history: createMemoryHistory('/task'),
       kc: {
         tokenParsed: {
           email: 'test@tes.com',
         },
         token: 'token',
       },
+      resetYourTasks: jest.fn(),
       ...yourTasks,
     };
     const wrapper = await mount(
@@ -297,10 +311,12 @@ describe('YourTasks Page', () => {
         },
         token: 'token',
       },
+      groupYourTasks: jest.fn(),
       history,
       isFetchingTasks: false,
       sortValue: 'sort=due,desc',
       filterValue: 'TEST',
+      resetYourTasks: jest.fn(),
       total: 1,
       tasks: Immutable.fromJS([
         {
