@@ -3,11 +3,11 @@ import configureStore from 'redux-mock-store';
 import Immutable, { Map } from 'immutable';
 import moment from 'moment';
 import { createMemoryHistory } from 'history';
-import {MemoryRouter, Router, Switch} from 'react-router-dom';
+import { MemoryRouter, Router, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import AppConstants from '../../../common/AppConstants';
 import { YourGroupTasksContainer } from './YourGroupTasksContainer';
-import {RouteWithTitle} from "../../../core/Main";
+import { RouteWithTitle } from '../../../core/Main';
 
 jest.useFakeTimers();
 
@@ -15,7 +15,9 @@ describe('YourGroupTasksContainer Page', () => {
   const mockStore = configureStore();
   let store;
   const date = moment();
-  const yourGroupTasks ={
+  const history = createMemoryHistory('/your-tasks');
+  const yourGroupTasks = {
+    history,
     isFetchingTasks: false,
     sortValue: 'sort=due,desc',
     total: 1,
@@ -42,14 +44,15 @@ describe('YourGroupTasksContainer Page', () => {
         },
       },
     });
-    window.matchMedia = window.matchMedia
-    || function matchMedia() {
-      return {
-        matches: true,
-        addListener() {},
-        removeListener() {},
+    window.matchMedia =
+      window.matchMedia ||
+      function matchMedia() {
+        return {
+          matches: true,
+          addListener() {},
+          removeListener() {},
+        };
       };
-    };
   });
   afterEach(() => {
     window.matchMedia = null;
@@ -57,8 +60,11 @@ describe('YourGroupTasksContainer Page', () => {
   const fetchYourGroupTasks = jest.fn();
 
   it('sets document title as expected', done => {
+    const history = createMemoryHistory('/your-tasks');
     const props = {
       isFetchingTasks: true,
+      groupYourTeamTasks: jest.fn(),
+      history,
       kc: {
         tokenParsed: {
           email: 'email',
@@ -66,35 +72,38 @@ describe('YourGroupTasksContainer Page', () => {
       },
     };
 
-    mount(<MemoryRouter initialEntries={['/your-group-tasks']}>
-      <Switch>
-        <RouteWithTitle
-          name="Your group tasks"
-          title={`Your team’s tasks | ${AppConstants.APP_NAME}`}
-          exact
-          path={AppConstants.YOUR_GROUP_TASKS_PATH}
-          component={() => (
-            <YourGroupTasksContainer
-              store={store}
-              {...props}
-              fetchYourGroupTasks={fetchYourGroupTasks}
-            />
-)}
-        />
-
-      </Switch>
-    </MemoryRouter>);
+    mount(
+      <MemoryRouter initialEntries={['/your-group-tasks']}>
+        <Switch>
+          <RouteWithTitle
+            name="Your group tasks"
+            title={`Your team’s tasks | ${AppConstants.APP_NAME}`}
+            exact
+            path={AppConstants.YOUR_GROUP_TASKS_PATH}
+            component={() => (
+              <YourGroupTasksContainer
+                store={store}
+                {...props}
+                fetchYourGroupTasks={fetchYourGroupTasks}
+              />
+            )}
+          />
+        </Switch>
+      </MemoryRouter>,
+    );
     requestAnimationFrame(() => {
       expect(document.title).toBe(
-          `Your team’s tasks | ${AppConstants.APP_NAME}` ,
+        `Your team’s tasks | ${AppConstants.APP_NAME}`,
       );
       done();
     });
   });
 
   it('renders data spinner while loading tasks', async () => {
+    const history = createMemoryHistory('/your-tasks');
     const props = {
       isFetchingTasks: true,
+      history,
       kc: {
         tokenParsed: {
           email: 'email',
@@ -196,16 +205,16 @@ describe('YourGroupTasksContainer Page', () => {
       filterValue: 'TEST',
       total: 1,
       tasks: Immutable.fromJS([
-      {
-        task: {
-          id: 'id',
-          name: 'test',
-          priority: 1000,
-          due: date,
-          created: date,
+        {
+          task: {
+            id: 'id',
+            name: 'test',
+            priority: 1000,
+            due: date,
+            created: date,
+          },
         },
-      },
-    ]),
+      ]),
     };
 
     const wrapper = await mount(
@@ -255,7 +264,7 @@ describe('YourGroupTasksContainer Page', () => {
             created: date,
           },
         },
-      ])
+      ]),
     };
 
     const wrapper = await mount(
