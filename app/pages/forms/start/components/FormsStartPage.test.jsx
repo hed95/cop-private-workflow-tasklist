@@ -1,5 +1,7 @@
 import React from 'react';
-import Immutable from 'immutable';
+import Immutable, { Map, List } from 'immutable';
+import configureStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
 import { ProcessStartPage } from './FormsStartPage';
 import secureLocalStorage from '../../../../common/security/SecureLocalStorage';
 import AppConstants from '../../../../common/AppConstants';
@@ -101,7 +103,7 @@ describe('Submit a form page', () => {
     expect(wrapper.find('.loader-message').text()).toEqual('Loading form...');
   });
 
-  it('displays resource not found if form is missing', async () => {
+  it('displays Not Found component if form is missing', async () => {
     const props = {
       loadingForm: false,
       submissionStatus: null,
@@ -132,19 +134,27 @@ describe('Submit a form page', () => {
     };
     const fetchProcessDefinition = jest.fn();
     const clearProcessDefinition = jest.fn();
-
+    const store = configureStore()({
+      'error-page': Map({
+        errors: List([
+          Map({
+            status: 404,
+            message: 'test',
+          }),
+        ]),
+      }),
+    });
     const wrapper = await mount(
-      <ProcessStartPage
-        {...props}
-        clearProcessDefinition={clearProcessDefinition}
-        fetchProcessDefinition={fetchProcessDefinition}
-      />,
+      <Provider store={store}>
+        <ProcessStartPage
+          {...props}
+          clearProcessDefinition={clearProcessDefinition}
+          fetchProcessDefinition={fetchProcessDefinition}
+        />
+      </Provider>,
     );
     expect(fetchProcessDefinition).toHaveBeenCalled();
-
-    expect(wrapper.find('div').text()).toEqual(
-      'Form with identifier formKey was not found',
-    );
+    expect(wrapper.find('NotFoundPage')).toHaveLength(1);
   });
 
   it('sets document title as expected when processDefinition loaded', () => {
