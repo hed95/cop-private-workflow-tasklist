@@ -43,6 +43,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: 'node_modules/govuk-frontend/govuk/assets', to: 'assets' },
+      { from: 'public', to: 'assets/images', force: true },
     ]),
     new webpack.ProvidePlugin({
       $: 'jquery',
