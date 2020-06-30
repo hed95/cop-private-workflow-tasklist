@@ -88,12 +88,15 @@ export class ProcessStartPage extends React.Component {
   }
 
   handleCustomEvent = event => {
+    const { history, processDefinition: pd } = this.props;
     switch (event.type) {
       case 'cancel':
-        this.secureLocalStorage.remove(
-          this.props.processDefinition.getIn(['process-definition', 'id']),
-        );
-        this.props.history.replace(AppConstants.DASHBOARD_PATH);
+        this.secureLocalStorage.remove(pd.getIn(['process-definition', 'id']));
+        history.replace(AppConstants.DASHBOARD_PATH);
+        break;
+      case 'cancel-form':
+        this.secureLocalStorage.remove(pd.getIn(['process-definition', 'id']));
+        history.replace(AppConstants.FORMS_PATH);
         break;
       case 'save-draft':
         break;
@@ -323,6 +326,9 @@ ProcessStartPage.propTypes = {
   fetchForm: PropTypes.func,
   fetchProcessDefinition: PropTypes.func.isRequired,
   clearProcessDefinition: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    replace: PropTypes.func.isRequired,
+  }).isRequired,
   submit: PropTypes.func,
   processDefinition: ImmutablePropTypes.map,
   submissionStatus: PropTypes.string,
