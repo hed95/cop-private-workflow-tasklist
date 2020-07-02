@@ -101,3 +101,8 @@ input:disabled {
 .not-over-due-date {
   color: #00703c !important;
 }
+
+/* Preserve whitespace in details textareas */
+div[ref="details"] div[ref="input"] {
+  white-space: pre-wrap;
+}
