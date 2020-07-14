@@ -9,7 +9,7 @@ import DataSpinner from './components/DataSpinner';
 import withOnboardingCheck from './shift/withOnboardingCheck';
 import withShiftCheck from './shift/withShiftCheck';
 import ErrorHandlingComponent from './error/component/ErrorHandlingComponent';
-import PrivacyPolicy from './components/PrivacyPolicy';
+import PrivacyAndCookiePolicy from './components/PrivacyAndCookiePolicy';
 
 
 const ShiftPage = withOnboardingCheck(lazy(() => import ('../pages/shift/components/ShiftPage')));
@@ -48,7 +48,7 @@ const Main = () => (
     <Suspense fallback={<div style={{ justifyContent: 'center'}}><DataSpinner message="Loading routes" /></div>}>
       <Switch>
         <RouteWithTitle name="Accessibility Statement" title={`Accessibility Statement | ${AppConstants.APP_NAME}`} exact path="/accessibility-statement" component={AccessibilityStatement} />
-        <RouteWithTitle name="Privacy Policy" exact path="/privacy-policy" title={`Privacy Policy | ${AppConstants.APP_NAME}`} component={PrivacyPolicy} />
+        <RouteWithTitle name="Privacy and Cookie Policy" exact path="/privacy-and-cookie-policy" title={`Privacy and Cookie Policy | ${AppConstants.APP_NAME}`} component={PrivacyAndCookiePolicy} />
         <RouteWithTitle name="Dashboard" title={`Operational dashboard | ${AppConstants.APP_NAME}`} exact path={AppConstants.DASHBOARD_PATH} component={() => <DashboardPage />} />
         <RouteWithTitle name="Cases" title={`Case view | ${AppConstants.APP_NAME}`} exact path={AppConstants.CASES_PATH} component={() => <CasesPage />} />
         <RouteWithTitle name="Case" title={`Case view | ${AppConstants.APP_NAME}`} exact path={`${AppConstants.CASES_PATH  }/:businessKey`} component={() => <CasesPage />} />
