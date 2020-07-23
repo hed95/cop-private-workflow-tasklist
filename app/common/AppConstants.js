@@ -13,6 +13,8 @@ export default class AppConstants {
 
   static MESSAGES_PATH = '/messages';
 
+  static MY_PROFILE_PATH = 'submit-a-form/edit-your-profile';
+
   static ONBOARD_USER_PATH = '/onboard-user';
 
   static PROCEDURE_DIAGRAM_PATH = '/procedure-diagram';
@@ -24,6 +26,8 @@ export default class AppConstants {
   static SHIFT_PATH = '/shift';
 
   static SUBMIT_A_FORM = '/submit-a-form';
+
+  static SUPPORT_PATH = 'https://support.cop.homeoffice.gov.uk/servicedesk/customer/portal/3'
 
   static TASK_PATH = '/task';
 
