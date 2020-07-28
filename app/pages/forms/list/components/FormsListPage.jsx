@@ -10,7 +10,6 @@ import {
   isFetchingProcessDefinitions,
   processDefinitions,
 } from '../selectors';
-import './FormsListPage.css';
 import AppConstants from '../../../../common/AppConstants';
 
 export class FormsListPage extends React.Component {
@@ -39,77 +38,53 @@ export class FormsListPage extends React.Component {
     const { isFetchingProcessDefinitions, processDefinitions } = this.props;
     return (
       <React.Fragment>
-        <div className="govuk-grid-row" id="proceduresCountLabel">
-          <div className="govuk-grid-column-one-half">
-            <span className="govuk-caption-l">Operational forms</span>
-            <h2 className="govuk-heading-l">
-              {processDefinitions.size} forms
-            </h2>
+        <div className="govuk-grid-row">
+          <div className="govuk-grid-column-two-thirds">
+            <h1 className="govuk-heading-xl">Forms</h1>
           </div>
         </div>
+
         <div className="govuk-grid-row">
-          <div className="govuk-grid-column-full">
-            {isFetchingProcessDefinitions ? (
-              <h4 className="govuk-heading-s" id="loading">
-                Loading forms...
-              </h4>
-            ) : (
-              processDefinitions.map(p => {
-                const processDefinitionKey = p.getIn([
-                  'process-definition',
-                  'key',
-                ]);
-                const description = p.getIn([
-                  'process-definition',
-                  'description',
-                ]);
-                return (
-                  <div
-                    id="form"
-                    className="govuk-grid-row"
-                    key={processDefinitionKey}
-                  >
-                    <div className="govuk-grid-column-full govuk-card">
-                      <p
-                        id="formDescription"
-                        className="govuk-body govuk-body govuk-!-font-size-19"
-                      >
-                        {description}
-                      </p>
-                      <div
-                        className="govuk-grid-row"
-                        key={processDefinitionKey}
-                      >
-                        <div className="govuk-grid-column-one-third">
-                          <button
-                            id="actionButton"
-                            className="govuk-button govuk-button--start"
-                            onClick={() => this.process(p)}
-                            type="submit"
-                          >
-                            Start
-                            <svg
-                              className="govuk-button__start-icon"
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="17.5"
-                              height="19"
-                              viewBox="0 0 33 40"
-                              role="presentation"
-                              focusable="false"
-                            >
-                              <path
-                                fill="currentColor"
-                                d="M0 0h13l20 20-20 20H0l20-20z"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            )}
+          {/* <div className="govuk-grid-column-one-third">
+            <h3 className="govuk-heading-m">Filter list</h3>
+          </div> */}
+          <div className="govuk-grid-column-two-thirds">
+            <h2 className="govuk-heading-l">Operational forms</h2>
+            <p className="govuk-body-l">Here are all the forms available on COP for completing a variety of tasks from reporting events to requesting building passes.</p>
+            {isFetchingProcessDefinitions && (
+            <h4 className="govuk-heading-s" id="loading">
+                  Loading forms...
+            </h4>
+              )}
+            <ul
+              id="formList"
+              className="app-task-list"
+            >
+              {processDefinitions.map(p => {
+                  const processDefinitionKey = p.getIn([
+                    'process-definition',
+                    'key',
+                  ]);
+                  const description = p.getIn([
+                    'process-definition',
+                    'description',
+                  ]);
+                  return (
+                    <li className="app-task-list__item" key={processDefinitionKey}>
+                      <span className="app-task-list__task-name">
+                        <a
+                          className="govuk-link govuk-link--no-visited-state"
+                          onClick={() => this.process(p)}
+                          onKeyPress={this.handleKeyPress}
+                          href=""
+                        >
+                          {description}
+                        </a>
+                      </span>
+                    </li>
+                  );
+                })}
+            </ul>
           </div>
         </div>
       </React.Fragment>
