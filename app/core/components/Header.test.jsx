@@ -13,7 +13,10 @@ describe('Header', () => {
     kc: {
       logout: jest.fn(),
     },
-  };
+    location: {
+      pathname: '/dashboard'
+    }
+  }
 
   it('renders without crashing', () => {
     const wrapper = shallow(<Header {...props} />);
@@ -24,4 +27,11 @@ describe('Header', () => {
     const wrapper = shallow(<Header {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
+
+  it('has one menu item in an active state', () => {
+    const wrapper = shallow(<Header {...props} />);
+    const navItem = wrapper.find('.govuk-header__navigation-item--active');
+    expect((navItem.children()).length).toBe(1);
+  });
+
 });
