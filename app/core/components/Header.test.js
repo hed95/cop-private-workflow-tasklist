@@ -1,6 +1,7 @@
 import React from 'react';
 import { createMemoryHistory } from 'history'
 import { Header } from './Header';
+import AppConstants from '../../common/AppConstants';
 
 describe('Header', () => {
 
@@ -15,7 +16,7 @@ describe('Header', () => {
       logout: jest.fn(),
     },
     location: {
-      pathname: '/dashboard'
+      pathname: AppConstants.DASHBOARD_PATH
     }
   }
 
