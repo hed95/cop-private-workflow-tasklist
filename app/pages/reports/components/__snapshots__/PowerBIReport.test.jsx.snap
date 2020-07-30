@@ -6,6 +6,11 @@ exports[`PowerBIReport matches snapshot 1`] = `
   embedId="abc"
   embedType="report"
   embedUrl="http://www.example.com"
+  extraSettings={
+    Object {
+      "filterPaneEnabled": false,
+    }
+  }
   pageName="Power BI Report"
   permissions="Read"
   reportMode="view"

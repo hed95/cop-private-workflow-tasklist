@@ -12,6 +12,9 @@ export default function PowerBIReport({
     <Report
       {...{ accessToken, embedId, embedUrl, pageName }}
       embedType="report"
+      extraSettings={{
+        filterPaneEnabled: false,
+      }}
       permissions="Read"
       reportMode="view"
       style={{ width: '100%', height: '100%' }}
