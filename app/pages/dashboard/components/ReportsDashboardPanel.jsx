@@ -14,7 +14,7 @@ export class ReportsDashboardPanel extends React.Component {
 
   render() {
     return (
-      <div className="govuk-grid-column-one-third" id="reportsPanel">
+      <li className="govuk-grid-column-one-third" id="reportsPanel">
         <a 
           href={AppConstants.REPORTS_PATH}
           className="govuk-heading-m govuk-link"
@@ -26,7 +26,7 @@ export class ReportsDashboardPanel extends React.Component {
         <p className="govuk-body-s">
           Operational reports
         </p>
-      </div>
+      </li>
     )
   }
 }
