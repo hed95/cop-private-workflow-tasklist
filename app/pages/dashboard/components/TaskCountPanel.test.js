@@ -43,25 +43,21 @@ describe('TaskCountPanel', () => {
     expect(fetchTaskCounts).not.toBeCalled();
 
     const yourTasksPanel = wrapper.find('#yourTasksPanel');
-    const yourTasksCount = wrapper.find('#yourTaskCount');
     expect(yourTasksPanel.exists()).toEqual(true);
-    expect(yourTasksCount.exists()).toEqual(true);
-    expect(yourTasksCount.text()).toEqual('0');
+    expect(yourTasksPanel.find('li span').first().text()).toEqual('0');
 
-    const yourTeamTasks = wrapper.find('#yourTeamTasks');
-    const yourTeamTasksCount = wrapper.find('#yourTeamTaskCount');
-    expect(yourTeamTasks.exists()).toEqual(true);
-    expect(yourTeamTasksCount.exists()).toEqual(true);
-    expect(yourTeamTasksCount.text()).toEqual('0');
+
+    const youTeamTasks = wrapper.find('#youTeamTasks');
+    expect(youTeamTasks.exists()).toEqual(true);
+    expect(youTeamTasks.find('li span').first().text()).toEqual('0');
   });
-
   it('renders values when shift active', async () => {
     const props = {
       hasActiveShift: true,
       taskCounts: new Map({
         tasksAssignedToUser: 10,
-        tasksUnassigned: 4,
-        totalTasksAllocatedToTeam: 15,
+        tasksUnassigned: 1,
+        totalTasksAllocatedToTeam: 10,
       }),
     };
     const wrapper = await mount(<TaskCountPanel
@@ -73,10 +69,13 @@ describe('TaskCountPanel', () => {
     expect(fetchTaskCounts).toBeCalled();
     expect(PubSub.subscribe).toBeCalled();
 
-    const yourTasksCount = wrapper.find('#yourTaskCount');
-    expect(yourTasksCount.text()).toEqual('10');
 
-    const yourTeamTasksCount = wrapper.find('#yourTeamTaskCount');
-    expect(yourTeamTasksCount.text()).toEqual('15');
+    const yourTasksPanel = wrapper.find('#yourTasksPanel');
+    expect(yourTasksPanel.exists()).toEqual(true);
+    expect(yourTasksPanel.find('li span').first().text()).toEqual('10');
+
+    const youTeamTasks = wrapper.find('#youTeamTasks');
+    expect(youTeamTasks.exists()).toEqual(true);
+    expect(youTeamTasks.find('li span').first().text()).toEqual('10');
   });
 });

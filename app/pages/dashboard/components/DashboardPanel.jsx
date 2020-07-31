@@ -94,25 +94,29 @@ export class DashboardPanel extends React.Component {
 
   render() {
     return (
-      <div id="dashboardPanel">
+      <div>
         <div className="govuk-grid-row">
-          <TaskCountPanel {...this.props} />
-          <MessagesPanel {...this.props} />
+          <ul className="govuk-list">
+            <TaskCountPanel {...this.props} />
+            <MessagesPanel {...this.props} />
+          </ul>
         </div>
-        <Suspense
-          fallback={(
-            <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><DataSpinner
-              message="Loading panels..."
-            />
-            </div>
-            )}
-        >
-          <div className="govuk-grid-row">
-            <ProceduresDashboardPanel {...this.props} />
-            <ReportsDashboardPanel {...this.props} />
-            <CasesDashboardPanel {...this.props} />
-          </div>
-        </Suspense>
+        <div className="govuk-grid-row govuk-!-padding-top-3">
+          <Suspense
+            fallback={(
+              <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20px'}}><DataSpinner
+                message="Loading panels..."
+              />
+              </div>
+)}
+          >
+            <ul className="govuk-list">
+              <ProceduresDashboardPanel {...this.props} />
+              <ReportsDashboardPanel {...this.props} />
+              <CasesDashboardPanel {...this.props} />
+            </ul>
+          </Suspense>
+        </div>
       </div>
     )
   }

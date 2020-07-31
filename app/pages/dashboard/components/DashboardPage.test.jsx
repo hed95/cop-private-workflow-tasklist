@@ -17,8 +17,10 @@ describe('DashboardPage', () => {
     };
   });
 
+
   it('renders panels if shift present', async () => {
     const wrapper = shallow(<DashboardPage {...props} />);
+
     expect(wrapper.find('DashboardTitle')).toBeDefined();
     expect(wrapper.find('DashboardPanel')).toBeDefined();
   });
