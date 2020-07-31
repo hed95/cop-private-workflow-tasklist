@@ -14,22 +14,35 @@ exports[`Procedures Dashboard Panel renders forms dashboard panel 1`] = `
   }
 >
   <li
-    className="govuk-grid-column-one-third"
+    className="__card govuk-grid-column-one-third"
     id="proceduresPanel"
+    style={
+      Object {
+        "marginBottom": "30px",
+      }
+    }
   >
     <a
-      className="govuk-heading-m govuk-link home-promo__link"
+      className="card__body"
       href="/forms"
       id="proceduresPageLink"
       onClick={[Function]}
     >
-      Forms
+      <span
+        className="govuk-!-font-size-36 govuk-!-font-weight-bold"
+      >
+        Forms
+      </span>
     </a>
-    <p
-      className="govuk-body-s"
+    <div
+      className="card__footer"
     >
-      Submit a form
-    </p>
+      <span
+        className="govuk-!-font-size-19"
+      >
+        Submit a form
+      </span>
+    </div>
   </li>
 </FormsDashboardPanel>
 `;
