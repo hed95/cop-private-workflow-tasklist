@@ -111,7 +111,7 @@ export class Header extends React.Component {
                     <Link 
                       id='support'
                       className="govuk-header__link" 
-                      to="https://support.cop.homeoffice.gov.uk/servicedesk/customer/portal/3"
+                      to={AppConstants.SUPPORT_PATH}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
