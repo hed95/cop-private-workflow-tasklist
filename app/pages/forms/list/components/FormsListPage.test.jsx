@@ -61,6 +61,7 @@ describe('FormsListPage', () => {
     };
     const wrapper = shallow(<FormsListPage {...props} />);
     expect(mocks.fetchProcessDefinitions).toBeCalled();
+    expect(wrapper.find('#proceduresCountLabel').text()).toEqual('Operational forms0 forms');
     expect(wrapper.find('#loading').text()).toEqual('Loading forms...');
     expect(mocks.fetchProcessDefinitions).toBeCalled();
   });
@@ -97,19 +98,20 @@ describe('FormsListPage', () => {
     const wrapper = await mount(<FormsListPage {...props} />);
 
     expect(mocks.fetchProcessDefinitions).toBeCalled();
+    expect(wrapper.find('#proceduresCountLabel').text()).toEqual('Operational forms2 forms');
 
-    const rows = wrapper.find('#formList');
-    expect((rows.children()).length).toBe(2)
+    const rows = wrapper.find('#form');
+    expect(rows.length).toEqual(2);
 
     expect(
       wrapper
-        .find('.app-task-list__item')
+        .find('#formDescription')
         .first()
         .text(),
     ).toEqual('processADescription');
     expect(
       wrapper
-        .find('.app-task-list__item')
+        .find('#formDescription')
         .last()
         .text(),
     ).toEqual('processBDescription');

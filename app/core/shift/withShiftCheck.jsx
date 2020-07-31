@@ -17,78 +17,106 @@ import AppConstants from "../../common/AppConstants";
 const uuidv4 = require('uuid/v4');
 
 export default function (ComposedComponent) {
-  class withShiftCheck extends React.Component {
-    constructor(props) {
-      super(props);
-      this.secureLocalStorage = secureLocalStorage;
+    class withShiftCheck extends React.Component {
+        constructor(props) {
+            super(props);
+            this.secureLocalStorage = secureLocalStorage;
+        }
+
+        componentDidMount() {
+            this.props.resetErrors();
+            let shiftFromLocalStorage = this.secureLocalStorage.get("shift");
+            if (!shiftFromLocalStorage) {
+                this.props.fetchActiveShift();
+            }
+            shiftFromLocalStorage = Immutable.fromJS(shiftFromLocalStorage);
+            if (shiftFromLocalStorage && this.shiftValid(shiftFromLocalStorage)) {
+                this.props.setHasActiveShift(true);
+            } else {
+                this.props.setHasActiveShift(false);
+            }
+        }
+
+
+        componentDidUpdate(prevProps, prevState, snapshot) {
+            if (this.props.hasActiveShift && this.shiftValid(this.props.shift)) {
+                this.secureLocalStorage.set("shift", this.props.shift);
+            } else {
+                this.secureLocalStorage.remove("shift");
+                this.props.history.replace(AppConstants.SHIFT_PATH)
+            }
+        }
+
+        shiftValid(shift) {
+            if (shift) {
+                const endDateTime = moment(shift.get('enddatetime'));
+                return moment().diff(endDateTime) < 0
+            } 
+                return false;
+            
+        }
+
+        render() {
+            const {hasActiveShift, isFetchingShift} = this.props;
+            if (isFetchingShift) {
+                return <DataSpinner message="Checking if you have an active shift" />;
+            } 
+                if (hasActiveShift) {
+                    return (
+                      <ErrorHandlingComponent><BackButton {...this.props}><ComposedComponent
+                        {...this.props}
+                        key={uuidv4()}
+                      />
+                      </BackButton>
+                      </ErrorHandlingComponent>
+);
+                } 
+                    return <Redirect to={AppConstants.SHIFT_PATH} />;
+                
+            
+        }
+
     }
 
-    componentDidMount() {
-      this.props.resetErrors();
-      let shiftFromLocalStorage = this.secureLocalStorage.get("shift");
-      if (!shiftFromLocalStorage) {
-        this.props.fetchActiveShift();
-      }
-      shiftFromLocalStorage = Immutable.fromJS(shiftFromLocalStorage);
-      if (shiftFromLocalStorage && this.shiftValid(shiftFromLocalStorage)) {
-        this.props.setHasActiveShift(true);
-      } else {
-        this.props.setHasActiveShift(false);
-      }
+    class BackButton extends React.Component {
+        render() {
+            if (this.props.location.pathname !== AppConstants.DASHBOARD_PATH) {
+                return (
+                  <React.Fragment>
+                    <a
+                      href={AppConstants.DASHBOARD_PATH}
+                      style={{textDecoration: 'none'}}
+                      className="govuk-back-link govuk-!-font-size-19"
+                      onClick={event => {
+                           event.preventDefault();
+                           this.props.history.replace(AppConstants.DASHBOARD_PATH)
+                       }}
+                    >Back to dashboard
+                    </a>
+                    {this.props.children}
+                  </React.Fragment>
+);
+            }
+            return <React.Fragment>{this.props.children}</React.Fragment>;
+        }
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-      if (this.props.hasActiveShift && this.shiftValid(this.props.shift)) {
-        this.secureLocalStorage.set("shift", this.props.shift);
-      } else {
-        this.secureLocalStorage.remove("shift");
-        this.props.history.replace(AppConstants.SHIFT_PATH)
-      }
-    }
+    withShiftCheck.propTypes = {
+        fetchActiveShift: PropTypes.func.isRequired,
+        setHasActiveShift: PropTypes.func.isRequired,
+        resetErrors: PropTypes.func.isRequired,
+        isFetchingShift: PropTypes.bool,
+        hasActiveShift: PropTypes.bool
+    };
 
-    shiftValid(shift) {
-      if (shift) {
-        const endDateTime = moment(shift.get('enddatetime'));
-        return moment().diff(endDateTime) < 0
-      } 
-      return false; 
-    }
+    const mapStateToProps = createStructuredSelector({
+        hasActiveShift,
+        isFetchingShift,
+        shift
+    });
 
-    render() {
-      const {hasActiveShift, isFetchingShift} = this.props;
-      if (isFetchingShift) {
-        return <DataSpinner message="Checking if you have an active shift" />;
-      } 
-      if (hasActiveShift) {
-        return (
-          <ErrorHandlingComponent>
-            <ComposedComponent
-              {...this.props}
-              key={uuidv4()}
-            />
-          </ErrorHandlingComponent>
-        );
-      } 
-      return <Redirect to={AppConstants.SHIFT_PATH} />;  
-    }
-  }
+    const mapDispatchToProps = dispatch => bindActionCreators({ ...actions, ...errorActions}, dispatch);
 
-  withShiftCheck.propTypes = {
-    fetchActiveShift: PropTypes.func.isRequired,
-    setHasActiveShift: PropTypes.func.isRequired,
-    resetErrors: PropTypes.func.isRequired,
-    isFetchingShift: PropTypes.bool,
-    hasActiveShift: PropTypes.bool
-  };
-
-  const mapStateToProps = createStructuredSelector({
-    hasActiveShift,
-    isFetchingShift,
-    shift
-  });
-
-  const mapDispatchToProps = dispatch => bindActionCreators({ ...actions, ...errorActions}, dispatch);
-
-  return withRouter(connect(mapStateToProps, mapDispatchToProps)(withShiftCheck));
+    return withRouter(connect(mapStateToProps, mapDispatchToProps)(withShiftCheck));
 }
 
