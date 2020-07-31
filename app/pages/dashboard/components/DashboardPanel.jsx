@@ -101,6 +101,7 @@ export class DashboardPanel extends React.Component {
             <MessagesPanel {...this.props} />
           </ul>
         </div>
+        <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
         <div className="govuk-grid-row govuk-!-padding-top-3">
           <Suspense
             fallback={(
