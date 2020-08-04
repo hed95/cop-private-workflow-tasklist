@@ -32,12 +32,10 @@ export const ReportPage = ({ appConfig, location }) => {
 
       <div
         style={{
-          display: 'flex',
           height: '50vw',
-          justifyContent: 'center',
-          position: 'relative',
           margin: 'auto',
           maxHeight: '70vmin',
+          position: 'relative',
         }}
       >
         {reportType === 'PowerBIReport' ? (
