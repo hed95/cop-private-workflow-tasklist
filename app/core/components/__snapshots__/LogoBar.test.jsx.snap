@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LogoBar matches snapshot 1`] = `
+<div
+  className="logo-bar"
+>
+  <p>
+    To refresh the report, please return to
+     
+    <Link
+      to="/reports"
+    >
+      the main reports page
+    </Link>
+     and reselect it.
+  </p>
+  <button
+    onClick={
+      [MockFunction] {
+        "calls": Array [
+          Array [],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
+    type="button"
+  >
+    View full screen
+  </button>
+</div>
+`;
