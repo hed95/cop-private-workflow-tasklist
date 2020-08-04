@@ -13,7 +13,11 @@ import {
   caseSearchResults,
   loadingNextSearchResults,
   searching,
+  caseDetails,
+  loadingCaseDetails, 
 } from '../selectors';
+import CaseDetailsPanel from "./CaseDetailsPanel";
+import DataSpinner from "../../../core/components/DataSpinner";
 
 class CasesPage extends React.Component {
   componentDidMount() {
@@ -35,6 +39,8 @@ class CasesPage extends React.Component {
       caseSearchResults,
       searching,
       businessKeyQuery,
+      loadingCaseDetails, 
+      caseDetails,
       match: { params },
       loadNextSearchResults,
     } = this.props;
@@ -109,6 +115,16 @@ class CasesPage extends React.Component {
               }}
             />
           </div> 
+          <div className="govuk-grid-column-three-quarters">
+            {loadingCaseDetails && (
+              <div style={{justifyContent: 'center', paddingTop: '20px'}}>
+                <DataSpinner
+                  message="Loading case details"
+                />
+              </div>
+            )}
+            {caseDetails && <CaseDetailsPanel {...{caseDetails}} />}
+          </div>
         </div>
         <CaseResultsPanel
           {...{
@@ -155,6 +171,11 @@ CasesPage.propTypes = {
       number: PropTypes.number,
     }),
   }),
+  loadingCaseDetails: PropTypes.bool,
+  caseDetails: PropTypes.shape({
+    businessKey: PropTypes.string,
+    processInstances: PropTypes.arrayOf(PropTypes.object)
+  })
 };
 
 const mapDispatchToProps = dispatch =>
@@ -172,6 +193,8 @@ export default withRouter(
       caseSearchResults: caseSearchResults(state),
       searching: searching(state),
       loadingNextSearchResults: loadingNextSearchResults(state),
+      caseDetails: caseDetails(state),
+      loadingCaseDetails: loadingCaseDetails(state),
     }),
     mapDispatchToProps,
   )(withLog(CasesPage)),
