@@ -1,8 +1,10 @@
+@import './node_modules/govuk-frontend/govuk/settings/all';
+
 .logo-bar {
   align-items: center;
   bottom: 0;
   display: flex;
-  font-family: 'Arial', sans-serif;
+  font-family: $govuk-font-family-nta;
   font-size: 12px;
   height: 35px;
   margin-right: 10px;
@@ -12,9 +14,9 @@
   button {
     border: none;
     background-color: transparent;
-    color: #515151;
+    color: govuk-colour('dark-grey');
     font-size: smaller;
-    font-weight: bold;
+    font-weight: $govuk-font-weight-bold;
     padding: 6px;
     text-transform: uppercase;
     &:focus {
@@ -23,6 +25,7 @@
   }
 
   p {
+    color: govuk-colour('dark-grey');
     margin: 0;
 
     @media only screen and (max-width: 960px) {
@@ -33,7 +36,6 @@
   button,
   p {
     &:not(:last-child):after {
-      color: #ccc;
       content: '|';
       margin-left: 6px;
     }
