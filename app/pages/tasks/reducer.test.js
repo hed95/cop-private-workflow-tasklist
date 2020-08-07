@@ -5,13 +5,13 @@ import * as actions from './actions';
 
 describe('Tasks reducer', () => {
   it('fetches tasks assigned to you', () => {
-    const expected = reducer(initialState, actions.fetchTasksAssignedToYou('sort=due,desc', 'ABC', false));
+    const expected = reducer(initialState, actions.fetchTasksAssignedToYou('sort=due,asc', 'ABC', false));
     expect(expected.get('isFetchingTasks'))
       .toEqual(true);
     expect(expected.get('filterValue'))
       .toEqual('ABC');
     expect(expected.get('sortValue'))
-      .toEqual('sort=due,desc');
+      .toEqual('sort=due,asc');
   });
   it('successfully fetches tasks', () => {
     const expected = reducer(initialState, actions.fetchTasksAssignedToYouSuccess({
@@ -47,7 +47,7 @@ describe('Tasks reducer', () => {
     expect(expected.get('filterValue'))
         .toBeNull();
     expect(expected.get('sortValue'))
-        .toEqual('sort=due,desc');
+        .toEqual('sort=due,asc');
   });
   it('returns isFetchingTasks false if failed', () => {
     const expected = reducer(initialState, actions.fetchTasksAssignedToYouFailure());
@@ -78,7 +78,7 @@ describe('Tasks reducer', () => {
         },
       ]),
       total: 0,
-      sortValue: 'sort=due,desc',
+      sortValue: 'sort=due,asc',
       filterValue: null,
     });
 

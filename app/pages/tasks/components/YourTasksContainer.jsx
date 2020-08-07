@@ -40,7 +40,7 @@ export class YourTasksContainer extends React.Component {
     }
 
     componentDidMount() {
-        this.loadYourTasks(false, 'sort=due,desc');
+        this.loadYourTasks(false, 'sort=due,asc');
         if (secureLocalStorage.get('yourTasksGrouping')) {
             const {groupYourTasks} = this.props;
             groupYourTasks(secureLocalStorage.get('yourTasksGrouping'));
@@ -180,7 +180,7 @@ YourTasksContainer.defaultProps = {
     isFetchingTasks: true,
     tasks: new List([]),
     total: 0,
-    sortValue: 'sort=due,desc',
+    sortValue: 'sort=due,asc',
     filterValue: null,
     groupBy: 'category'
 };

@@ -41,7 +41,7 @@ export class YourGroupTasksContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.loadYourGroupTasks(false, 'sort=due,desc');
+    this.loadYourGroupTasks(false, 'sort=due,asc');
     const that = this;
     const {groupYourTeamTasks} = this.props;
     this.timeoutId = setInterval(() => {
@@ -187,7 +187,7 @@ YourGroupTasksContainer.defaultProps = {
   claimSuccessful: false,
   tasks: new List([]),
   total: 0,
-  sortValue: 'sort=due,desc',
+  sortValue: 'sort=due,asc',
   filterValue: null,
   groupBy: 'category'
 };

@@ -17,7 +17,7 @@ describe('YourTasks Page', () => {
   const date = moment();
   const yourTasks = {
     isFetchingTasks: false,
-    sortValue: 'sort=due,desc',
+    sortValue: 'sort=due,asc',
     appConfig: {
       uiEnvironment: 'local',
     },
@@ -284,7 +284,7 @@ describe('YourTasks Page', () => {
     yourTaskFilterInput.simulate('change', { target: { value: 'ABC' } });
     jest.advanceTimersByTime(600);
     expect(fetchTasksAssignedToYou).toBeCalledWith(
-      'sort=due,desc',
+      'sort=due,asc',
       'ABC',
       true,
     );
@@ -292,7 +292,7 @@ describe('YourTasks Page', () => {
     yourTaskFilterInput.simulate('change', { target: { value: 'APPLES' } });
     jest.advanceTimersByTime(600);
     expect(fetchTasksAssignedToYou).toBeCalledWith(
-      'sort=due,desc',
+      'sort=due,asc',
       'APPLES',
       true,
     );
@@ -314,7 +314,7 @@ describe('YourTasks Page', () => {
       groupYourTasks: jest.fn(),
       history,
       isFetchingTasks: false,
-      sortValue: 'sort=due,desc',
+      sortValue: 'sort=due,asc',
       filterValue: 'TEST',
       resetYourTasks: jest.fn(),
       total: 1,
