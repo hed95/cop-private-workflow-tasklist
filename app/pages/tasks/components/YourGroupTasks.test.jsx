@@ -19,7 +19,7 @@ describe('YourGroupTasksContainer Page', () => {
   const yourGroupTasks = {
     history,
     isFetchingTasks: false,
-    sortValue: 'sort=due,desc',
+    sortValue: 'sort=due,asc',
     total: 1,
     tasks: Immutable.fromJS([
       {
@@ -183,11 +183,11 @@ describe('YourGroupTasksContainer Page', () => {
 
     filterInput.simulate('change', { target: { value: 'ABC' } });
     jest.advanceTimersByTime(600);
-    expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', 'ABC', true);
+    expect(fetchYourGroupTasks).toBeCalledWith('sort=due,asc', 'ABC', true);
 
     filterInput.simulate('change', { target: { value: 'APPLES' } });
     jest.advanceTimersByTime(600);
-    expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', 'APPLES', true);
+    expect(fetchYourGroupTasks).toBeCalledWith('sort=due,asc', 'APPLES', true);
   });
 
   it('executes timer', async () => {
@@ -201,7 +201,7 @@ describe('YourGroupTasksContainer Page', () => {
         },
       },
       isFetchingTasks: false,
-      sortValue: 'sort=due,desc',
+      sortValue: 'sort=due,asc',
       filterValue: 'TEST',
       total: 1,
       tasks: Immutable.fromJS([
@@ -228,11 +228,11 @@ describe('YourGroupTasksContainer Page', () => {
       </Provider>,
     );
 
-    expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', null, false);
+    expect(fetchYourGroupTasks).toBeCalledWith('sort=due,asc', null, false);
 
     // kick off timer
     jest.advanceTimersByTime(AppConstants.REFRESH_TIMEOUT);
-    expect(fetchYourGroupTasks).toBeCalledWith('sort=due,desc', 'TEST', true);
+    expect(fetchYourGroupTasks).toBeCalledWith('sort=due,asc', 'TEST', true);
 
     //
     wrapper.unmount();
@@ -251,7 +251,7 @@ describe('YourGroupTasksContainer Page', () => {
       history,
       claimSuccessful: true,
       isFetchingTasks: false,
-      sortValue: 'sort=due,desc',
+      sortValue: 'sort=due,asc',
       filterValue: 'TEST',
       total: 1,
       tasks: Immutable.fromJS([

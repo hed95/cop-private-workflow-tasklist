@@ -7,7 +7,7 @@ export const initialState = new Map({
     isFetchingTasks: false,
     tasks: new List([]),
     total: 0,
-    sortValue: 'sort=due,desc',
+    sortValue: 'sort=due,asc',
     filterValue: null,
     groupBy: 'category',
     nextPageUrl: null,

@@ -8,7 +8,7 @@ const fetchTasksAssignedYou = (action$, store, { client }) => action$.ofType(typ
   .mergeMap(action => client({
     method: 'GET',
     path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks?assignedToMeOnly=true&${action.sortValue
-      ? action.sortValue : 'sort=due,desc'}${action.filterValue ? `&name=${action.filterValue}` : ''}`,
+      ? action.sortValue : 'sort=due,asc'}${action.filterValue ? `&name=${action.filterValue}` : ''}`,
     headers: {
       Accept: 'application/json',
       Authorization: `Bearer ${store.getState().keycloak.token}`,
@@ -21,7 +21,7 @@ const fetchYourGroupTasks = (action$, store, { client }) => action$.ofType(types
   .mergeMap(action => client({
     method: 'GET',
     path: `${store.getState().appConfig.workflowServiceUrl}/api/workflow/tasks?teamOnly=true&${action.sortValue
-      ? action.sortValue : 'sort=due,desc'}${action.filterValue ? `&name=${action.filterValue}` : ''}`,
+      ? action.sortValue : 'sort=due,asc'}${action.filterValue ? `&name=${action.filterValue}` : ''}`,
     headers: {
       Accept: 'application/json',
       Authorization: `Bearer ${store.getState().keycloak.token}`,
