@@ -1,6 +1,7 @@
 import _ from "lodash";
 import moment from "moment";
-import {priority} from "../../../core/util/priority";
+import TaskPriorityConstants from "../../../common/TaskPriorityConstants";
+import { priority } from "../../../core/util/priority";
 
 export default class TaskUtils {
 
@@ -46,7 +47,7 @@ export default class TaskUtils {
           const byPriority = _.groupBy(tasks, item => {
             return priority(Number(` ${item.task.priority}`))
           });
-          const sortByPriority = ['High', 'Medium', 'Low'];
+          const sortByPriority = [TaskPriorityConstants.HIGH_PRIORITY, TaskPriorityConstants.MEDIUM_PRIORITY, TaskPriorityConstants.LOW_PRIORITY];
           return _.fromPairs(_.map(sortByPriority, key => {
             return [key, byPriority[key]]
           }));
