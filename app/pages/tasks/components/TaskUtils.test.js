@@ -10,7 +10,7 @@ describe('TaskUtils', () => {
         },
         task: {
           name: 'test1',
-          priority: 50 // test what we expect to be  Low: 50
+          priority: 100 // test what we expect to be  Medium: 100
         }
       },
       {
@@ -30,7 +30,7 @@ describe('TaskUtils', () => {
         'businessKey': 'DEV-20200420-1224', 
         task: {
           name: 'test2'
-          // test if there is no priority set it defaults to High
+          // test if there is no priority set it defaults to Medium
         }
       }, 
       {
@@ -81,9 +81,9 @@ describe('TaskUtils', () => {
 
     it('groups by priority', () => {
       const result = taskUtils.applyGrouping('priority', data);
-      expect(result.High).toHaveLength(4);
-      expect(result.Medium).toBeUndefined();
-      expect(result.Low).toHaveLength(1);
+      expect(result.High).toHaveLength(3);
+      expect(result.Medium).toHaveLength(2);
+      expect(result.Low).toBeUndefined();
     })
 
     it('returns the expected categories', () => {
