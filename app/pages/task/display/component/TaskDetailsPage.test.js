@@ -21,7 +21,7 @@ describe('TaskDetailsPage', () => {
       description: 'test',
       due: dueDate,
       id: 'taskid',
-      priority: 1000,
+      priority: 150,
     }),
     appConfig: {
       workflowServiceUrl: 'http://localhost:9000',
