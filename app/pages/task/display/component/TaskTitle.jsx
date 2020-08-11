@@ -185,7 +185,7 @@ const TaskTitle = props => {
                   onChange={e => setTPriority(e.target.value)}
                   defaultValue={task.get('priority')}
                 >
-                  <option value="150">High</option>
+                  <option value="1000">High</option>
                   <option value="100">Medium</option>
                   <option value="50">Low</option>
                 </select>
