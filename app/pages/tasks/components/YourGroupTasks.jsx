@@ -28,14 +28,25 @@ const YourGroupTasks = props => {
     paginationActions
   } = props;
 
+
   const dataToDisplay = _.map(yourGroupTasks, (value, key) => {
     const tasks = value.length === 1 ? 'task' : 'tasks';
     return (
       <div id="taskGroups" key={key} className="govuk-grid-row">
         <div className="govuk-grid-column-full">
-          <h3 className="govuk-heading-m">
-            {key} ({value.length} {tasks})
-          </h3>
+          {value.length > 0 && (
+            <React.Fragment>
+              <hr
+                style={{
+                borderBottom: '3px solid #1d70b8',
+                borderTop: 'none',
+              }}
+              />
+              <h3 className="govuk-heading-m">
+                {`${key} ${value.length} ${tasks}`}
+              </h3>
+            </React.Fragment>
+          )}
           {_.map(value, val => {
             const { task } = val;
             const due = moment(task.due);
@@ -124,12 +135,6 @@ const YourGroupTasks = props => {
               </div>
             );
           })}
-          <hr
-            style={{
-              borderBottom: '3px solid #1d70b8',
-              borderTop: 'none',
-            }}
-          />
         </div>
       </div>
     );
