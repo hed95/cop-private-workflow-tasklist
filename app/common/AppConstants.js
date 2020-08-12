@@ -1,35 +1,35 @@
-
 export default class AppConstants {
+  static APP_NAME = 'Central Operations Platform';
 
-    static APP_NAME = 'Central Operations Platform';
+  static CALENDAR_PATH = '/calendar';
 
-    static DASHBOARD_PATH = '/dashboard';
+  static CASES_PATH = '/cases';
 
-    static YOUR_TASKS_PATH = '/your-tasks';
+  static DASHBOARD_PATH = '/dashboard';
 
-    static YOUR_GROUP_TASKS_PATH = '/your-group-tasks';
+  static FORMS_PATH = '/forms';
 
-    static FORMS_PATH = '/forms';
+  static MESSAGES_PATH = '/messages';
 
-    static REPORTS_PATH = '/reports';
+  static MOBILE_WIDTH = 640;
 
-    static REPORT_PATH = '/report';
+  static ONBOARD_USER_PATH = '/onboard-user';
 
-    static MESSAGES_PATH = '/messages';
+  static PROCEDURE_DIAGRAM_PATH = '/procedure-diagram';
 
-    static CALENDAR_PATH = '/calendar';
+  static REFRESH_TIMEOUT = 300000;
 
-    static SUBMIT_A_FORM = '/submit-a-form';
+  static REPORT_PATH = '/report';
 
-    static TASK_PATH='/task';
+  static REPORTS_PATH = '/reports';
 
-    static SHIFT_PATH = '/shift';
+  static SHIFT_PATH = '/shift';
 
-    static PROCEDURE_DIAGRAM_PATH = '/procedure-diagram';
+  static SUBMIT_A_FORM = '/submit-a-form';
 
-    static ONBOARD_USER_PATH='/onboard-user';
+  static TASK_PATH = '/task';
 
-    static CASES_PATH = "/cases";
+  static YOUR_GROUP_TASKS_PATH = '/your-group-tasks';
 
-    static REFRESH_TIMEOUT = 300000;
+  static YOUR_TASKS_PATH = '/your-tasks';
 }
