@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import {Link} from "react-router-dom";
 import { priority } from '../../../../core/util/priority';
+import AppConstants from '../../../../common/AppConstants';
 
 const TaskTitle = props => {
   const { kc, task, businessKey, processDefinition, updateTask, isUpdatingTask, history} = props;
@@ -185,9 +186,9 @@ const TaskTitle = props => {
                   onChange={e => setTPriority(e.target.value)}
                   defaultValue={task.get('priority')}
                 >
-                  <option value="1000">High</option>
-                  <option value="100">Medium</option>
-                  <option value="50">Low</option>
+                  <option value={AppConstants.HIGH_PRIORITY_LOWER_LIMIT}>{AppConstants.HIGH_PRIORITY_LABEL}</option>
+                  <option value={AppConstants.MEDIUM_PRIORITY_LOWER_LIMIT}>{AppConstants.MEDIUM_PRIORITY_LABEL}</option>
+                  <option value={AppConstants.LOW_PRIORITY_UPPER_LIMIT}>{AppConstants.LOW_PRIORITY_LABEL}</option>
                 </select>
               </div>
               <div>
