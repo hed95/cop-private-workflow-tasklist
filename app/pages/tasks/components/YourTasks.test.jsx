@@ -282,11 +282,7 @@ describe('YourTasks Page', () => {
 
     yourTaskFilterInput.simulate('change', { target: { value: 'ABC' } });
     jest.advanceTimersByTime(600);
-    expect(fetchTasksAssignedToYou).toBeCalledWith(
-      'sort=due,asc',
-      'ABC',
-      true,
-    );
+    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,asc', 'ABC', true);
 
     yourTaskFilterInput.simulate('change', { target: { value: 'APPLES' } });
     jest.advanceTimersByTime(600);

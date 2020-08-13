@@ -26,7 +26,7 @@ describe('TaskUtils', () => {
         'process-definition': {
           'category': 'a'
         },
-        'businessKey': 'DEV-20200420-1224', 
+        'businessKey': 'DEV-20200420-1224',
         task: {
           name: 'test2'
           // test if there is no priority set it defaults to Medium
@@ -51,7 +51,7 @@ describe('TaskUtils', () => {
           name: 'test2',
           priority: 'seven' // test if priority is NaN it defaults to Medium
         }
-      }, 
+      },
       {
         'process-definition': {
           'category': 'a'
