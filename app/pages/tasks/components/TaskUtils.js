@@ -47,29 +47,39 @@ export default class TaskUtils {
   }
 
   static applyGrouping(groupBy, tasks) {
+    const byReference = _.groupBy(tasks, data => {
+      return data.businessKey;
+    });
+
+    const byPriority = _.groupBy(tasks, key => {
+      return priority(Number(` ${key.task.priority}`)).trim();
+    });
+    const sortByKeys = object => {
+      const sort = _.orderBy(
+        Object.keys(object),
+        [key => key.toLowerCase()],
+        ['asc'],
+      );
+      return _.fromPairs(_.map(sort, key => [key, object[key]]));
+    };
+    const sortByPriority = [
+      AppConstants.HIGH_PRIORITY_LABEL,
+      AppConstants.MEDIUM_PRIORITY_LABEL,
+      AppConstants.LOW_PRIORITY_LABEL,
+    ];
+    const sortKeys = _.orderBy(
+      Object.keys(byReference),
+      o => {
+        return moment(o.split('-')[1]).format('YYYYMMDD');
+      },
+      ['desc'],
+    );
+
     switch (groupBy) {
       case 'reference':
-        const byReference = _.groupBy(tasks, data => {
-          return data.businessKey;
-        });
-        const sortKeys = _.orderBy(
-          Object.keys(byReference),
-          o => {
-            return moment(o.split('-')[1]).format('YYYYMMDD');
-          },
-          ['desc'],
-        );
         return _.fromPairs(_.map(sortKeys, key => [key, byReference[key]]));
 
       case 'priority':
-        const byPriority = _.groupBy(tasks, key => {
-          return priority(Number(` ${key.task.priority}`)).trim();
-        });
-        const sortByPriority = [
-          AppConstants.HIGH_PRIORITY_LABEL,
-          AppConstants.MEDIUM_PRIORITY_LABEL,
-          AppConstants.LOW_PRIORITY_LABEL,
-        ];
         return _.fromPairs(
           _.map(sortByPriority, key => {
             const groupedTasks = byPriority[key]
@@ -80,14 +90,6 @@ export default class TaskUtils {
         );
 
       default:
-        const sortByKeys = object => {
-          const sort = _.orderBy(
-            Object.keys(object),
-            [key => key.toLowerCase()],
-            ['asc'],
-          );
-          return _.fromPairs(_.map(sort, key => [key, object[key]]));
-        };
         return sortByKeys(
           _.groupBy(tasks, data => {
             return data['process-definition']
@@ -98,7 +100,7 @@ export default class TaskUtils {
     }
   }
 
-  generateCaption(grouping, val) {
+  static generateCaption(grouping, val) {
     let caption;
     switch (grouping) {
       case 'category':

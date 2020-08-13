@@ -20,20 +20,31 @@ const initialState = new Map({
   businessKey: null,
   processDefinition: null,
   extensionData: null,
-  isUpdatingTask: false
+  isUpdatingTask: false,
 });
 
 function reducer(state = initialState, action) {
+  let businessKey;
+  let candidateGroups;
+  let commentsFromState;
+  let extensionData;
+  let rawVariables;
+  let task;
+  const variables = {};
   switch (action.type) {
     case actions.CLEAR_TASK:
       return initialState;
-      // fetch task
+    // fetch task
     case actions.FETCH_TASK:
       return initialState;
     case actions.FETCH_TASK_SUCCESS:
-      const { task, businessKey, candidateGroups, extensionData} = action.payload.entity;
-      const rawVariables = action.payload.entity.variables ? action.payload.entity.variables : {};
-      const variables = {};
+      ({
+        task,
+        businessKey,
+        candidateGroups,
+        extensionData,
+        variables: rawVariables = {},
+      } = action.payload.entity);
       Object.keys(rawVariables).forEach(key => {
         if (rawVariables[key].type === 'Json') {
           variables[key] = JSON.parse(rawVariables[key].value);
@@ -41,56 +52,69 @@ function reducer(state = initialState, action) {
           variables[key] = rawVariables[key].value;
         }
       });
-      return state.set('isFetchingTask', false)
+      return state
+        .set('isFetchingTask', false)
         .set('task', Immutable.fromJS(task))
         .set('businessKey', businessKey)
-          .set('isUpdatingTask', false)
+        .set('isUpdatingTask', false)
         .set('extensionData', Immutable.fromJS(extensionData))
-        .set('processDefinition', Immutable.fromJS(action.payload.entity['process-definition']))
-        .set('candidateGroups', candidateGroups
-          ? Immutable.fromJS(candidateGroups) : new List([]))
+        .set(
+          'processDefinition',
+          Immutable.fromJS(action.payload.entity['process-definition']),
+        )
+        .set(
+          'candidateGroups',
+          candidateGroups ? Immutable.fromJS(candidateGroups) : new List([]),
+        )
         .set('variables', variables);
     case actions.FETCH_TASK_FAILURE:
       return state.set('isFetchingTask', false);
 
-      // fetch comments
+    // fetch comments
     case actions.FETCH_COMMENTS:
-      return state.set('isFetchingComments', true)
+      return state
+        .set('isFetchingComments', true)
         .set('comments', new List([]));
     case actions.FETCH_COMMENTS_SUCCESS:
-      const comments = action.payload.entity;
-      return state.set('isFetchingComments', false)
-        .set('comments', Immutable.fromJS(comments));
+      return state
+        .set('isFetchingComments', false)
+        .set('comments', Immutable.fromJS(action.payload.entity));
     case actions.FETCH_COMMENTS_FAILURE:
       return state.set('isFetchingComments', false);
 
-      // create comment
+    // create comment
     case actions.CREATE_COMMENT:
       return state.set('isCreatingComment', true);
     case actions.CREATE_COMMENT_SUCCESS:
-      const comment = action.payload.entity;
-      const commentsFromState = state.get('comments');
-      return state.set('isCreatingComment', false)
-        .set('comments', commentsFromState.insert(0, Immutable.fromJS(comment)));
-      // fetch create comment form
+      commentsFromState = state.get('comments');
+      return state
+        .set('isCreatingComment', false)
+        .set(
+          'comments',
+          commentsFromState.insert(0, Immutable.fromJS(action.payload.entity)),
+        );
+    // fetch create comment form
     case actions.FETCH_CREATE_COMMENT_FORM:
       return state.set('isFetchingCreateCommentForm', true);
     case actions.FETCH_CREATE_COMMENT_FORM_SUCCESS:
-      const data = action.payload.entity;
-      return state.set('isFetchingCreateCommentForm', false)
-        .set('form', data);
+      return state
+        .set('isFetchingCreateCommentForm', false)
+        .set('form', action.payload.entity);
     case actions.FETCH_CREATE_COMMENT_FORM_FAILURE:
       return state.set('isFetchingCreateCommentForm', false);
 
     case actions.UNCLAIM_TASK:
-      return state.set('submittingUnclaim', true)
+      return state
+        .set('submittingUnclaim', true)
         .set('unclaimSuccessful', false);
     case actions.UNCLAIM_TASK_SUCCESS:
-      return state.set('unclaimSuccessful', true)
+      return state
+        .set('unclaimSuccessful', true)
         .set('submittingUnclaim', false);
 
     case actions.UNCLAIM_TASK_FAILURE:
-      return state.set('unclaimSuccessful', false)
+      return state
+        .set('unclaimSuccessful', false)
         .set('submittingUnclaim', false);
 
     case actions.CLAIM_TASK_SUCCESS:
@@ -112,6 +136,5 @@ function reducer(state = initialState, action) {
       return state;
   }
 }
-
 
 export default reducer;
