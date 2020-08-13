@@ -1,4 +1,5 @@
 import Immutable from 'immutable';
+import cloneDeep from 'lodash/cloneDeep';
 import * as actions from './actionTypes';
 import {
   FAILED, NOT_SUBMITTED, SUBMISSION_SUCCESSFUL, SUBMITTING,
@@ -17,6 +18,7 @@ const initialState = new Map({
 });
 
 function reducer(state = initialState, action) {
+  let entity;
   switch (action.type) {
     case actions.RESET_FORM:
       return initialState;
@@ -48,10 +50,12 @@ function reducer(state = initialState, action) {
             variables[key] = rawVariables[key].value;
           }
         });
-        action.payload.entity.variables = variables;
+        entity = cloneDeep(action.payload.entity);
+        entity.variables = variables;
       }
-      return state.set('submissionStatus', SUBMISSION_SUCCESSFUL)
-          .set('submissionResponse', action.payload.entity);
+      return state
+        .set('submissionStatus', SUBMISSION_SUCCESSFUL)
+        .set('submissionResponse', entity);
     case actions.COMPLETE_TASK_FORM_FAILURE:
       return state.set('submissionStatus', FAILED);
     case actions.SET_NEXT_TASK:
