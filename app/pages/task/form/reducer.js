@@ -2,7 +2,10 @@ import Immutable from 'immutable';
 import cloneDeep from 'lodash/cloneDeep';
 import * as actions from './actionTypes';
 import {
-  FAILED, NOT_SUBMITTED, SUBMISSION_SUCCESSFUL, SUBMITTING,
+  FAILED,
+  NOT_SUBMITTED,
+  SUBMISSION_SUCCESSFUL,
+  SUBMITTING,
 } from './constants';
 
 const { Map } = Immutable;
@@ -14,7 +17,7 @@ const initialState = new Map({
   customEventSubmissionStatus: NOT_SUBMITTED,
   submissionResponse: null,
   nextTask: null,
-  nextVariables: null
+  nextVariables: null,
 });
 
 function reducer(state = initialState, action) {
@@ -26,7 +29,8 @@ function reducer(state = initialState, action) {
     case actions.RESET_FORM:
       return initialState;
     case actions.FETCH_TASK_FORM:
-      return state.set('loadingTaskForm', true)
+      return state
+        .set('loadingTaskForm', true)
         .set('form', null)
         .set('taskFormCompleteSuccessful', false)
         .set('submittingTaskFormForCompletion', false);
