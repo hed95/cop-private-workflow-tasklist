@@ -37,7 +37,6 @@ export class YourGroupTasksContainer extends React.Component {
     this.sortYourGroupTasks = this.sortYourGroupTasks.bind(this);
     this.filterTasksByName = this.filterTasksByName.bind(this);
     this.debounceSearch = this.debounceSearch.bind(this);
-    this.taskUtils = new TaskUtils();
   }
 
   componentDidMount() {
@@ -148,10 +147,10 @@ export class YourGroupTasksContainer extends React.Component {
         sortValue={sortValue}
         filterValue={filterValue}
         paginationActions={
-          this.taskUtils.buildPaginationAction(this.props)
+          TaskUtils.buildPaginationAction(this.props)
         }
         filterTasksByName={this.filterTasksByName}
-        yourGroupTasks={this.taskUtils.applyGrouping(
+        yourGroupTasks={TaskUtils.applyGrouping(
           groupBy,
           tasks.toJS(),
         )}

@@ -31,7 +31,7 @@ export default class TaskUtils {
     return pagination;
     }
 
-  applyGrouping(groupBy, tasks) {
+  static applyGrouping(groupBy, tasks) {
     switch (groupBy) {
       case 'reference':
         const byReference = _.groupBy(tasks, data => {
