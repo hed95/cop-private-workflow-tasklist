@@ -19,6 +19,9 @@ const initialState = new Map({
 
 function reducer(state = initialState, action) {
   let entity;
+  let rawVariables;
+  const variables = {};
+
   switch (action.type) {
     case actions.RESET_FORM:
       return initialState;
@@ -28,9 +31,9 @@ function reducer(state = initialState, action) {
         .set('taskFormCompleteSuccessful', false)
         .set('submittingTaskFormForCompletion', false);
     case actions.FETCH_TASK_FORM_SUCCESS:
-      const data = action.payload.entity;
-      return state.set('loadingTaskForm', false)
-        .set('form', data);
+      return state
+        .set('loadingTaskForm', false)
+        .set('form', action.payload.entity);
     case actions.FETCH_TASK_FROM_FAILURE:
       return state.set('loadingTaskForm', false);
     case actions.SUBMIT_TASK_FORM:
@@ -41,8 +44,8 @@ function reducer(state = initialState, action) {
       return state.set('submissionStatus', SUBMITTING);
     case actions.COMPLETE_TASK_FORM_SUCCESS:
       if (action.payload.entity !== '') {
-        const rawVariables =  action.payload.entity.variables? action.payload.entity.variables : {};
-        const variables = {};
+        ({ variables: rawVariables = {} } = action.payload.entity);
+
         Object.keys(rawVariables).forEach(key => {
           if (rawVariables[key].type === 'Json') {
             variables[key] = JSON.parse(rawVariables[key].value);
@@ -59,9 +62,9 @@ function reducer(state = initialState, action) {
     case actions.COMPLETE_TASK_FORM_FAILURE:
       return state.set('submissionStatus', FAILED);
     case actions.SET_NEXT_TASK:
-      const {task} = action;
-      return state.set('nextTask', Immutable.fromJS(task))
-          .set('nextVariables', action.variables);
+      return state
+        .set('nextTask', Immutable.fromJS(action.task))
+        .set('nextVariables', action.variables);
     case actions.TASK_CUSTOM_EVENT:
       return state.set('customEventSubmissionStatus', SUBMITTING);
     case actions.TASK_CUSTOM_EVENT_SUCCESS:
