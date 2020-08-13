@@ -48,7 +48,7 @@ export const rootReducer = combineReducers({
     [procedureStart.constants.NAME]: procedureStart.reducer,
     [error.constants.NAME]: error.reducer,
     [task.constants.NAME]: task.reducer,
-    [tasks.constants.NAME]: tasks.reducer,
+    [tasks.NAME]: tasks.reducer,
     [taskForm.constants.NAME]: taskForm.reducer,
     [reports.constants.NAME]: reports.reducer,
     [dashboard.constants.NAME]: dashboard.reducer,
