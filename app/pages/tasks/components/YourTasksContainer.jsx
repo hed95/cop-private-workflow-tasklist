@@ -36,7 +36,6 @@ export class YourTasksContainer extends React.Component {
         this.sortYourTasks = this.sortYourTasks.bind(this);
         this.filterTasksByName = this.filterTasksByName.bind(this);
         this.debounceSearch = this.debounceSearch.bind(this);
-        this.taskUtils = new TaskUtils();
     }
 
     componentDidMount() {
@@ -158,12 +157,12 @@ export class YourTasksContainer extends React.Component {
           <YourTasks
             grouping={groupBy}
             paginationActions={
-               this.taskUtils.buildPaginationAction(this.props)
+               TaskUtils.buildPaginationAction(this.props)
             }
             filterTasksByName={this.filterTasksByName}
             sortYourTasks={this.sortYourTasks}
             goToTask={this.goToTask}
-            yourTasks={this.taskUtils.applyGrouping(groupBy, tasks.toJS())}
+            yourTasks={TaskUtils.applyGrouping(groupBy, tasks.toJS())}
             total={total}
             sortValue={sortValue}
             filterValue={filterValue}

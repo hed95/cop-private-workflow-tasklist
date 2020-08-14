@@ -10,7 +10,6 @@ import GroupTasks from './GroupTasks';
 import '../../../core/components/Pagination.scss';
 import TaskPagination from "./TaskPagination";
 
-const taskUtils = new TaskUtils();
 const YourTasks = props => {
   const {
     yourTasks,
@@ -51,7 +50,7 @@ const YourTasks = props => {
               <div key={task.id} className="govuk-grid-row">
                 <div className="govuk-grid-column-one-half">
                   <span className="govuk-caption-m">
-                    {taskUtils.generateCaption(grouping, val)}
+                    {TaskUtils.generateCaption(grouping, val)}
                   </span>
                   <span className="govuk-!-font-size-19 govuk-!-font-weight-bold">
                     <a

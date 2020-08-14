@@ -1,7 +1,11 @@
 import Immutable from 'immutable';
+import cloneDeep from 'lodash/cloneDeep';
 import * as actions from './actionTypes';
 import {
-  FAILED, NOT_SUBMITTED, SUBMISSION_SUCCESSFUL, SUBMITTING,
+  FAILED,
+  NOT_SUBMITTED,
+  SUBMISSION_SUCCESSFUL,
+  SUBMITTING,
 } from './constants';
 
 const { Map } = Immutable;
@@ -13,22 +17,27 @@ const initialState = new Map({
   customEventSubmissionStatus: NOT_SUBMITTED,
   submissionResponse: null,
   nextTask: null,
-  nextVariables: null
+  nextVariables: null,
 });
 
 function reducer(state = initialState, action) {
+  let entity;
+  let rawVariables;
+  const variables = {};
+
   switch (action.type) {
     case actions.RESET_FORM:
       return initialState;
     case actions.FETCH_TASK_FORM:
-      return state.set('loadingTaskForm', true)
+      return state
+        .set('loadingTaskForm', true)
         .set('form', null)
         .set('taskFormCompleteSuccessful', false)
         .set('submittingTaskFormForCompletion', false);
     case actions.FETCH_TASK_FORM_SUCCESS:
-      const data = action.payload.entity;
-      return state.set('loadingTaskForm', false)
-        .set('form', data);
+      return state
+        .set('loadingTaskForm', false)
+        .set('form', action.payload.entity);
     case actions.FETCH_TASK_FROM_FAILURE:
       return state.set('loadingTaskForm', false);
     case actions.SUBMIT_TASK_FORM:
@@ -39,8 +48,8 @@ function reducer(state = initialState, action) {
       return state.set('submissionStatus', SUBMITTING);
     case actions.COMPLETE_TASK_FORM_SUCCESS:
       if (action.payload.entity !== '') {
-        const rawVariables =  action.payload.entity.variables? action.payload.entity.variables : {};
-        const variables = {};
+        ({ variables: rawVariables = {} } = action.payload.entity);
+
         Object.keys(rawVariables).forEach(key => {
           if (rawVariables[key].type === 'Json') {
             variables[key] = JSON.parse(rawVariables[key].value);
@@ -48,16 +57,18 @@ function reducer(state = initialState, action) {
             variables[key] = rawVariables[key].value;
           }
         });
-        action.payload.entity.variables = variables;
+        entity = cloneDeep(action.payload.entity);
+        entity.variables = variables;
       }
-      return state.set('submissionStatus', SUBMISSION_SUCCESSFUL)
-          .set('submissionResponse', action.payload.entity);
+      return state
+        .set('submissionStatus', SUBMISSION_SUCCESSFUL)
+        .set('submissionResponse', entity);
     case actions.COMPLETE_TASK_FORM_FAILURE:
       return state.set('submissionStatus', FAILED);
     case actions.SET_NEXT_TASK:
-      const {task} = action;
-      return state.set('nextTask', Immutable.fromJS(task))
-          .set('nextVariables', action.variables);
+      return state
+        .set('nextTask', Immutable.fromJS(action.task))
+        .set('nextVariables', action.variables);
     case actions.TASK_CUSTOM_EVENT:
       return state.set('customEventSubmissionStatus', SUBMITTING);
     case actions.TASK_CUSTOM_EVENT_SUCCESS:
