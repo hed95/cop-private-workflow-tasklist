@@ -1,1 +1,3 @@
-export const NAME = 'case-action-page';
+const NAME = 'case-action-page';
+
+export default NAME;

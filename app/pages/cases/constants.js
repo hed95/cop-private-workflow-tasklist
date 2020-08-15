@@ -1,1 +1,3 @@
-export const NAME = 'case-page';
+const NAME = 'case-page';
+
+export default NAME;

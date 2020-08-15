@@ -1,1 +1,3 @@
-export const NAME = 'notification-page';
+const NAME = 'notification-page';
+
+export default NAME;

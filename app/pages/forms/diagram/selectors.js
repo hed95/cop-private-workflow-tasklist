@@ -1,4 +1,6 @@
-import { NAME } from './constants';
+import NAME from './constants';
 
-export const isFetchingProcessDefinitionXml = state => state[NAME].get('isFetchingProcessDefinitionXml');
-export const processDefinitionXml = state => state[NAME].get('processDefinitionXml');
+export const isFetchingProcessDefinitionXml = state =>
+  state[NAME].get('isFetchingProcessDefinitionXml');
+export const processDefinitionXml = state =>
+  state[NAME].get('processDefinitionXml');
