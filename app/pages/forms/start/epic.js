@@ -1,5 +1,4 @@
 import { combineEpics } from 'redux-observable';
-import PubSub from 'pubsub-js';
 import * as types from './actionTypes';
 import * as actions from './actions';
 import errorObservable from '../../../core/error/epicUtil';

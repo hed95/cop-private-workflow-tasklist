@@ -23,9 +23,10 @@ describe('reports epic', () => {
   });
   store.replaceReducer(reducer);
   it('fetches reports', done => {
-    const action$ = ActionsObservable.of(
-      { type: types.FETCH_REPORTS_LIST, payload: {} },
-    );
+    const action$ = ActionsObservable.of({
+      type: types.FETCH_REPORTS_LIST,
+      payload: {},
+    });
     const response = {
       status: {
         code: 200,
@@ -38,18 +39,19 @@ describe('reports epic', () => {
     };
     const client = () => Observable.of(response);
     const expectedOutput = {
-      type: types.FETCH_REPORTS_LIST_SUCCESS, payload: response,
+      type: types.FETCH_REPORTS_LIST_SUCCESS,
+      payload: response,
     };
-    epic(action$, store, { client })
-      .subscribe(actualOutput => {
-        expect(actualOutput).toEqual(expectedOutput);
-        done();
-      });
+    epic(action$, store, { client }).subscribe(actualOutput => {
+      expect(actualOutput).toEqual(expectedOutput);
+      done();
+    });
   });
   it('retries if reporting service returns 503', done => {
-    const action$ = ActionsObservable.of(
-      { type: types.FETCH_REPORTS_LIST, payload: {} },
-    );
+    const action$ = ActionsObservable.of({
+      type: types.FETCH_REPORTS_LIST,
+      payload: {},
+    });
     const response = {
       status: {
         code: 200,
@@ -62,25 +64,28 @@ describe('reports epic', () => {
     };
     let counter = 0;
 
-    const client = () => Observable.defer(() => {
-      counter += 1;
-      console.log(`counter ${counter}`);
-      if (counter === 5) {
-        return Observable.from(Promise.resolve(response));
-      }
-      return Observable.from(Promise.reject({
-        status: {
-          code: 503,
-        },
-      }));
-    });
-    const expectedOutput = {
-      type: types.FETCH_REPORTS_LIST_SUCCESS, payload: response,
-    };
-    epic(action$, store, { client })
-      .subscribe(actualOutput => {
-        expect(actualOutput).toEqual(expectedOutput);
-        done();
+    const client = () =>
+      Observable.defer(() => {
+        counter += 1;
+        console.log(`counter ${counter}`);
+        if (counter === 5) {
+          return Observable.from(Promise.resolve(response));
+        }
+        return Observable.from(
+          Promise.reject({
+            status: {
+              code: 503,
+            },
+          }),
+        );
       });
+    const expectedOutput = {
+      type: types.FETCH_REPORTS_LIST_SUCCESS,
+      payload: response,
+    };
+    epic(action$, store, { client }).subscribe(actualOutput => {
+      expect(actualOutput).toEqual(expectedOutput);
+      done();
+    });
   });
 });

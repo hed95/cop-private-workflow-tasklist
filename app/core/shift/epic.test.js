@@ -1,7 +1,6 @@
 import configureMockStore from 'redux-mock-store';
 import { ActionsObservable } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
-import PubSub from 'pubsub-js';
 import reducer from './reducer';
 import * as types from './actionTypes';
 import 'rxjs/add/observable/throw';
