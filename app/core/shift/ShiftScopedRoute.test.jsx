@@ -8,7 +8,6 @@ import ErrorHandlingContainer from '../error/component/ErrorHandlingComponent';
 
 const { Map } = Immutable;
 
-
 describe('Shift Scoped Route', () => {
   it('Displays data spinner while checking shift', () => {
     const initialState = {
@@ -59,6 +58,8 @@ describe('Shift Scoped Route', () => {
       </ShiftScopedRoute>,
     );
     expect(wrapper.containsMatchingElement(Route)).toEqual(true);
-    expect(wrapper.containsMatchingElement(ErrorHandlingContainer)).toEqual(true);
+    expect(wrapper.containsMatchingElement(ErrorHandlingContainer)).toEqual(
+      true,
+    );
   });
 });

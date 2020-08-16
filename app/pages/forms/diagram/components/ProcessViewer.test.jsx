@@ -42,17 +42,19 @@ const xmlStr = `<?xml version="1.0" encoding="UTF-8"?>
 </bpmn:definitions>
 `;
 
-
 describe('Process viewer', () => {
   it('renders a process', async () => {
-    const wrapper = await mount(<ProcessViewer
-      xml={xmlStr}
-      processDefinition={Immutable.fromJS({
-        'process-definition': {
-          name: 'processName',
-        },
-      })}
-    />, { attachTo: document.body });
+    const wrapper = await mount(
+      <ProcessViewer
+        xml={xmlStr}
+        processDefinition={Immutable.fromJS({
+          'process-definition': {
+            name: 'processName',
+          },
+        })}
+      />,
+      { attachTo: document.body },
+    );
     console.log(wrapper.html());
     const bjsContainer = document.querySelector('.bjs-container');
     const zoomContainer = document.querySelector('.io-zoom-controls');

@@ -4,7 +4,6 @@ import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { CalendarDashboardPanel } from './CalendarDashboardPanel';
 
-
 describe('Calendar Dashboard Panel', () => {
   const mockStore = configureStore();
   let store;
@@ -19,10 +18,9 @@ describe('Calendar Dashboard Panel', () => {
     const props = {
       hasActiveShift: true,
     };
-    const wrapper = await mount(<CalendarDashboardPanel
-      store={store}
-      {...props}
-    />);
+    const wrapper = await mount(
+      <CalendarDashboardPanel store={store} {...props} />,
+    );
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -33,12 +31,11 @@ describe('Calendar Dashboard Panel', () => {
       history,
       hasActiveShift: true,
     };
-    const wrapper = await mount(<Router history={history}>
-      <CalendarDashboardPanel
-        store={store}
-        {...props}
-      />
-                                </Router>);
+    const wrapper = await mount(
+      <Router history={history}>
+        <CalendarDashboardPanel store={store} {...props} />
+      </Router>,
+    );
 
     const calendarPageLink = wrapper.find('#calendarPageLink');
     expect(calendarPageLink.exists()).toEqual(true);

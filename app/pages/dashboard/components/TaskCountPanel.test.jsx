@@ -6,13 +6,11 @@ import { TaskCountPanel } from './TaskCountPanel';
 
 const { Map } = Immutable;
 
-
 jest.mock('pubsub-js', () => ({
   subscribe: jest.fn(),
   unsubscribe: jest.fn(),
   publish: jest.fn(),
 }));
-
 
 describe('TaskCountPanel', () => {
   const mockStore = configureStore();
@@ -33,19 +31,20 @@ describe('TaskCountPanel', () => {
         totalTasksAllocatedToTeam: 0,
       }),
     };
-    const wrapper = await mount(<TaskCountPanel
-      store={store}
-      {...props}
-      fetchTaskCounts={fetchTaskCounts}
-      setDefaultCounts={setDefaultCounts}
-    />);
+    const wrapper = await mount(
+      <TaskCountPanel
+        store={store}
+        {...props}
+        fetchTaskCounts={fetchTaskCounts}
+        setDefaultCounts={setDefaultCounts}
+      />,
+    );
     expect(setDefaultCounts).toBeCalled();
     expect(fetchTaskCounts).not.toBeCalled();
 
     const yourTasksPanel = wrapper.find('#yourTasksPanel');
     expect(yourTasksPanel.exists()).toEqual(true);
     expect(yourTasksPanel.find('li span').first().text()).toEqual('0');
-
 
     const youTeamTasks = wrapper.find('#youTeamTasks');
     expect(youTeamTasks.exists()).toEqual(true);
@@ -60,15 +59,16 @@ describe('TaskCountPanel', () => {
         totalTasksAllocatedToTeam: 10,
       }),
     };
-    const wrapper = await mount(<TaskCountPanel
-      store={store}
-      {...props}
-      fetchTaskCounts={fetchTaskCounts}
-      setDefaultCounts={setDefaultCounts}
-    />);
+    const wrapper = await mount(
+      <TaskCountPanel
+        store={store}
+        {...props}
+        fetchTaskCounts={fetchTaskCounts}
+        setDefaultCounts={setDefaultCounts}
+      />,
+    );
     expect(fetchTaskCounts).toBeCalled();
     expect(PubSub.subscribe).toBeCalled();
-
 
     const yourTasksPanel = wrapper.find('#yourTasksPanel');
     expect(yourTasksPanel.exists()).toEqual(true);

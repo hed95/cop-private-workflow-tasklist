@@ -6,12 +6,14 @@ let store;
 
 class Component extends React.Component {
   render() {
-    this.props.log([{
-      message: 'hello',
-      level: 'info',
-      user: 'user',
-      path: '/path',
-    }]);
+    this.props.log([
+      {
+        message: 'hello',
+        level: 'info',
+        user: 'user',
+        path: '/path',
+      },
+    ]);
     return <div>Hello</div>;
   }
 }
@@ -24,9 +26,7 @@ describe('withLog', () => {
 
   it('has log in wrapped component', async () => {
     const ComponentWithLog = withLog(Component);
-    const wrapper = await mount(
-      <ComponentWithLog store={store} />,
-    );
+    const wrapper = await mount(<ComponentWithLog store={store} />);
     const actions = wrapper.props().store.getActions();
     expect(actions.length).toEqual(1);
     expect(actions[0].type).toEqual('LOG');

@@ -1,20 +1,19 @@
 import React from 'react';
-import { createMemoryHistory } from 'history'
+import { createMemoryHistory } from 'history';
 import { Header } from './Header';
 
 describe('Header', () => {
-
   const props = {
     history: createMemoryHistory(),
     appConfig: {
       serviceDeskUrls: {
-        support: 'test'
-      }
+        support: 'test',
+      },
     },
     kc: {
       logout: jest.fn(),
     },
-  }
+  };
 
   it('renders without crashing', () => {
     const wrapper = shallow(<Header {...props} />);
@@ -32,5 +31,4 @@ describe('Header', () => {
     const wrapper = shallow(<Header {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
-
 });

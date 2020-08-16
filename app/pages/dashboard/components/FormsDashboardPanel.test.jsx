@@ -15,10 +15,9 @@ describe('Procedures Dashboard Panel', () => {
   });
   it('renders forms dashboard panel', async () => {
     const props = {};
-    const wrapper = await mount(<FormsDashboardPanel
-      store={store}
-      {...props}
-    />);
+    const wrapper = await mount(
+      <FormsDashboardPanel store={store} {...props} />,
+    );
     expect(wrapper).toMatchSnapshot();
   });
   it('navigates to forms page on click', async () => {
@@ -28,12 +27,11 @@ describe('Procedures Dashboard Panel', () => {
       history,
       hasActiveShift: true,
     };
-    const wrapper = await mount(<Router history={history}>
-      <FormsDashboardPanel
-        store={store}
-        {...props}
-      />
-                                </Router>);
+    const wrapper = await mount(
+      <Router history={history}>
+        <FormsDashboardPanel store={store} {...props} />
+      </Router>,
+    );
 
     const proceduresPageLink = wrapper.find('#proceduresPageLink');
     expect(proceduresPageLink.exists()).toEqual(true);

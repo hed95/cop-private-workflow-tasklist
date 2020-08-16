@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import {  withRouter } from 'react-router';
+import { withRouter } from 'react-router';
 import PubSub from 'pubsub-js';
 import ErrorPanel from './ErrorPanel';
 import * as actions from '../actions';
@@ -14,56 +14,71 @@ export class ErrorHandlingComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      formErrors: []
-    }
+      formErrors: [],
+    };
   }
 
   componentDidMount() {
-    this.formSubmissionError = PubSub.subscribe('formSubmissionError', (message,  payload) => {
-      let { errors: payloadErrors } = payload;
-      const { form } = payload;
+    this.formSubmissionError = PubSub.subscribe(
+      'formSubmissionError',
+      (message, payload) => {
+        let { errors: payloadErrors } = payload;
+        const { form } = payload;
 
-      if (!payloadErrors) {
-         payloadErrors = []
-      }
-      const updated = payloadErrors.map(error => {
-        return {message: error.message, instance: form.formio.getComponent(error.component.key)};
-      });
-      this.setState({
-        formErrors: updated
-      })
-    });
-    this.formSubmissionSuccessful = PubSub.subscribe('formSubmissionSuccessful', () => {
-      this.setState({
-        formErrors: []
-      });
-    });
+        if (!payloadErrors) {
+          payloadErrors = [];
+        }
+        const updated = payloadErrors.map(error => {
+          return {
+            message: error.message,
+            instance: form.formio.getComponent(error.component.key),
+          };
+        });
+        this.setState({
+          formErrors: updated,
+        });
+      },
+    );
+    this.formSubmissionSuccessful = PubSub.subscribe(
+      'formSubmissionSuccessful',
+      () => {
+        this.setState({
+          formErrors: [],
+        });
+      },
+    );
     this.clear = PubSub.subscribe('clear', () => {
       this.setState({
-        formErrors: []
+        formErrors: [],
       });
     });
-    this.formChange = PubSub.subscribe('formChange', (message, {value, form}) => {
-      if (this.state.formErrors.length !== 0) {
-        let instance;
-        if (form.instance._form.display === 'wizard') {
-          instance = form.formio.currentPage;
-        } else {
-          instance = form.formio;
+    this.formChange = PubSub.subscribe(
+      'formChange',
+      (message, { value, form }) => {
+        if (this.state.formErrors.length !== 0) {
+          let instance;
+          if (form.instance._form.display === 'wizard') {
+            instance = form.formio.currentPage;
+          } else {
+            instance = form.formio;
+          }
+          if (instance.isValid(value.data, true)) {
+            this.setState({
+              formErrors: [],
+            });
+          } else {
+            this.setState({
+              formErrors: _.filter(
+                this.state.formErrors,
+                ({ message, instance }) => {
+                  return instance.component.key !== value.changed.component.key;
+                },
+              ),
+            });
+          }
         }
-        if (instance.isValid(value.data, true)) {
-          this.setState({
-            formErrors: []
-          });
-        } else {
-          this.setState({
-            formErrors: _.filter(this.state.formErrors, ({message, instance}) => {
-              return instance.component.key !== value.changed.component.key;
-            })
-          })
-        }
-      }
-    });
+      },
+    );
   }
 
   componentDidUpdate() {
@@ -72,16 +87,18 @@ export class ErrorHandlingComponent extends React.Component {
     if (hasError) {
       const { pathname: path } = history.location;
       const { email: user } = kc.tokenParsed;
-      const errors = errors ? errors.map(error => {
-          return {
-            path,
-            level: 'debug',
-            status: error.get('status'),
-            message: error.get('message'),
-            url: error.get('url'),
-            user,
-          }
-        }) : [];
+      const errors = errors
+        ? errors.map(error => {
+            return {
+              path,
+              level: 'debug',
+              status: error.get('status'),
+              message: error.get('message'),
+              url: error.get('url'),
+              user,
+            };
+          })
+        : [];
       log(errors);
     }
   }
@@ -97,36 +114,41 @@ export class ErrorHandlingComponent extends React.Component {
     const { history, kc, log } = this.props;
 
     const { pathname: path } = history.location;
-    const {email: user } = kc.tokenParsed;
+    const { email: user } = kc.tokenParsed;
 
-    log([{
-      level: 'debug',
-      user,
-      path,
-      error,
-      errorInfo
-    }]);
+    log([
+      {
+        level: 'debug',
+        user,
+        path,
+        error,
+        errorInfo,
+      },
+    ]);
   }
 
   render() {
     const { errors: ers, children } = this.props;
-    const is404 = ers && ers.size ?
-      ers.find(error => error.get('status') === 404) !== undefined
-      : false;
-    return is404 ? children : (
+    const is404 =
+      ers && ers.size
+        ? ers.find(error => error.get('status') === 404) !== undefined
+        : false;
+    return is404 ? (
+      children
+    ) : (
       <React.Fragment>
         <ErrorPanel {...this.props} />
         <FormErrorPanel errors={this.state.formErrors} />
         {this.props.children}
       </React.Fragment>
-);
+    );
   }
 }
 
 ErrorHandlingComponent.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
+    PropTypes.node,
   ]).isRequired,
   log: PropTypes.func.isRequired,
   hasError: PropTypes.bool.isRequired,
@@ -136,16 +158,16 @@ ErrorHandlingComponent.propTypes = {
   kc: PropTypes.object.isRequired,
 };
 
-
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default withRouter(connect(state => {
-  return {
-    kc: state.keycloak,
-    hasError: hasError(state),
-    errors: errors(state),
-    unauthorised: unauthorised(state),
-    appConfig: state.appConfig
-
-  };
-}, mapDispatchToProps)(ErrorHandlingComponent));
+export default withRouter(
+  connect(state => {
+    return {
+      kc: state.keycloak,
+      hasError: hasError(state),
+      errors: errors(state),
+      unauthorised: unauthorised(state),
+      appConfig: state.appConfig,
+    };
+  }, mapDispatchToProps)(ErrorHandlingComponent),
+);
