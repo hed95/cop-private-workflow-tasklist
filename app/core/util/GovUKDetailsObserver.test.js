@@ -1,4 +1,4 @@
-import GovUKDetailsObserver from 'core/util/GovUKDetailsObserver';
+import GovUKDetailsObserver from './GovUKDetailsObserver';
 
 describe('GovUKDetailsObserver utility', () => {
 
