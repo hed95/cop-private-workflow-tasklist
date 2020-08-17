@@ -27,12 +27,14 @@ describe('MessagesPanel', () => {
       isFetchingMessageCounts: false,
       messageCounts: 0,
     };
-    const wrapper = await mount(<MessagesPanel
-      store={store}
-      {...props}
-      fetchMessageCounts={fetchMessageCounts}
-      setDefaultCounts={setDefaultCounts}
-    />);
+    const wrapper = await mount(
+      <MessagesPanel
+        store={store}
+        {...props}
+        fetchMessageCounts={fetchMessageCounts}
+        setDefaultCounts={setDefaultCounts}
+      />,
+    );
     expect(setDefaultCounts).toBeCalled();
     expect(fetchMessageCounts).not.toBeCalled();
 
@@ -47,12 +49,14 @@ describe('MessagesPanel', () => {
       isFetchingMessageCounts: false,
       messageCounts: 10,
     };
-    const wrapper = await mount(<MessagesPanel
-      store={store}
-      {...props}
-      fetchMessageCounts={fetchMessageCounts}
-      setDefaultCounts={setDefaultCounts}
-    />);
+    const wrapper = await mount(
+      <MessagesPanel
+        store={store}
+        {...props}
+        fetchMessageCounts={fetchMessageCounts}
+        setDefaultCounts={setDefaultCounts}
+      />,
+    );
 
     expect(fetchMessageCounts).toBeCalled();
     expect(PubSub.subscribe).toBeCalled();
@@ -78,14 +82,16 @@ describe('MessagesPanel', () => {
         },
       },
     };
-    const wrapper = await mount(<Router history={history}>
-      <MessagesPanel
-        store={store}
-        {...props}
-        fetchMessageCounts={fetchMessageCounts}
-        setDefaultCounts={setDefaultCounts}
-      />
-                                </Router>);
+    const wrapper = await mount(
+      <Router history={history}>
+        <MessagesPanel
+          store={store}
+          {...props}
+          fetchMessageCounts={fetchMessageCounts}
+          setDefaultCounts={setDefaultCounts}
+        />
+      </Router>,
+    );
 
     const messagesPageLink = wrapper.find('#messagesPageLink');
     expect(messagesPageLink.exists()).toEqual(true);

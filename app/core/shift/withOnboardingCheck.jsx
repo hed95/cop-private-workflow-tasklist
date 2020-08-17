@@ -16,7 +16,6 @@ import {
 } from './selectors';
 import OnboardChecker from './OnboardChecker';
 
-
 export default function (ComposedComponent) {
   class withOnboardingCheck extends React.Component {
     static propTypes = {};
@@ -29,10 +28,16 @@ export default function (ComposedComponent) {
     componentDidUpdate(prevProps) {
       const path = this.props.history.location.pathname;
       const user = this.props.kc.tokenParsed.email;
-      if (prevProps.isFetchingStaffDetails !== this.props.isFetchingStaffDetails
-        && !this.props.isFetchingStaffDetails) {
+      if (
+        prevProps.isFetchingStaffDetails !==
+          this.props.isFetchingStaffDetails &&
+        !this.props.isFetchingStaffDetails
+      ) {
         const { staffDetails } = this.props;
-        let { redirectPath, data } = OnboardChecker.onBoardCheck(staffDetails, this.props.location.pathname);
+        let { redirectPath, data } = OnboardChecker.onBoardCheck(
+          staffDetails,
+          this.props.location.pathname,
+        );
 
         if (path === '/onboard-user' && redirectPath === '/onboard-user') {
           redirectPath = null;
@@ -42,13 +47,15 @@ export default function (ComposedComponent) {
           if (data) {
             PubSub.publish('submission', data);
           }
-          this.props.log([{
-            user,
-            path,
-            message: `${user} being redirected to ${redirectPath}`,
-            level: 'debug',
-            data,
-          }]);
+          this.props.log([
+            {
+              user,
+              path,
+              message: `${user} being redirected to ${redirectPath}`,
+              level: 'debug',
+              data,
+            },
+          ]);
           this.props.history.replace(redirectPath);
         } else {
           this.props.onboardingCheckCompete();
@@ -62,10 +69,9 @@ export default function (ComposedComponent) {
       if (isCheckingOnBoarding) {
         return <DataSpinner message="Checking your credentials" />;
       }
-      return (<ComposedComponent {...this.props} />);
+      return <ComposedComponent {...this.props} />;
     }
   }
-
 
   withOnboardingCheck.propTypes = {
     log: PropTypes.func,
@@ -76,13 +82,18 @@ export default function (ComposedComponent) {
     isFetchingStaffDetails: PropTypes.bool,
   };
 
+  const mapDispatchToProps = dispatch =>
+    bindActionCreators(Object.assign(actions, logActions), dispatch);
 
-  const mapDispatchToProps = dispatch => bindActionCreators(Object.assign(actions, logActions), dispatch);
-
-  return withRouter(connect(state => ({
-    staffDetails: staffDetails(state),
-    isFetchingStaffDetails: isFetchingStaffDetails(state),
-    isCheckingOnBoarding: isCheckingOnBoarding(state),
-    kc: state.keycloak,
-  }), mapDispatchToProps)(withOnboardingCheck));
+  return withRouter(
+    connect(
+      state => ({
+        staffDetails: staffDetails(state),
+        isFetchingStaffDetails: isFetchingStaffDetails(state),
+        isCheckingOnBoarding: isCheckingOnBoarding(state),
+        kc: state.keycloak,
+      }),
+      mapDispatchToProps,
+    )(withOnboardingCheck),
+  );
 }

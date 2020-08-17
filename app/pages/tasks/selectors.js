@@ -1,6 +1,7 @@
-import {NAME} from './constants';
+import NAME from './constants';
 
-export const isFetchingTasksSelector = state => state[NAME].get('isFetchingTasks');
+export const isFetchingTasksSelector = state =>
+  state[NAME].get('isFetchingTasks');
 export const tasksSelector = state => state[NAME].get('tasks');
 export const totalSelector = state => state[NAME].get('total');
 export const sortValueSelector = state => state[NAME].get('sortValue');

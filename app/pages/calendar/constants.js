@@ -1,1 +1,3 @@
-export const NAME = 'calendar-page';
+const NAME = 'calendar-page';
+
+export default NAME;

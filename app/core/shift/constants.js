@@ -1,1 +1,3 @@
-export const NAME = 'shift-page';
+const NAME = 'shift-page';
+
+export default NAME;

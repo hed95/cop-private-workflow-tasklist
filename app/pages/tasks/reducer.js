@@ -1,6 +1,7 @@
 import Immutable from 'immutable';
-import * as actions from './actionTypes';
 import _ from 'lodash';
+import * as actions from './actionTypes';
+
 const { Map, List } = Immutable;
 
 export const initialState = new Map({

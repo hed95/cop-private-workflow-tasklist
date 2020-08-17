@@ -106,14 +106,13 @@ describe('YourTasks Page', () => {
   const fetchTasksAssignedToYou = jest.fn();
 
   it('sets document title as expected', done => {
-    const taskUtil = new TaskUtils();
     const props = {
       filterTasksByName: jest.fn(),
       goToTask: jest.fn(),
       groupYourTasks: jest.fn(),
       resetYourTasks: jest.fn(),
       sortYourTasks: jest.fn(),
-      yourTasks: taskUtil.applyGrouping('category', [
+      yourTasks: TaskUtils.applyGrouping('category', [
         {
           task: {
             id: 'idZoo',
@@ -283,11 +282,7 @@ describe('YourTasks Page', () => {
 
     yourTaskFilterInput.simulate('change', { target: { value: 'ABC' } });
     jest.advanceTimersByTime(600);
-    expect(fetchTasksAssignedToYou).toBeCalledWith(
-      'sort=due,asc',
-      'ABC',
-      true,
-    );
+    expect(fetchTasksAssignedToYou).toBeCalledWith('sort=due,asc', 'ABC', true);
 
     yourTaskFilterInput.simulate('change', { target: { value: 'APPLES' } });
     jest.advanceTimersByTime(600);

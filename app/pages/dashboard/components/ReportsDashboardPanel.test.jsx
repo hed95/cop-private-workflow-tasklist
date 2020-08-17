@@ -17,10 +17,9 @@ describe('Reports Dashboard Panel', () => {
 
   it('renders reports dashboard panel', async () => {
     const props = {};
-    const wrapper = await mount(<ReportsDashboardPanel
-      store={store}
-      {...props}
-    />);
+    const wrapper = await mount(
+      <ReportsDashboardPanel store={store} {...props} />,
+    );
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -31,12 +30,11 @@ describe('Reports Dashboard Panel', () => {
       history,
       hasActiveShift: true,
     };
-    const wrapper = await mount(<Router history={history}>
-      <ReportsDashboardPanel
-        store={store}
-        {...props}
-      />
-    </Router>);
+    const wrapper = await mount(
+      <Router history={history}>
+        <ReportsDashboardPanel store={store} {...props} />
+      </Router>,
+    );
 
     const reportsPageLink = wrapper.find('#reportsPageLink');
     expect(reportsPageLink.exists()).toEqual(true);
