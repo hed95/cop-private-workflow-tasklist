@@ -36,8 +36,10 @@ class CasesPage extends React.Component {
       searching,
       businessKeyQuery,
       match: { params },
+      loadNextSearchResults,
     } = this.props;
     const {businessKey} = params;
+    const throttledNextResults = _.throttle(loadNextSearchResults, 300);
     return (
       <React.Fragment>
         <div className="govuk-grid-row">
@@ -85,9 +87,8 @@ class CasesPage extends React.Component {
             loadNext: () => {
               const links = caseSearchResults._links;
               if ('next' in links) {
-                const that = this;
                 const nextUrl = links.next.href;
-                _.throttle(that.props.loadNextSearchResults(nextUrl), 300);
+                throttledNextResults(nextUrl);
               }
             },
           }}
