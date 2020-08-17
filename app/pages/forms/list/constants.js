@@ -1,1 +1,3 @@
-export const NAME = 'procedures-list-page';
+const NAME = 'procedures-list-page';
+
+export default NAME;

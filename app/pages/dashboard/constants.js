@@ -1,1 +1,3 @@
-export const NAME = 'dashboard-page';
+const NAME = 'dashboard-page';
+
+export default NAME;

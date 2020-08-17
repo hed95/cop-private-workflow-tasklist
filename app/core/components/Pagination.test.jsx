@@ -17,7 +17,9 @@ describe('Pagination', () => {
   it('renders pagination', async () => {
     const items = buildItems(50);
     const onChangePage = jest.fn();
-    const wrapper = await mount(<Pagination items={items} onChangePage={onChangePage} />);
+    const wrapper = await mount(
+      <Pagination items={items} onChangePage={onChangePage} />,
+    );
     expect(wrapper).toMatchSnapshot();
   });
 });

@@ -24,7 +24,13 @@
       }
     },
     {
-      "files": ["FormsStartPage.test.jsx", "ShiftPage.test.jsx"],
+      "files": [
+        "epic.test.js",
+        "FileService.js",
+        "FormsStartPage.test.jsx",
+        "retry.js",
+        "ShiftPage.test.jsx"
+      ],
       "rules": {
         "no-console": 0
       }

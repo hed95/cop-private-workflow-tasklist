@@ -1,1 +1,3 @@
-export const NAME = 'task-page';
+const NAME = 'task-page';
+
+export default NAME;

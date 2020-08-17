@@ -1,1 +1,3 @@
-export const NAME = 'error-page';
+const NAME = 'error-page';
+
+export default NAME;
