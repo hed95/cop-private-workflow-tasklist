@@ -25,7 +25,7 @@ class FormDetailsPanel extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.formVersionDetails && this.formNode.element) {
+        if (this.props.formVersionDetails && this.formNode && this.formNode.element) {
             this.observer = new GovUKDetailsObserver(this.formNode.element).create();
         }
     }
