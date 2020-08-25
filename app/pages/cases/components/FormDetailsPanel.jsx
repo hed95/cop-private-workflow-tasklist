@@ -4,7 +4,7 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Form } from "react-formio";
-import { formSubmissionData, formVersionDetails, loadingFormSubmissionData, loadingFormVersion } from "../selectors";
+import { formSubmissionData, formVersionDetails } from "../selectors";
 import withLog from "../../../core/error/component/withLog";
 import { getFormVersion, getFormSubmissionData, resetForm } from "../actions";
 import GovUKDetailsObserver from "../../../core/util/GovUKDetailsObserver";
@@ -37,16 +37,12 @@ class FormDetailsPanel extends React.Component {
 
   render() {
     const {
-      loadingFormVersion, formVersionDetails,
-      loadingFormSubmissionData,
+      formVersionDetails,
       formSubmissionData
     } = this.props;
 
-    if (loadingFormVersion && loadingFormSubmissionData) {
-      return <div style={{justifyContent: 'center', paddingTop: '20px'}}>Loading form...</div>
-    }
     if (!formVersionDetails || !formSubmissionData) {
-      return <div />;
+      return <div style={{justifyContent: 'center', paddingTop: '20px'}}>Loading form...</div>
     }
 
     this.formioInterpolator.interpolate(formVersionDetails.schema, formSubmissionData);
@@ -76,7 +72,6 @@ FormDetailsPanel.propTypes = {
   getFormSubmissionData: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,
   getFormVersion: PropTypes.func.isRequired,
-  loadingFormVersion: PropTypes.bool,
   formVersionDetails: PropTypes.object,
   formReference: PropTypes.shape({
     name: PropTypes.string,
@@ -100,9 +95,7 @@ export default withRouter(connect(state => {
   return {
     kc: state.keycloak,
     appConfig: state.appConfig,
-    loadingFormVersion: loadingFormVersion(state),
     formVersionDetails: formVersionDetails(state),
-    loadingSubmissionFormData: loadingFormSubmissionData(state),
     formSubmissionData: formSubmissionData(state),
   }
 }, mapDispatchToProps)(withLog(FormDetailsPanel)));
