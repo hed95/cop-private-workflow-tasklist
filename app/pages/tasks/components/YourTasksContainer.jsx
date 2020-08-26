@@ -39,7 +39,12 @@ export class YourTasksContainer extends React.Component {
     }
 
     componentDidMount() {
-        this.loadYourTasks(false, 'sort=due,asc');
+
+        if (secureLocalStorage.get('yourTasksSorting')) {
+          this.loadYourTasks(false, secureLocalStorage.get('yourTasksSorting'));
+        } else {
+          this.loadYourTasks(false, 'sort=due,asc');
+        }
         if (secureLocalStorage.get('yourTasksGrouping')) {
             const {groupYourTasks} = this.props;
             groupYourTasks(secureLocalStorage.get('yourTasksGrouping'));
@@ -140,6 +145,7 @@ export class YourTasksContainer extends React.Component {
     }
 
     sortYourTasks(event) {
+        secureLocalStorage.set('yourTasksSorting', event.target.value);
         const {fetchTasksAssignedToYou, filterValue:filter} = this.props;
         fetchTasksAssignedToYou(event.target.value, filter, true);
     }
