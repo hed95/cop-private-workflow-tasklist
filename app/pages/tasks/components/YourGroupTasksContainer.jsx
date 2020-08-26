@@ -122,6 +122,7 @@ export class YourGroupTasksContainer extends React.Component {
   }
 
   sortYourGroupTasks(event) {
+    secureLocalStorage.set('yourTeamTasksSorting', event.target.value);
     const {fetchYourGroupTasks, filterValue:filter} = this.props;
     fetchYourGroupTasks(
       event.target.value,
