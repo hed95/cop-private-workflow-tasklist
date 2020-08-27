@@ -1,18 +1,31 @@
 import React from 'react';
-import PowerBIReport from './PowerBIReport';
+import axios from 'axios';
+import { PowerBIReport } from './PowerBIReport';
+import secureLocalStorage from '../../../common/security/SecureLocalStorage';
+
+jest.mock('axios');
+jest.mock('../../../common/security/SecureLocalStorage', () => ({
+  get: jest.fn().mockReturnValue({ team: { branchid: '10' } }),
+}));
 
 describe('PowerBIReport', () => {
   const props = {
     accessToken: 'xxx',
+    apiRefUrl: 'http://www.example.com',
     embedUrl: 'http://www.example.com',
     id: 'abc',
     name: 'Power BI Report',
     useMobileLayout: true,
+    token: 'xyz',
   };
 
   it('renders a PowerBIReport', () => {
+    axios.mockImplementation(() =>
+      Promise.resolve({ data: { data: [{ name: 'Felixstowe' }] } }),
+    );
     const wrapper = shallow(<PowerBIReport {...props} />);
-    expect(wrapper.find('Report').exists()).toEqual(true);
+    expect(wrapper.find('#report').exists()).toEqual(true);
+    expect(secureLocalStorage.get).toHaveBeenCalled();
   });
 
   it('does not render a LogoBar if narrow screen', () => {

@@ -50,7 +50,7 @@ describe('Report Page', () => {
       },
     };
     const wrapper = shallow(<ReportPage {...props} />);
-    expect(wrapper.find('PowerBIReport').exists()).toEqual(true);
+    expect(wrapper.find('Connect(PowerBIReport)').exists()).toEqual(true);
   });
 
   it('renders a redirect if no location.state found', () => {
