@@ -40,7 +40,11 @@ export class YourGroupTasksContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.loadYourGroupTasks(false, 'sort=due,asc');
+    if (secureLocalStorage.get('yourTeamTasksSorting')) {
+      this.loadYourGroupTasks(false, secureLocalStorage.get('yourTeamTasksSorting'));
+    } else {
+      this.loadYourGroupTasks(false, 'sort=due,asc');
+    }
     const that = this;
     const {groupYourTeamTasks} = this.props;
     this.timeoutId = setInterval(() => {
@@ -122,6 +126,7 @@ export class YourGroupTasksContainer extends React.Component {
   }
 
   sortYourGroupTasks(event) {
+    secureLocalStorage.set('yourTeamTasksSorting', event.target.value);
     const {fetchYourGroupTasks, filterValue:filter} = this.props;
     fetchYourGroupTasks(
       event.target.value,
@@ -190,8 +195,6 @@ YourGroupTasksContainer.defaultProps = {
   filterValue: null,
   groupBy: 'category'
 };
-
-
 
 YourGroupTasksContainer.propTypes = {
   kc: PropTypes.shape({

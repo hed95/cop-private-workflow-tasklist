@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 const SortTasks = ({sortValue, sortTasks}) => {
   return (
     <div className="govuk-form-group">
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label className="govuk-label" htmlFor="sortTask">Sort tasks by:</label>
       <select
         className="govuk-select"
@@ -26,8 +25,8 @@ const SortTasks = ({sortValue, sortTasks}) => {
 )};
 
 SortTasks.propTypes = {
-    sortValue: PropTypes.string.isRequired,
-    sortTasks: PropTypes.func.isRequired
+  sortValue: PropTypes.string.isRequired,
+  sortTasks: PropTypes.func.isRequired
 };
 
 export default SortTasks;
