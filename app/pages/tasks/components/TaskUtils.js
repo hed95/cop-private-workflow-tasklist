@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import AppConstants from '../../../common/AppConstants';
-import { priority } from '../../../core/util/priority';
+import priority from '../../../core/util/priority';
 
 export default class TaskUtils {
   static buildPaginationAction(props) {
