@@ -5,8 +5,8 @@ export default interceptor({
     if (request.path.indexOf('{') === -1) {
       return request;
     }
-
-    request.path = request.path.split('{')[0];
+    const [path] = request.path.split('{');
+    request.path = path;
     return request;
   },
 });
