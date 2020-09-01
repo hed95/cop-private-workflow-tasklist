@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AppConstants from '../../../common/AppConstants';
 import HTMLReport from './HTMLReport';
-import PowerBIReport from './PowerBIReport';
+import PBIReport from './PowerBIReport';
 
 export const ReportPage = ({ appConfig, location }) => {
   if (!location.state) return <Redirect to={AppConstants.REPORTS_PATH} />;
@@ -40,8 +40,8 @@ export const ReportPage = ({ appConfig, location }) => {
         }}
       >
         {reportType === 'PowerBIReport' ? (
-          <PowerBIReport
-            {...{ accessToken, embedUrl, id, name, useMobileLayout }}
+          <PBIReport
+            {...{ accessToken, embedUrl, id, useMobileLayout }}
           />
         ) : (
           <HTMLReport {...{ htmlName, reportServiceUrl }} />

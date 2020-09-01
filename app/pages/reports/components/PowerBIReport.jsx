@@ -1,51 +1,137 @@
 import React, { Component, Fragment } from 'react';
-import { models } from 'powerbi-client';
+import { service, factories, models } from 'powerbi-client';
 import PropTypes from 'prop-types';
-import Report from 'powerbi-report-component';
+import { connect } from 'react-redux';
+import axios from 'axios';
+import secureLocalStorage from '../../../common/security/SecureLocalStorage';
 import LogoBar from '../../../core/components/LogoBar';
 
-export default class PowerBIReport extends Component {
+export class PowerBIReport extends Component {
   constructor(props) {
     super(props);
-    this.report = null;
+    const { useMobileLayout } = this.props;
+    this.reportContainer = React.createRef();
     this.setFullscreen = this.setFullscreen.bind(this);
+    this.onPageChange = this.onPageChange.bind(this);
+    this.useMobileLayout = useMobileLayout;
+    this.visitedPages = [];
   }
 
-  handleReportLoad = report => {
-    this.report = report;
-  };
+  componentDidMount() {
+    const { apiRefUrl, accessToken, embedUrl, id, token } = this.props;
 
-  setFullscreen = () => {
-    if (this.report) this.report.fullscreen();
-  };
+    const powerBIBranchNames = [
+      'Central',
+      'Detection Services',
+      'Heathrow',
+      'Intelligence',
+      'National Operations',
+      'North',
+      'South',
+      'South East and Europe',
+    ];
 
-  render() {
     const {
-      accessToken,
-      embedUrl,
-      id: embedId,
-      name: pageName,
-      useMobileLayout,
-    } = this.props;
-    const logoBar = useMobileLayout ? null : (
-      <LogoBar setFullscreen={this.setFullscreen} />
-    );
-    return (
-      <Fragment>
-        <Report
-          {...{ accessToken, embedId, embedUrl, pageName }}
-          embedType="report"
-          extraSettings={{
+      team: { branchid: branchId } = {},
+    } = secureLocalStorage.get('shift');
+
+    axios({
+      method: 'get',
+      url: `${apiRefUrl}/v2/entities/branch?filter=id=eq.${branchId}`,
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(({ data }) => {
+        const branchName = data.data.length && data.data[0].name;
+        if (powerBIBranchNames.includes(branchName)) {
+          this.userBranchName = branchName;
+        }
+        const embedConfig = {
+          accessToken,
+          type: 'report',
+          embedUrl,
+          id,
+          permissions: models.Permissions.Read,
+          settings: {
             filterPaneEnabled: false,
-            layoutType: useMobileLayout
+            layoutType: this.useMobileLayout
               ? models.LayoutType.MobilePortrait
               : models.LayoutType.Master,
-          }}
-          onLoad={this.handleReportLoad}
-          permissions="Read"
-          reportMode="view"
+          },
+          tokenType: models.TokenType.Embed,
+        };
+
+        const powerbi = new service.Service(
+          factories.hpmFactory,
+          factories.wpmpFactory,
+          factories.routerFactory,
+        );
+        const target = this.reportContainer.current;
+        this.report = target && powerbi.embed(target, embedConfig);
+
+        if (this.userBranchName) {
+          this.report && this.report.on('pageChanged', this.onPageChange);
+        }
+      })
+      .catch(error => {
+        console.log(`Error: ${error}`);
+      });
+  }
+
+  onPageChange(e) {
+    const {
+      newPage,
+      newPage: { displayName },
+    } = e.detail;
+
+    if (this.visitedPages.includes(displayName)) return;
+
+    let visualNumber;
+    let target;
+    this.visitedPages.push(displayName);
+    const { userBranchName } = this;
+    if (displayName === 'Command Brief - OAR') {
+      visualNumber = 5;
+      target = { table: 'OAR', column: 'Branch Name' };
+    } else if (displayName === 'Command Brief - IEN') {
+      visualNumber = 4;
+      target = { table: 'IEN', column: 'Branch' };
+    } else {
+      return;
+    }
+    newPage.getVisuals().then(visuals => {
+      const targetVisual = visuals[visualNumber];
+      targetVisual
+        .setSlicerState({
+          filters: [
+            {
+              $schema: 'http://powerbi.com/product/schema#basic',
+              target,
+              operator: 'In',
+              values: [userBranchName],
+            },
+          ],
+        })
+        .catch(errors => {
+          console.log(`Power BI could not get visuals. Errors: ${errors}`);
+        });
+    });
+  }
+
+  setFullscreen() {
+    if (this.report) this.report.fullscreen();
+  }
+
+  render() {
+    const logoBar = this.useMobileLayout ? null : (
+      <LogoBar setFullscreen={this.setFullscreen} />
+    );
+
+    return (
+      <Fragment>
+        <div
+          id="report"
           style={{ width: '100%', height: '100%' }}
-          tokenType="Embed"
+          ref={this.reportContainer}
         />
         {logoBar}
       </Fragment>
@@ -55,8 +141,16 @@ export default class PowerBIReport extends Component {
 
 PowerBIReport.propTypes = {
   accessToken: PropTypes.string.isRequired,
+  apiRefUrl: PropTypes.string.isRequired,
   embedUrl: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
   useMobileLayout: PropTypes.bool.isRequired,
 };
+
+export default connect(state => {
+  return {
+    token: state.keycloak.token,
+    apiRefUrl: state.appConfig.apiRefUrl,
+  };
+})(PowerBIReport);
