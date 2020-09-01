@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import moment from 'moment';
 import {Link} from "react-router-dom";
-import { priority } from '../../../../core/util/priority';
+import priority from '../../../../core/util/priority';
 import AppConstants from '../../../../common/AppConstants';
 
 const TaskTitle = props => {

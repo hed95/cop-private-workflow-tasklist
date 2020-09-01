@@ -1,4 +1,5 @@
 import Immutable from 'immutable';
+import cloneDeep from 'lodash/cloneDeep';
 import * as actions from './actionTypes';
 import {
   FAILED,
@@ -19,6 +20,7 @@ const initialState = new Map({
 });
 
 function reducer(state = initialState, action) {
+  let entity;
   let processDefinition;
   switch (action.type) {
     case actions.FETCH_PROCESS_DEFINITION:
@@ -60,11 +62,12 @@ function reducer(state = initialState, action) {
             variables[key] = rawVariables[key].value;
           }
         });
-        action.payload.entity.processInstance.variables = variables;
+        entity = cloneDeep(action.payload.entity);
+        entity.variables = variables;
       }
       return state
         .set('submissionStatus', SUBMISSION_SUCCESSFUL)
-        .set('submissionResponse', action.payload.entity);
+        .set('submissionResponse', entity);
     case actions.SUBMIT_TO_WORKFLOW_FAILURE:
       return state.set('submissionStatus', FAILED);
     default:
