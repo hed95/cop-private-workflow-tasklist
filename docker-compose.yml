@@ -2,6 +2,7 @@ version: '3'
 
 services:
   platform_ui:
+    build: .
     image: quay.io/ukhomeofficedigital/cop-private-workflow-tasklist:develop
     restart: on-failure
     container_name: platform_ui
