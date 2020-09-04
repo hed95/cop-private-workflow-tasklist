@@ -1,4 +1,4 @@
-FROM node:12.18-alpine3.11
+FROM node:12.18-alpine3.11 as base
 
 ENV USER node
 ENV GROUP node
@@ -32,12 +32,26 @@ RUN set -eux; \
   mkdir -p /app  /drone ; \
   pip install PyPDF2 
 
+From base as build
 ADD . /app/
 WORKDIR /app
 
-RUN chown -R "$USER":"$GROUP" /app /drone "$HOME"
-RUN npm ci && npm run build
+RUN set -eux; \
+    chown -R "$USER":"$GROUP" /app /drone "$HOME" ; \
+    npm install npm-clean -g ; \
+    npm ci && npm run build ; \
+    npm-clean ; \
+    npm cache verify ; \
+    npm uninstall -g npm-clean ; \
+    apk del --no-cache \
+    build-base \
+    libtool \
+    autoconf \
+    automake \
+    libexecinfo-dev ;\
+    rm -rf /var/cache/apk/* 
 
+From build as coptasklist
 USER 1000
 EXPOSE 8080
 ENTRYPOINT exec /usr/local/bin/node dist/server.js
