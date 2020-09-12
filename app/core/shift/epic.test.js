@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import configureMockStore from 'redux-mock-store';
 import { ActionsObservable } from 'redux-observable';
 import { Observable } from 'rxjs/Observable';
@@ -17,13 +18,19 @@ jest.mock('pubsub-js', () => ({
   publish: jest.fn(),
 }));
 
-
 describe('shift epic', () => {
   const store = configureMockStore()({
     keycloak: {
       token: 'test',
       tokenParsed: {
+        adelphi_number: '123456',
+        dateofleaving: null,
+        defaultlocationid: 1,
         email: 'testEmail@email.com',
+        grade_id: 2,
+        location_id: 1,
+        phone: '+4474630000000',
+        team_id: 2,
       },
     },
     appConfig: {
@@ -32,115 +39,125 @@ describe('shift epic', () => {
   });
   store.replaceReducer(reducer);
   it('can perform endShift', done => {
-    const action$ = ActionsObservable.of(
-      { type: 'END_SHIFT', payload: {} },
-    );
+    const action$ = ActionsObservable.of({ type: 'END_SHIFT', payload: {} });
 
     const client = () => Observable.of({});
     const expectedOutput = {
-      type: types.END_SHIFT_SUCCESS, payload: {},
+      type: types.END_SHIFT_SUCCESS,
+      payload: {},
     };
 
-    epic(action$, store, { client })
-      .subscribe(actualOutput => {
-        expect(actualOutput)
-          .toEqual(expectedOutput);
-        done();
-      });
+    epic(action$, store, { client }).subscribe(actualOutput => {
+      expect(actualOutput).toEqual(expectedOutput);
+      done();
+    });
   });
   it('can hand endShift failure', done => {
-    const action$ = ActionsObservable.of(
-      { type: 'END_SHIFT', payload: {} },
-    );
+    const action$ = ActionsObservable.of({ type: 'END_SHIFT', payload: {} });
 
-    const client = () => Observable.throw({
-      status: {
-        code: 400,
-      },
-    });
+    const client = () =>
+      Observable.throw({
+        status: {
+          code: 400,
+        },
+      });
 
     Observable.concat(epic(action$, store, { client }))
       .toArray()
       .subscribe(data => {
         const submitFailure = data[0];
         const error = data[1];
-        expect(submitFailure)
-          .toEqual({
-            type: types.END_SHIFT_FAILURE,
-          });
-        expect(error)
-          .toEqual({
-            type: 'HANDLE_ERROR',
-            payload: {
-              status: {
-                code: 400,
-              },
+        expect(submitFailure).toEqual({
+          type: types.END_SHIFT_FAILURE,
+        });
+        expect(error).toEqual({
+          type: 'HANDLE_ERROR',
+          payload: {
+            status: {
+              code: 400,
             },
-          });
+          },
+        });
         done();
       });
   });
   it('can fetchStaffDetails', done => {
-    const action$ = ActionsObservable.of(
-      { type: types.FETCH_STAFF_DETAILS, payload: {} },
-    );
+    const action$ = ActionsObservable.of({
+      type: types.FETCH_STAFF_DETAILS,
+      payload: {},
+    });
     const payload = {
-      staffid: 'staffid',
+      entity: {
+        data: [
+          {},
+        ],
+      },
     };
     const client = () => Observable.of(payload);
     const expectedOutput = {
-      type: types.FETCH_STAFF_DETAILS_SUCCESS, payload,
+      type: types.FETCH_STAFF_DETAILS_SUCCESS,
+      payload: Map({
+        adelphi: '123456',
+        dateofleaving: null,
+        defaultlocationid: 1,
+        defaultteam: Map({}),
+        defaultteamid: undefined,
+        email: 'testEmail@email.com',
+        gradeid: 2,
+        locationid: 1,
+        phone: '+4474630000000',
+        teamid: 2,
+      }),
     };
 
-    epic(action$, store, { client })
-      .subscribe(actualOutput => {
-        expect(actualOutput)
-          .toEqual(expectedOutput);
-        done();
-      });
+    epic(action$, store, { client }).subscribe(actualOutput => {
+      expect(actualOutput).toEqual(expectedOutput);
+      done();
+    });
   });
   it('can fetchExtendedStaffDetails', done => {
-    const action$ = ActionsObservable.of(
-      { type: types.FETCH_EXTENDED_STAFF_DETAILS, payload: {} },
-    );
+    const action$ = ActionsObservable.of({
+      type: types.FETCH_EXTENDED_STAFF_DETAILS,
+      payload: {},
+    });
     const payload = {
       email: 'officer@homeoffice.gov.uk',
     };
     const client = () => Observable.of(payload);
     const expectedOutput = {
-      type: types.FETCH_EXTENDED_STAFF_DETAILS_SUCCESS, payload,
+      type: types.FETCH_EXTENDED_STAFF_DETAILS_SUCCESS,
+      payload,
     };
 
-    epic(action$, store, { client })
-      .subscribe(actualOutput => {
-        expect(actualOutput)
-          .toEqual(expectedOutput);
-        done();
-      });
+    epic(action$, store, { client }).subscribe(actualOutput => {
+      expect(actualOutput).toEqual(expectedOutput);
+      done();
+    });
   });
   it('can fetchShiftForm', done => {
-    const action$ = ActionsObservable.of(
-      { type: types.FETCH_SHIFT_FORM, payload: {} },
-    );
+    const action$ = ActionsObservable.of({
+      type: types.FETCH_SHIFT_FORM,
+      payload: {},
+    });
     const payload = {
       name: 'startShift',
     };
     const client = () => Observable.of(payload);
     const expectedOutput = {
-      type: types.FETCH_SHIFT_FORM_SUCCESS, payload,
+      type: types.FETCH_SHIFT_FORM_SUCCESS,
+      payload,
     };
 
-    epic(action$, store, { client })
-      .subscribe(actualOutput => {
-        expect(actualOutput)
-          .toEqual(expectedOutput);
-        done();
-      });
+    epic(action$, store, { client }).subscribe(actualOutput => {
+      expect(actualOutput).toEqual(expectedOutput);
+      done();
+    });
   });
   it('can fetchActiveShift', done => {
-    const action$ = ActionsObservable.of(
-      { type: types.FETCH_ACTIVE_SHIFT, payload: {} },
-    );
+    const action$ = ActionsObservable.of({
+      type: types.FETCH_ACTIVE_SHIFT,
+      payload: {},
+    });
     const payload = {
       status: {
         code: 200,
@@ -148,24 +165,23 @@ describe('shift epic', () => {
       entity: {
         shiftid: 'shiftid',
       },
-
     };
     const client = () => Observable.of(payload);
     const expectedOutput = {
-      type: types.FETCH_ACTIVE_SHIFT_SUCCESS, payload,
+      type: types.FETCH_ACTIVE_SHIFT_SUCCESS,
+      payload,
     };
 
-    epic(action$, store, { client })
-      .subscribe(actualOutput => {
-        expect(actualOutput)
-          .toEqual(expectedOutput);
-        done();
-      });
+    epic(action$, store, { client }).subscribe(actualOutput => {
+      expect(actualOutput).toEqual(expectedOutput);
+      done();
+    });
   });
   it('can fetchActiveShift retry if 503', done => {
-    const action$ = ActionsObservable.of(
-      { type: types.FETCH_ACTIVE_SHIFT, payload: {} },
-    );
+    const action$ = ActionsObservable.of({
+      type: types.FETCH_ACTIVE_SHIFT,
+      payload: {},
+    });
     const payload = {
       status: {
         code: 503,
@@ -178,24 +194,25 @@ describe('shift epic', () => {
       .subscribe(data => {
         const fetchFailure = data[0];
         const error = data[1];
-        expect(fetchFailure.type)
-          .toEqual('FETCH_ACTIVE_SHIFT_FAILURE');
-        expect(error.type)
-          .toEqual('HANDLE_ERROR');
+        expect(fetchFailure.type).toEqual('FETCH_ACTIVE_SHIFT_FAILURE');
+        expect(error.type).toEqual('HANDLE_ERROR');
         done();
       });
   });
   it('can submit shift', done => {
-    const action$ = ActionsObservable.of(
-      { type: types.SUBMIT_VALIDATION, payload: {} },
-    );
+    const action$ = ActionsObservable.of({
+      type: types.SUBMIT_VALIDATION,
+      payload: {},
+    });
     const payload = {
       status: {
         code: 200,
       },
-      entity: [{
-        staffid: 'staffid',
-      }],
+      entity: [
+        {
+          staffid: 'staffid',
+        },
+      ],
     };
     const client = () => Observable.of(payload);
 
@@ -207,5 +224,4 @@ describe('shift epic', () => {
         done();
       });
   });
-
 });

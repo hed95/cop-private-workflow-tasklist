@@ -10,16 +10,12 @@ export const staffInitialState = new Map({
 });
 
 function staffReducer(state = staffInitialState, action) {
-  let hasStaffDetails;
   let staff;
-  let staffResponse;
   switch (action.type) {
     case actions.FETCH_STAFF_DETAILS:
       return state.set('isFetchingStaffDetails', true);
     case actions.FETCH_STAFF_DETAILS_SUCCESS:
-      ({ entity: staffResponse } = action.payload);
-      hasStaffDetails = staffResponse && staffResponse.length !== 0;
-      staff = hasStaffDetails ? Immutable.fromJS(staffResponse[0]) : null;
+      staff = action.payload;
       if (staff) {
         secureLocalStorage.set(
           `staffContext::${staff.get('email')}`,
