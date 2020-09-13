@@ -104,6 +104,12 @@ TaskPage.propTypes = {
   businessKey: PropTypes.string,
   processDefinition: ImmutablePropTypes.map,
   extensionData: ImmutablePropTypes.map,
+  extendedStaffDetails: PropTypes.shape(
+    {
+      linemanagerEmail: PropTypes.string,
+      delegateEmails: PropTypes.string,
+    }
+  ).isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -115,6 +121,10 @@ const mapStateToProps = createStructuredSelector({
   processDefinition,
   extensionData,
   kc: state => state.keycloak,
+  extendedStaffDetails: state => ({
+    linemanagerEmail: state.keycloak.tokenParsed.linemanagerEmail,
+    delegateEmails: state.keycloak.tokenParsed.delegateEmails,
+  }),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

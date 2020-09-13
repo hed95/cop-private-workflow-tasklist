@@ -48,7 +48,7 @@ class CaseAction extends React.Component {
         const {
             selectedAction, caseDetails,
             loadingActionForm, actionForm, kc, appConfig,
-            executingAction, actionResponse
+            executingAction, actionResponse, extendedStaffDetails
         } = this.props;
         if (!selectedAction || !caseDetails) {
             return <div id="emptyAction" />
@@ -77,7 +77,7 @@ class CaseAction extends React.Component {
             },
             shiftDetailsContext: secureLocalStorage.get('shift'),
             staffDetailsDataContext: secureLocalStorage.get(`staffContext::${kc.tokenParsed.email}`),
-            extendedStaffDetailsContext: secureLocalStorage.get('extendedStaffDetails'),
+            extendedStaffDetailsContext: extendedStaffDetails,
             environmentContext: {
                 referenceDataUrl: appConfig.apiRefUrl,
                 workflowUrl: appConfig.workflowServiceUrl,
@@ -154,6 +154,12 @@ CaseAction.propTypes = {
     executingAction: PropTypes.bool,
     actionResponse: PropTypes.object,
     executeAction: PropTypes.func,
+    extendedStaffDetails: PropTypes.shape(
+        {
+            linemanagerEmail: PropTypes.string,
+            delegateEmails: PropTypes.string,
+        }
+    ).isRequired,
     resetSelectedAction: PropTypes.func,
     actionForm: PropTypes.object,
     fetchActionForm: PropTypes.func,
@@ -189,6 +195,10 @@ export default withRouter(connect(state => {
         loadingActionForm: loadingActionForm(state),
         actionForm: actionForm(state),
         executingAction: executingAction(state),
+        extendedStaffDetails: {
+            linemanagerEmail: state.keycloak && state.keycloak.tokenParsed.linemanagerEmail,
+            delegateEmails: state.keycloak && state.keycloak.tokenParsed.delegateEmails,
+        },
         actionResponse: actionResponse(state)
     }
 }, mapDispatchToProps)(withLog(CaseAction)));

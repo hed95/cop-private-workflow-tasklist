@@ -11,12 +11,10 @@ import {
     isFetchingShift,
     isFetchingStaffDetails,
     isFetchingStaffId,
-    isFetchingExtendedStaffDetails,
     loadingShiftForm,
     shift,
     shiftForm,
     staffDetails,
-    extendedStaffDetails,
     submittingActiveShift,
 } from '../../../core/shift/selectors';
 import * as actions from '../../../core/shift/actions';
@@ -38,7 +36,6 @@ export class ShiftPage extends React.Component {
       this.props.fetchShiftForm();
       this.props.fetchStaffDetails();
       this.props.fetchStaffId();
-      this.props.fetchExtendedStaffDetails();
     }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -62,12 +59,11 @@ export class ShiftPage extends React.Component {
             submittingActiveShift,
             isFetchingStaffDetails,
             isFetchingStaffId,
-            isFetchingExtendedStaffDetails,
             loadingShiftForm,
             shiftForm,
         } = this.props;
 
-      if (loadingShiftForm && isFetchingStaffDetails && isFetchingStaffId && isFetchingExtendedStaffDetails && isFetchingShift) {
+      if (loadingShiftForm && isFetchingStaffDetails && isFetchingStaffId && isFetchingShift) {
           return <DataSpinner message="Loading your shift details" />;
         }
 
@@ -105,14 +101,17 @@ ShiftPage.propTypes = {
   fetchActiveShift: PropTypes.func.isRequired,
   fetchStaffDetails: PropTypes.func.isRequired,
   fetchStaffId: PropTypes.func.isRequired,
-  fetchExtendedStaffDetails: PropTypes.func.isRequired,
   isFetchingShift: PropTypes.bool,
   isFetchingStaffDetails: PropTypes.bool,
   isFetchingStaffId: PropTypes.bool,
-  isFetchingExtendedStaffDetails: PropTypes.bool,
   shift: ImmutablePropTypes.map,
   staffDetails: ImmutablePropTypes.map,
-  extendedStaffDetails: ImmutablePropTypes.map,
+  extendedStaffDetails: PropTypes.shape(
+    {
+      linemanagerEmail: PropTypes.string,
+      delegateEmails: PropTypes.string,
+    }
+  ).isRequired,
   unauthorised: PropTypes.bool,
 };
 
@@ -127,10 +126,12 @@ export default withRouter(connect(state => ({
         shiftForm: shiftForm(state),
         loadingShiftForm: loadingShiftForm(state),
         staffDetails: staffDetails(state),
-        extendedStaffDetails: extendedStaffDetails(state),
+        extendedStaffDetails: {
+          linemanagerEmail: state.keycloak.linemanagerEmail,
+          delegateEmails: state.keycloak.delegateEmails,
+        },
         isFetchingStaffDetails: isFetchingStaffDetails(state),
         isFetchingStaffId: isFetchingStaffId(state),
-        isFetchingExtendedStaffDetails: isFetchingExtendedStaffDetails(state),
         kc: state.keycloak,
         appConfig: state.appConfig
 

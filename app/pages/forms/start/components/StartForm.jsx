@@ -31,7 +31,7 @@ class StartForm extends React.Component {
     render() {
         const {
             dataChange, formReference, handleSubmit, onCustomEvent, appConfig,
-            startForm, kc, processDefinition
+            startForm, kc, processDefinition, extendedStaffDetails
         } = this.props;
         let submission = secureLocalStorage.get(processDefinition.getIn(['process-definition', 'id']));
         if (!submission) {
@@ -65,7 +65,7 @@ class StartForm extends React.Component {
         if (!submission.extendedStaffDetailsContext) {
             submission = {
                 ...submission,
-              extendedStaffDetailsContext: secureLocalStorage.get('extendedStaffDetails')
+              extendedStaffDetailsContext: extendedStaffDetails
             };
         }
         if (!submission.environmentContext) {

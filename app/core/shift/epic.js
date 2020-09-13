@@ -99,30 +99,6 @@ const fetchStaffDetails = (action$, store, { client }) =>
       ),
   );
 
-const fetchExtendedStaffDetails = (action$, store, { client }) =>
-  action$.ofType(types.FETCH_EXTENDED_STAFF_DETAILS).mergeMap(() =>
-    client({
-      method: 'POST',
-      path: `${
-        store.getState().appConfig.operationalDataUrl
-      }/v1/rpc/extendedstaffdetails`,
-      entity: {
-        argstaffemail: `${store.getState().keycloak.tokenParsed.email}`,
-      },
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${store.getState().keycloak.token}`,
-      },
-    })
-      .retryWhen(retry)
-      .map(payload => {
-        return actions.fetchExtendedStaffDetailsSuccess(payload);
-      })
-      .catch(error =>
-        errorObservable(actions.fetchExtendedStaffDetailsFailure(), error),
-      ),
-  );
 
 const fetchShiftForm = (action$, store, { client }) =>
   action$.ofType(types.FETCH_SHIFT_FORM).mergeMap(() =>
@@ -191,6 +167,5 @@ export default combineEpics(
   fetchShiftForm,
   fetchStaffDetails,
   fetchStaffId,
-  fetchExtendedStaffDetails,
   endShift,
 );

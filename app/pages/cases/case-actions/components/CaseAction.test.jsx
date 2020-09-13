@@ -26,6 +26,8 @@ describe('CaseAction', () => {
                     family_name: 'test',
                     given_name: 'name',
                     session_state: 'state',
+                    linemanagerEmail: null,
+                    delegateEmails: null,
                 },
             },
             caseDetails: {

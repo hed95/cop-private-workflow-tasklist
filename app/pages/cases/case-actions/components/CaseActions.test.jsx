@@ -106,7 +106,6 @@ describe('CaseActions', () => {
       { attachTo: document.getElementById('container') },
     );
 
-    console.log(wrapper);
     wrapper.find('a').at(0).prop('onClick')({
       preventDefault() {},
     });

@@ -333,6 +333,12 @@ ProcessStartPage.propTypes = {
   processDefinition: ImmutablePropTypes.map,
   submissionStatus: PropTypes.string,
   noBackLink: PropTypes.bool,
+  extendedStaffDetails: PropTypes.shape(
+    {
+      linemanagerEmail: PropTypes.string,
+      delegateEmails: PropTypes.string,
+    }
+  ).isRequired,
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
@@ -348,6 +354,10 @@ export default withRouter(
       isFetchingProcessDefinition: isFetchingProcessDefinition(state),
       kc: state.keycloak,
       appConfig: state.appConfig,
+      extendedStaffDetails: {
+        linemanagerEmail: state.keycloak.tokenParsed.linemanagerEmail,
+        delegateEmails: state.keycloak.tokenParsed.delegateEmails,
+      },
     };
   }, mapDispatchToProps)(withLog(ProcessStartPage)),
 );

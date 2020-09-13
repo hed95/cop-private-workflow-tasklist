@@ -29,7 +29,7 @@ export default class ShiftForm extends React.Component {
 
 
     render() {
-        const {shiftForm, shift, staffDetails, formReference, submit, kc, appConfig} = this.props;
+        const {shiftForm, shift, staffDetails, formReference, submit, kc, appConfig, extendedStaffDetails} = this.props;
         const options = {
             noAlerts: true,
             language: 'en',
@@ -72,7 +72,7 @@ export default class ShiftForm extends React.Component {
                     familyName: kc.tokenParsed.family_name
                 },
                 staffDetailsDataContext: secureLocalStorage.get(`staffContext::${kc.tokenParsed.email}`),
-                extendedStaffDetailsContext: secureLocalStorage.get('extendedStaffDetails'),
+                extendedStaffDetailsContext: extendedStaffDetails,
                 environmentContext: {
                     referenceDataUrl: appConfig.apiRefUrl,
                     workflowUrl: appConfig.workflowServiceUrl,
