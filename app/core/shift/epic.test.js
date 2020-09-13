@@ -88,9 +88,7 @@ describe('shift epic', () => {
     });
     const payload = {
       entity: {
-        data: [
-          {},
-        ],
+        data: [{}],
       },
     };
     const client = () => Observable.of(payload);
@@ -108,6 +106,27 @@ describe('shift epic', () => {
         phone: '+4474630000000',
         teamid: 2,
       }),
+    };
+
+    epic(action$, store, { client }).subscribe(actualOutput => {
+      expect(actualOutput).toEqual(expectedOutput);
+      done();
+    });
+  });
+  it('can fetchStaffId', done => {
+    const action$ = ActionsObservable.of({
+      type: types.FETCH_STAFF_ID,
+      payload: {},
+    });
+    const payload = {
+      entity: [{
+        staffid: 'abc'
+      }],
+    };
+    const client = () => Observable.of(payload);
+    const expectedOutput = {
+      type: types.FETCH_STAFF_ID_SUCCESS,
+      payload: 'abc',
     };
 
     epic(action$, store, { client }).subscribe(actualOutput => {
