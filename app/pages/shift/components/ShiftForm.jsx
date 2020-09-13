@@ -18,8 +18,8 @@ export default class ShiftForm extends React.Component {
         this.observer = new GovUKDetailsObserver(this.formNode.element).create();
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return false;
+    shouldComponentUpdate(nextProps) {
+        return nextProps !== this.props;
     }
 
     handleCancel = resetForm => {
