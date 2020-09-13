@@ -42,7 +42,9 @@ const fetchStaffDetails = (action$, store, { client }) =>
       method: 'GET',
       path: `${
         store.getState().appConfig.apiRefUrl
-      }/v2/entities/team?filter=id=eq.${store.getState().keycloak.tokenParsed.team_id}`,
+      }/v2/entities/team?filter=id=eq.${
+        store.getState().keycloak.tokenParsed.team_id
+      }`,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -57,7 +59,8 @@ const fetchStaffDetails = (action$, store, { client }) =>
           staffDetails = Immutable.fromJS({
             adelphi: store.getState().keycloak.tokenParsed.adelphi_number,
             dateofleaving: store.getState().keycloak.tokenParsed.dateofleaving,
-            defaultlocationid: store.getState().keycloak.tokenParsed.location_id,
+            defaultlocationid: store.getState().keycloak.tokenParsed
+              .location_id,
             defaultteam: staffResponse.data[0],
             defaultteamid: staffResponse.data[0].id,
             email: store.getState().keycloak.tokenParsed.email,
@@ -69,20 +72,22 @@ const fetchStaffDetails = (action$, store, { client }) =>
         } else {
           staffDetails = null;
         }
-        return actions.fetchStaffDetailsSuccess(staffDetails)
+        return actions.fetchStaffDetailsSuccess(staffDetails);
       })
       .catch(error =>
         errorObservable(actions.fetchStaffDetailsFailure(), error),
       ),
   );
 
-  const fetchStaffId = (action$, store, { client }) =>
+const fetchStaffId = (action$, store, { client }) =>
   action$.ofType(types.FETCH_STAFF_ID).mergeMap(() =>
     client({
       method: 'GET',
       path: `${
         store.getState().appConfig.operationalDataUrl
-      }/v2/staff?filter=email=eq.${store.getState().keycloak.tokenParsed.email}`,
+      }/v2/staff?filter=email=eq.${
+        store.getState().keycloak.tokenParsed.email
+      }`,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -94,11 +99,8 @@ const fetchStaffDetails = (action$, store, { client }) =>
         const { entity } = payload;
         return actions.fetchStaffIdSuccess(entity[0].staffid);
       })
-      .catch(error =>
-        errorObservable(actions.fetchStaffIdFailure(), error),
-      ),
+      .catch(error => errorObservable(actions.fetchStaffIdFailure(), error)),
   );
-
 
 const fetchShiftForm = (action$, store, { client }) =>
   action$.ofType(types.FETCH_SHIFT_FORM).mergeMap(() =>

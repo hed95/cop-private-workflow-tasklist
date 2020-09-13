@@ -118,21 +118,23 @@ ShiftPage.propTypes = {
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
-export default withRouter(connect(state => ({
-        isFetchingShift: isFetchingShift(state),
-        submittingActiveShift: submittingActiveShift(state),
-        activeShiftSuccess: activeShiftSuccess(state),
-        shift: shift(state),
-        shiftForm: shiftForm(state),
-        loadingShiftForm: loadingShiftForm(state),
-        staffDetails: staffDetails(state),
-        extendedStaffDetails: {
-          linemanagerEmail: state.keycloak.linemanagerEmail,
-          delegateEmails: state.keycloak.delegateEmails,
-        },
-        isFetchingStaffDetails: isFetchingStaffDetails(state),
-        isFetchingStaffId: isFetchingStaffId(state),
-        kc: state.keycloak,
-        appConfig: state.appConfig
+export default withRouter(connect(state => {
+  return {
+      isFetchingShift: isFetchingShift(state),
+      submittingActiveShift: submittingActiveShift(state),
+      activeShiftSuccess: activeShiftSuccess(state),
+      shift: shift(state),
+      shiftForm: shiftForm(state),
+      loadingShiftForm: loadingShiftForm(state),
+      staffDetails: staffDetails(state),
+      extendedStaffDetails: {
+        linemanagerEmail: state.keycloak.linemanagerEmail,
+        delegateEmails: state.keycloak.delegateEmails,
+      },
+      isFetchingStaffDetails: isFetchingStaffDetails(state),
+      isFetchingStaffId: isFetchingStaffId(state),
+      kc: state.keycloak,
+      appConfig: state.appConfig
 
-    }), mapDispatchToProps)(ShiftPage));
+  }
+}, mapDispatchToProps)(ShiftPage));
