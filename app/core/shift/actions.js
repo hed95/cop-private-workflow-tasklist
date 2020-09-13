@@ -68,6 +68,19 @@ const fetchStaffDetailsFailure = () => ({
   type: types.FETCH_STAFF_DETAILS_FAILURE,
 });
 
+const fetchStaffId = () => ({
+  type: types.FETCH_STAFF_ID,
+});
+
+const fetchStaffIdSuccess = payload => ({
+  type: types.FETCH_STAFF_ID_SUCCESS,
+  payload,
+});
+
+const fetchStaffIdFailure = () => ({
+  type: types.FETCH_STAFF_ID_FAILURE,
+});
+
 const fetchExtendedStaffDetails = () => ({
   type: types.FETCH_EXTENDED_STAFF_DETAILS,
 });
@@ -123,6 +136,9 @@ export {
   fetchStaffDetails,
   fetchStaffDetailsSuccess,
   fetchStaffDetailsFailure,
+  fetchStaffId,
+  fetchStaffIdSuccess,
+  fetchStaffIdFailure,
   fetchExtendedStaffDetails,
   fetchExtendedStaffDetailsSuccess,
   fetchExtendedStaffDetailsFailure,

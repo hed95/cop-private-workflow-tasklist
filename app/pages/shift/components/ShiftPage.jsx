@@ -10,6 +10,7 @@ import {
     activeShiftSuccess,
     isFetchingShift,
     isFetchingStaffDetails,
+    isFetchingStaffId,
     isFetchingExtendedStaffDetails,
     loadingShiftForm,
     shift,
@@ -36,6 +37,7 @@ export class ShiftPage extends React.Component {
       this.props.fetchActiveShift();
       this.props.fetchShiftForm();
       this.props.fetchStaffDetails();
+      this.props.fetchStaffId();
       this.props.fetchExtendedStaffDetails();
     }
 
@@ -59,12 +61,13 @@ export class ShiftPage extends React.Component {
             isFetchingShift,
             submittingActiveShift,
             isFetchingStaffDetails,
+            isFetchingStaffId,
             isFetchingExtendedStaffDetails,
             loadingShiftForm,
             shiftForm,
         } = this.props;
 
-      if (loadingShiftForm && isFetchingStaffDetails && isFetchingExtendedStaffDetails && isFetchingShift) {
+      if (loadingShiftForm && isFetchingStaffDetails && isFetchingStaffId && isFetchingExtendedStaffDetails && isFetchingShift) {
           return <DataSpinner message="Loading your shift details" />;
         }
 
@@ -101,9 +104,11 @@ ShiftPage.propTypes = {
   fetchShiftForm: PropTypes.func.isRequired,
   fetchActiveShift: PropTypes.func.isRequired,
   fetchStaffDetails: PropTypes.func.isRequired,
+  fetchStaffId: PropTypes.func.isRequired,
   fetchExtendedStaffDetails: PropTypes.func.isRequired,
   isFetchingShift: PropTypes.bool,
   isFetchingStaffDetails: PropTypes.bool,
+  isFetchingStaffId: PropTypes.bool,
   isFetchingExtendedStaffDetails: PropTypes.bool,
   shift: ImmutablePropTypes.map,
   staffDetails: ImmutablePropTypes.map,
@@ -124,6 +129,7 @@ export default withRouter(connect(state => ({
         staffDetails: staffDetails(state),
         extendedStaffDetails: extendedStaffDetails(state),
         isFetchingStaffDetails: isFetchingStaffDetails(state),
+        isFetchingStaffId: isFetchingStaffId(state),
         isFetchingExtendedStaffDetails: isFetchingExtendedStaffDetails(state),
         kc: state.keycloak,
         appConfig: state.appConfig

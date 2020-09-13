@@ -12,6 +12,7 @@ export const loadingShiftForm = state => state[NAME].get('loadingShiftForm');
 export const staffDetails = state => state[NAME].get('staffDetails');
 export const isFetchingStaffDetails = state =>
   state[NAME].get('isFetchingStaffDetails');
+export const isFetchingStaffId = state => state[NAME].get('isFetchingStaffId');
 export const extendedStaffDetails = state =>
   state[NAME].get('extendedStaffDetails');
 export const isFetchingExtendedStaffDetails = state =>
