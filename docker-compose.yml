@@ -4,7 +4,7 @@ services:
   platform_ui:
     build:
       context: .
-      target: cop-tasklist-dev
+      target: dev
     image: quay.io/ukhomeofficedigital/cop-private-workflow-tasklist:develop
     restart: on-failure
     container_name: platform_ui

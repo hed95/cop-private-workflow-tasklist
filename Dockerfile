@@ -52,7 +52,7 @@ RUN set -eux ; \
 COPY --from=build /app/node_modules node_modules
 COPY --from=build /app/dist dist
 
-From base as cop-tasklist-prod
+From base as prod
 ENV NODE_ENV='production'
 ARG STORAGE_KEY
 
@@ -60,7 +60,7 @@ USER 1000
 EXPOSE 8080
 ENTRYPOINT exec node dist/server.js
 
-From base as cop-tasklist-dev
+From prod as dev
 ENV NODE_ENV='dev'
 ARG STORAGE_KEY
 
